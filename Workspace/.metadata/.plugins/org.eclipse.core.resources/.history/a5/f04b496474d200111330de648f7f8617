@@ -1,0 +1,76 @@
+crypto = require('crypto')
+QRefDatabase = require('../db/QRefDatabase')
+class UserAuth 
+	constructor: () ->
+	salt: () -> 
+		hash = crypto.createHash('sha512')
+		hash.update(crypto.randomBytes(1024))
+		hash.digest('hex')
+	securePassword: (key, salt, password) ->
+		sKey = key + salt
+		hmac = crypto.createHmac('sha512', sKey)
+		hmac.update(password)
+		hmac.digest('hex')
+	secureToken: (key, salt) ->
+		sPassword = '' + Date.now() + crypto.randomBytes(64)
+		this.securePassword(key, salt, sPassword)
+	validateCredential: (userName, password, callback) ->
+		db = new QRefDatabase()
+		db.Users.where('userName')
+				.equals(userName)
+				.findOne((err, user) => 
+					if err? 
+						callback(err, false)
+					if user?
+						pwHash = @.securePassword(user._id, user.passwordSalt, password)
+						callback(null, pwHash == user.passwordHash)
+					else
+						callback(null, false)
+				)
+	validateToken: (token, callback) ->
+		db = new QRefDatabase()
+		db.AuthTokens.where('token')
+					 .equals(token)
+					 .findOne((err, obj) =>
+					 	if err?
+					 		callback(err, false)
+					 	if obj?
+					 		callback(null, Date.now() < obj.expiresOn)
+					 	else
+					 		callback(null, false)
+					 )
+	login: (userName, password, callback) ->
+		db = new QRefDatabase()
+		cbFunc = (err, token, success) =>
+			callback(err, token, success)
+			
+		db.Users.where('userName')
+				.equals(userName)
+				.findOne((err, user) ->
+					if err?
+						cbFunc(err, null, false)
+					if user?
+						pwHash = @.securePassword(user._id, user.passwordSalt, password)
+						
+						if pwHash == user.passwordHash
+							expiry = new Date()
+							expiry.setHours(expiry.getHours() + 3)
+							tk = new db.AuthTokens()
+							tk.token = @.secureToken(user._id, user.passwordSalt)
+							tk.expiresOn = expiry
+							tk.user = user
+							tk.save((error) ->
+								if err?
+									cbFunc(error, null, false)
+								else
+									cbFunc(null, tk.token, true)
+							) 
+						else
+							cbFunc(null, null, false)
+					else
+						cbFunc(null, null, false)
+		)
+		
+	validateRequest: (req, callback) ->
+		@.validateToken(req.header('Authorization'), callback)
+module.exports = new UserAuth()

@@ -1,0 +1,21 @@
+crypto = require('crypto')
+class UserAuth 
+	constructor: () ->
+	salt: () -> 
+		hash = crypto.createHash('sha512')
+		hash.update(crypto.randomBytes(1024))
+		hash.digest('hex')
+	securePassword: (key, salt, password) ->
+		sKey = key + salt
+		hmac = crypto.createHmac('sha512', sKey)
+		hmac.update(password)
+		hmac.digest('hex')
+	secureToken: (key, salt) ->
+		sPassword = '' + Date.now() + crypto.randomBytes(64)
+		this.securePassword(key, salt, sPassword)
+	validatePassword: (password, user) ->
+		if not user? or not user?._id? or not user?.passwordSalt? or not user?.passwordHash?
+			throw new Error('user is not a valid mongoose UserSchema object')
+		else
+			sPassword = this.securePassword(user._id, user.passwordSalt, password)
+			sPassword.equals(user.passwordHash)

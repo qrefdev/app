@@ -1,0 +1,27 @@
+{
+  "name": "qs",
+  "description": "querystring parser",
+  "version": "0.4.2",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/visionmedia/node-querystring.git"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*"
+  },
+  "author": {
+    "name": "TJ Holowaychuk",
+    "email": "tj@vision-media.ca",
+    "url": "http://tjholowaychuk.com"
+  },
+  "main": "index",
+  "engines": {
+    "node": "*"
+  },
+  "_id": "qs@0.4.2",
+  "dist": {
+    "shasum": "8ea2e22e074da7dcd3441abe41bb9e7d8a29232b"
+  },
+  "_from": "qs@0.4.2"
+}

@@ -1,0 +1,14 @@
+mongoose = require('mongoose')
+Schema = moongoose.Schema
+ObjectId = Schema.ObjectId
+
+UserSchemaInternal = 
+	userId: ObjectId
+	userName: String
+	passwordHash: String
+	passwordSalt: String
+	firstName: String
+	lastName: String
+
+module.exports = new Schema(UserSchemaInternal)
+	

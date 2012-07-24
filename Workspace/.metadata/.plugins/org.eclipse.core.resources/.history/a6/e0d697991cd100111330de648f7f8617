@@ -1,0 +1,17 @@
+crypto = require('crypto')
+class UserAuth 
+	constructor: () ->
+	salt: () -> 
+		hash = crypto.createHash('sha512')
+		hash.update(crypto.randomBytes(1024))
+		hash.digest('hex')
+	securePassword: (key, salt, password) ->
+		sKey = key + salt
+		hmac = crypto.createHmac('sha512', sKey)
+		hmac.update(password)
+		hmac.digest('hex')
+	secureToken: (key, salt) ->
+		sPassword = '' + Date.now() + crypto.randomBytes(64)
+		this.securePassword(key, salt, sPassword)
+	validateCredential: (userName, password, callback) ->
+		

@@ -1,0 +1,5 @@
+mongoose = require('mongoose)
+Schema = moongoose.Schema
+ObjectId = Schema.ObjectId
+
+UserSchemaInternal = 

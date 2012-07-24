@@ -1,0 +1,15 @@
+mongoose = require('mongoose')
+class QRefDatabase
+	connection: null
+	url: 'mongodb://localhost/qref'
+	Users: null
+	Schema: mongoose.Schema
+	constructor: () ->
+		@connection = mongoose.createConnection(@url)
+		this.initialize()
+	initialize: () ->
+		UserSchema = require('../schema/UserSchema')
+		@Users = @connection.model('users', UserSchema)
+	getConnection: () -> @connection
+module.exports = QRefDatabase
+		

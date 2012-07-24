@@ -1,0 +1,6 @@
+RpcRoute = require('../../RpcRoute')
+class LoginRoute extends RpcRoute
+	constructor: () ->
+		super [{ method: 'POST', path: '/login' }]
+	post: (req, res) ->
+module.exports = new LoginRoute()

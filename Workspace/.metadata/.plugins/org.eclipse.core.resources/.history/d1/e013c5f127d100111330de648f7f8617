@@ -1,0 +1,14 @@
+class RpcResponse
+	success: true
+	mode: 'rpc'
+	messages: []
+	returnValue: null
+	constructor: (returnValue) -> @returnValue = returnValue
+	addMessage: (msg) -> @messages.push(msg)
+	reset: () ->
+		@messages = []
+		@success = true
+		@returnValue = null
+		@mode = 'rpc'
+		@messages.length
+	failure: () -> @success = false

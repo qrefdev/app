@@ -1,0 +1,4 @@
+@echo off
+
+call "C:\Program Files\nodejs\nodejsvars.bat"
+call node_modules\.bin\coffee.cmd -o "%1" -c "%2"

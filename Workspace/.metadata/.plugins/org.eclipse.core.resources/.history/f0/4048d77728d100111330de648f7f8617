@@ -1,0 +1,18 @@
+class RpcResponse
+	success: true
+	mode: 'rpc'
+	message: null
+	errorCode: 0
+	returnValue: null
+	constructor: (returnValue) -> @returnValue = returnValue
+	setMessage: (msg) -> @message = msg
+	reset: () ->
+		@message = null
+		@success = true
+		@returnValue = null
+		@mode = 'rpc'
+		@errorCode = 0
+		@messages.length
+	failure: (errorCode) -> 
+		@success = false
+		@errorCode = errorCode

@@ -1,0 +1,23 @@
+Route = require('./Route')
+RpcResponse = require('../serialization/RpcResponse')
+class RpcRoute extends Route
+	constructor: (methods) ->
+		super methods
+	get: (req, res) ->
+		resp = new RpcResponse(null)
+		resp.failure('Method Not Allowed', 405)
+		res.json(resp, 200)
+	put: (req, res) ->
+		resp = new RpcResponse(null)
+		resp.failure('Method Not Allowed', 405)
+		res.json(resp, 200)
+	del: (req, res) ->
+		resp = new RpcResponse(null)
+		resp.failure('Method Not Allowed', 405)
+		res.json(resp, 200)
+	isValidRequest: (req) ->
+		if req.body? and req.body?.mode? and req.body.mode == 'rpc'
+			tru
+		else
+			false 
+module.exports = RpcRoute
