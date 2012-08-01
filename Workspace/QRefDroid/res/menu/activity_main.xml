@@ -1,3 +1,5 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/showLoginMenuItem" android:visible="true" android:checkable="false" android:enabled="true" android:checked="false" android:title="@string/menu_show_login_text"></item>
+    <item android:id="@+id/showHomeMenuItem" android:visible="true" android:checkable="false" android:title="@string/menu_show_home_text" android:enabled="true" android:checked="false"></item>
  
 </menu>

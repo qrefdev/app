@@ -4,10 +4,11 @@ import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 public class Main extends Activity {
 
@@ -26,8 +27,9 @@ public class Main extends Activity {
         	settings.setUseWideViewPort(true);
         	settings.setBuiltInZoomControls(false);
         	
-        	//view.setWebChromeClient(new WebChromeClient());
-        	view.setWebViewClient(new WebViewClient());
+        	view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+        	view.setWebChromeClient(new WebChromeClient());
+        	//view.setWebViewClient(new WebViewClient());
         	view.loadUrl("file:///android_asset/web/phoneView.html");
         }
     }
@@ -37,4 +39,36 @@ public class Main extends Activity {
         getMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
     }
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.showHomeMenuItem:
+			this.showHomeScreen();
+			return true;
+		case R.id.showLoginMenuItem:
+			this.showLoginScreen();
+			return true;
+		default: 
+			return super.onOptionsItemSelected(item);
+		}
+	}
+	
+	private void showLoginScreen() {
+		WebView view = (WebView)this.findViewById(R.id.mainWebView);
+        
+        if (view != null) {
+        	view.loadUrl("file:///android_asset/web/phoneView.html#signin");
+        }
+	}
+	
+	private void showHomeScreen() {
+		WebView view = (WebView)this.findViewById(R.id.mainWebView);
+        
+        if (view != null) {
+        	view.loadUrl("file:///android_asset/web/phoneView.html#home");
+        }
+	}
+    
+    
 }

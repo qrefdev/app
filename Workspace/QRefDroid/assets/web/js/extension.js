@@ -33,7 +33,10 @@ this._chain)}});j(["concat","join","slice"],function(a){var b=k[a];m.prototype[a
 
 var sampleData = [
 		{id: "test1", name: "CheckList 1", 
-			preflight: [{index: 0, check:"check",response:"response"}, {index: 1, check:"check2",response:"response2"}, {index: 2, check:"check3",response:"response3"}, {index: 3, check:"check4",response:"response4"}, {index: 4, check:"check5",response:"response5"}, {index: 5, check:"check6",response:"response6"}],
+			preflight: [{index: 0, check:"check",response:"response"}, {index: 1, check:"check2",response:"response2"},
+			{index: 2, check:"check3",response:"response3"}, {index: 3, check:"check4",response:"response4"},
+			{index: 4, check:"check5",response:"response5"}, {index: 5, check:"check6",response:"response6"},
+			{index: 6, check:"check7",response:"response7"}, {index: 7, check:"check8",response:"response8"}],
 			takeoff: [{index: 0, check:"check2",response:"response2"}],
 			landing: [{index: 0, check:"check3",response:"response3"}],
 			emergencies: [{name: "condition1", items: [{index: 0, check:"emCheck1", response: "emResponse1"}]},
@@ -51,37 +54,30 @@ var sampleData = [
 
 var CheckLists = new CheckListHandler();
 var Navigation = new NavigationHandler();
+var Theme = new ThemeHandler();
+var loader = undefined;
 
 $(function() {
-	Navigation.init();
-	CheckLists.load(sampleData);
-	//$(window).resize();
-});
+	$.android = /android/.test(navigator.userAgent.toLowerCase())
 
-/*
-$(window).resize(function() {
-	var homePage = $("#home");
-	var checklistPage = $("#checklist");
-	var emergencyPage = $("#emergency");
-	var emergencyChecklistPage = $("#emergency-checklist");
+	loader = new Loader();
+	Navigation.init();
+	Theme.init();
+	CheckLists.load(sampleData);
 	
-	var width = $(window).width();
-	var height = $(window).height();
 	
-	homePage.width(width);
-	homePage.height(height);
+	var btnSignIn = $('#btnSignIn');
+	btnSignIn.click(function (evt) {
+		var loader = new Loader();
+		loader.show();
+		
+		window.setTimeout(function() {
+			loader.hide();
+		}, 8000);
+	});
 	
-	checklistPage.width(width);
-	checklistPage.height(height);
-	
-	emergencyPage.width(width);
-	emergencyPage.height(height);
-	
-	emergencyChecklistPage.width(width);
-	emergencyChecklistPage.height(height);
 	
 });
-*/
 
 $(document).bind("pagechange", function(event, data) {
 
@@ -96,14 +92,12 @@ $(document).bind("pagechange", function(event, data) {
 	if(u.hash == emergencyChecklist)
 	{
 		Navigation.currentCheckListCategory = "emergencies";
-		Navigation.resetCheckListNavBar();
 		Navigation.populateEmergencyCheckList();
 		//e.preventDefault();
 	}
 	else if ( u.hash == emergency ) 
 	{
 		Navigation.currentCheckListCategory = "emergencies";
-		Navigation.resetCheckListNavBar();
 		Navigation.populateEmergencyList();
 
 		// Make sure to tell changePage() we've handled this call so it doesn't
@@ -117,11 +111,12 @@ $(document).bind("pagechange", function(event, data) {
 			Navigation.currentCheckListCategory = Navigation.previousCheckListCategory;
 		}
 		
-		Navigation.resetCheckListNavBar();
-		
 		Navigation.populateCheckList();
 		//e.preventDefault();
 	}
+	
+	Theme.refresh();
+	Navigation.resetCheckListNavBar();
 });
 
 function NavigationHandler() {
@@ -131,6 +126,7 @@ function NavigationHandler() {
 	this.previousCheckListCategory = "preflight";
 	this.currentEmergency = 0;
 	this.previousAreas = new Array();
+	this.scrollViews = undefined;
 	
 	var self = this;
 	
@@ -212,7 +208,7 @@ function NavigationHandler() {
 			
 				for(var i = 0; i < currentListItems.length; i++)
 				{
-					html += "<li data-index='" + i + "' class='ui-li-static'><h3 class='ui-li-heading'>" + currentListItems[i].check + "</h3><p class='ui-list-desc'>" + currentListItems[i].response + "</p></li>";
+					html += "<li data-index='" + i + "' class='ui-li-static'><h3 class='ui-li-heading'>" + currentListItems[i].check + "</h3><p class='ui-list-desc'>" + currentListItems[i].response + "</p><div class='handle'></div></li>";
 				}
 				
 				$("#checklist-items").html(html);
@@ -227,7 +223,7 @@ function NavigationHandler() {
 			
 				for(var i = 0; i < currentListItems.length; i++)
 				{
-					html += "<li data-index='" + i + "' class='ui-li-static'><h3 class='ui-li-heading'>" + currentListItems[i].check + "</h3><p class='ui-list-desc'>" + currentListItems[i].response + "</p></li>";
+					html += "<li data-index='" + i + "' class='ui-li-static'><h3 class='ui-li-heading'>" + currentListItems[i].check + "</h3><p class='ui-list-desc'>" + currentListItems[i].response + "</p><div class='handle'></div></li>";
 				}
 				
 				$("#checklist-items").html(html);
@@ -242,13 +238,20 @@ function NavigationHandler() {
 			
 				for(var i = 0; i < currentListItems.length; i++)
 				{
-					html += "<li data-index='" + i + "' class='ui-li-static'><h3 class='ui-li-heading'>" + currentListItems[i].check + "</h3><p class='ui-list-desc'>" + currentListItems[i].response + "</p></li>";
+					html += "<li data-index='" + i + "' class='ui-li-static'><h3 class='ui-li-heading'>" + currentListItems[i].check + "</h3><p class='ui-list-desc'>" + currentListItems[i].response + "</p><div class='handle'></div></li>";
 				}
 				
 				$("#checklist-items").html(html);
 				$("#checklist-items").listview();
 				$("#checklist-items").listview("refresh");
 			}
+			
+			if($.android && this.scrollViews)
+			{
+				this.scrollViews.resetAll();
+			}
+			
+			Theme.refresh();
 		}
 	};
 	
@@ -262,21 +265,26 @@ function NavigationHandler() {
 		{
 			if(row == 0)
 			{
-				html += '<div data-link="emergency-checklist" data-index="' + i + '" class="ui-block-a">' + this.qref.emergencies[i].name + '</div>';
+				html += '<div data-link="emergency-checklist" data-index="' + i + '" class="ui-block-a"><button class="ui-btn ui-btn-up-a">' + this.qref.emergencies[i].name + '</button></div>';
 				row++;
 			}
 			else if(row == 1)
 			{
-				html += '<div data-link="emergency-checklist" data-index="' + i + '" class="ui-block-b">' + this.qref.emergencies[i].name + '</div>';
+				html += '<div data-link="emergency-checklist" data-index="' + i + '" class="ui-block-b"><button class="ui-btn ui-btn-up-a">' + this.qref.emergencies[i].name + '</button></div>';
 				row--;
 			}
 		}
 		
 		$("#checklist-emergency").html(html);
-		
 		$("#checklist-emergency").children().tap(function() {
 			self.changeEmergency($(this));
 		});
+		if($.android && this.scrollViews)
+		{
+			this.scrollViews.resetAll();
+		}
+		
+		Theme.refresh();
 	};
 	
 	this.populateEmergencyCheckList = function() {
@@ -290,12 +298,19 @@ function NavigationHandler() {
 	
 		for(var i = 0; i < list.length; i++)
 		{
-			html += "<li data-index='" + i + "' class='ui-li-static'><h3 class='ui-li-heading'>" + list[i].check + "</h3><p class='ui-list-desc'>" + list[i].response + "</p></li>";
+			html += "<li data-index='" + i + "' class='ui-li-static'><h3 class='ui-li-heading'>" + list[i].check + "</h3><p class='ui-list-desc'>" + list[i].response + "</p><div class='handle'></div></li>";
 		}
 		
 		$("#checklist-emergency-items").html(html);
 		$("#checklist-emergency-items").listview();
 		$("#checklist-emergency-items").listview("refresh");
+		
+		if($.android && this.scrollViews)
+		{
+			this.scrollViews.resetAll();
+		}
+		
+		Theme.refresh();
 	};
 	
 	/** This changes the emergency checklist **/
@@ -380,12 +395,23 @@ function NavigationHandler() {
 		$(".checklistNavBar").each(function(i, e) {
 				$(e).children().each(function(index, element) {
 				var actualElement = $($(element).children()[0]);
-					
-				actualElement.removeClass('ui-btn-hover-a').removeClass('ui-btn-active').removeClass('ui-btn-up-b');
+				
+				actualElement.removeClass('ui-btn-hover-c ui-btn-hover-f ui-btn-up-f ui-btn-hover-a ui-btn-hover-a ui-btn-hover-d ui-btn-active ui-btn-up-c ui-btn-up-d');
 				
 				if(index == selected)
 				{
-					actualElement.addClass('ui-btn-up-b');
+					if(Theme.current == "f")
+					{
+						actualElement.addClass('ui-btn-up-c');
+					}
+					else if(Theme.current == "a")
+					{
+						actualElement.addClass('ui-btn-up-d');
+					}
+				}
+				else
+				{
+					actualElement.addClass('ui-btn-up-' + Theme.current);
 				}
 			});
 		});
@@ -398,6 +424,9 @@ function NavigationHandler() {
 			$(e).children().tap(function() {
 				Navigation.changeCategory($(this));
 				Navigation.resetNavBar(parseInt($(this).attr("data-index")));
+			});
+			$(e).children().mouseout(function() {
+				Navigation.resetCheckListNavBar();
 			});
 		});
 	};
@@ -413,11 +442,15 @@ function NavigationHandler() {
 	this.init = function() {
 		this.initHomeNavBar();
 		this.initCheckListNavBar();
-		$(".back").tap(function() {
+		/**$(".back").tap(function() {
 			Navigation.back();
-		});
+		});*/
 		
-		$("#checklist-emergency-items").sortable();
+		$("#checklist-emergency-items").sortable({
+			handle: ".handle",
+			scroll: true,
+			axis: "y"	
+		});
 		$("#checklist-emergency-items").disableSelection();
 		$("#checklist-emergency-items").bind("sortstop", function(event, ui) {
 			$("checklist-emergency-items").listview('refresh');
@@ -426,7 +459,11 @@ function NavigationHandler() {
 			Navigation.setCheckList(CheckLists.updateIndices(currentCheckList, CheckLists.getIndices()));
 			
 		});
-		$( "#checklist-items" ).sortable();
+		$( "#checklist-items" ).sortable({
+			handle: ".handle",
+			scroll: true,
+			axis: "y"	
+		});
 		$( "#checklist-items" ).disableSelection();
 		<!-- Refresh list to the end of sort to have a correct display -->
 		$( "#checklist-items" ).bind( "sortstop", function(event, ui) {
@@ -435,6 +472,12 @@ function NavigationHandler() {
 			var currentCheckList = Navigation.getCheckList();
 			Navigation.setCheckList(CheckLists.updateIndices(currentCheckList, CheckLists.getIndices()));
 		});
+		
+		//Init the scrolling for android devices
+		if($.android)
+		{
+			this.scrollViews = new TouchSlideWindow($(".content"));
+		}
 	};
 }
 
@@ -530,3 +573,236 @@ function CheckListHandler() {
 		return list;
 	};
 }
+
+function TouchSlideWindow(element, bottomCallback) {
+	var self = this;
+	this.element = element;
+	this.elements = new Array();
+	
+	if(this.element.length > 1)
+	{
+		this.element.each(function(i, e) {
+			var i = new TouchSlideWindow($(e));	
+		
+			self.elements.push(i);
+		});
+		
+		return;
+	}
+	
+	this.container = $(element.children()[0]);
+	this.callback = bottomCallback;
+	this.bottomReached = false;
+	this.start = 0;
+	
+	
+	
+	
+	
+	this.reset = function() {
+		self.container.css({top: "0px"});
+	};
+	
+	this.resetAll = function() {
+		var self = this;
+		for(var i = 0; i < self.elements.length; i++)
+		{
+			self.elements[i].reset();
+		}
+	};
+	
+	this.scrollTo = function(top) {
+		self.container.animate({top: -top + "px"}, 500);
+	};
+	
+	this.element[0].addEventListener("touchstart", function(event) {
+		if(event.touches.length > 0)
+		{
+			self.start = event.touches[0].pageY - self.element.offset().top;
+		}
+	}, false);
+	
+	this.element[0].addEventListener("touchmove", function(event) {
+		event.preventDefault();
+		var top = self.container.position().top;
+		var windowHeight = self.element.height();
+		var height = self.container.height();
+		var offset = Math.abs(height - windowHeight);
+		
+		if(height > windowHeight)
+		{
+			if(event.touches.length > 0)
+			{	
+				var current = event.touches[0].pageY - self.element.offset().top;
+				
+				if(current < self.start)
+				{
+					var speed = (self.start - current);
+					
+					if(top >= -offset)
+					{
+						top -= speed;
+						self.start = current;
+						
+						if(top <= -offset)
+						{
+							if(self.bottomReached == false)
+							{
+								if(self.callback)
+									self.callback();
+										
+								self.bottomReached = true;
+							}
+							
+							top = -offset;
+						}
+						
+						self.container.css("top", top + "px");
+					}
+				}
+				else if(current > self.start)
+				{
+					var speed = (current - self.start);
+					
+					if(top < 0)
+					{
+						top += speed;
+						self.start = current;
+						self.bottomReached = false;
+						
+						if(top >= 0)
+						{
+							top = 0;
+						}
+						
+						self.container.css("top", top + "px");
+					}
+				}
+			}
+		}
+	}, false);
+	
+	return self;
+}
+
+
+function ThemeHandler() {
+	this.current = "f";
+	var self = this;
+
+	this.init = function() {
+		$('.theme-changer').tap(function() {
+			self.changeTheme();
+			Navigation.resetCheckListNavBar();
+		});
+	};
+	
+	this.refresh = function() {
+		var currentTheme = self.current;
+		
+		if(currentTheme == 'f')
+		{
+			$(".handle").removeClass("handle-white").addClass("handle-black");
+			$(".ui-logo").removeClass("ui-logo-dark").addClass("ui-logo-light");
+		}
+		else if(currentTheme == 'a')
+		{
+			$(".handle").removeClass("handle-black").addClass("handle-white");
+			$(".ui-logo").removeClass("ui-logo-light").addClass("ui-logo-dark");
+		}
+		
+		//reset all the buttons widgets
+		$('.ui-btn').removeClass('ui-btn-up-a ui-btn-up-b ui-btn-up-c ui-btn-up-d ui-btn-up-e ui-btn-up-f ui-btn-hover-a ui-btn-hover-b ui-btn-hover-c ui-btn-hover-d ui-btn-hover-e ui-btn-hover-f')
+						   .addClass('ui-btn-up-' + currentTheme)
+						   .attr('data-theme', currentTheme);
+						   
+		$('.ui-li').removeClass('ui-btn-up-a ui-btn-up-b ui-btn-up-c ui-btn-up-d ui-btn-up-e ui-btn-up-f ui-btn-hover-a ui-btn-hover-b ui-btn-hover-c ui-btn-hover-d ui-btn-hover-e ui-btn-hover-f')
+						   .addClass('ui-btn-up-' + currentTheme)
+						   .attr('data-theme', currentTheme);
+	
+		//reset the header/footer widgets
+		$('.ui-header, .ui-footer')
+						   .removeClass('ui-bar-a ui-bar-b ui-bar-c ui-bar-d ui-bar-e ui-bar-f')
+						   .addClass('ui-bar-' + currentTheme)
+						   .attr('data-theme', currentTheme);
+	
+		//reset the page widget
+		$('.ui-page').removeClass('ui-body-a ui-body-b ui-body-c ui-body-d ui-body-e ui-body-f')
+						   .addClass('ui-body-' + currentTheme)
+						   .attr('data-theme', currentTheme);
+						   
+		
+		//target the list divider elements, then iterate through them to check if they have a theme set, if a theme is set then do nothing, otherwise change its theme to `b` (this is the jQuery Mobile default for list-dividers)
+		$('.ui-li-divider').removeClass('ui-bar-a ui-bar-b ui-bar-c ui-bar-d ui-bar-e ui-bar-f')
+					   .addClass('ui-bar-' + currentTheme)
+					   .attr('data-theme', currentTheme);
+	};
+	
+	this.changeTheme = function() {
+		var currentTheme = self.current;
+		var selectedTheme = "f";
+		
+		if(currentTheme == "f")
+		{
+			selectedTheme = "a";
+			self.current = "a";
+			$(".theme-changer span span").removeClass("ui-icon-moon").addClass("ui-icon-sun");
+		}
+		else if(currentTheme == "a")
+		{
+			selectedTheme = "f";
+			self.current = "f";
+			$(".theme-changer span span").removeClass("ui-icon-sun").addClass("ui-icon-moon");
+		}
+		
+		if(selectedTheme == 'f')
+		{
+			$(".handle").removeClass("handle-white").addClass("handle-black");
+			$(".ui-logo").removeClass("ui-logo-dark").addClass("ui-logo-light");
+		}
+		else if(selectedTheme == 'a')
+		{
+			$(".handle").removeClass("handle-black").addClass("handle-white");
+			$(".ui-logo").removeClass("ui-logo-light").addClass("ui-logo-dark");
+		}
+		
+		//reset all the buttons widgets
+		$('.ui-btn').removeClass('ui-btn-up-a ui-btn-up-b ui-btn-up-c ui-btn-up-d ui-btn-up-e ui-btn-up-f ui-btn-hover-a ui-btn-hover-b ui-btn-hover-c ui-btn-hover-d ui-btn-hover-e ui-btn-hover-f')
+						   .addClass('ui-btn-up-' + selectedTheme)
+						   .attr('data-theme', selectedTheme);
+						   
+		$('.ui-li').removeClass('ui-btn-up-a ui-btn-up-b ui-btn-up-c ui-btn-up-d ui-btn-up-e ui-btn-up-f ui-btn-hover-a ui-btn-hover-b ui-btn-hover-c ui-btn-hover-d ui-btn-hover-e ui-btn-hover-f')
+						   .addClass('ui-btn-up-' + selectedTheme)
+						   .attr('data-theme', selectedTheme);
+	
+		//reset the header/footer widgets
+		$('.ui-header, .ui-footer')
+						   .removeClass('ui-bar-a ui-bar-b ui-bar-c ui-bar-d ui-bar-e ui-bar-f')
+						   .addClass('ui-bar-' + selectedTheme)
+						   .attr('data-theme', selectedTheme);
+	
+		//reset the page widget
+		$('.ui-page').removeClass('ui-body-a ui-body-b ui-body-c ui-body-d ui-body-e ui-body-f')
+						   .addClass('ui-body-' + selectedTheme)
+						   .attr('data-theme', selectedTheme);
+						   
+		
+		//target the list divider elements, then iterate through them to check if they have a theme set, if a theme is set then do nothing, otherwise change its theme to `b` (this is the jQuery Mobile default for list-dividers)
+		$('.ui-li-divider').removeClass('ui-bar-a ui-bar-b ui-bar-c ui-bar-d ui-bar-e ui-bar-f')
+					   .addClass('ui-bar-' + selectedTheme)
+					   .attr('data-theme', selectedTheme);
+	};
+}
+
+function Loader() {
+	this.element = $(".loader-backing");
+	
+	this.show = function() {
+		this.element.fadeIn();
+	}
+	
+	this.hide = function() {
+		this.element.fadeOut();
+	}
+}
+

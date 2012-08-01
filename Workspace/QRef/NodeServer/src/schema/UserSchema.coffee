@@ -19,6 +19,20 @@ UserSchemaInternal =
 	lastName:
 		type: String
 		required: false
+	emailAddress:
+		type: String
+		required: true
+	roles: [
+		type: ObjectId,
+		ref: 'user.roles'
+	]
+	recoveryQuestion:
+		type: ObjectId
+		ref: 'user.recovery.questions'
+		required: true
+	recoveryAnswer:
+		type: String
+		required: true
 
 UserSchema = new Schema(UserSchemaInternal)
 module.exports = UserSchema

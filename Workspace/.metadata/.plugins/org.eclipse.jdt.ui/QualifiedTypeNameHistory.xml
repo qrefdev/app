@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="com.qref.android.R.layout"/>
-<fullyQualifiedTypeName name="com.qref.android.R.id"/>
 <fullyQualifiedTypeName name="android.webkit.WebView"/>
 <fullyQualifiedTypeName name="android.webkit.WebSettings"/>
 <fullyQualifiedTypeName name="android.webkit.WebChromeClient"/>
 <fullyQualifiedTypeName name="android.webkit.WebViewClient"/>
+<fullyQualifiedTypeName name="android.view.View"/>
+<fullyQualifiedTypeName name="com.qref.android.R.menu"/>
+<fullyQualifiedTypeName name="com.qref.android.R.id"/>
 </qualifiedTypeNameHistroy>
