@@ -73,7 +73,7 @@
               <children xsi:type="advanced:Placeholder" xmi:id="_4Q7PYdU2EeGMy9hbiDZDmg" elementId="org.eclipse.jdt.ui.TypeHierarchy" toBeRendered="false" ref="_4BQbsNU2EeGMy9hbiDZDmg"/>
               <children xsi:type="advanced:Placeholder" xmi:id="_4Q72cNU2EeGMy9hbiDZDmg" elementId="org.eclipse.jdt.ui.PackagesView" toBeRendered="false" ref="_4QS9QNU2EeGMy9hbiDZDmg"/>
             </children>
-            <children xsi:type="basic:PartSashContainer" xmi:id="_4Q72cdU2EeGMy9hbiDZDmg" containerData="7500" selectedElement="_4Q9roNU2EeGMy9hbiDZDmg">
+            <children xsi:type="basic:PartSashContainer" xmi:id="_4Q72cdU2EeGMy9hbiDZDmg" containerData="7500" selectedElement="_4Q8dgNU2EeGMy9hbiDZDmg">
               <children xsi:type="basic:PartSashContainer" xmi:id="_4Q8dgNU2EeGMy9hbiDZDmg" containerData="6721" selectedElement="_4Q8dgdU2EeGMy9hbiDZDmg" horizontal="true">
                 <children xsi:type="advanced:Placeholder" xmi:id="_4Q8dgdU2EeGMy9hbiDZDmg" elementId="org.eclipse.ui.editorss" containerData="7000" ref="_4AEv8NU2EeGMy9hbiDZDmg"/>
                 <children xsi:type="basic:PartStack" xmi:id="_4Q9EkNU2EeGMy9hbiDZDmg" elementId="topRight" containerData="3000" selectedElement="_4Q9EkdU2EeGMy9hbiDZDmg">
@@ -181,7 +181,7 @@
       <tags>categoryTag:Help</tags>
     </sharedElements>
     <sharedElements xsi:type="advanced:Area" xmi:id="_4AEv8NU2EeGMy9hbiDZDmg" elementId="org.eclipse.ui.editorss" selectedElement="_4AFXANU2EeGMy9hbiDZDmg">
-      <children xsi:type="basic:PartStack" xmi:id="_4AFXANU2EeGMy9hbiDZDmg" elementId="org.eclipse.e4.primaryDataStack" selectedElement="_l4FLMNqZEeGlnYKtNawKAQ">
+      <children xsi:type="basic:PartStack" xmi:id="_4AFXANU2EeGMy9hbiDZDmg" elementId="org.eclipse.e4.primaryDataStack" selectedElement="_1KjlgNvzEeGFuLU5XIgUMg">
         <tags>newtablook</tags>
         <tags>org.eclipse.e4.primaryDataStack</tags>
         <tags>EditorStack</tags>
@@ -217,6 +217,11 @@
         </children>
         <children xsi:type="basic:Part" xmi:id="_l4FLMNqZEeGlnYKtNawKAQ" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="UserAuth.coffee" iconURI="platform:/plugin/org.eclipse.ui.editors//icons/full/obj16/file_obj.gif" tooltip="QRef/NodeServer/src/security/UserAuth.coffee" closeable="true">
           <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.ui.DefaultTextEditor&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/QRef/NodeServer/src/security/UserAuth.coffee&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;1133&quot; selectionTopPixel=&quot;180&quot;/>&#xD;&#xA;&lt;/editor>"/>
+          <tags>Editor</tags>
+          <tags>removeOnHide</tags>
+        </children>
+        <children xsi:type="basic:Part" xmi:id="_1KjlgNvzEeGFuLU5XIgUMg" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="QRefDroid Manifest" iconURI="platform:/plugin/com.android.ide.eclipse.adt/icons/android_file.png" tooltip="QRefDroid/AndroidManifest.xml" closeable="true">
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;com.android.ide.eclipse.editors.manifest.ManifestEditor&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/QRefDroid/AndroidManifest.xml&quot;/>&#xD;&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
           <tags>removeOnHide</tags>
         </children>
