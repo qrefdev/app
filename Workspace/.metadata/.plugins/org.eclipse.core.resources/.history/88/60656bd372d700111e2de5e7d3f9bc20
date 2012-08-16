@@ -1,9 +1,0 @@
-<resources>
-
-    <string name="app_name">QRef</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="menu_settings">Settings</string>
-    <string name="title_activity_main">QRef</string>
-    <string name="menu_show_login_text">Show Login</string>
-
-</resources>

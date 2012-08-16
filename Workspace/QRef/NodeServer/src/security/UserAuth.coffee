@@ -1,5 +1,7 @@
 crypto = require('crypto')
+mongoose = require('mongoose')
 QRefDatabase = require('../db/QRefDatabase')
+ObjectId = mongoose.Types.ObjectId
 class UserAuth 
 	constructor: () ->
 	salt: () -> 
@@ -16,7 +18,7 @@ class UserAuth
 		@.securePassword(key, salt, sPassword)
 	validateCredential: (userName, password, callback) ->
 		db = new QRefDatabase()
-		db.Users.where('userName')
+		db.User.where('userName')
 				.equals(userName)
 				.findOne((err, user) => 
 					if err? 
@@ -29,7 +31,7 @@ class UserAuth
 				)
 	validateToken: (token, callback) ->
 		db = new QRefDatabase()
-		db.AuthTokens.where('token')
+		db.AuthToken.where('token')
 					 .equals(token)
 					 .findOne((err, obj) =>
 					 	if err?
@@ -44,7 +46,7 @@ class UserAuth
 		db = new QRefDatabase()
 	
 			
-		db.Users.where('userName')
+		db.User.where('userName')
 				.equals(userName)
 				.findOne((err, user) =>
 					if err?
@@ -56,7 +58,7 @@ class UserAuth
 						if pwHash == user.passwordHash
 							expiry = new Date()
 							expiry.setHours(expiry.getHours() + 336)
-							tk = new db.AuthTokens()
+							tk = new db.AuthToken()
 							tk.token = @.secureToken(user._id, user.passwordSalt)
 							tk.expiresOn = expiry
 							tk.user = user
@@ -76,7 +78,7 @@ class UserAuth
 		@.validateToken(req.header('Authorization'), callback)
 	refreshToken: (token, callback) ->
 		db = new QRefDatabase()
-		db.AuthTokens.where('token')
+		db.AuthToken.where('token')
 					 .equals(token)
 					 .findOne((err, obj) ->
 					 	if err?
@@ -98,4 +100,52 @@ class UserAuth
 					 	else
 					 		callback(null, false)
 					 )
+	createAccount: (userName, password, callback) ->
+		db = new QRefDatabase()
+		userSalt = @.salt()
+		userGuid = new ObjectId()
+		userHash = @.securePassword(userGuid, userSalt, password)
+		
+		user = new db.User()
+		user._id = userGuid
+		user.passwordSalt = userSalt
+		user.passwordHash = userHash
+		user.emailAddress = userName
+		user.userName = userName
+		
+		db.User.where('userName')
+				.equals(userName)
+				.find((err, arrObjs) ->
+					if err?
+						callback(err, false, 1)
+						return
+					if arrObjs? and arrObjs.length > 0
+						callback(null, false, 2)
+						return
+					else
+						user.save((err) ->
+							if err?
+								callback(err, false, 3)
+							else
+								callback(null, true, 0)
+						)
+					
+				)
+	userFromToken: (token, callback) ->
+		db = new QRefDatabase()
+		db.AuthToken.where('token')
+					.equals(token)
+					.populate('user')
+					.findOne((err, tk) ->
+						
+						if err?
+							callback(err, null)
+							return
+						if not tk?
+							callback(true, null)
+							return
+						
+						callback(null, tk.user)
+			
+					)
 module.exports = new UserAuth()

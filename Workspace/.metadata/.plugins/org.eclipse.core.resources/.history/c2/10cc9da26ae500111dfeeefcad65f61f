@@ -1,0 +1,170 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+	<title>QRef</title> 
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="css/qref.css" /> 
+	<link rel="stylesheet" href="css/jquery.mobile.structure.css" />
+	<link rel="stylesheet" href="css/styles.css" />
+	<script src="js/jquery.js"></script>
+	<script src="js/jquery.ui.js"></script>
+	<script src="js/jquery.punch.js"></script>
+	<script src="js/jquery.mobile.js"></script>
+	<script src="js/extension.js"></script>
+</head> 
+<body> 
+
+
+<!-- Home Page -->
+<div id="home" data-role="page" style="width: 100%;" data-theme="f">
+	<div class="ui-logo"></div>
+
+	<div data-role="header">
+		<h1>My Qrefs</h1>
+		<div data-role="button" data-icon="moon" data-iconpos="notext" class="theme-changer ui-btn-right"></div>
+	</div><!-- /header -->
+
+	<div class="content" data-role="content">
+		<div class="content-wrapper">	
+			<ul id="my-qrefs" data-role="listview">
+			</ul>
+		</div>
+	</div><!-- /content -->
+	<div data-role="footer">
+		<div data-role="navbar">
+			<ul id="home-nav">
+				<li data-link="more">
+					<a href="javascript:void(null);" data-icon="gear">More Models</a>
+				</li>
+				<li data-link="eb6">
+					<a href="javascript:void(null);" data-icon="grid">EB6</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<!-- Checklist -->
+<div id="checklist" data-role="page" style="width: 100%;" data-theme="f">
+	<div class="ui-logo"></div>
+	<div class="header" data-role="header">
+		<a href="javascript:void(null);" data-rel="back" class="back" data-icon="arrow-l">Back</a>
+		<h1 class="headerText"></h1>
+		<div data-role="button" data-icon="moon" style="right: 80px;" data-iconpos="notext" class="theme-changer ui-btn-right"></div>
+		<a href="javascript:void(null);" class="edit-button" data-icon="pen">Edit</a>
+	</div>
+	
+	<div class="content" data-role="content">
+		<div class="content-wrapper">
+			<ul id="checklist-items" data-role="listview">
+			</ul>
+		</div>
+	</div>
+	
+	<div class="footer" data-role="footer">
+		<div data-role="navbar">
+			<ul class="checklistNavBar">
+				<li data-index="0" data-category="preflight"><a href="javascript:void(null);" class="ui-btn-active">Preflight</a></li>
+				<li data-index="1" data-category="takeoff"><a href="javascript:void(null);">Takeoff</a></li>
+				<li data-index="2" data-category="landing"><a href="javascript:void(null);">Landing</a></li>
+				<li data-index="3" data-category="emergencies"><a href="javascript:void(null);">Emergencies</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div id="emergency" data-role="page" style="width: 100%;" data-theme="f">
+	<div class="ui-logo"></div>
+	<div class="header" data-role="header">
+		<a href="javascript:void(null);" data-rel="back" class="back" data-icon="arrow-l">Back</a>
+		<h1 class="headerText"></h1>
+		<div data-role="button" data-icon="moon" data-iconpos="notext" class="theme-changer ui-btn-right"></div>
+	</div>
+	
+	<div class="content" data-role="content">
+		<div class="content-wrapper">
+			<div id="checklist-emergency" class="ui-grid-a">
+					
+			</div>
+		</div>
+	</div>
+	
+	<div class="footer" data-role="footer">
+		<div data-role="navbar">
+			<ul class="checklistNavBar">
+				<li data-index="0" data-category="preflight"><a href="javascript:void(null);" class="ui-btn-active">Preflight</a></li>
+				<li data-index="1" data-category="takeoff"><a href="javascript:void(null);">Takeoff</a></li>
+				<li data-index="2" data-category="landing"><a href="javascript:void(null);">Landing</a></li>
+				<li data-index="3" data-category="emergencies"><a href="javascript:void(null);">Emergencies</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div id="emergency-checklist" data-role="page" style="width: 100%;" data-theme="f">
+	<div class="ui-logo"></div>
+	<div class="header" data-role="header">
+		<a href="javascript:void(null);" data-rel="back" class="back" data-icon="arrow-l">Back</a>
+		<h1 class="headerText"></h1>
+		<div data-role="button" data-icon="moon" style="right: 80px;" data-iconpos="notext" class="theme-changer ui-btn-right"></div>
+		<a href="javascript:void(null);" class="edit-button" data-icon="pen">Edit</a>
+	</div>
+	
+	<div class="content" data-role="content">
+		<div class="content-wrapper">
+			<ul id="checklist-emergency-items" data-role="listview">
+			</ul>
+		</div>
+	</div>
+	
+	<div class="footer" data-role="footer">
+		<div data-role="navbar">
+			<ul class="checklistNavBar">
+				<li data-index="0" data-category="preflight"><a href="javascript:void(null);" class="ui-btn-active">Preflight</a></li>
+				<li data-index="1" data-category="takeoff"><a href="javascript:void(null);">Takeoff</a></li>
+				<li data-index="2" data-category="landing"><a href="javascript:void(null);">Landing</a></li>
+				<li data-index="3" data-category="emergencies"><a href="javascript:void(null);">Emergencies</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div id="signin" data-role="page" style="width: 100%;" data-theme="f">
+	<div class="ui-logo"></div>
+	 <div class="header" data-role="header">
+		<h1>Sign in</h1>
+		<div data-role="button" data-icon="moon" data-iconpos="notext" class="theme-changer ui-btn-right"></div>
+	</div>
+	
+	<div class="content" data-role="content">
+		<div class="content-wrapper">
+			<div class="row">
+				<div data-role="fieldcontain" class="ui-hide-label">
+					<label for="email">Email</label>
+					<input type="email" name="email" id="email" value="" placeholder="Email"/>
+				</div>
+			</div>
+			<div class="row">
+				<div data-role="fieldcontain" class="ui-hide-label">
+					<label for="password">Password</label>
+					<input type="password" name="password" id="password" value="" placeholder="Password"/>
+				</div>
+			</div>
+			<div class="row">
+				<a href="javascript:void(null)" id="btnSignIn" data-icon="check" data-role="button">Sign in</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="loader-backing">
+	<div class="loader">
+		<p>
+			<img src="images/ajax-loader.gif" />
+			Loading...
+		</p>
+	</div>
+</div>
+</body>
+</html>

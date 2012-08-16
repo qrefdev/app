@@ -9,5 +9,5 @@ RecoveryQuestionSchemaInternal =
 		unique: true
 
 RecoveryQuestionSchema = new Schema(RecoveryQuestionSchemaInternal)
-modules.exports = RecoveryQuestionSchema
+module.exports = RecoveryQuestionSchema
 	

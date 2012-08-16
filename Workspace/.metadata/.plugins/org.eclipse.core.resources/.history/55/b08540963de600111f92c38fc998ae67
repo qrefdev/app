@@ -1,0 +1,18 @@
+mongoose = require('mongoose')
+Schema = mongoose.Schema
+ObjectId = Schema.ObjectId
+AircraftChecklistItemSchema = require('./AircraftChecklistItemSchema')
+
+AircraftChecklistSectionSchemaInternal = 
+	sectionType:
+		type: Number
+		required: true
+	items:
+		type: [AircraftChecklistItemSchema]
+		required: true
+	sectionIcon:
+		type: String
+		required: false
+
+AircraftChecklistSectionSchema = new Schema(AircraftChecklistSectionSchemaInternal)
+module.exports = AircraftChecklistSectionSchema

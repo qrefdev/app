@@ -27,4 +27,4 @@ class AjaxResponse
 		@message = reason
 		@errorCode = errorCode
 		@success = false
-	
+module.exports = AjaxResponse
