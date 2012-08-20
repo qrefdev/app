@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="59" version="2.0">
+<workbench progressCount="62" version="2.0">
 <workbenchAdvisor/>
 <window height="768" maximized="true" width="1024" x="25" y="25">
 <fastViewData fastViewLocation="1024"/>
@@ -29,7 +29,7 @@
 <coolItem id="com.android.ide.eclipse.editors.CommonXmlEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.wst.html.core.htmlsource.source" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" itemType="typePlaceholder" x="-1" y="-1"/>
-<coolItem id="org.eclipse.ui.DefaultTextEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="org.eclipse.ui.DefaultTextEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="group.help" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.help" itemType="typeToolBarContribution" x="-1" y="-1"/>
 </coolbarLayout>
@@ -38,66 +38,10 @@
 <editorArea activeWorkbook="DefaultEditorWorkbook">
 <info part="DefaultEditorWorkbook">
 <folder appearance="1" expanded="2">
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-<part id="1"/>
-<part id="2"/>
-<part id="3"/>
-<part id="4"/>
-<part id="5"/>
-<part id="6"/>
-<part id="7"/>
-<part id="8"/>
-<part id="9"/>
-<part id="10"/>
-</presentation>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 </editorArea>
-<editor id="org.eclipse.ui.DefaultTextEditor" name="ProductSchema.coffee" partName="ProductSchema.coffee" path="C:/SourceControl/QRef/trunk/Workspace/QRef/NodeServer/src/schema/ProductSchema.coffee" title="ProductSchema.coffee" tooltip="QRef/NodeServer/src/schema/ProductSchema.coffee" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/QRef/NodeServer/src/schema/ProductSchema.coffee"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="346" selectionTopPixel="0"/>
-</editor>
-<editor id="org.eclipse.ui.DefaultTextEditor" name="AircraftChecklistsRoute.coffee" partName="AircraftChecklistsRoute.coffee" path="C:/SourceControl/QRef/trunk/Workspace/QRef/NodeServer/src/router/routes/ajax/aircraft/AircraftChecklistsRoute.coffee" title="AircraftChecklistsRoute.coffee" tooltip="QRef/NodeServer/src/router/routes/ajax/aircraft/AircraftChecklistsRoute.coffee" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/QRef/NodeServer/src/router/routes/ajax/aircraft/AircraftChecklistsRoute.coffee"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="542" selectionTopPixel="0"/>
-</editor>
-<editor id="org.eclipse.ui.DefaultTextEditor" name="ProductsRoute.coffee" partName="ProductsRoute.coffee" path="C:/SourceControl/QRef/trunk/Workspace/QRef/NodeServer/src/router/routes/ajax/aircraft/ProductsRoute.coffee" title="ProductsRoute.coffee" tooltip="QRef/NodeServer/src/router/routes/ajax/aircraft/ProductsRoute.coffee" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/QRef/NodeServer/src/router/routes/ajax/aircraft/ProductsRoute.coffee"/>
-<editorState selectionHorizontalPixel="0" selectionLength="3788" selectionOffset="0" selectionTopPixel="0"/>
-</editor>
-<editor id="org.eclipse.ui.DefaultTextEditor" name="ProductRoute.coffee" partName="ProductRoute.coffee" path="C:/SourceControl/QRef/trunk/Workspace/QRef/NodeServer/src/router/routes/ajax/aircraft/ProductRoute.coffee" title="ProductRoute.coffee" tooltip="QRef/NodeServer/src/router/routes/ajax/aircraft/ProductRoute.coffee" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/QRef/NodeServer/src/router/routes/ajax/aircraft/ProductRoute.coffee"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="842" selectionTopPixel="225"/>
-</editor>
-<editor id="org.eclipse.ui.DefaultTextEditor" name="UserSchema.coffee" partName="UserSchema.coffee" path="C:/SourceControl/QRef/trunk/Workspace/QRef/NodeServer/src/schema/UserSchema.coffee" title="UserSchema.coffee" tooltip="QRef/NodeServer/src/schema/UserSchema.coffee" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/QRef/NodeServer/src/schema/UserSchema.coffee"/>
-<editorState selectionHorizontalPixel="0" selectionLength="699" selectionOffset="0" selectionTopPixel="99"/>
-</editor>
-<editor id="org.eclipse.ui.DefaultTextEditor" name="AircraftChecklistRoute.coffee" partName="AircraftChecklistRoute.coffee" path="C:/SourceControl/QRef/trunk/Workspace/QRef/NodeServer/src/router/routes/ajax/aircraft/AircraftChecklistRoute.coffee" title="AircraftChecklistRoute.coffee" tooltip="QRef/NodeServer/src/router/routes/ajax/aircraft/AircraftChecklistRoute.coffee" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/QRef/NodeServer/src/router/routes/ajax/aircraft/AircraftChecklistRoute.coffee"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="0"/>
-</editor>
-<editor id="org.eclipse.ui.DefaultTextEditor" name="UserProductSchema.coffee" partName="UserProductSchema.coffee" path="C:/SourceControl/QRef/trunk/Workspace/QRef/NodeServer/src/schema/UserProductSchema.coffee" title="UserProductSchema.coffee" tooltip="QRef/NodeServer/src/schema/UserProductSchema.coffee" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/QRef/NodeServer/src/schema/UserProductSchema.coffee"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="246" selectionTopPixel="0"/>
-</editor>
-<editor id="org.eclipse.ui.DefaultTextEditor" name="QRefDatabase.coffee" partName="QRefDatabase.coffee" path="C:/SourceControl/QRef/trunk/Workspace/QRef/NodeServer/src/db/QRefDatabase.coffee" title="QRefDatabase.coffee" tooltip="QRef/NodeServer/src/db/QRefDatabase.coffee" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/QRef/NodeServer/src/db/QRefDatabase.coffee"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1652" selectionTopPixel="24"/>
-</editor>
-<editor id="org.eclipse.ui.DefaultTextEditor" name="UserProductsRoute.coffee" partName="UserProductsRoute.coffee" path="C:/SourceControl/QRef/trunk/Workspace/QRef/NodeServer/src/router/routes/ajax/user/UserProductsRoute.coffee" title="UserProductsRoute.coffee" tooltip="QRef/NodeServer/src/router/routes/ajax/user/UserProductsRoute.coffee" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/QRef/NodeServer/src/router/routes/ajax/user/UserProductsRoute.coffee"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="535" selectionTopPixel="45"/>
-</editor>
-<editor activePart="true" focus="true" id="org.eclipse.ui.DefaultTextEditor" name="CurrentUserProductsRoute.coffee" partName="CurrentUserProductsRoute.coffee" path="C:/SourceControl/QRef/trunk/Workspace/QRef/NodeServer/src/router/routes/ajax/user/CurrentUserProductsRoute.coffee" title="CurrentUserProductsRoute.coffee" tooltip="QRef/NodeServer/src/router/routes/ajax/user/CurrentUserProductsRoute.coffee" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/QRef/NodeServer/src/router/routes/ajax/user/CurrentUserProductsRoute.coffee"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2325" selectionTopPixel="909"/>
-</editor>
-<editor id="org.eclipse.ui.DefaultTextEditor" name="UserAuth.coffee" partName="UserAuth.coffee" path="C:/SourceControl/QRef/trunk/Workspace/QRef/NodeServer/src/security/UserAuth.coffee" title="UserAuth.coffee" tooltip="QRef/NodeServer/src/security/UserAuth.coffee" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/QRef/NodeServer/src/security/UserAuth.coffee"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3842" selectionTopPixel="1779"/>
-</editor>
 </editors>
 <views>
 <view id="org.eclipse.ui.navigator.ProjectExplorer" partName="Project Explorer">
@@ -359,178 +303,7 @@
 </perspective>
 </perspectives>
 <workingSets/>
-<navigationHistory>
-<editors>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/QRef/NodeServer/src/schema/ProductSchema.coffee"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/QRef/NodeServer/src/router/routes/ajax/aircraft/ProductsRoute.coffee"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/QRef/NodeServer/src/router/routes/rpc/auth/RegisterAccountRoute.coffee"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/QRef/NodeServer/src/router/routes/rpc/auth/RefreshTokenRoute.coffee"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/QRef/NodeServer/src/router/routes/ajax/aircraft/AircraftChecklistRoute.coffee"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/QRef/NodeServer/src/schema/AircraftChecklistItemSchema.coffee"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/QRef/NodeServer/src/schema/ProductSchema.coffee"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/QRef/NodeServer/src/router/routes/ajax/aircraft/AircraftChecklistsRoute.coffee"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/QRef/NodeServer/src/router/routes/ajax/aircraft/ProductsRoute.coffee"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/QRef/NodeServer/src/router/routes/ajax/product/ProductListRoute.coffee"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/QRef/NodeServer/src/router/routes/ajax/aircraft/ProductRoute.coffee"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/QRef/NodeServer/src/schema/UserSchema.coffee"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/QRef/NodeServer/src/router/routes/ajax/aircraft/AircraftChecklistRoute.coffee"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/QRef/NodeServer/src/schema/UserProductSchema.coffee"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/QRef/NodeServer/src/db/QRefDatabase.coffee"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/QRef/NodeServer/src/router/routes/ajax/user/UserProductsRoute.coffee"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/QRef/NodeServer/src/router/routes/ajax/user/CurrentUserProductsRoute.coffee"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/QRef/NodeServer/src/security/UserAuth.coffee"/>
-</editors>
-<item historyLabel="ProductSchema.coffee" index="0">
-<position info="not_deleted" x="392" y="0"/>
-</item>
-<item historyLabel="ProductsRoute.coffee" index="1">
-<position info="not_deleted" x="3670" y="0"/>
-</item>
-<item historyLabel="ProductSchema.coffee" index="0">
-<position info="not_deleted" x="392" y="0"/>
-</item>
-<item historyLabel="ProductsRoute.coffee" index="1">
-<position info="not_deleted" x="3489" y="0"/>
-</item>
-<item historyLabel="ProductSchema.coffee" index="0">
-<position info="not_deleted" x="157" y="11"/>
-</item>
-<item historyLabel="ProductsRoute.coffee" index="1">
-<position info="not_deleted" x="3489" y="0"/>
-</item>
-<item historyLabel="ProductSchema.coffee" index="0">
-<position info="not_deleted" x="225" y="22"/>
-</item>
-<item historyLabel="ProductsRoute.coffee" index="1">
-<position info="not_deleted" x="3489" y="0"/>
-</item>
-<item historyLabel="ProductSchema.coffee" index="0">
-<position info="not_deleted" x="300" y="24"/>
-</item>
-<item historyLabel="ProductsRoute.coffee" index="1">
-<position info="not_deleted" x="3489" y="0"/>
-</item>
-<item historyLabel="ProductSchema.coffee" index="0">
-<position info="not_deleted" x="377" y="14"/>
-</item>
-<item historyLabel="ProductsRoute.coffee" index="1">
-<position info="not_deleted" x="3489" y="0"/>
-</item>
-<item historyLabel="ProductSchema.coffee" index="0">
-<position info="not_deleted" x="448" y="16"/>
-</item>
-<item historyLabel="ProductsRoute.coffee" index="1">
-<position info="not_deleted" x="3489" y="0"/>
-</item>
-<item historyLabel="ProductSchema.coffee" index="0">
-<position info="not_deleted" x="521" y="20"/>
-</item>
-<item historyLabel="ProductsRoute.coffee" index="1">
-<position info="not_deleted" x="3489" y="0"/>
-</item>
-<item historyLabel="ProductSchema.coffee" index="0">
-<position info="not_deleted" x="808" y="17"/>
-</item>
-<item historyLabel="ProductsRoute.coffee" index="1">
-<position info="not_deleted" x="3489" y="0"/>
-</item>
-<item historyLabel="RegisterAccountRoute.coffee" index="2">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="RefreshTokenRoute.coffee" index="3">
-<position info="not_deleted" x="677" y="0"/>
-</item>
-<item historyLabel="RegisterAccountRoute.coffee" index="2">
-<position info="not_deleted" x="754" y="0"/>
-</item>
-<item historyLabel="AircraftChecklistRoute.coffee" index="4">
-<position info="not_deleted" x="901" y="0"/>
-</item>
-<item historyLabel="AircraftChecklistItemSchema.coffee" index="5">
-<position info="not_deleted" x="134" y="0"/>
-</item>
-<item historyLabel="ProductSchema.coffee" index="6">
-<position info="not_deleted" x="346" y="0"/>
-</item>
-<item historyLabel="AircraftChecklistsRoute.coffee" index="7">
-<position info="not_deleted" x="542" y="0"/>
-</item>
-<item historyLabel="ProductSchema.coffee" index="6">
-<position info="not_deleted" x="346" y="0"/>
-</item>
-<item historyLabel="ProductsRoute.coffee" index="8">
-<position info="not_deleted" x="0" y="3788"/>
-</item>
-<item historyLabel="ProductListRoute.coffee" index="9">
-<position info="not_deleted" x="479" y="0"/>
-</item>
-<item historyLabel="ProductsRoute.coffee" index="8">
-<position info="not_deleted" x="0" y="3788"/>
-</item>
-<item historyLabel="ProductRoute.coffee" index="10">
-<position info="not_deleted" x="947" y="0"/>
-</item>
-<item historyLabel="UserSchema.coffee" index="11">
-<position info="not_deleted" x="387" y="0"/>
-</item>
-<item historyLabel="AircraftChecklistRoute.coffee" index="12">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="ProductRoute.coffee" index="10">
-<position info="not_deleted" x="842" y="0"/>
-</item>
-<item historyLabel="UserSchema.coffee" index="11">
-<position info="not_deleted" x="0" y="699"/>
-</item>
-<item historyLabel="UserProductSchema.coffee" index="13">
-<position info="not_deleted" x="246" y="0"/>
-</item>
-<item historyLabel="QRefDatabase.coffee" index="14">
-<position info="not_deleted" x="1652" y="0"/>
-</item>
-<item historyLabel="UserProductsRoute.coffee" index="15">
-<position info="not_deleted" x="2516" y="0"/>
-</item>
-<item historyLabel="ProductsRoute.coffee" index="8">
-<position info="not_deleted" x="0" y="3788"/>
-</item>
-<item historyLabel="UserProductsRoute.coffee" index="15">
-<position/>
-</item>
-<item historyLabel="UserProductSchema.coffee" index="13">
-<position info="not_deleted" x="246" y="0"/>
-</item>
-<item historyLabel="UserProductsRoute.coffee" index="15">
-<position info="not_deleted" x="1387" y="0"/>
-</item>
-<item historyLabel="CurrentUserProductsRoute.coffee" index="16">
-<position info="not_deleted" x="2473" y="0"/>
-</item>
-<item historyLabel="UserProductsRoute.coffee" index="15">
-<position info="not_deleted" x="0" y="2516"/>
-</item>
-<item historyLabel="CurrentUserProductsRoute.coffee" index="16">
-<position info="not_deleted" x="360" y="0"/>
-</item>
-<item historyLabel="UserProductsRoute.coffee" index="15">
-<position info="not_deleted" x="535" y="0"/>
-</item>
-<item historyLabel="CurrentUserProductsRoute.coffee" index="16">
-<position info="not_deleted" x="834" y="0"/>
-</item>
-<item historyLabel="UserAuth.coffee" index="17">
-<position info="not_deleted" x="3943" y="0"/>
-</item>
-<item historyLabel="CurrentUserProductsRoute.coffee" index="16">
-<position info="not_deleted" x="848" y="0"/>
-</item>
-<item historyLabel="UserAuth.coffee" index="17">
-<position info="not_deleted" x="3842" y="0"/>
-</item>
-<item active="true" historyLabel="CurrentUserProductsRoute.coffee" index="16">
-<position info="not_deleted" x="848" y="0"/>
-</item>
-</navigationHistory>
+<navigationHistory/>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
 </page>
 <workbenchWindowAdvisor/>
@@ -555,47 +328,47 @@
 </trimLayout>
 </window>
 <mruList>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="UserAuth.coffee" tooltip="QRef/NodeServer/src/security/UserAuth.coffee">
-<persistable path="/QRef/NodeServer/src/security/UserAuth.coffee"/>
-</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="CurrentUserProductsRoute.coffee" tooltip="QRef/NodeServer/src/router/routes/ajax/user/CurrentUserProductsRoute.coffee">
 <persistable path="/QRef/NodeServer/src/router/routes/ajax/user/CurrentUserProductsRoute.coffee"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="UserProductsRoute.coffee" tooltip="QRef/NodeServer/src/router/routes/ajax/user/UserProductsRoute.coffee">
-<persistable path="/QRef/NodeServer/src/router/routes/ajax/user/UserProductsRoute.coffee"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="QRefDatabase.coffee" tooltip="QRef/NodeServer/src/db/QRefDatabase.coffee">
-<persistable path="/QRef/NodeServer/src/db/QRefDatabase.coffee"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="UserProductSchema.coffee" tooltip="QRef/NodeServer/src/schema/UserProductSchema.coffee">
-<persistable path="/QRef/NodeServer/src/schema/UserProductSchema.coffee"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="AircraftChecklistRoute.coffee" tooltip="QRef/NodeServer/src/router/routes/ajax/aircraft/AircraftChecklistRoute.coffee">
-<persistable path="/QRef/NodeServer/src/router/routes/ajax/aircraft/AircraftChecklistRoute.coffee"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="UserSchema.coffee" tooltip="QRef/NodeServer/src/schema/UserSchema.coffee">
-<persistable path="/QRef/NodeServer/src/schema/UserSchema.coffee"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="ProductRoute.coffee" tooltip="QRef/NodeServer/src/router/routes/ajax/aircraft/ProductRoute.coffee">
-<persistable path="/QRef/NodeServer/src/router/routes/ajax/aircraft/ProductRoute.coffee"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="ProductListRoute.coffee" tooltip="QRef/NodeServer/src/router/routes/ajax/product/ProductListRoute.coffee">
-<persistable path="/QRef/NodeServer/src/router/routes/ajax/product/ProductListRoute.coffee"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="ProductsRoute.coffee" tooltip="QRef/NodeServer/src/router/routes/ajax/aircraft/ProductsRoute.coffee">
 <persistable path="/QRef/NodeServer/src/router/routes/ajax/aircraft/ProductsRoute.coffee"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="AircraftChecklistsRoute.coffee" tooltip="QRef/NodeServer/src/router/routes/ajax/aircraft/AircraftChecklistsRoute.coffee">
-<persistable path="/QRef/NodeServer/src/router/routes/ajax/aircraft/AircraftChecklistsRoute.coffee"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="ProductManager.coffee" tooltip="QRef/NodeServer/src/db/manager/ProductManager.coffee">
+<persistable path="/QRef/NodeServer/src/db/manager/ProductManager.coffee"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="ProductSchema.coffee" tooltip="QRef/NodeServer/src/schema/ProductSchema.coffee">
 <persistable path="/QRef/NodeServer/src/schema/ProductSchema.coffee"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="AuthTokenSchema.coffee" tooltip="QRef/NodeServer/src/schema/AuthTokenSchema.coffee">
-<persistable path="/QRef/NodeServer/src/schema/AuthTokenSchema.coffee"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" name="extension.js" tooltip="QRef/WebContent/js/extension.js">
+<persistable path="/QRef/WebContent/js/extension.js"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" name="AircraftChecklistRoute.js" tooltip="QRef/NodeServer/lib/router/routes/ajax/aircraft/AircraftChecklistRoute.js">
-<persistable path="/QRef/NodeServer/lib/router/routes/ajax/aircraft/AircraftChecklistRoute.js"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="AircraftManufacturersRoute.coffee" tooltip="QRef/NodeServer/src/router/routes/ajax/aircraft/AircraftManufacturersRoute.coffee">
+<persistable path="/QRef/NodeServer/src/router/routes/ajax/aircraft/AircraftManufacturersRoute.coffee"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="AircraftModelSchema.coffee" tooltip="QRef/NodeServer/src/schema/AircraftModelSchema.coffee">
+<persistable path="/QRef/NodeServer/src/schema/AircraftModelSchema.coffee"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="AircraftManufacturerSchema.coffee" tooltip="QRef/NodeServer/src/schema/AircraftManufacturerSchema.coffee">
+<persistable path="/QRef/NodeServer/src/schema/AircraftManufacturerSchema.coffee"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="AircraftModelsRoute.coffee" tooltip="QRef/NodeServer/src/router/routes/ajax/aircraft/AircraftModelsRoute.coffee">
+<persistable path="/QRef/NodeServer/src/router/routes/ajax/aircraft/AircraftModelsRoute.coffee"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="LoginRoute.coffee" tooltip="QRef/NodeServer/src/router/routes/rpc/auth/LoginRoute.coffee">
+<persistable path="/QRef/NodeServer/src/router/routes/rpc/auth/LoginRoute.coffee"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="RefreshTokenRoute.coffee" tooltip="QRef/NodeServer/src/router/routes/rpc/auth/RefreshTokenRoute.coffee">
+<persistable path="/QRef/NodeServer/src/router/routes/rpc/auth/RefreshTokenRoute.coffee"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="RegisterAccountRoute.coffee" tooltip="QRef/NodeServer/src/router/routes/rpc/auth/RegisterAccountRoute.coffee">
+<persistable path="/QRef/NodeServer/src/router/routes/rpc/auth/RegisterAccountRoute.coffee"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="RestfulResponse.coffee" tooltip="QRef/NodeServer/src/serialization/RestfulResponse.coffee">
+<persistable path="/QRef/NodeServer/src/serialization/RestfulResponse.coffee"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="RpcResponse.coffee" tooltip="QRef/NodeServer/src/serialization/RpcResponse.coffee">
+<persistable path="/QRef/NodeServer/src/serialization/RpcResponse.coffee"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="AircraftChecklistItemSchema.coffee" tooltip="QRef/NodeServer/src/schema/AircraftChecklistItemSchema.coffee">
 <persistable path="/QRef/NodeServer/src/schema/AircraftChecklistItemSchema.coffee"/>

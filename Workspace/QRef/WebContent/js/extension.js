@@ -70,39 +70,24 @@ function passwordFocus(object, target) {
 	t.toggle().focus();
 }
 
-
-var sampleData = [
-		{id: "test1", name: "CheckList 1", model: "172", 
-			preflight: [{index: 0, check:"check",response:"response"}, {index: 1, check:"check2",response:"response2"},
-			{index: 2, check:"check3",response:"response3"}, {index: 3, check:"check4",response:"response4"},
-			{index: 4, check:"check5",response:"response5"}, {index: 5, check:"check6",response:"response6"},
-			{index: 6, check:"check7",response:"response7"}, {index: 7, check:"check8",response:"response8"}],
-			takeoff: [{index: 0, check:"check2",response:"response2"}],
-			landing: [{index: 0, check:"check3",response:"response3"}],
-			emergencies: [{name: "condition1", items: [{index: 0, check:"emCheck1", response: "emResponse1"}]},
-						{name: "condition2", items: [{index: 0, check:"emCheck2", response: "emResponse2"}]},
-						{name: "condition3", items: [{index: 0, check:"emCheck3", response: "emResponse3"}]}]
-		}, 
-		{id: "test2", name: "CheckList 2", model: "173",		
-			preflight: [{index: 0, check:"check4",response:"response4"}],
-			takeoff: [{index: 0, check:"check5",response:"response5"}],
-			landing: [{index: 0, check:"check6",response:"response6"}],
-			emergencies: [{name: "condition1", items: [{index: 0, check:"emCheck1", response: "emResponse1"}]}]
-		
-		}
-];
-
-var CheckLists = new CheckListHandler();
+var Checklist = new CheckListHandler();
 var Navigation = new NavigationHandler();
+var MyProducts = new MyProductsHandler();
 var Theme = new ThemeHandler();
 var loader = undefined;
+var cached = false;
+var online = true;
+var cachedUserProducts = "";
+var previousProduct = "";
+var previousArea = "";
+var previousCategory = "";
 
 $(function() {
 	$.android = /android/.test(navigator.userAgent.toLowerCase())
 
 	loader = new Loader();
 	Navigation.init();
-	CheckLists.load(sampleData);
+	MyProducts.init();
 	
 	$("#editAddForm").validate({
 		submitHandler: function() {
@@ -121,10 +106,56 @@ $(function() {
 			Signin();
 		}
 	});
+	
+	token = $.cookie.getCookie("QrefAuth");
+	
+	if(token == undefined) token = "";
 });
 
 function SaveEditAdd() {
 	//do something
+}
+
+function RefreshToken(callback) {
+	if(token != "" && online)
+	{
+		var refresh = { "mode":"rpc", "token": token}
+		
+		$.ajax({
+			type: "post",
+			url: "http://localhost:8080/services/rpc/auth/refreshToken",
+			data: refresh,
+			success: function(data) {
+				var response = data;
+				
+				if(response.success == true)
+				{
+					token = response.returnValue;
+					$.cookie.setCookie("QrefAuth", token, 30);
+					
+					if(callback) 
+						callback(true);
+				}
+			
+				if(callback)
+					callback(false);
+			},
+			error: function(data) {
+				if(callback)
+					callback(false);
+			}
+		});
+	}
+	else if(online == false && token != "")
+	{
+		if(callback)
+			callback(true);
+	}
+	else
+	{
+		if(callback)
+			callback(false);
+	}
 }
 
 function Register() {
@@ -204,6 +235,7 @@ function Signin() {
 			if(response.success == true)
 			{
 				token = response.returnValue;
+				$.cookie.setCookie("QrefAuth", token, 30);
 				Navigation.go("dashboard");
 			}
 			else
@@ -261,6 +293,46 @@ function Dialog(element, message, callback) {
 	};
 }
 
+function MyProductsHandler() {
+	this.listing = undefined;
+	
+	this.init = function() {
+		this.listing = $("#dashboard-planes");
+		$(".dashboard-plane-selector").swipe({
+			swipeUp: function() {
+				return true;
+			},
+			swipeDown: function() {
+				return true;
+			}
+		});
+	};
+	
+	this.reset = function() {
+		$(".dashboard-plane-selector").swipe("resetScroll");
+	};
+	
+	this.populate = function(status) {
+		var html = "";
+		this.listing.html("");
+		
+		for(var i = 0; i < Checklist.products.length; i++)
+		{
+			html += '<li data-id="' + Checklist.products[i]._id + '"><div class="heading">' + Checklist.products[i].aircraftChecklist.manufacturer.name +
+					'</div><div class="subheading">' + Checklist.products[i].aircraftChecklist.model.name + '</div></li>';
+		}
+		
+		this.listing.html(html);
+		//this.addHandlers();
+	};
+	
+	this.addHandlers = function() {
+		this.listing.children().click(function() {
+			//ToDo: Load Listing
+		});
+	};
+}
+
 function NavigationHandler() {
 	this.qref = undefined;
 	this.currentArea = "intro"
@@ -303,6 +375,14 @@ function NavigationHandler() {
 		}
 		else if(this.currentArea == "dashboard")
 		{
+			Checklist.load(function(status) {
+				if(status == Checklist.commands.CACHELOADED || status == Checklist.commands.ONLINELOADEDAFTERCACHE || status == Checklist.commands.ONLINEONLYLOADED)
+				{
+					MyProducts.reset();
+					MyProducts.populate();
+				}
+			});
+		
 			$("#intro").fadeOut();
 			$("#signin").fadeOut();
 			$("#register").fadeOut();
@@ -313,7 +393,13 @@ function NavigationHandler() {
 			$("#intro").fadeOut();
 			$("#dashboard").fadeOut();
 			$("#register").fadeOut();
-			$("#signin").fadeIn();
+			
+			RefreshToken(function(success) {
+				if(success)
+					Navigation.go("dashboard");
+				else
+					$("#signin").fadeIn();
+			});
 		}
 		else if(this.currentArea == "register")
 		{
@@ -322,49 +408,6 @@ function NavigationHandler() {
 			$("#register").fadeOut();
 			$("#signin").fadeOut();
 			$("#register").fadeIn();
-		}
-	};
-	
-	/** Data Helpers for the Currently Selected QRef **/
-	this.getCheckList = function() {
-		var currentListItems = new Array();
-		
-		if(this.currentCheckListCategory == "preflight")
-		{
-			currentListItems = CheckLists.sort(this.qref.preflight);
-		}
-		else if(this.currentCheckListCategory == "takeoff")
-		{
-			currentListItems = CheckLists.sort(this.qref.takeoff);
-		}
-		else if(this.currentCheckListCategory == "landing")
-		{
-			currentListItems = CheckLists.sort(this.qref.landing);
-		}
-		else if(this.currentCheckListCategory == "emergencies")
-		{
-			currentListItems = CheckLists.sort(this.qref.emergencies[this.currentEmergency].items);
-		}
-		
-		return currentListItems;
-	}
-	
-	this.setCheckList = function(list) {
-		if(this.currentCheckListCategory == "preflight")
-		{
-			this.qref.preflight = list;
-		}
-		else if(this.currentCheckListCategory == "takeoff")
-		{
-			this.qref.takeoff = list;
-		}
-		else if(this.currentCheckListCategory == "landing")
-		{
-			this.qref.landing = list;
-		}
-		else if(this.currentCheckListCategory == "emergencies")
-		{
-			this.qref.emergencies[this.currentEmergency].items = list;
 		}
 	};
 
@@ -410,83 +453,226 @@ function NavigationHandler() {
 }
 
 function CheckListHandler() {
-	this.lists = new Array();
+	this.products = new Array();
+	var self = this;
 	
-	this.load = function(jsonLists) {
-		this.lists = jsonLists;
-		
-		var html = "";
+	this.commands = {
+		CACHELOADED: 0,
+		ONLINELOADEDAFTERCACHE: 1,
+		ONLINEFAILEDAFTERCACHE: 2,
+		ONLINEONLYLOADED: 3,
+		ONLINEONLYFAILED: 4
 	};
 	
-	this.getList = function(id) {
-		var item = _.find(this.lists, function(i) {
-			if(i.id == id)
+	this.load = function(updateCallback) {
+		if(cached)
+		{	
+			this.products = JSON.parse(cachedUserProducts);
+			this.products = this.sort();
+			
+			if(updateCallback)
+				updateCallback(this.commands.CACHELOADED);
+			
+			if(online)
+			{
+				this.onlineLoad(function(success) {
+					if(success) {
+						self.products = self.sort();
+						
+						if(updateCallback)
+							updateCallback(self.commands.ONLINELOADEDAFTERCACHE);
+					}
+					else
+					{
+						if(updateCallback)
+							updateCallback(self.commands.ONLINEFAILEDAFTERCACHE);
+					}
+				});
+			}
+		}
+		else
+		{
+			if(online)
+			{
+				this.onlineLoad(function(success) {
+					if(success) {
+						self.products = self.sort();
+						
+						if(updateCallback)
+							updateCallback(self.commands.ONLINEONLYLOADED);
+					}
+					else
+					{
+						if(updateCallback)
+							updateCallback(self.commands.ONLINEONLYFAILED);
+					}
+				});
+			}
+			else
+			{
+				if(updateCallback)
+					updateCallback(self.commands.ONLINEONLYFAILED);
+			}
+		}
+	};
+	
+	this.onlineLoad = function(updateCallback) {
+		$.ajax({
+			type: "get",
+			url: "/services/ajax/user/products?token=" + token,
+			success: function(data) {
+				var response = data;
+				
+				if(response.success == true)
+				{
+					self.products = response.records;
+					if(updateCallback)
+						updateCallback(true);
+				}
+				else
+				{
+					if(updateCallback)
+						updateCallback(false);
+				}
+			},
+			error: function()
+			{
+				if(updateCallback)
+					updateCallback(false);
+			}
+		});
+	};
+	
+	this.getProduct = function(id) {
+		var item = _.find(this.products, function(i) {
+			if(i._id == id)
 				return true;
 		});
 		
 		return item;
 	};
 	
-	this.sort = function(list) {
-		var sorted = list.sort(function(item,item2) {
-			if(item.index < item2.index)
-			{
-				return -1;
+	this.sort = function() {
+		var dict = new Dictionary();
+		
+		for(var i = 0; i < this.products.length; i++)
+		{
+			var product = this.products[i];
+			
+			var manufacturer = product.aircraftChecklist.manufacturer.name;
+			
+			if (!dict.containsKey(manufacturer)) {
+				dict.set(manufacturer, [product])
+			} else {
+				var tmp = dict.get(manufacturer);
+				tmp.push(product);
 			}
-			else if(item.index == item2.index)
+		}
+		
+		var keySet = dict.sortedKeys();
+		var sortedArray = [];
+		
+		for (kv in keySet) {
+			var arrProd = dict.get(keySet[kv]);
+			
+			arrProd = arrProd.sort(function (item1, item2) {
+				if (item1.aircraftChecklist.model.name < item2.aircraftChecklist.model.name)
+					return -1;
+				else if (item1.aircraftChecklist.model.name == item2.aircraftChecklist.model.name)
+					return 0;
+				else if (item1.aircraftChecklist.model.name > item2.aircraftChecklist.model.name)
+					return 1;
+				
+				return 0;
+			});
+			
+			sortedArray = sortedArray.concat(arrProd);
+			
+		}
+		
+		return sortedArray;
+		
+	};
+	
+	/*
+	this.sort = function() {
+		var sorted = new Array();
+		var manufacturers = new Array();
+		var lastManufacturer = "";
+		
+		var tempManufacturers = new Array();
+		
+		for(var i = 0; i < this.products.length; i++)
+		{
+			var product = this.products[i];
+			
+			var manufacturer = product.aircraftChecklist.manufacturer.name;
+			
+			if(manufacturer == lastManufacturer)
+			{
+				tempManufacturers.push(product);
+			}
+			else
+			{
+				if(tempManufacturers.length > 0)
+				{
+					manufacturers.push(tempManufacturers);
+				}
+				
+				tempManufacturers = new Array();
+				lastManufacturer = manufacturer;
+				tempManufacturers.push(product);
+			}
+		}
+	
+		var sortedManufacturers = manufacturers.sort(function(item,item2) {
+			if(item.length > 0 && item2.length > 0)
+			{
+				if(item[0].aircraftChecklist.manufacturer.name < item2[0].aircraftChecklist.manufacturer.name)
+				{
+					return -1;
+				}
+				else if(item[0].aircraftChecklist.manufacturer.name == item2[0].aircraftChecklist.manufacturer.name)
+				{
+					return 0;
+				}
+				else if(item[0].aircraftChecklist.manufacturer.name > item2[0].aircraftChecklist.manufacturer.name)
+				{
+					return 1;
+				}
+			}
+			else
 			{
 				return 0;
 			}
-			else if(item.index > item2.index)
-			{
-				return 1;
-			}
 		});
+		
+		for(var i = 0; i < sortedManufacturers.length; i++)
+		{
+			var sortedModels = sortedManufacturers[i].sort(function(item, item2) {
+				if(item.aircraftChecklist.model.name < item2.aircraftChecklist.model.name)
+				{
+					return -1;
+				}
+				else if(item.aircraftChecklist.model.name == item2.aircraftChecklist.model.name)
+				{
+					return 0;
+				}
+				else if(item.aircraftChecklist.model.name > item2.aircraftChecklist.model.name)
+				{
+					return 1;
+				}
+			});
+			
+			for(var j = 0; j < sortedModels.length; j++)
+			{
+				sorted.push(sortedModels[j]);
+			}
+		}
 		
 		return sorted;
 	};
-	
-	this.getIndices = function() {
-		if(Navigation.currentCheckListCategory != "emergencies")
-		{
-			var indices = new Array();
-			
-			$("#checklist-items").children().each(function(index, e) {
-				var element = $(e);
-				var originalIndex = parseInt(element.attr("data-index"));
-				
-				indices[originalIndex] = index;
-			});
-			
-			return indices;
-		}
-		else
-		{
-			return this.getEmergencyCheckListIndices();
-		}
-	};
-	
-	this.getEmergencyCheckListIndices = function() {
-		var indices = new Array();
-		
-		$("#checklist-emergency-items").children().each(function(index, e) {
-			var element = $(e);
-			var originalIndex = parseInt(element.attr("data-index"));
-			
-			indices[originalIndex] = index;
-		});
-		
-		return indices;
-	};
-	
-	this.updateIndices = function(list, newOrder) {
-		for(var i = 0; i < list.length; i++)
-		{
-			list[i].index = newOrder[list[i].index];
-		}
-		
-		return list;
-	};
+	*/
 }
 
 function ThemeHandler() {
@@ -505,4 +691,42 @@ function Loader() {
 		this.element.fadeOut();
 	}
 }
+
+function Dictionary() {
+	this.elements = {};
+	
+	return this;
+}
+
+Dictionary.prototype = {
+
+	containsKey: function(key) {
+		return Object.keys(this.elements).indexOf(key) != -1;
+	},
+	
+	get: function(key) {
+		if (this.containsKey(key))
+			return this.elements[key];
+		
+		return null;
+	},
+	
+	set: function(key, value) {
+		this.elements[key] = value;
+	},
+	
+	sortedKeys: function() {
+		var keys = Object.keys(this.elements);
+		return keys.sort(function (item1, item2) {
+			if (item1 < item2)
+				return -1;
+			else if (item1 == item2)
+				return 0;
+			else if (item1 > item2)
+				return 1;
+		
+			return 0;
+		});
+	}
+};
 

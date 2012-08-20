@@ -43,6 +43,10 @@ ProductSchemaInternal =
 		ref: 'aircraft.checklists'
 		required: false
 		default: null
+	isSampleProduct:
+		type: Boolean
+		required: true
+		default: false
 	
 	
 ProductSchema = new Schema(ProductSchemaInternal)

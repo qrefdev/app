@@ -1,0 +1,258 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+		<title>QRef</title> 
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="css/styles.css" />
+		<link rel="stylesheet" href="css/fontawesome.css" />
+		<script src="js/jquery.js"></script>
+		<script src="js/jquery.ui.js"></script>
+		<script src="js/jquery.punch.js"></script>
+		<script src="js/jquery.validate.js"></script>
+		<script src="js/touchswipe.js"></script>
+		<script src="js/extension.js"></script>
+	</head> 
+	<body> 
+		<article id="intro" class="theme-dark">
+			<section class="page">
+				<div class="logo-intro"></div>
+				<nav class="nav">
+					<ul>
+						<li class="item" data-link="signin" style="border-right: 1px solid #1f1f1f;"><div><i class="icon icon-signin"></i><div class="header-only">Sign in</div></div></li>
+						<li class="item" data-link="register"><div><i class="icon icon-pencil"></i><div class="header-only">Register</div></div></li>
+						<li class="item" style="width: 100%; border-top: 1px solid #1f1f1f;" data-link="dashboard"><div><i class="icon icon-share-alt"></i><div class="header-only">Skip</div></div></li>
+					</ul>
+				</nav>
+			</section>
+		</article>
+		<article id="dashboard" class="theme-dark theme-dark-blue" style="display: none;">
+			<section class="page">
+				<div class="topbar">
+					<div class="item back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+					<div class="item back" style="background: url('images/logo.png') 50% 50% no-repeat; background-size: 100% 100%; width: 32px;">
+					</div>
+					<div class="item-right menu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
+				</div>
+				<div class="content">
+					<div class="grid dashboard-plane-selector">
+						<ul id="dashboard-planes" class="vertical">
+							
+						</ul>
+					</div>
+					<div class="dashboard-plane">
+						<div id="dashboard-preview" class="preview"></div>
+						<button class="button dashboard-open"><i class="icon icon-book"></i> Open</button>
+					</div>
+				</div>
+				<nav class="nav">
+					<ul>
+						<li data-link="download" class="item"><div><i class="icon icon-download"></i><div class="header">Download</div><br><div class="subheader">Models</div></div></li>
+						<li data-link="e6b" class="item"><div><i class="icon icon-table"></i><div class="header">E6B</div><br><div class="subheader">Calculators</div></div></li>
+					</ul>
+				</nav>
+			</section>
+		</article>
+		<article id="categories" class="theme-dark" style="display: none;">
+			<section class="page">
+				<div class="topbar">
+					<div class="item back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+					<div class="item back" style="background: url('images/logo.png') 50% 50% no-repeat; background-size: 100% 100%; width: 32px;">
+					</div>
+					<div class="item-right menu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
+				</div>
+				<div class="content" style="bottom: 0px;">
+					<div class="grid">
+						<ul id="category-listing" class="full">
+							
+						</ul>
+					</div>
+				</div>
+			</section>
+		</article>
+		<article id="checklist" class="theme-dark theme-dark-blue" style="display: none;">
+			<section class="page">
+				<div class="topbar">
+					<div class="item back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+					<div class="item back" style="background: url('images/logo.png') 50% 50% no-repeat; background-size: 100% 100%; width: 32px;">
+					</div>
+					<div class="item-right menu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
+					<div class="item-right edit">
+						<p><i class="icon icon-pencil"></i></p>
+					</div>
+				</div>
+				<div class="content">
+					<div class="grid checklist">
+						<ul id="checklist-items" class="vertical">
+							
+						</ul>
+					</div>
+				</div>
+				<nav class="nav">
+					<ul>
+						<li data-link="preflight" class="item-25"><div><i class="icon icon-plane"></i><div class="header-only">Preflight</div></div></li>
+						<li data-link="takeoff" class="item-25"><div><i class="icon icon-plane"></i><div class="header-only">Take-off</div></div></li>
+						<li data-link="landing" class="item-25"><div><i class="icon icon-plane"></i><div class="header-only">Landing</div></div></li>
+						<li data-link="emergency" class="item-25"><div><i class="icon icon-plane"></i><div class="header-only">Emergency</div></div></li>
+					</ul>
+				</nav>
+			</section>
+		</article>
+		<article id="emergencies" class="theme-dark theme-dark-blue" style="display: none;">
+			<section class="page">
+				<div class="topbar">
+					<div class="item back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+					<div class="item back" style="background: url('images/logo.png') 50% 50% no-repeat; background-size: 100% 100%; width: 32px;">
+					</div>
+					<div class="item-right menu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
+				</div>
+				<div class="content">
+					<div class="grid">
+						<ul id="category-listing" class="full">
+							
+						</ul>
+					</div>
+				</div>
+				<nav class="nav">
+					<ul>
+						<li data-link="preflight" class="item-25"><div><i class="icon icon-plane"></i><div class="header-only">Preflight</div></div></li>
+						<li data-link="takeoff" class="item-25"><div><i class="icon icon-plane"></i><div class="header-only">Take-off</div></div></li>
+						<li data-link="landing" class="item-25"><div><i class="icon icon-plane"></i><div class="header-only">Landing</div></div></li>
+						<li data-link="emergency" class="item-25"><div><i class="icon icon-plane"></i><div class="header-only">Emergency</div></div></li>
+					</ul>
+				</nav>
+			</section>
+		</article>
+		<article id="download" style="display: none;" class="theme-dark">
+			<section class="page">
+				<div class="topbar">
+					<div class="item back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+					<div class="item back" style="background: url('images/logo.png') 50% 50% no-repeat; background-size: 100% 100%; width: 32px;">
+					</div>
+					<div class="item-right menu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
+				</div>
+				<div class="content" style="bottom: 0px;">
+					<div class="grid">
+						<ul id="download-listing" class="full">
+							
+						</ul>
+					</div>
+				</div>
+			</section>
+		</article>
+		<article id="editadd" style="display: none;" class="theme-dark">
+			<section class="page">
+				<div class="topbar">
+					<div class="item back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+					<div class="item back" style="background: url('images/logo.png') 50% 50% no-repeat; background-size: 100% 100%; width: 32px;">
+					</div>
+					<div class="item-right menu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
+				</div>
+				<div style="float: left; position: relative; width: 100%;">
+					<form id="editAddForm" method="post" action="javascript:void(null);">
+						<input class="textbox required" type="text" value="check" id="check" name="check" onblur="inputBlur(this, 'check');" onfocus="inputFocus(this, 'check');" />
+						<input style="height: 100px;" class="textbox required" type="text" value="response" id="response" name="response" onfocus="inputFocus(this, 'response');" onblur="inputBlur(this, 'response');" />
+						
+						<input type="submit" style="margin: 10px auto;" class="button button-register" value="Save" />
+					</form>
+				</div>
+			</section>
+		</article>
+		<article id="signin" style="display: none;" class="theme-dark">
+			<section class="page">
+				<div class="topbar">
+					<div class="item back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+					<div class="item back" style="background: url('images/logo.png') 50% 50% no-repeat; background-size: 100% 100%; width: 32px;">
+					</div>
+					<div class="item-right menu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
+				</div>
+				<div style="float: left; position: relative; width: 100%;">
+					<div class="logo-page"></div>
+					<form id="signinForm" method="post" action="javascript:void(null);">
+					<input class="textbox required" type="email" value="email" id="email" name="email" onblur="inputBlur(this, 'email');" onfocus="inputFocus(this, 'email');" />
+					<input class="textbox" type="text" value="password" id="fauxPassword" name="fauxPassword" onfocus="passwordFocus(this, 'password');" />
+					<input class="textbox required" type="password" style="display: none;" id="password" name="password" onblur="passwordBlur(this, 'fauxPassword');" />
+					<input type="submit" style="margin: 10px auto;" class="button button-signin" value="Sign in" />
+					</form>
+				</div>
+			</section>
+		</article>
+		<article id="register" style="display: none;" class="theme-dark">
+			<section class="page">
+				<div class="topbar">
+					<div class="item back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+					<div class="item back" style="background: url('images/logo.png') 50% 50% no-repeat; background-size: 100% 100%; width: 32px;">
+					</div>
+					<div class="item-right menu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
+				</div>
+				<div style="float: left; position: relative; width: 100%;">
+					<div class="logo-page"></div>
+					<form id="registerForm" action="javascript:void(null);" method="post">
+					<input class="textbox required" type="email" value="email" id="emailRegister" name="emailRegister" onblur="inputBlur(this, 'email');" onfocus="inputFocus(this, 'email');" />
+					<input class="textbox" type="text" value="password" id="fauxPasswordRegister" name="fauxPasswordRegister" onfocus="passwordFocus(this, 'passwordRegister');" />
+					<input class="textbox required" type="password" style="display: none;" id="passwordRegister" name="passwordRegister" onblur="passwordBlur(this, 'fauxPasswordRegister');" />
+					<input class="textbox" type="text" value="confirm password" id="fauxConfirmPassword" name="fauxConfirmPassword" onfocus="passwordFocus(this, 'confirmPassword');" />
+					<input class="textbox required" type="password" style="display: none;" id="confirmPassword" name="confirmPassword" onblur="passwordBlur(this, 'fauxConfirmPassword');" />
+					<input type="submit" style="margin: 10px auto;" class="button button-register" value="Register"/>
+					</form>
+				</div>
+			</section>
+		</article>
+		<article id="menu" style="display: none;" class="theme-dark">
+			<div class="menu">
+				<ul>
+					<li data-link="settings"><i class="icon icon-cog"></i> Settings</li>
+					<li data-link="dashboard"><i class="icon icon-dashboard"></i> Dashboard</li>
+					<li data-link="signout" id="signout-menu" style="display: none;"><i class="icon icon-signout"></i> Sign out</li>
+					<li data-link="signin" id="signin-menu" style="display: none;"><i class="icon icon-signin" ></i> Sign in</li>
+					<li data-link="register" id="register-menu" style="display: none;"><i class="icon icon-pencil"></i> Register</li>
+					<li data-link="sync" id="sync-menu" style="display: none;"><i class="icon icon-repeat"></i> Sync</li>
+				</ul>
+			</div>
+		</article>
+		<div class="theme-dark model" id="loader">
+			<figure class="loader">
+				<img src="images/ajax-loader.gif" alt="Loading" />
+				<figcaption>Loading...</figcaption>
+			</figure>
+		</div>
+		<div class="theme-dark model" id="infobox">
+			<figure class="info" >
+				<figcaption class="data"></figcaption>
+				<button class="okay">Okay</button>
+			</figure>
+		</div>
+	</body>
+</html>
