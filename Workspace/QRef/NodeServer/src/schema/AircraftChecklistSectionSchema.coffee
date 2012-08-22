@@ -16,7 +16,7 @@ AircraftChecklistSectionSchemaInternal =
 		required: true
 	items:
 		type: [AircraftChecklistItemSchema]
-		required: true
+		required: false
 	sectionIcon:
 		type: String
 		required: false

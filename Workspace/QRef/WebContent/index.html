@@ -12,34 +12,30 @@
 		<script src="js/jquery.validate.js"></script>
 		<script src="js/jquery.cookie.js"></script>
 		<script src="js/jquery.touchswipe.js"></script>
+		<script src="js/underscore.js"></script>
+		<script src="js/helpers.js"></script>
+		<script src="js/signin.js"></script>
+		<script src="js/register.js"></script>
+		<script src="js/uiwindows.js"></script>
+		<script src="js/navigationhandler.js"></script>
+		<script src="js/checklisthandler.js"></script>
+		<script src="js/producthandler.js"></script>
 		<script src="js/extension.js"></script>
 	</head> 
 	<body> 
-		<article id="intro" class="theme-dark">
+		<article id="dashboard" class="theme-dark">
 			<section class="page">
-				<div class="logo-intro"></div>
-				<nav class="nav">
-					<ul>
-						<li class="item" data-link="signin" style="border-right: 1px solid #1f1f1f;"><div><i class="icon icon-signin"></i><div class="header-only">Sign in</div></div></li>
-						<li class="item" data-link="register"><div><i class="icon icon-pencil"></i><div class="header-only">Register</div></div></li>
-						<li class="item" style="width: 100%; border-top: 1px solid #1f1f1f;" data-link="dashboard"><div><i class="icon icon-share-alt"></i><div class="header-only">Skip</div></div></li>
-					</ul>
-				</nav>
-			</section>
-		</article>
-		<article id="dashboard" class="theme-dark theme-dark-blue" style="display: none;">
-			<section class="page">
-				<div class="topbar">
-					<div class="item back">
-						<p><i class="icon icon-chevron-left"></i></p>
+				<div class="dashbar">
+					<div class="item" style="background: url('images/logo.png') 50% 50% no-repeat; background-size: 100% 100%; width: 150px; height: 60px;">
 					</div>
-					<div class="item back" style="background: url('images/logo.png') 50% 50% no-repeat; background-size: 100% 100%; width: 32px;">
-					</div>
-					<div class="item-right menu">
+					<div class="item-right topmenu">
 						<p><i class="icon icon-th-list"></i></p>
 					</div>
+					<div class="header">
+						<p>MY AIRCRAFT</p>
+					</div>
 				</div>
-				<div class="content">
+				<div class="dashcontent">
 					<div class="grid dashboard-plane-selector">
 						<div class="container">
 							<ul id="dashboard-planes" class="vertical">
@@ -47,38 +43,13 @@
 							</ul>
 						</div>
 					</div>
-					<div class="dashboard-plane">
-						<div id="dashboard-preview" class="preview"></div>
-						<button class="button dashboard-open"><i class="icon icon-book"></i> Open</button>
-					</div>
 				</div>
-				<nav class="nav">
+				<nav class="nav dashnav">
 					<ul>
-						<li data-link="download" class="item"><div><i class="icon icon-download"></i><div class="header">Download</div><br><div class="subheader">Models</div></div></li>
-						<li data-link="e6b" class="item"><div><i class="icon icon-table"></i><div class="header">E6B</div><br><div class="subheader">Calculators</div></div></li>
+						<li data-link="download" class="item" style="padding-top: 10px; z-index: 10;"><div><i class="icon icon-download"></i><div class="header">Download</div><br><div class="subheader">Models</div></div></li>
+						<li data-link="e6b" class="item" style="margin-top: 10px; z-index: 5;"><div><i class="icon icon-table"></i><div class="header">E6B</div><br><div class="subheader">Calculators</div></div></li>
 					</ul>
 				</nav>
-			</section>
-		</article>
-		<article id="categories" class="theme-dark" style="display: none;">
-			<section class="page">
-				<div class="topbar">
-					<div class="item back">
-						<p><i class="icon icon-chevron-left"></i></p>
-					</div>
-					<div class="item back" style="background: url('images/logo.png') 50% 50% no-repeat; background-size: 100% 100%; width: 32px;">
-					</div>
-					<div class="item-right menu">
-						<p><i class="icon icon-th-list"></i></p>
-					</div>
-				</div>
-				<div class="content" style="bottom: 0px;">
-					<div class="grid">
-						<ul id="category-listing" class="full">
-							
-						</ul>
-					</div>
-				</div>
 			</section>
 		</article>
 		<article id="checklist" class="theme-dark theme-dark-blue" style="display: none;">
@@ -87,9 +58,10 @@
 					<div class="item back">
 						<p><i class="icon icon-chevron-left"></i></p>
 					</div>
-					<div class="item back" style="background: url('images/logo.png') 50% 50% no-repeat; background-size: 100% 100%; width: 32px;">
+					<div class="item">
+						<p><span id="area"></span><i class="icon icon-caret-down"></i></p>
 					</div>
-					<div class="item-right menu">
+					<div class="item-right topmenu">
 						<p><i class="icon icon-th-list"></i></p>
 					</div>
 					<div class="item-right edit">
@@ -103,14 +75,6 @@
 						</ul>
 					</div>
 				</div>
-				<nav class="nav">
-					<ul>
-						<li data-link="preflight" class="item-25"><div><i class="icon icon-plane"></i><div class="header-only">Preflight</div></div></li>
-						<li data-link="takeoff" class="item-25"><div><i class="icon icon-plane"></i><div class="header-only">Take-off</div></div></li>
-						<li data-link="landing" class="item-25"><div><i class="icon icon-plane"></i><div class="header-only">Landing</div></div></li>
-						<li data-link="emergency" class="item-25"><div><i class="icon icon-plane"></i><div class="header-only">Emergency</div></div></li>
-					</ul>
-				</nav>
 			</section>
 		</article>
 		<article id="emergencies" class="theme-dark theme-dark-blue" style="display: none;">
@@ -119,9 +83,7 @@
 					<div class="item back">
 						<p><i class="icon icon-chevron-left"></i></p>
 					</div>
-					<div class="item back" style="background: url('images/logo.png') 50% 50% no-repeat; background-size: 100% 100%; width: 32px;">
-					</div>
-					<div class="item-right menu">
+					<div class="item-right topmenu">
 						<p><i class="icon icon-th-list"></i></p>
 					</div>
 				</div>
@@ -132,14 +94,6 @@
 						</ul>
 					</div>
 				</div>
-				<nav class="nav">
-					<ul>
-						<li data-link="preflight" class="item-25"><div><i class="icon icon-plane"></i><div class="header-only">Preflight</div></div></li>
-						<li data-link="takeoff" class="item-25"><div><i class="icon icon-plane"></i><div class="header-only">Take-off</div></div></li>
-						<li data-link="landing" class="item-25"><div><i class="icon icon-plane"></i><div class="header-only">Landing</div></div></li>
-						<li data-link="emergency" class="item-25"><div><i class="icon icon-plane"></i><div class="header-only">Emergency</div></div></li>
-					</ul>
-				</nav>
 			</section>
 		</article>
 		<article id="download" style="display: none;" class="theme-dark">
@@ -148,9 +102,8 @@
 					<div class="item back">
 						<p><i class="icon icon-chevron-left"></i></p>
 					</div>
-					<div class="item back" style="background: url('images/logo.png') 50% 50% no-repeat; background-size: 100% 100%; width: 32px;">
-					</div>
-					<div class="item-right menu">
+
+					<div class="item-right topmenu">
 						<p><i class="icon icon-th-list"></i></p>
 					</div>
 				</div>
@@ -169,9 +122,7 @@
 					<div class="item back">
 						<p><i class="icon icon-chevron-left"></i></p>
 					</div>
-					<div class="item back" style="background: url('images/logo.png') 50% 50% no-repeat; background-size: 100% 100%; width: 32px;">
-					</div>
-					<div class="item-right menu">
+					<div class="item-right topmenu">
 						<p><i class="icon icon-th-list"></i></p>
 					</div>
 				</div>
@@ -191,20 +142,22 @@
 					<div class="item back">
 						<p><i class="icon icon-chevron-left"></i></p>
 					</div>
-					<div class="item back" style="background: url('images/logo.png') 50% 50% no-repeat; background-size: 100% 100%; width: 32px;">
+					<div class="item-middle">
+						<p>Sign in</p>
 					</div>
-					<div class="item-right menu">
+					<div class="item-right topmenu">
 						<p><i class="icon icon-th-list"></i></p>
 					</div>
 				</div>
-				<div style="float: left; position: relative; width: 100%;">
-					<div class="logo-page"></div>
-					<form id="signinForm" method="post" action="javascript:void(null);">
-					<input class="textbox required" type="email" value="email" id="email" name="email" onblur="inputBlur(this, 'email');" onfocus="inputFocus(this, 'email');" />
-					<input class="textbox" type="text" value="password" id="fauxPassword" name="fauxPassword" onfocus="passwordFocus(this, 'password');" />
-					<input class="textbox required" type="password" style="display: none;" id="password" name="password" onblur="passwordBlur(this, 'fauxPassword');" />
-					<input type="submit" style="margin: 10px auto;" class="button button-signin" value="Sign in" />
-					</form>
+				<div class="content">
+					<div style="float: left; position: relative; width: 100%; margin-top: 40px;">
+						<form id="signinForm" method="post" action="javascript:void(null);">
+						<input class="textbox required" type="email" value="email" id="email" name="email" onblur="inputBlur(this, 'email');" onfocus="inputFocus(this, 'email');" />
+						<input class="textbox" type="text" value="password" id="fauxPassword" name="fauxPassword" onfocus="passwordFocus(this, 'password');" />
+						<input class="textbox required" type="password" style="display: none;" id="password" name="password" onblur="passwordBlur(this, 'fauxPassword');" />
+						<input type="submit" style="margin: 10px auto;" class="button button-signin" value="Sign in" />
+						</form>
+					</div>
 				</div>
 			</section>
 		</article>
@@ -214,37 +167,49 @@
 					<div class="item back">
 						<p><i class="icon icon-chevron-left"></i></p>
 					</div>
-					<div class="item back" style="background: url('images/logo.png') 50% 50% no-repeat; background-size: 100% 100%; width: 32px;">
+					<div class="item-middle">
+						<p>Register</p>
 					</div>
-					<div class="item-right menu">
+					<div class="item-right topmenu">
 						<p><i class="icon icon-th-list"></i></p>
 					</div>
 				</div>
-				<div style="float: left; position: relative; width: 100%;">
-					<div class="logo-page"></div>
-					<form id="registerForm" action="javascript:void(null);" method="post">
-					<input class="textbox required" type="email" value="email" id="emailRegister" name="emailRegister" onblur="inputBlur(this, 'email');" onfocus="inputFocus(this, 'email');" />
-					<input class="textbox" type="text" value="password" id="fauxPasswordRegister" name="fauxPasswordRegister" onfocus="passwordFocus(this, 'passwordRegister');" />
-					<input class="textbox required" type="password" style="display: none;" id="passwordRegister" name="passwordRegister" onblur="passwordBlur(this, 'fauxPasswordRegister');" />
-					<input class="textbox" type="text" value="confirm password" id="fauxConfirmPassword" name="fauxConfirmPassword" onfocus="passwordFocus(this, 'confirmPassword');" />
-					<input class="textbox required" type="password" style="display: none;" id="confirmPassword" name="confirmPassword" onblur="passwordBlur(this, 'fauxConfirmPassword');" />
-					<input type="submit" style="margin: 10px auto;" class="button button-register" value="Register"/>
-					</form>
+				<div class="content">
+					<div style="float: left; position: relative; width: 100%; margin-top: 40px;">
+						<form id="registerForm" action="javascript:void(null);" method="post">
+						<input class="textbox required" type="email" value="email" id="emailRegister" name="emailRegister" onblur="inputBlur(this, 'email');" onfocus="inputFocus(this, 'email');" />
+						<input class="textbox" type="text" value="password" id="fauxPasswordRegister" name="fauxPasswordRegister" onfocus="passwordFocus(this, 'passwordRegister');" />
+						<input class="textbox required" type="password" style="display: none;" id="passwordRegister" name="passwordRegister" onblur="passwordBlur(this, 'fauxPasswordRegister');" />
+						<input class="textbox" type="text" value="confirm password" id="fauxConfirmPassword" name="fauxConfirmPassword" onfocus="passwordFocus(this, 'confirmPassword');" />
+						<input class="textbox required" type="password" style="display: none;" id="confirmPassword" name="confirmPassword" onblur="passwordBlur(this, 'fauxConfirmPassword');" />
+						<input type="submit" style="margin: 10px auto;" class="button button-register" value="Register"/>
+						</form>
+					</div>
 				</div>
 			</section>
 		</article>
-		<article id="menu" style="display: none;" class="theme-dark">
+		<div id="menu" style="display: none;" class="theme-dark">
 			<div class="menu">
 				<ul>
-					<li data-link="settings"><i class="icon icon-cog"></i> Settings</li>
-					<li data-link="dashboard"><i class="icon icon-dashboard"></i> Dashboard</li>
-					<li data-link="signout" id="signout-menu" style="display: none;"><i class="icon icon-signout"></i> Sign out</li>
-					<li data-link="signin" id="signin-menu" style="display: none;"><i class="icon icon-signin" ></i> Sign in</li>
-					<li data-link="register" id="register-menu" style="display: none;"><i class="icon icon-pencil"></i> Register</li>
-					<li data-link="sync" id="sync-menu" style="display: none;"><i class="icon icon-repeat"></i> Sync</li>
+					<li data-link="settings"><p><i class="icon icon-cog"></i> Settings</p></li>
+					<li data-link="dashboard"><p><i class="icon icon-dashboard"></i> Dashboard</p></li>
+					<li data-link="signout" id="signout-menu" style="display: none;"><p><i class="icon icon-signout"></i> Sign out</p></li>
+					<li data-link="signin" id="signin-menu" style="display: none;"><p><i class="icon icon-signin" ></i> Sign in</p></li>
+					<li data-link="register" id="register-menu" style="display: none;"><p><i class="icon icon-pencil"></i> Register</p></li>
+					<li data-link="sync" id="sync-menu" style="display: none;"><p><i class="icon icon-repeat"></i> Sync</p></li>
 				</ul>
 			</div>
-		</article>
+		</div>
+		<div id="checklist-nav" style="display: none;" class="theme-dark">
+			<nav class="nav">
+				<ul>
+					<li data-link="preflight" class="item-25"><div><i class="icon icon-plane"></i><div class="header-only">Preflight</div></div></li>
+					<li data-link="takeoff" class="item-25"><div><i class="icon icon-plane"></i><div class="header-only">Take-off</div></div></li>
+					<li data-link="landing" class="item-25"><div><i class="icon icon-plane"></i><div class="header-only">Landing</div></div></li>
+					<li data-link="emergency" class="item-25"><div><i class="icon icon-plane"></i><div class="header-only">Emergency</div></div></li>
+				</ul>
+			</nav>
+		</div>
 		<div class="theme-dark model" id="loader">
 			<figure class="loader">
 				<img src="images/ajax-loader.gif" alt="Loading" />

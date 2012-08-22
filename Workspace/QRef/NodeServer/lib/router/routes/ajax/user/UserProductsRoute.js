@@ -80,7 +80,7 @@
               return;
             }
             return db.UserProduct.where('user').equals(userId).count(function(err, count) {
-              var itm, _i, _len;
+              var arrProducts, mgr, uProd, _i, _len;
               if (err != null) {
                 resp = new AjaxResponse();
                 resp.failure('Internal Error', 500);
@@ -88,12 +88,22 @@
                 return;
               }
               resp = new AjaxResponse();
+              arrProducts = [];
               for (_i = 0, _len = arrObjs.length; _i < _len; _i++) {
-                itm = arrObjs[_i];
-                resp.addRecord(itm.product);
+                uProd = arrObjs[_i];
+                arrProducts.push(uProd.product.toObject());
               }
-              resp.setTotal(count);
-              return res.json(resp, 200);
+              mgr = new ProductManager();
+              return mgr.expandAll(arrProducts, function(err, eArrProducts) {
+                if (err != null) {
+                  resp.failure(err, 500);
+                  res.json(resp, 200);
+                  return;
+                }
+                resp.addRecords(eArrProducts);
+                resp.setTotal(count);
+                return res.json(resp, 200);
+              });
             });
           });
         });

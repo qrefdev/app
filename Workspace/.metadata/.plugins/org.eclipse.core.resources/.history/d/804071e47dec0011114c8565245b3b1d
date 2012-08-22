@@ -1,0 +1,736 @@
+html, body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	font-family: Myriad Pro, Helvetica;
+}
+
+/** Logo Intro **/
+.logo-intro {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-left: -74px;
+	margin-top: -92px;
+	width: 149px;
+	height: 185px;
+	overflow: hidden;
+	padding: 0;
+}
+
+/** Logo Pages **/
+.logo-page {
+	float: left;
+	position: relative;
+	width: 100%;
+	height: 220px;
+	padding: 0;
+	margin-top: 32px;
+}
+
+.theme-dark .logo-page {
+	background: transparent url("../images/logo-full.png") 50% 50% no-repeat;
+}
+
+.theme-dark .logo-intro {
+	background: transparent url("../images/logo-full.png") 50% 50% no-repeat;
+}
+
+/** Text Boxes & Text Areas **/
+.textbox {
+	position: relative;
+	margin: 10px auto;
+	padding: 5px;
+	text-align: left;
+	width: 70%;
+	height: 16px;
+	font-size: 12px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	display:block;
+}
+
+.theme-dark .textbox {
+	border: 1px solid #740101;
+	background: #000813;
+	color: #540101;
+}
+
+/** Page Wrapper **/
+
+.page {
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	overflow-x: hidden;
+	overflow-y: visible;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+/** Apply Theme **/
+.theme-dark .page {
+	background: #1f1414 url("../images/stripe.png") top left repeat;
+}
+
+/** Bottom Nav Bar **/
+
+.nav {
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	width: 100%;
+	height: auto;
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+}
+
+.nav ul {
+	float: left;
+	position: relative;
+	width: 100%;
+	height: auto;
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+.nav ul li {
+	float: left;
+	position: relative;
+	width: auto;
+	height: 60px;
+	padding: 0;
+	margin: 0;
+	text-align: left;
+	cursor: pointer;
+}
+
+.nav ul .item {
+	width: 49%;
+	margin: 0;
+	padding: 0;
+}
+
+.nav ul .item-25 {
+	width: 24%;
+	margin: 0;
+	padding: 0;
+}
+
+.nav ul .item-33 {
+	width: 32%;
+	margin: 0;
+	padding: 0;
+}
+
+.nav ul .item .header {
+	font-size: 16px;
+	position: absolute;
+	left: 60px;
+	top: 15px;
+}
+
+.nav ul .item .subheader {
+	font-size: 12px;
+	left: 60px;
+	top: 35px;
+	position: absolute;
+}
+
+.nav ul .item-25 .header {
+	font-size: 12px;
+	position: absolute;
+	left: 60px;
+	top: 15px;
+}
+
+.nav ul .item-25 .subheader {
+	font-size: 10px;
+	left: 60px;
+	top: 35px;
+	position: absolute;
+}
+
+.nav ul .item-33 .header {
+	font-size: 14px;
+	position: absolute;
+	left: 60px;
+	top: 15px;
+}
+
+.nav ul .item-33 .subheader {
+	font-size: 12px;
+	left: 60px;
+	top: 35px;
+	position: absolute;
+}
+
+.nav ul .item div .icon {
+	font-size: 34px;
+	position: absolute;
+	top: 15px;
+	left: 5px;
+	display: block;
+}
+
+.nav ul .item-25 div .icon {
+	font-size: 18px;
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	display: block;
+}
+
+.nav ul .item-33 div .icon {
+	font-size: 24px;
+	float: left;
+	display: block;
+}
+
+.nav ul .header-only {
+	font-size: 16px;
+	position: absolute;
+	left: 60px;
+	top: 20px;
+}
+
+/** Theme stuff for nav **/
+
+.theme-dark .nav {
+	color: #d3a1a1;
+	background: #840101;
+}
+
+.theme-dark .nav ul li {
+	border-right: 1px solid #3a1a1;
+}
+
+.theme-dark .nav ul li:hover {
+	background: #740101;
+}
+
+.theme-dark .nav .active {
+	background: #740101;
+}
+
+.theme-dark-blue .nav {
+	color: #d10404;
+	background: #001121; /* Old browsers */
+background: -moz-linear-gradient(top,  #001121 0%, #00090f 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#001121), color-stop(100%,#00090f)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #001121 0%,#00090f 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #001121 0%,#00090f 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #001121 0%,#00090f 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #001121 0%,#00090f 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#001121', endColorstr='#00090f',GradientType=0 ); /* IE6-9 */
+}
+
+.theme-dark-blue .nav ul li {
+	border-right: 1px solid #001b34;
+}
+
+.theme-dark-blue .nav ul li:hover {
+	background: #000625;
+}
+
+.theme-dark-blue .nav .active {
+	background: #000625;
+}
+
+.theme-dark-blue .nav ul .item div .icon, .theme-dark-blue .nav ul .item-25 div .icon {
+	color: #830000;
+}
+
+.theme-dark-blue .nav ul .item .subheader, .theme-dark-blue .nav ul .item-25 .subheader {
+	color: #585858;
+}
+
+/** Top Bar **/
+.topbar {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	width: 100%;
+	height: 32px;
+	font-size: 12px;
+	overflow: hidden;
+	padding: 0;
+	margin: 0;
+}
+
+.topbar .item {
+	float: left;
+	position: relative;
+	width: auto;
+	height: 32px;
+	margin-right: 5px;
+	z-index: 5;
+	cursor: pointer;
+}
+
+.topbar .item p {
+	margin: 0;
+	padding: 6px;
+}
+
+.topbar .item-right p {
+	padding: 6px;
+	margin: 0;
+}
+
+.topbar .item-right {
+	float: right;
+	position: relative;
+	width: auto;
+	height: 32px;
+	margin-right: 5px;
+	z-index: 5;
+}
+
+.topbar .header {
+	position: absolute;
+	width: 100%;
+	z-index: 1;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	height: 32px;
+	padding: 0;
+	margin: 0;
+	text-align: center;
+}
+
+.topbar .icon {
+	font-size: 24px;
+}
+
+/** Top Bar Theme **/
+
+.theme-dark .topbar {
+	color: #d10404;
+}
+
+
+/** Content Wrapper **/
+.content {
+	position: absolute;
+	top: 32px;
+	left: 0px;
+	right: 0px;
+	bottom: 60px;
+	width: 100%;
+	overflow: hidden;
+	padding: 0;
+	margin: 0;
+}
+
+.content-full {
+	position: absolute;
+	top: 32px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	width: 100%;
+	overflow: hidden;
+	padding: 0;
+	margin: 0;
+}
+
+.theme-dark .content, .theme-dark .content-full {
+	background: #000000;
+}
+
+
+/** Grid System **/
+.grid {
+	float: left;
+	position: relative;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+.grid .vertical {
+	float: left;
+	position: relative;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+.grid .vertical li {
+	float: left;
+	position: relative;
+	width: 100%;
+	margin-bottom: 2px;
+}
+
+.grid .vertical li:last-child {
+	margin-bottom: 0;
+}
+
+.grid .horizontal {
+	float: left;
+	position: relative;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.grid .horizontal li {
+	float: left;
+	position: relative;
+	width: auto;
+	margin-right: 2px;
+}
+
+.grid .horizontal li:last-child {
+	margin-right: 0;
+}
+
+.grid .full {
+	float: left;
+	position: relative;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.grid .full .span50 {
+	float: left;
+	position: relative;
+	width: 49%;
+	margin-right: 2px;
+	margin-bottom: 2px;
+}
+
+.grid .full .span50:nth-child(even) {
+	margin-right: 0;
+}
+
+.grid .full .span33 {
+	float: left;
+	position: relative;
+	width: 32%;
+	margin-right: 2px;
+	margin-bottom: 2px;
+}
+
+.grid .full .span33:nth-child(3n) {
+	margin-right: 0px;
+}
+
+.grid .full .span25 {
+	float: left;
+	position: relative;
+	width: 24%;
+	margin-right: 2px;
+	margin-bottom: 2px;
+}
+
+.grid .full .span25:nth-child(4n) {
+	margin-right: 0px;
+}
+
+.grid .separator {
+	width: 100%;
+	float: left;
+	position: relative;
+	margin: 0;
+	padding: 0;
+	height: auto;
+}
+
+.grid .separator p {
+	padding: 5px;
+}
+
+.theme-dark .grid .separator {
+	background: #1f1f1f;
+	color: #84010;
+	font-size: 16px;
+}
+
+/** Button Theme **/
+.theme-dark button {
+	text-align: center;
+	border: none;
+	background: #840101;
+	color: #d3a1a1;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	display:block;
+	cursor: pointer;
+}
+
+.theme-dark .button {
+	text-align: center;
+	border: none;
+	background: #840101;
+	color: #d3a1a1;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	display:block;
+	cursor: pointer;
+}
+
+/** Sign in and Register Button */
+.button-signin, .button-register {
+	font-size: 22px;
+	padding: 20px 0px 20px 0px;
+	width: 70%;
+}
+
+/** Dashboard Left Grid **/
+.dashboard-plane-selector {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	bottom: 0px;
+	width: 24%;
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+	color: #ffffff;
+}
+
+.dashboard-plane {
+	position: absolute;
+	top: 0px;
+	left: 26%;
+	bottom: 0px;
+	width: 74%;
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+}
+
+.dashboar-plane .preview {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	z-index: 1;
+	width: 100%;
+	height: 100%;
+}
+
+
+.dashboard-open {
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	width: 100%;
+	height: 80px;
+	z-index: 99;
+	font-size: 24px;
+}
+
+.dashboard-open .icon {
+	font-size: 24px;
+}
+
+.theme-dark .dashboard-open {
+	color: #d10404;
+	background: #001121; /* Old browsers */
+background: -moz-linear-gradient(top,  #001121 0%, #00090f 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#001121), color-stop(100%,#00090f)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #001121 0%,#00090f 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #001121 0%,#00090f 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #001121 0%,#00090f 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #001121 0%,#00090f 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#001121', endColorstr='#00090f',GradientType=0 ); /* IE6-9 */
+}
+
+/** Menu Theme **/
+.theme-dark .menu {
+	position: absolute;
+	top: 32px;
+	right: 0px;
+	width: 150px;
+	bottom: 0px;
+	background: #1f1f1f;
+	margin: 0;
+	padding: 0;
+}
+
+.theme-dark .menu ul {
+	float: right;
+	position: relative;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+.theme-dark .menu ul li {
+	float: right:
+	position: relative;
+	width: 90%;
+	margin-top: 10px;
+	border-bottom: 1px solid #740101;
+	color: #740101;
+}
+
+/** Checklist Theme and Items **/
+.theme-dark .checklist .vertical li {
+	color: #d10404;
+	background: #001121; /* Old browsers */
+background: -moz-linear-gradient(top,  #001121 0%, #00090f 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#001121), color-stop(100%,#00090f)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #001121 0%,#00090f 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #001121 0%,#00090f 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #001121 0%,#00090f 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #001121 0%,#00090f 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#001121', endColorstr='#00090f',GradientType=0 ); /* IE6-9 */
+}
+
+.checklist .vertical li {
+	height: 80px;
+}
+
+.checklist .vertical li div .icon {
+	font-size: 34px;
+	position: absolute;
+	top: 15px;
+	left: 5px;
+	display: block;
+}
+
+.checklist .vertical li div .check {
+	font-size: 16px;
+	position: absolute;
+	left: 60px;
+	top: 15px;
+}
+
+.checklist .vertical li div .response {
+	font-size: 12px;
+	left: 60px;
+	top: 35px;
+	position: absolute;
+}
+
+/** Loader and Info Boxes **/
+.loader {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 300px;
+	margin-left: -150px;
+	height: 100px;
+	margin-top: -50px;
+	z-index: 99999;
+}
+
+.loader img {
+	position: absolute;
+	top: 35px;
+	left: 25px;
+}
+
+.loader figcaption {
+	position: absolute;
+	top: 45px;
+	left: 85px;
+	font-size: 18px;
+}
+
+.info {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 300px;
+	margin-left: -150px;
+	height: 100px;
+	margin-top: -50px;
+	z-index: 9999;
+}
+
+.info figcaption {
+	float: left;
+	position: relative;
+	margin-top: 10px;
+	margin-left: 10px;
+	font-size: 14px;
+}
+
+.info button {
+	width: 100%;
+	position: absolute;
+	bottom: 0px;
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+	height: 30px;
+}
+
+.model {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	left: 0px;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	background: rgba(0,0,0,0.5);
+	display: none;
+	z-index: 998;
+}
+
+.theme-dark .loader {
+	border: 1px solid #740101;
+	background: #000813;
+	color: #540101;
+}
+
+.theme-dark .info {
+	border: 1px solid #740101;
+	background: #000813;
+	color: #540101;
+}
+
+/** Form Stuff **/
+form {
+	float: left;
+	position: relative;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+form label {
+	position: relative;
+	margin: 10px auto;
+	padding: 5px;
+	text-align: left;
+	width: 70%;
+	height: 16px;
+	font-size: 12px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	display:block;
+}
+
+.theme-dark form label {
+	color: #740101;
+}
+
+/** Container Wrapper for Scroll **/
+.container {
+	position: absolute;
+	width: auto;
+	height: auto;
+	top: 0px;
+	left: 0px;
+}

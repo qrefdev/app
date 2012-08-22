@@ -63,12 +63,22 @@ class UserProductsRoute extends AjaxRoute
 							return
 						
 						resp = new AjaxResponse()
-	
-						for itm in arrObjs
-							resp.addRecord(itm.product)					
-	
-						resp.setTotal(count)
-						res.json(resp, 200)
+						arrProducts = []
+						
+						for uProd in arrObjs
+							arrProducts.push(uProd.product.toObject())
+						
+						mgr = new ProductManager()
+						mgr.expandAll(arrProducts, (err, eArrProducts) ->
+							if err?
+								resp.failure(err, 500)
+								res.json(resp, 200)
+								return
+								
+							resp.addRecords(eArrProducts)
+							resp.setTotal(count)
+							res.json(resp, 200)
+						)
 					)
 					
 				)

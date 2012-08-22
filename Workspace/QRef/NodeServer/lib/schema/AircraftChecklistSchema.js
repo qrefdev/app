@@ -35,19 +35,19 @@
     },
     preflight: {
       type: [AircraftChecklistSectionSchema],
-      required: true
+      required: false
     },
     takeoff: {
       type: [AircraftChecklistSectionSchema],
-      required: true
+      required: false
     },
     landing: {
       type: [AircraftChecklistSectionSchema],
-      required: true
+      required: false
     },
     emergencies: {
       type: [AircraftChecklistSectionSchema],
-      required: true
+      required: false
     }
   };
 

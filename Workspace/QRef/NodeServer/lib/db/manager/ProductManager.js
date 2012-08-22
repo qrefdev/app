@@ -37,7 +37,8 @@
             callback('Not Found', null);
             return;
           }
-          eProd.aircraftChecklist = chklst.toObject();
+          chklst = chklst.toObject();
+          eProd.aircraftChecklist = chklst;
           return async.parallel([
             function(cb) {
               if (!(chklst.manufacturer != null)) {
@@ -55,7 +56,7 @@
                 return cb(null);
               });
             }, function(cb) {
-              if (!(chklist.model != null)) {
+              if (!(chklst.model != null)) {
                 cb(null);
                 return;
               }
@@ -84,13 +85,14 @@
     };
 
     ProductManager.prototype.expandAll = function(arrProducts, callback) {
-      var eArrProducts;
+      var eArrProducts,
+        _this = this;
       if (!(arrProducts != null)) {
         callback('Array cannot be a null reference', null);
       }
       eArrProducts = [];
       return async.forEach(arrProducts, function(item, cb) {
-        return this.expand(item, function(err, newItem) {
+        return _this.expand(item, function(err, newItem) {
           if (err != null) {
             cb(err);
             return;
