@@ -28,7 +28,7 @@
 <coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="com.android.ide.eclipse.editors.CommonXmlEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.wst.html.core.htmlsource.source" itemType="typePlaceholder" x="-1" y="-1"/>
-<coolItem id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" itemType="typePlaceholder" x="-1" y="-1"/>
+<coolItem id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="org.eclipse.ui.DefaultTextEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="group.help" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.help" itemType="typeToolBarContribution" x="-1" y="-1"/>
@@ -52,6 +52,7 @@
 <part id="10"/>
 <part id="11"/>
 <part id="12"/>
+<part id="13"/>
 </presentation>
 </folder>
 </info>
@@ -88,7 +89,7 @@
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/QRef/NodeServer/src/schema/AircraftChecklistSectionSchema.coffee"/>
 <editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="437" selectionTopPixel="0"/>
 </editor>
-<editor activePart="true" focus="true" id="org.eclipse.ui.DefaultTextEditor" name="AircraftChecklistItemSchema.coffee" partName="AircraftChecklistItemSchema.coffee" path="C:/SourceControl/QRef/trunk/Workspace/QRef/NodeServer/src/schema/AircraftChecklistItemSchema.coffee" title="AircraftChecklistItemSchema.coffee" tooltip="QRef/NodeServer/src/schema/AircraftChecklistItemSchema.coffee" workbook="DefaultEditorWorkbook">
+<editor id="org.eclipse.ui.DefaultTextEditor" name="AircraftChecklistItemSchema.coffee" partName="AircraftChecklistItemSchema.coffee" path="C:/SourceControl/QRef/trunk/Workspace/QRef/NodeServer/src/schema/AircraftChecklistItemSchema.coffee" title="AircraftChecklistItemSchema.coffee" tooltip="QRef/NodeServer/src/schema/AircraftChecklistItemSchema.coffee" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/QRef/NodeServer/src/schema/AircraftChecklistItemSchema.coffee"/>
 <editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="394" selectionTopPixel="0"/>
 </editor>
@@ -100,13 +101,17 @@
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/QRef/NodeServer/src/schema/UserProductSchema.coffee"/>
 <editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="0"/>
 </editor>
-<editor id="org.eclipse.ui.DefaultTextEditor" name="ProductManager.coffee" partName="ProductManager.coffee" path="C:/SourceControl/QRef/trunk/Workspace/QRef/NodeServer/src/db/manager/ProductManager.coffee" title="ProductManager.coffee" tooltip="QRef/NodeServer/src/db/manager/ProductManager.coffee" workbook="DefaultEditorWorkbook">
+<editor activePart="true" focus="true" id="org.eclipse.ui.DefaultTextEditor" name="ProductManager.coffee" partName="ProductManager.coffee" path="C:/SourceControl/QRef/trunk/Workspace/QRef/NodeServer/src/db/manager/ProductManager.coffee" title="ProductManager.coffee" tooltip="QRef/NodeServer/src/db/manager/ProductManager.coffee" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/QRef/NodeServer/src/db/manager/ProductManager.coffee"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1824" selectionTopPixel="0"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="631" selectionTopPixel="315"/>
 </editor>
 <editor id="org.eclipse.ui.DefaultTextEditor" name="UserProductsRoute.coffee" partName="UserProductsRoute.coffee" path="C:/SourceControl/QRef/trunk/Workspace/QRef/NodeServer/src/router/routes/ajax/user/UserProductsRoute.coffee" title="UserProductsRoute.coffee" tooltip="QRef/NodeServer/src/router/routes/ajax/user/UserProductsRoute.coffee" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/QRef/NodeServer/src/router/routes/ajax/user/UserProductsRoute.coffee"/>
 <editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="846" selectionTopPixel="90"/>
+</editor>
+<editor id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" name="app.js" partName="app.js" path="C:/SourceControl/QRef/trunk/Workspace/QRef/NodeServer/app.js" title="app.js" tooltip="QRef/NodeServer/app.js" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/QRef/NodeServer/app.js"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1496" selectionTopPixel="495"/>
 </editor>
 </editors>
 <views>
@@ -383,6 +388,8 @@
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/QRef/NodeServer/src/schema/UserProductSchema.coffee"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/QRef/NodeServer/src/db/manager/ProductManager.coffee"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/QRef/NodeServer/src/router/routes/ajax/user/UserProductsRoute.coffee"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" path="/QRef/NodeServer/app.js"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/QRef/NodeServer/src/db/manager/ProductManager.coffee"/>
 </editors>
 <item historyLabel="AircraftModelSchema.coffee" index="0">
 <position info="not_deleted" x="0" y="0"/>
@@ -480,8 +487,20 @@
 <item historyLabel="AircraftChecklistSectionSchema.coffee" index="9">
 <position info="not_deleted" x="437" y="0"/>
 </item>
-<item active="true" historyLabel="AircraftChecklistItemSchema.coffee" index="10">
+<item historyLabel="AircraftChecklistItemSchema.coffee" index="10">
 <position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="app.js" index="15">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="app.js" index="15">
+<position info="not_deleted" x="1333" y="0"/>
+</item>
+<item historyLabel="app.js" index="15">
+<position info="not_deleted" x="1697" y="0"/>
+</item>
+<item active="true" historyLabel="ProductManager.coffee" index="16">
+<position info="not_deleted" x="1848" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -501,6 +520,9 @@
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" name="app.js" tooltip="QRef/NodeServer/app.js">
+<persistable path="/QRef/NodeServer/app.js"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="UserProductsRoute.coffee" tooltip="QRef/NodeServer/src/router/routes/ajax/user/UserProductsRoute.coffee">
 <persistable path="/QRef/NodeServer/src/router/routes/ajax/user/UserProductsRoute.coffee"/>
 </file>
@@ -542,9 +564,6 @@
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="AircraftModelSchema.coffee" tooltip="QRef/NodeServer/src/schema/AircraftModelSchema.coffee">
 <persistable path="/QRef/NodeServer/src/schema/AircraftModelSchema.coffee"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" name="extension.js" tooltip="QRef/WebContent/js/extension.js">
-<persistable path="/QRef/WebContent/js/extension.js"/>
 </file>
 </mruList>
 </workbench>
