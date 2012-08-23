@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="59" version="2.0">
+<workbench progressCount="62" version="2.0">
 <workbenchAdvisor/>
 <window height="768" maximized="true" width="1024" x="25" y="25">
 <fastViewData fastViewLocation="1024"/>
@@ -15,17 +15,17 @@
 <coolItem id="adt.actionSet.wizards" itemType="typeToolBarContribution" x="84" y="22"/>
 <coolItem id="org.eclipse.debug.ui.launchActionSet" itemType="typeToolBarContribution" x="129" y="22"/>
 <coolItem id="org.eclipse.jst.j2ee.J2eeMainActionSet" itemType="typeToolBarContribution" x="91" y="22"/>
-<coolItem id="org.eclipse.search.searchActionSet" itemType="typeToolBarContribution" x="76" y="22"/>
-<coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="61" y="22"/>
+<coolItem id="org.eclipse.search.searchActionSet" itemType="typeToolBarContribution" x="99" y="22"/>
+<coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="130" y="22"/>
 <coolItem id="org.eclipse.wst.server.ui.internal.webbrowser.actionSet" itemType="typeToolBarContribution" x="38" y="22"/>
 <coolItem id="org.eclipse.wst.web.ui.wizardsActionSet" itemType="typeToolBarContribution" x="84" y="22"/>
 <coolItem id="org.eclipse.wst.ws.explorer.explorer" itemType="typeToolBarContribution" x="38" y="22"/>
 <coolItem id="org.eclipse.wst.xml.ui.perspective.NewFileToolBar" itemType="typeToolBarContribution" x="-1" y="-1"/>
-<coolItem id="org.eclipse.wst.xml.ui.design.DesignToolBar" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="org.eclipse.wst.xml.ui.design.DesignToolBar" itemType="typeToolBarContribution" x="61" y="22"/>
 <coolItem id="group.nav" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.navigate" itemType="typeToolBarContribution" x="190" y="22"/>
 <coolItem id="group.editor" itemType="typeGroupMarker"/>
-<coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typePlaceholder" x="-1" y="-1"/>
+<coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="com.android.ide.eclipse.editors.CommonXmlEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.wst.html.core.htmlsource.source" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
@@ -53,6 +53,11 @@
 <part id="11"/>
 <part id="12"/>
 <part id="13"/>
+<part id="14"/>
+<part id="15"/>
+<part id="16"/>
+<part id="17"/>
+<part id="18"/>
 </presentation>
 </folder>
 </info>
@@ -101,7 +106,7 @@
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/QRef/NodeServer/src/schema/UserProductSchema.coffee"/>
 <editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="0"/>
 </editor>
-<editor activePart="true" focus="true" id="org.eclipse.ui.DefaultTextEditor" name="ProductManager.coffee" partName="ProductManager.coffee" path="C:/SourceControl/QRef/trunk/Workspace/QRef/NodeServer/src/db/manager/ProductManager.coffee" title="ProductManager.coffee" tooltip="QRef/NodeServer/src/db/manager/ProductManager.coffee" workbook="DefaultEditorWorkbook">
+<editor id="org.eclipse.ui.DefaultTextEditor" name="ProductManager.coffee" partName="ProductManager.coffee" path="C:/SourceControl/QRef/trunk/Workspace/QRef/NodeServer/src/db/manager/ProductManager.coffee" title="ProductManager.coffee" tooltip="QRef/NodeServer/src/db/manager/ProductManager.coffee" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/QRef/NodeServer/src/db/manager/ProductManager.coffee"/>
 <editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="631" selectionTopPixel="315"/>
 </editor>
@@ -112,6 +117,25 @@
 <editor id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" name="app.js" partName="app.js" path="C:/SourceControl/QRef/trunk/Workspace/QRef/NodeServer/app.js" title="app.js" tooltip="QRef/NodeServer/app.js" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/QRef/NodeServer/app.js"/>
 <editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1496" selectionTopPixel="495"/>
+</editor>
+<editor id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" name="qrefdb.js" partName="qrefdb.js" path="C:/SourceControl/QRef/trunk/Workspace/QRef/NodeServer/qrefdb.js" title="qrefdb.js" tooltip="QRef/NodeServer/qrefdb.js" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/QRef/NodeServer/qrefdb.js"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2839" selectionTopPixel="1389"/>
+</editor>
+<editor id="com.android.ide.eclipse.editors.manifest.ManifestEditor" name="AndroidManifest.xml" partName="QRefDroid Manifest" path="C:/SourceControl/QRef/trunk/Workspace/QRefDroid/AndroidManifest.xml" title="QRefDroid Manifest" tooltip="QRefDroid/AndroidManifest.xml" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/QRefDroid/AndroidManifest.xml"/>
+</editor>
+<editor id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" name="extension.js" partName="extension.js" path="C:/SourceControl/QRef/trunk/Workspace/QRefDroid/assets/web/js/extension.js" title="extension.js" tooltip="QRefDroid/assets/web/js/extension.js" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/QRefDroid/assets/web/js/extension.js"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="511" selectionTopPixel="225"/>
+</editor>
+<editor id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" name="signin.js" partName="signin.js" path="C:/SourceControl/QRef/trunk/Workspace/QRefDroid/assets/web/js/signin.js" title="signin.js" tooltip="QRefDroid/assets/web/js/signin.js" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/QRefDroid/assets/web/js/signin.js"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="369" selectionTopPixel="24"/>
+</editor>
+<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Main.java" partName="Main.java" path="C:/SourceControl/QRef/trunk/Workspace/QRefDroid/src/com/qref/android/Main.java" title="Main.java" tooltip="QRefDroid/src/com/qref/android/Main.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/QRefDroid/src/com/qref/android/Main.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="791" selectionTopPixel="60"/>
 </editor>
 </editors>
 <views>
@@ -139,6 +163,11 @@
 </view>
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
+<expanded>
+<category IMemento.internal.id="Warnings (31 items)"/>
+<category IMemento.internal.id="Errors"/>
+<category IMemento.internal.id="Warnings"/>
+</expanded>
 <columnWidths org.eclipse.ui.ide.locationField="90" org.eclipse.ui.ide.markerType="90" org.eclipse.ui.ide.pathField="120" org.eclipse.ui.ide.resourceField="90" org.eclipse.ui.ide.severityAndDescriptionField="300"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.resourceField"/>
@@ -157,7 +186,7 @@
 </view>
 <view id="org.eclipse.wst.server.ui.ServersView" partName="Servers"/>
 </views>
-<perspectives activePart="org.eclipse.ui.DefaultTextEditor" activePerspective="org.eclipse.wst.web.ui.webDevPerspective">
+<perspectives activePart="org.eclipse.jdt.ui.CompilationUnitEditor" activePerspective="org.eclipse.wst.web.ui.webDevPerspective">
 <perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.eclipse.jst.j2ee.internal.perspective.J2EEPerspective" id="org.eclipse.jst.j2ee.J2EEPerspective" label="Java EE"/>
 <alwaysOnActionSet id="org.eclipse.mylyn.context.ui.actionSet"/>
@@ -390,6 +419,11 @@
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/QRef/NodeServer/src/router/routes/ajax/user/UserProductsRoute.coffee"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" path="/QRef/NodeServer/app.js"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/QRef/NodeServer/src/db/manager/ProductManager.coffee"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" path="/QRef/NodeServer/qrefdb.js"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.manifest.ManifestEditor" path="/QRefDroid/AndroidManifest.xml"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" path="/QRefDroid/assets/web/js/extension.js"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" path="/QRefDroid/assets/web/js/signin.js"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/QRefDroid/src/com/qref/android/Main.java"/>
 </editors>
 <item historyLabel="AircraftModelSchema.coffee" index="0">
 <position info="not_deleted" x="0" y="0"/>
@@ -499,8 +533,34 @@
 <item historyLabel="app.js" index="15">
 <position info="not_deleted" x="1697" y="0"/>
 </item>
-<item active="true" historyLabel="ProductManager.coffee" index="16">
+<item historyLabel="ProductManager.coffee" index="16">
 <position info="not_deleted" x="1848" y="0"/>
+</item>
+<item historyLabel="qrefdb.js" index="17">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="QRefDroid Manifest" index="18"/>
+<item historyLabel="extension.js" index="19">
+<position info="not_deleted" x="420" y="0"/>
+</item>
+<item historyLabel="signin.js" index="20">
+<position info="not_deleted" x="203" y="0"/>
+</item>
+<item historyLabel="extension.js" index="19">
+<position info="not_deleted" x="511" y="0"/>
+</item>
+<item historyLabel="signin.js" index="20">
+<position info="not_deleted" x="604" y="0"/>
+</item>
+<item historyLabel="Main.java" index="21">
+<position info="not_deleted" x="400" y="0"/>
+</item>
+<item historyLabel="signin.js" index="20">
+<position info="not_deleted" x="369" y="0"/>
+</item>
+<item historyLabel="QRefDroid Manifest" index="18"/>
+<item active="true" historyLabel="Main.java" index="21">
+<position info="not_deleted" x="323" y="4"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -520,6 +580,21 @@
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Main.java" tooltip="QRefDroid/src/com/qref/android/Main.java">
+<persistable path="/QRefDroid/src/com/qref/android/Main.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" name="signin.js" tooltip="QRefDroid/assets/web/js/signin.js">
+<persistable path="/QRefDroid/assets/web/js/signin.js"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" name="extension.js" tooltip="QRefDroid/assets/web/js/extension.js">
+<persistable path="/QRefDroid/assets/web/js/extension.js"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.manifest.ManifestEditor" name="AndroidManifest.xml" tooltip="QRefDroid/AndroidManifest.xml">
+<persistable path="/QRefDroid/AndroidManifest.xml"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" name="qrefdb.js" tooltip="QRef/NodeServer/qrefdb.js">
+<persistable path="/QRef/NodeServer/qrefdb.js"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" name="app.js" tooltip="QRef/NodeServer/app.js">
 <persistable path="/QRef/NodeServer/app.js"/>
 </file>
@@ -549,21 +624,6 @@
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="ProductsRoute.coffee" tooltip="QRef/NodeServer/src/router/routes/ajax/aircraft/ProductsRoute.coffee">
 <persistable path="/QRef/NodeServer/src/router/routes/ajax/aircraft/ProductsRoute.coffee"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="ProductSchema.coffee" tooltip="QRef/NodeServer/src/schema/ProductSchema.coffee">
-<persistable path="/QRef/NodeServer/src/schema/ProductSchema.coffee"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="AircraftChecklistSchema.coffee" tooltip="QRef/NodeServer/src/schema/AircraftChecklistSchema.coffee">
-<persistable path="/QRef/NodeServer/src/schema/AircraftChecklistSchema.coffee"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Main.java" tooltip="QRefDroid/src/com/qref/android/Main.java">
-<persistable path="/QRefDroid/src/com/qref/android/Main.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="AircraftManufacturerSchema.coffee" tooltip="QRef/NodeServer/src/schema/AircraftManufacturerSchema.coffee">
-<persistable path="/QRef/NodeServer/src/schema/AircraftManufacturerSchema.coffee"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="AircraftModelSchema.coffee" tooltip="QRef/NodeServer/src/schema/AircraftModelSchema.coffee">
-<persistable path="/QRef/NodeServer/src/schema/AircraftModelSchema.coffee"/>
 </file>
 </mruList>
 </workbench>
