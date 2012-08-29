@@ -12,7 +12,7 @@ class ProductRoute extends AjaxRoute
 			res.json(resp, 200)
 			return
 		
-		db = new QRefDatabase()
+		db = QRefDatabase.instance()
 		token = req.param('token')
 		productId = req.params.productId
 		
@@ -54,7 +54,7 @@ class ProductRoute extends AjaxRoute
 			res.json(resp, 200)
 			return
 		
-		db = new QRefDatabase()
+		db = QRefDatabase.instance()
 		token = req.param('token')
 		productId = req.params.productId
 		

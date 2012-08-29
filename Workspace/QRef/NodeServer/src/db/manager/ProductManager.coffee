@@ -5,7 +5,7 @@ QRefDatabase = require('../QRefDatabase')
 class ProductManager
 	constructor: () ->
 	expand: (product, callback) ->
-		db = new QRefDatabase()
+		db = QRefDatabase.instance()
 		if not product?
 			callback('Product cannot be null', null)
 			return

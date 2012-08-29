@@ -12,7 +12,7 @@ class AircraftManufacturersRoute extends AjaxRoute
 			res.json(resp, 200)
 			return
 		
-		db = new QRefDatabase()
+		db = QRefDatabase.instance()
 		token = req.param('token')
 		
 		UserAuth.validateToken(token, (err, isTokenValid) ->
@@ -60,7 +60,7 @@ class AircraftManufacturersRoute extends AjaxRoute
 			res.json(resp, 200)
 			return
 		
-		db = new QRefDatabase()
+		db = QRefDatabase.instance()
 		token = req.param('token')
 		
 		UserAuth.validateToken(token, (err, isTokenValid) ->

@@ -39,7 +39,7 @@
         res.json(resp, 200);
         return;
       }
-      db = new QRefDatabase();
+      db = QRefDatabase.instance();
       token = req.param('token');
       checklistId = req.params.checklistId;
       return UserAuth.validateToken(token, function(err, isTokenValid) {
@@ -80,7 +80,7 @@
         res.json(resp, 200);
         return;
       }
-      db = new QRefDatabase();
+      db = QRefDatabase.instance();
       token = req.param('token');
       checklistId = req.params.checklistId;
       return UserAuth.validateToken(token, function(err, isTokenValid) {

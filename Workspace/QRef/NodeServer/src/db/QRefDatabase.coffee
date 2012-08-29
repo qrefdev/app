@@ -36,5 +36,6 @@ class QRefDatabase
 		@UserProduct = @connection.model('user.products', UserProductSchema)
 	getConnection: () -> @connection
 	getUrl: () -> @url
-module.exports = QRefDatabase
+	instance: () -> @
+module.exports = new QRefDatabase()
 		

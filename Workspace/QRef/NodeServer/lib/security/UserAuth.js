@@ -37,7 +37,7 @@
     UserAuth.prototype.validateCredential = function(userName, password, callback) {
       var db,
         _this = this;
-      db = new QRefDatabase();
+      db = QRefDatabase.instance();
       return db.User.where('userName').equals(userName).findOne(function(err, user) {
         var pwHash;
         if (err != null) {
@@ -55,7 +55,7 @@
     UserAuth.prototype.validateToken = function(token, callback) {
       var db,
         _this = this;
-      db = new QRefDatabase();
+      db = QRefDatabase.instance();
       return db.AuthToken.where('token').equals(token).findOne(function(err, obj) {
         if (err != null) {
           callback(err, false);
@@ -72,7 +72,7 @@
     UserAuth.prototype.login = function(userName, password, callback) {
       var db,
         _this = this;
-      db = new QRefDatabase();
+      db = QRefDatabase.instance();
       return db.User.where('userName').equals(userName).findOne(function(err, user) {
         var expiry, pwHash, tk;
         if (err != null) {
@@ -110,7 +110,7 @@
 
     UserAuth.prototype.refreshToken = function(token, callback) {
       var db;
-      db = new QRefDatabase();
+      db = QRefDatabase.instance();
       return db.AuthToken.where('token').equals(token).findOne(function(err, obj) {
         var expiry;
         if (err != null) {
@@ -140,7 +140,7 @@
 
     UserAuth.prototype.createAccount = function(userName, password, callback) {
       var db, user, userGuid, userHash, userSalt;
-      db = new QRefDatabase();
+      db = QRefDatabase.instance();
       userSalt = this.salt();
       userGuid = new ObjectId();
       userHash = this.securePassword(userGuid, userSalt, password);
@@ -171,7 +171,7 @@
 
     UserAuth.prototype.userFromToken = function(token, callback) {
       var db;
-      db = new QRefDatabase();
+      db = QRefDatabase.instance();
       return db.AuthToken.where('token').equals(token).populate('user').findOne(function(err, tk) {
         if (err != null) {
           callback(err, null);

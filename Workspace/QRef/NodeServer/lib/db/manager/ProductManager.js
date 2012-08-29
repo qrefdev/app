@@ -17,7 +17,7 @@
 
     ProductManager.prototype.expand = function(product, callback) {
       var db, eProd;
-      db = new QRefDatabase();
+      db = QRefDatabase.instance();
       if (!(product != null)) {
         callback('Product cannot be null', null);
         return;

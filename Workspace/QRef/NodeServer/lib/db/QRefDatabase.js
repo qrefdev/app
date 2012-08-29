@@ -64,10 +64,14 @@
       return this.url;
     };
 
+    QRefDatabase.prototype.instance = function() {
+      return this;
+    };
+
     return QRefDatabase;
 
   })();
 
-  module.exports = QRefDatabase;
+  module.exports = new QRefDatabase();
 
 }).call(this);

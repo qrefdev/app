@@ -12,7 +12,7 @@ class AircraftChecklistsRoute extends AjaxRoute
 			res.json(resp, 200)
 			return
 		
-		db = new QRefDatabase()
+		db = QRefDatabase.instance()
 		token = req.param('token')
 		
 		UserAuth.validateToken(token, (err, isTokenValid) ->
@@ -62,7 +62,7 @@ class AircraftChecklistsRoute extends AjaxRoute
 			res.json(resp, 200)
 			return
 		
-		db = new QRefDatabase()
+		db = QRefDatabase.instance()
 		token = req.param('token')
 		
 		UserAuth.validateToken(token, (err, isTokenValid) ->
@@ -82,6 +82,14 @@ class AircraftChecklistsRoute extends AjaxRoute
 			newObj.takeoff = req.body.takeoff
 			newObj.landing = req.body.landing
 			newObj.emergencies = req.body.emergenices
+			newObj.serialNumber = req.body.serialNumber
+			newObj.modelYear = req.body.modelYear
+			
+			if req.body?.tailNumber?
+				newObj.tailNumber = req.body.tailNumber
+				
+			if req.body?.user?
+				newObj.user = req.body.user
 			
 			if req.body?.version?
 				newObj.version = req.body.version
@@ -115,6 +123,7 @@ class AircraftChecklistsRoute extends AjaxRoute
 			  (req.body? and req.body?.token? and req.body?.model? and  
 			 	req.body?.manufacturer? and req.body?.preflight? and req.body?.takeoff? and
 			 	req.body?.landing? and req.body?.emergencies? and
+			 	req.body?.modelYear and req.body?.serialNumber and
 			 	req.body?.mode? and req.body.mode == 'ajax')
 			true
 		else

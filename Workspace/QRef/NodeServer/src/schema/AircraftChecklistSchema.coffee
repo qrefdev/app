@@ -12,6 +12,21 @@ AircraftChecklistSchemaInternal =
 		type: ObjectId
 		ref: 'aircraft.models'
 		required: true
+	modelYear: 
+		type: String
+		required: true
+	serialNumber: 
+		type: String
+		required: true
+	tailNumber:
+		type: String
+		required: false
+		default: null
+	user:
+		type: ObjectId
+		ref: 'users'
+		required: false
+		default: null
 	version:
 		type: Number
 		required: true
@@ -36,5 +51,5 @@ AircraftChecklistSchemaInternal =
 		required: false
 
 AircraftChecklistSchema = new Schema(AircraftChecklistSchemaInternal)
-AircraftChecklistSchema.index({ manufacturer: 1, model: 1, version: 1 }, { unique: true })
+AircraftChecklistSchema.index({ manufacturer: 1, model: 1, version: 1, modelYear: 1, serialNumber: 1 }, { unique: true })
 module.exports = AircraftChecklistSchema

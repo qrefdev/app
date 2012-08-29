@@ -12,7 +12,7 @@ class AircraftChecklistRoute extends AjaxRoute
 			res.json(resp, 200)
 			return
 		
-		db = new QRefDatabase()
+		db = QRefDatabase.instance()
 		token = req.param('token')
 		checklistId = req.params.checklistId
 		
@@ -53,7 +53,7 @@ class AircraftChecklistRoute extends AjaxRoute
 			res.json(resp, 200)
 			return
 		
-		db = new QRefDatabase()
+		db = QRefDatabase.instance()
 		token = req.param('token')
 		checklistId = req.params.checklistId
 		

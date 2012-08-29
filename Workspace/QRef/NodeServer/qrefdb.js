@@ -50,6 +50,8 @@ if (cluster.isMaster) {
 	var express = require('express'),
 		Router = require('./lib/router/Router');
 	
+	var QRefDatabase = require('./lib/db/QRefDatabase');
+	
 	var app = module.exports = express.createServer();
 	
 	var allowCrossDomain = function(req, res, next) {

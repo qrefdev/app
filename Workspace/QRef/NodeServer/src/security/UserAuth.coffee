@@ -17,7 +17,7 @@ class UserAuth
 		sPassword = '' + Date.now() + crypto.randomBytes(64)
 		@.securePassword(key, salt, sPassword)
 	validateCredential: (userName, password, callback) ->
-		db = new QRefDatabase()
+		db = QRefDatabase.instance()
 		db.User.where('userName')
 				.equals(userName)
 				.findOne((err, user) => 
@@ -30,7 +30,7 @@ class UserAuth
 						callback(null, false)
 				)
 	validateToken: (token, callback) ->
-		db = new QRefDatabase()
+		db = QRefDatabase.instance()
 		db.AuthToken.where('token')
 					 .equals(token)
 					 .findOne((err, obj) =>
@@ -43,7 +43,7 @@ class UserAuth
 					 		callback(null, false)
 					 )
 	login: (userName, password, callback) ->
-		db = new QRefDatabase()
+		db = QRefDatabase.instance()
 	
 			
 		db.User.where('userName')
@@ -77,7 +77,7 @@ class UserAuth
 	validateRequest: (req, callback) ->
 		@.validateToken(req.header('Authorization'), callback)
 	refreshToken: (token, callback) ->
-		db = new QRefDatabase()
+		db = QRefDatabase.instance()
 		db.AuthToken.where('token')
 					 .equals(token)
 					 .findOne((err, obj) ->
@@ -101,7 +101,7 @@ class UserAuth
 					 		callback(null, false)
 					 )
 	createAccount: (userName, password, callback) ->
-		db = new QRefDatabase()
+		db = QRefDatabase.instance()
 		userSalt = @.salt()
 		userGuid = new ObjectId()
 		userHash = @.securePassword(userGuid, userSalt, password)
@@ -132,7 +132,7 @@ class UserAuth
 					
 				)
 	userFromToken: (token, callback) ->
-		db = new QRefDatabase()
+		db = QRefDatabase.instance()
 		db.AuthToken.where('token')
 					.equals(token)
 					.populate('user')
