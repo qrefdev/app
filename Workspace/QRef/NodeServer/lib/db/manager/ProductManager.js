@@ -27,57 +27,45 @@
       } else {
         eProd = product;
       }
-      if (eProd.productCategory === 'aviation' && eProd.productType === 'checklist' && (eProd.aircraftChecklist != null)) {
-        return db.AircraftChecklist.findById(eProd.aircraftChecklist).exec(function(err, chklst) {
+      if (eProd.productCategory === 'aviation' && eProd.productType === 'checklist') {
+        return async.parallel([
+          function(cb) {
+            if (!(eProd.manufacturer != null)) {
+              cb(null);
+              return;
+            }
+            return db.AircraftManufacturer.findById(eProd.manufacturer).exec(function(err, mfr) {
+              if (err != null) {
+                cb(err);
+              }
+              if (!(mfr != null)) {
+                cb('Not Found');
+              }
+              eProd.manufacturer = mfr.toObject();
+              return cb(null);
+            });
+          }, function(cb) {
+            if (!(eProd.model != null)) {
+              cb(null);
+              return;
+            }
+            return db.AircraftModel.findById(eProd.model).exec(function(err, mdl) {
+              if (err != null) {
+                cb(err);
+              }
+              if (!(mdl != null)) {
+                cb('Not Found');
+              }
+              eProd.model = mdl.toObject();
+              return cb(null);
+            });
+          }
+        ], function(err, results) {
           if (err != null) {
             callback(err, null);
             return;
           }
-          if (!(chklst != null)) {
-            callback('Not Found', null);
-            return;
-          }
-          chklst = chklst.toObject();
-          eProd.aircraftChecklist = chklst;
-          return async.parallel([
-            function(cb) {
-              if (!(chklst.manufacturer != null)) {
-                cb(null);
-                return;
-              }
-              return db.AircraftManufacturer.findById(chklst.manufacturer).exec(function(err, mfr) {
-                if (err != null) {
-                  cb(err);
-                }
-                if (!(mfr != null)) {
-                  cb('Not Found');
-                }
-                chklst.manufacturer = mfr.toObject();
-                return cb(null);
-              });
-            }, function(cb) {
-              if (!(chklst.model != null)) {
-                cb(null);
-                return;
-              }
-              return db.AircraftModel.findById(chklst.model).exec(function(err, mdl) {
-                if (err != null) {
-                  cb(err);
-                }
-                if (!(mdl != null)) {
-                  cb('Not Found');
-                }
-                chklst.model = mdl.toObject();
-                return cb(null);
-              });
-            }
-          ], function(err, results) {
-            if (err != null) {
-              callback(err, null);
-              return;
-            }
-            return callback(null, eProd);
-          });
+          return callback(null, eProd);
         });
       } else {
         return callback(null, eProd);

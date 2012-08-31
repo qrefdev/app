@@ -77,6 +77,9 @@ class ProductsRoute extends AjaxRoute
 			newObj = new db.Product()
 			newObj.name = req.body.name
 			newObj.productType = req.body.productType
+			newObj.manufacturer = req.body.manufacturer
+			newObj.model = req.body.model
+			newObj.modelYear = req.body.modelYear
 			
 			if req.body?.productCategory?
 				newObj.productCategory = req.body.productCategory
@@ -103,7 +106,9 @@ class ProductsRoute extends AjaxRoute
 			
 			if req.body?.aircraftChecklist?
 				newObj.aircraftChecklist = req.body.aircraftChecklist
-				
+			
+			if req.body?.serialNumber?
+				newObj.serialNumber = req.body.serialNumber
 			
 			newObj.save((err) ->
 				if err?
@@ -125,7 +130,9 @@ class ProductsRoute extends AjaxRoute
 	isValidRequest: (req) ->
 		if (req.query? and req.query?.token?) or
 			 (req.body? and req.body?.token? and req.body?.name? and 
-			 req.body?.productType? and req.body?.mode? and req.body.mode == 'ajax')
+			 req.body?.productType? and req.body?.mode? and
+			 req.body?.manufacturer? and req.body?.model? and
+			 req.body?.modelYear? and req.body.mode == 'ajax')
 			true
 		else
 			false 

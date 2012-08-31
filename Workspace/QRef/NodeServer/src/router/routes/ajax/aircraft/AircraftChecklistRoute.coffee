@@ -90,16 +90,17 @@ class AircraftChecklistRoute extends AjaxRoute
 				
 				if req.body?.version?
 					obj.version = req.body.version
+					
+				if req.body?.index?
+					obj.index = req.body.index
 				
 				if req.body?.productIcon?
 					obj.productIcon = req.body.productIcon
-				else 
-					obj.productIcon = null
+
 				
 				if req.body?.coverImage?
 					obj.coverImage = req.body.coverImage
-				else
-					obj.coverImage = null
+		
 					
 				obj.save((err) ->
 					if err?

@@ -82,11 +82,13 @@ class AircraftChecklistsRoute extends AjaxRoute
 			newObj.takeoff = req.body.takeoff
 			newObj.landing = req.body.landing
 			newObj.emergencies = req.body.emergenices
-			newObj.serialNumber = req.body.serialNumber
 			newObj.modelYear = req.body.modelYear
 			
 			if req.body?.tailNumber?
 				newObj.tailNumber = req.body.tailNumber
+				
+			if req.body?.index?
+				newObj.index = req.body.index
 				
 			if req.body?.user?
 				newObj.user = req.body.user
@@ -123,7 +125,7 @@ class AircraftChecklistsRoute extends AjaxRoute
 			  (req.body? and req.body?.token? and req.body?.model? and  
 			 	req.body?.manufacturer? and req.body?.preflight? and req.body?.takeoff? and
 			 	req.body?.landing? and req.body?.emergencies? and
-			 	req.body?.modelYear and req.body?.serialNumber and
+			 	req.body?.modelYear and
 			 	req.body?.mode? and req.body.mode == 'ajax')
 			true
 		else

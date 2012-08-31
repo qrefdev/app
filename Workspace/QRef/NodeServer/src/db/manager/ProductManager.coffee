@@ -16,63 +16,49 @@ class ProductManager
 			eProd = product
 		
 		if (eProd.productCategory == 'aviation' and
-			eProd.productType == 'checklist' and eProd.aircraftChecklist?)
-				db.AircraftChecklist.findById(eProd.aircraftChecklist)
-					.exec((err, chklst) ->
-						if err?
-							callback(err, null)
-							return
-						
-						if not chklst?
-							callback('Not Found', null)
-							return
-							
-						chklst = chklst.toObject()
-						eProd.aircraftChecklist = chklst
-						
-						async.parallel([
-										(cb) ->
-											if not chklst.manufacturer?
-												cb(null)
-												return
-												
-											db.AircraftManufacturer.findById(chklst.manufacturer)
-												.exec((err, mfr) ->
-													if err?
-														cb(err)
-													if not mfr?
-														cb('Not Found')
-													
-													chklst.manufacturer = mfr.toObject()
-													cb(null)
-												)
-										,
-										(cb) ->
-											if not chklst.model?
-												cb(null)
-												return
-												
-											db.AircraftModel.findById(chklst.model)
-												.exec((err, mdl) ->
-													if err?
-														cb(err)
-													if not mdl?
-														cb('Not Found')
-													
-													chklst.model = mdl.toObject()
-													cb(null)
-												)
-									],
-									(err, results) ->
-									
-										if err?
-											callback(err, null)
-											return
+			eProd.productType == 'checklist')
+				async.parallel([
+								(cb) ->
+									if not eProd.manufacturer?
+										cb(null)
+										return
+										
+									db.AircraftManufacturer.findById(eProd.manufacturer)
+										.exec((err, mfr) ->
+											if err?
+												cb(err)
+											if not mfr?
+												cb('Not Found')
 											
-										callback(null, eProd)
-						)
-						
+											eProd.manufacturer = mfr.toObject()
+											cb(null)
+										)
+								,
+								(cb) ->
+									if not eProd.model?
+										cb(null)
+										return
+										
+									db.AircraftModel.findById(eProd.model)
+										.exec((err, mdl) ->
+											if err?
+												cb(err)
+											if not mdl?
+												cb('Not Found')
+											
+											eProd.model = mdl.toObject()
+											cb(null)
+										)
+							],
+							(err, results) ->
+							
+								if err?
+									callback(err, null)
+									return
+									
+								callback(null, eProd)
 				)
+						
 		else
 			callback(null, eProd)
 	expandAll: (arrProducts, callback) =>

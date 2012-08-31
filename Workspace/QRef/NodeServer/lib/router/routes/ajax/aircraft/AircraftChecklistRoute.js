@@ -93,7 +93,7 @@
         }
         query = db.AircraftChecklist.findById(checklistId);
         return query.exec(function(err, obj) {
-          var _ref, _ref1, _ref2;
+          var _ref, _ref1, _ref2, _ref3;
           if (err != null) {
             resp = new AjaxResponse();
             resp.failure(err, 500);
@@ -115,15 +115,14 @@
           if (((_ref = req.body) != null ? _ref.version : void 0) != null) {
             obj.version = req.body.version;
           }
-          if (((_ref1 = req.body) != null ? _ref1.productIcon : void 0) != null) {
-            obj.productIcon = req.body.productIcon;
-          } else {
-            obj.productIcon = null;
+          if (((_ref1 = req.body) != null ? _ref1.index : void 0) != null) {
+            obj.index = req.body.index;
           }
-          if (((_ref2 = req.body) != null ? _ref2.coverImage : void 0) != null) {
+          if (((_ref2 = req.body) != null ? _ref2.productIcon : void 0) != null) {
+            obj.productIcon = req.body.productIcon;
+          }
+          if (((_ref3 = req.body) != null ? _ref3.coverImage : void 0) != null) {
             obj.coverImage = req.body.coverImage;
-          } else {
-            obj.coverImage = null;
           }
           return obj.save(function(err) {
             if (err != null) {

@@ -91,7 +91,7 @@
       db = QRefDatabase.instance();
       token = req.param('token');
       return UserAuth.validateToken(token, function(err, isTokenValid) {
-        var newObj, _ref, _ref1, _ref2, _ref3, _ref4;
+        var newObj, _ref, _ref1, _ref2, _ref3, _ref4, _ref5;
         if ((err != null) || !isTokenValid === true) {
           resp = new AjaxResponse();
           resp.failure('Not Authorized', 403);
@@ -105,23 +105,25 @@
         newObj.takeoff = req.body.takeoff;
         newObj.landing = req.body.landing;
         newObj.emergencies = req.body.emergenices;
-        newObj.serialNumber = req.body.serialNumber;
         newObj.modelYear = req.body.modelYear;
         if (((_ref = req.body) != null ? _ref.tailNumber : void 0) != null) {
           newObj.tailNumber = req.body.tailNumber;
         }
-        if (((_ref1 = req.body) != null ? _ref1.user : void 0) != null) {
+        if (((_ref1 = req.body) != null ? _ref1.index : void 0) != null) {
+          newObj.index = req.body.index;
+        }
+        if (((_ref2 = req.body) != null ? _ref2.user : void 0) != null) {
           newObj.user = req.body.user;
         }
-        if (((_ref2 = req.body) != null ? _ref2.version : void 0) != null) {
+        if (((_ref3 = req.body) != null ? _ref3.version : void 0) != null) {
           newObj.version = req.body.version;
         } else {
           newObj.version = 1;
         }
-        if (((_ref3 = req.body) != null ? _ref3.productIcon : void 0) != null) {
+        if (((_ref4 = req.body) != null ? _ref4.productIcon : void 0) != null) {
           newObj.productIcon = req.body.productIcon;
         }
-        if (((_ref4 = req.body) != null ? _ref4.coverImage : void 0) != null) {
+        if (((_ref5 = req.body) != null ? _ref5.coverImage : void 0) != null) {
           newObj.coverImage = req.body.coverImage;
         }
         return newObj.save(function(err) {
@@ -140,8 +142,8 @@
     };
 
     AircraftChecklistsRoute.prototype.isValidRequest = function(req) {
-      var _ref, _ref1, _ref10, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
-      if (((req.query != null) && (((_ref = req.query) != null ? _ref.token : void 0) != null)) || ((req.body != null) && (((_ref1 = req.body) != null ? _ref1.token : void 0) != null) && (((_ref2 = req.body) != null ? _ref2.model : void 0) != null) && (((_ref3 = req.body) != null ? _ref3.manufacturer : void 0) != null) && (((_ref4 = req.body) != null ? _ref4.preflight : void 0) != null) && (((_ref5 = req.body) != null ? _ref5.takeoff : void 0) != null) && (((_ref6 = req.body) != null ? _ref6.landing : void 0) != null) && (((_ref7 = req.body) != null ? _ref7.emergencies : void 0) != null) && ((_ref8 = req.body) != null ? _ref8.modelYear : void 0) && ((_ref9 = req.body) != null ? _ref9.serialNumber : void 0) && (((_ref10 = req.body) != null ? _ref10.mode : void 0) != null) && req.body.mode === 'ajax')) {
+      var _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
+      if (((req.query != null) && (((_ref = req.query) != null ? _ref.token : void 0) != null)) || ((req.body != null) && (((_ref1 = req.body) != null ? _ref1.token : void 0) != null) && (((_ref2 = req.body) != null ? _ref2.model : void 0) != null) && (((_ref3 = req.body) != null ? _ref3.manufacturer : void 0) != null) && (((_ref4 = req.body) != null ? _ref4.preflight : void 0) != null) && (((_ref5 = req.body) != null ? _ref5.takeoff : void 0) != null) && (((_ref6 = req.body) != null ? _ref6.landing : void 0) != null) && (((_ref7 = req.body) != null ? _ref7.emergencies : void 0) != null) && ((_ref8 = req.body) != null ? _ref8.modelYear : void 0) && (((_ref9 = req.body) != null ? _ref9.mode : void 0) != null) && req.body.mode === 'ajax')) {
         return true;
       } else {
         return false;

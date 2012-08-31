@@ -43,7 +43,7 @@
         res.json(resp, 200);
         return;
       }
-      db = new QRefDatabase();
+      db = QRefDatabase.instance();
       token = req.param('token');
       return UserAuth.validateToken(token, function(err, isTokenValid) {
         if ((err != null) || !isTokenValid === true) {

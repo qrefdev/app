@@ -92,7 +92,7 @@
       db = QRefDatabase.instance();
       token = req.param('token');
       return UserAuth.validateToken(token, function(err, isTokenValid) {
-        var newObj, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7;
+        var newObj, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8;
         if ((err != null) || !isTokenValid === true) {
           resp = new AjaxResponse();
           resp.failure('Not Authorized', 403);
@@ -102,6 +102,9 @@
         newObj = new db.Product();
         newObj.name = req.body.name;
         newObj.productType = req.body.productType;
+        newObj.manufacturer = req.body.manufacturer;
+        newObj.model = req.body.model;
+        newObj.modelYear = req.body.modelYear;
         if (((_ref = req.body) != null ? _ref.productCategory : void 0) != null) {
           newObj.productCategory = req.body.productCategory;
         } else {
@@ -128,6 +131,9 @@
         if (((_ref7 = req.body) != null ? _ref7.aircraftChecklist : void 0) != null) {
           newObj.aircraftChecklist = req.body.aircraftChecklist;
         }
+        if (((_ref8 = req.body) != null ? _ref8.serialNumber : void 0) != null) {
+          newObj.serialNumber = req.body.serialNumber;
+        }
         return newObj.save(function(err) {
           if (err != null) {
             resp = new AjaxResponse();
@@ -144,8 +150,8 @@
     };
 
     ProductsRoute.prototype.isValidRequest = function(req) {
-      var _ref, _ref1, _ref2, _ref3, _ref4;
-      if (((req.query != null) && (((_ref = req.query) != null ? _ref.token : void 0) != null)) || ((req.body != null) && (((_ref1 = req.body) != null ? _ref1.token : void 0) != null) && (((_ref2 = req.body) != null ? _ref2.name : void 0) != null) && (((_ref3 = req.body) != null ? _ref3.productType : void 0) != null) && (((_ref4 = req.body) != null ? _ref4.mode : void 0) != null) && req.body.mode === 'ajax')) {
+      var _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7;
+      if (((req.query != null) && (((_ref = req.query) != null ? _ref.token : void 0) != null)) || ((req.body != null) && (((_ref1 = req.body) != null ? _ref1.token : void 0) != null) && (((_ref2 = req.body) != null ? _ref2.name : void 0) != null) && (((_ref3 = req.body) != null ? _ref3.productType : void 0) != null) && (((_ref4 = req.body) != null ? _ref4.mode : void 0) != null) && (((_ref5 = req.body) != null ? _ref5.manufacturer : void 0) != null) && (((_ref6 = req.body) != null ? _ref6.model : void 0) != null) && (((_ref7 = req.body) != null ? _ref7.modelYear : void 0) != null) && req.body.mode === 'ajax')) {
         return true;
       } else {
         return false;

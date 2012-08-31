@@ -47,7 +47,25 @@ ProductSchemaInternal =
 		type: Boolean
 		required: true
 		default: false
+	serialNumber: 
+		type: String
+		required: false
+		default: null
+	manufacturer: 
+		type: ObjectId
+		ref: 'aircraft.manufacturers'
+		required: true
+	model: 
+		type: ObjectId
+		ref: 'aircraft.models'
+		required: true
+	modelYear: 
+		type: String
+		required: true
 	
 	
 ProductSchema = new Schema(ProductSchemaInternal)
+ProductSchema.index({ manufacturer: 1, model: 1 })
+ProductSchema.index({ manufacturer: 1, model: 1, modelYear: 1 })
+ProductSchema.index({ name: 1 }, { unique: true })
 module.exports = ProductSchema

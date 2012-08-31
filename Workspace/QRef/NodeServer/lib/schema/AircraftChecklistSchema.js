@@ -24,9 +24,10 @@
       type: String,
       required: true
     },
-    serialNumber: {
-      type: String,
-      required: true
+    index: {
+      type: Number,
+      required: false,
+      "default": null
     },
     tailNumber: {
       type: String,
@@ -77,7 +78,7 @@
     model: 1,
     version: 1,
     modelYear: 1,
-    serialNumber: 1
+    tailNumber: 1
   }, {
     unique: true
   });
