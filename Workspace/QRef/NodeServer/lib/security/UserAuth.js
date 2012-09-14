@@ -9,9 +9,25 @@
 
   ObjectId = mongoose.Types.ObjectId;
 
+  /*
+  Secure utility methods for managing users, credentials, and tokens.
+  @author Nathan Klick
+  @copyright QRef 2012
+  */
+
+
   UserAuth = (function() {
+    /*
+    	Creates a new UserAuth object instance.
+    */
 
     function UserAuth() {}
+
+    /*
+    	Generates a random salt.
+    	@return [String] A hexadecimal string representing a SHA-512 hash.
+    */
+
 
     UserAuth.prototype.salt = function() {
       var hash;
@@ -19,6 +35,15 @@
       hash.update(crypto.randomBytes(1024));
       return hash.digest('hex');
     };
+
+    /*
+    	Performs an HMAC transformation on a password using a given key and salt values.
+    	@param key [String] The key to use with the HMAC algorithm.
+    	@param salt [String] A hexadecimal string representing a SHA-512 salt value.
+    	@param password [String] The clear text password to be encoded.
+    	@return [String] A hexadecimal string representing a secure SHA-512 HMAC representation of the clear text password.
+    */
+
 
     UserAuth.prototype.securePassword = function(key, salt, password) {
       var hmac, sKey;
@@ -28,11 +53,27 @@
       return hmac.digest('hex');
     };
 
+    /*
+    	Generates a random secure token using the given key and salt values.
+    	@param key [String] The key to use with the HMAC algorithm.
+    	@param salt [String] A hexadecimal string representing a SHA-512 salt value.
+    	@return [String] A hexadecimal string representing a secure random token.
+    */
+
+
     UserAuth.prototype.secureToken = function(key, salt) {
       var sPassword;
       sPassword = '' + Date.now() + crypto.randomBytes(64);
       return this.securePassword(key, salt, sPassword);
     };
+
+    /*
+    	Validates a given userName and password against the database.
+    	@param userName [String] The username to validate.
+    	@param password [String] The clear text password to validate.
+    	@param callback [Function] A function meeting the requirements of the {Callbacks#userAuthValidateCredentialCallback} method.
+    */
+
 
     UserAuth.prototype.validateCredential = function(userName, password, callback) {
       var db,
@@ -52,6 +93,13 @@
       });
     };
 
+    /*
+    	Validate a secure token against the database records.
+    	@param token [String] A hexadecimal string representing a secure token.
+    	@param callback [Function] A function meeting the requirements of the {Callbacks#userAuthValidateCredentialCallback} method.
+    */
+
+
     UserAuth.prototype.validateToken = function(token, callback) {
       var db,
         _this = this;
@@ -68,6 +116,14 @@
         }
       });
     };
+
+    /*
+    	Validates a set of user credentials against the database and issues a valid token if the credentials are valid.
+    	@param userName [String] The username to validate.
+    	@param password [String] The clear text password to validate.
+    	@param callback [Function] A function meeting the requirements of the {Callbacks#userAuthLoginCallback} method.
+    */
+
 
     UserAuth.prototype.login = function(userName, password, callback) {
       var db,
@@ -104,9 +160,23 @@
       });
     };
 
+    /*
+    	A helper method user to extract a token from the Authorization HTTP header and pass it to the {#validateToken} method.
+    	@param req [Express.Request] The HTTP request object.
+    	@param callback [Function] A function meeting the requirements of the {Callbacks#userAuthValidateCredentialCallback} method.
+    */
+
+
     UserAuth.prototype.validateRequest = function(req, callback) {
       return this.validateToken(req.header('Authorization'), callback);
     };
+
+    /*
+    	Validates and extends the life of an existing secure token.
+    	@param token [String] A hexadecimal string representing a secure token.
+    	@param callback [Function] A function meeting the requirements of the {Callbacks#userAuthValidateCredentialCallback} method.
+    */
+
 
     UserAuth.prototype.refreshToken = function(token, callback) {
       var db;
@@ -138,6 +208,14 @@
       });
     };
 
+    /*
+    	Creates a new user account with no roles.
+    	@param userName [String] The userName to create. This should always be the email address of the user.
+    	@param password [String] The clear text password provided by the user.
+    	@param callback [Function] A function meeting the requirements of the {Callbacks#userAuthCreateAccountCallback} method.
+    */
+
+
     UserAuth.prototype.createAccount = function(userName, password, callback) {
       var db, user, userGuid, userHash, userSalt;
       db = QRefDatabase.instance();
@@ -168,6 +246,13 @@
         }
       });
     };
+
+    /*
+    	Retrieves the associate user account for a secure token.
+    	@param token [String] A hexadecimal string representing a secure token.
+    	@param callback [Function] A function meeting the requirements of the {Callbacks#userAuthUserFromTokenCallback} method.
+    */
+
 
     UserAuth.prototype.userFromToken = function(token, callback) {
       var db;

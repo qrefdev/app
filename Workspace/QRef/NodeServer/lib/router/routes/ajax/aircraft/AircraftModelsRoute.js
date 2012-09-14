@@ -12,6 +12,26 @@
 
   QRefDatabase = require('../../../../db/QRefDatabase');
 
+  /*
+  Service route that allows the retrieval of all models and the creation of new models.
+  @example Service Methods (see {CreateAircraftModelAjaxRequest})
+    Request Format: application/json
+    Response Format: application/json
+    
+    GET /services/ajax/aircraft/manufacturers?token=:token
+      :token - (Required) A valid authentication token.
+      
+    Retrieves all models.
+    
+    POST /services/ajax/aircraft/manufacturers
+    	@BODY - (Required) CreateAircraftManufacturerAjaxRequest
+    	
+    Creates a new aircraft model.
+  @author Nathan Klick
+  @copyright QRef 2012
+  */
+
+
   AircraftModelsRoute = (function(_super) {
 
     __extends(AircraftModelsRoute, _super);
@@ -114,6 +134,7 @@
           newObj = new db.AircraftModel();
           newObj.name = req.body.name;
           newObj.manufacturer = mfr._id;
+          newObj.modelYear = req.body.modelYear;
           if (((_ref = req.body) != null ? _ref.description : void 0) != null) {
             newObj.description = req.body.description;
           }
@@ -143,8 +164,8 @@
     };
 
     AircraftModelsRoute.prototype.isValidRequest = function(req) {
-      var _ref, _ref1, _ref2, _ref3, _ref4;
-      if (((req.query != null) && (((_ref = req.query) != null ? _ref.token : void 0) != null)) || ((req.body != null) && (((_ref1 = req.body) != null ? _ref1.token : void 0) != null) && (((_ref2 = req.body) != null ? _ref2.name : void 0) != null) && (((_ref3 = req.body) != null ? _ref3.manufacturer : void 0) != null) && (((_ref4 = req.body) != null ? _ref4.mode : void 0) != null) && req.body.mode === 'ajax')) {
+      var _ref, _ref1, _ref2, _ref3, _ref4, _ref5;
+      if (((req.query != null) && (((_ref = req.query) != null ? _ref.token : void 0) != null)) || ((req.body != null) && (((_ref1 = req.body) != null ? _ref1.token : void 0) != null) && (((_ref2 = req.body) != null ? _ref2.name : void 0) != null) && (((_ref3 = req.body) != null ? _ref3.manufacturer : void 0) != null) && (((_ref4 = req.body) != null ? _ref4.modelYear : void 0) != null) && (((_ref5 = req.body) != null ? _ref5.mode : void 0) != null) && req.body.mode === 'ajax')) {
         return true;
       } else {
         return false;

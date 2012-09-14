@@ -1,0 +1,433 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+		<title>QRef</title> 
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="css/base.css" />
+		<link rel="stylesheet" href="css/theme-dark.css" />
+		<link rel="stylesheet" href="css/fontawesome.css" />
+		<link rel="stylesheet" href="css/ui-darkness/jquery-ui-1.8.23.custom.css"  />
+		<script src="js/jquery.js"></script>
+		<script src="js/jquery.ui.js"></script>
+		<script src="js/jquery.punch.js"></script>
+		<script src="js/jquery.validate.js"></script>
+		<script src="js/jquery.cookie.js"></script>
+		<script src="js/jquery.swipe.js"></script>
+		<script src="js/jquery.tap.js"></script>
+		<script src="js/jquery.touchscroll.js"></script>
+		<script src="js/underscore.js"></script>
+		<script src="js/listitemhandler.js"></script>
+		<script src="js/helpers.js"></script>
+		<script src="js/signin.js"></script>
+		<script src="js/register.js"></script>
+		<script src="js/uiwindows.js"></script>
+		<script src="js/navigationhandler.js"></script>
+		<script src="js/checklisthandler.js"></script>
+		<script src="js/producthandler.js"></script>
+		<script src="js/extension.js"></script>
+		<script src="js/sortableInitializer.js"></script>
+		<script src="js/checklistExtensions.js"></script>
+		<script src="js/checklistparser.js"></script>
+		<script src="js/checklistPostRequest.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-1.8.23.custom.min.js"></script>
+		<style>
+			.feedback { font-size: 1.0em; }
+			.selectable .ui-selecting { background: #FECA40; }
+			.selectable .ui-selected { background: #F39814; color: white; }
+			.ui-selected .CheckListItem_Section, 
+				.ui-selected .CheckListItem_Check, 
+				.ui-selected .CheckListItem_Response { color:black; font-weight: bold; }
+			.selectable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+			.selectable li { width:96.5%; margin: 3px; padding: 0.4em; font-size: 1.0em; height: auto; }
+		</style>
+	</head> 
+	<body> 
+		<article id="dashboard" class="theme-dark">
+			<section class="page">
+				<div class="dashbar">
+					<div class="item" style="background: url('images/logo.png') 50% 50% no-repeat; background-size: 100% 100%; width: 150px; height: 60px;">
+					</div>
+					<div class="item-right topmenu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
+					<div class="item-right edit-check">
+						<p><i class="icon icon-pencil"></i></p>
+					</div>
+					<div class="header">
+						<p>MY AIRCRAFT</p>
+					</div>
+				</div>
+				<div class="dashcontent">
+					<div class="grid dashboard-planes-selector">
+						<div class="container">
+						<div style="width:100%; overflow:hidden;">
+							<button style="float:left; width:100px; height:35px; margin-left:30px; margin-top:20px;" onclick="EditChecklist()"><b>Edit Checklist</b></button>
+							<button style="float:right;width:100px; height:35px; margin-right:30px; margin-top:20px;" id="CheckIn" onclick="CheckIn()"><b>Check In</b></button>
+						</div>
+						<input type="file" id="fileinput" onchange="readMultipleFiles(this)" style="margin-top:10px; margin-bottom:10px; margin-left:20px; margin-right:20px; padding:10px; float:left;" />
+						<input class="textbox required" type="email" style="display: none;" value="a.barc3lo@gmail.com" id="email" name="email" onblur="inputBlur(this, 'email');" onfocus="inputFocus(this, 'email');" />
+						<input class="textbox required" type="password" style="display: none;" value="Avi-1261" id="password" name="password" onblur="passwordBlur(this, 'fauxPassword');" />
+						
+						<div id="maindiv" style="float:left; width:100%; height:100%; text-align:center; overflow:hidden; color:white;">
+							<div id="CheckListInputsDiv">
+								<div class="CheckListInputs">
+									<div style="width:100%">
+										Section
+									</div>
+									<select id="Item_Section"></select>
+								</div>
+								<div class="CheckListInputs">
+									<div style="width:100%">
+										Index
+									</div>
+									<input id="Item_Index"></input>
+								</div>
+								<div class="CheckListInputs">
+									<div style="width:100%">
+										Check
+									</div>
+									<input id="Item_Check"></input>
+								</div>
+								<div class="CheckListInputs">
+									<div style="width:100%">
+										Response
+									</div>
+									<input id="Item_Response"></input>
+								</div>
+								<div style="width:100%; float:left; text-align:center; overflow:hidden;">
+									<button style="width:150px; float:none; margin-left:auto; margin-right:auto; height:40px;" onclick="ApplyItemChanges()"><b>Apply Changes</b></button>
+								</div>
+							</div>
+							<div class="cont" id="1">
+								<div class="title">
+									Preflight
+								</div>
+								<div class="buttons">
+									<div class="buttonPM_cont">
+										<button id="AddToSection_1" onclick="AddNewCheckListItem(this)"><i class="icon icon-plus-sign" id="centerbutton"></i></button>
+										<button id="RemoveFromSection_1" onclick="RemoveFromList(this)"><i class="icon icon-minus-sign" id="centerbutton"></i></button>
+									</div>
+								</div>
+								<div class="box">
+									<div class="selectboxdiv">
+										<div id="Section1_Select">
+											<ul id="s1" class="selectable">
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="cont" id="2">
+								<div class="title">
+									TakeOff Cruise
+								</div>
+								<div class="buttons">
+									<div class="buttonPM_cont">
+										<button id="AddToSection_2" onclick="AddNewCheckListItem(this)"><i class="icon icon-plus-sign" id="centerbutton"></i></button>
+										<button id="RemoveFromSection_2" onclick="RemoveFromList(this)"><i class="icon icon-minus-sign" id="centerbutton"></i></button>
+									</div>
+								</div>
+								<div class="box">
+									<div class="selectboxdiv">
+										<div id="Section2_Select">
+											<ul id="s2" class="selectable">
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="cont" id="3">
+								<div class="title">
+									Landing
+								</div>
+								<div class="buttons">
+									<div class="buttonPM_cont">
+										<button id="AddToSection_3" onclick="AddNewCheckListItem(this)"><i class="icon icon-plus-sign" id="centerbutton"></i></button>
+										<button id="RemoveFromSection_3" onclick="RemoveFromList(this)"><i class="icon icon-minus-sign" id="centerbutton"></i></button>
+									</div>
+								</div>
+								<div class="box">
+									<div class="selectboxdiv">
+										<div id="Section3_Select">
+											<ul id="s3" class="selectable">
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="cont" id="4">
+								<div class="title">
+									Emergency
+								</div>
+								<div class="buttons">
+									<div class="buttonPM_cont">
+										<button id="AddToSection_4" onclick="AddNewCheckListItem(this)"><i class="icon icon-plus-sign" id="centerbutton"></i></button>
+										<button id="RemoveFromSection_4" onclick="RemoveFromList(this)"><i class="icon icon-minus-sign" id="centerbutton"></i></button>
+									</div>
+								</div>
+								<div class="box">
+									<div class="selectboxdiv">
+										<div id="Section4_Select">
+											<ul id="s4" class="selectable">
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+							<ul id="dashboard-planes" class="vertical">
+								
+							</ul>
+						</div>
+					</div>
+				</div>
+				<nav class="nav dashnav">
+					<ul>
+						<li data-link="download" class="item" style="padding-top: 10px; z-index: 10;"><div><i class="icon icon-download"></i><div class="header">Download</div><br><div class="subheader">Models</div></div></li>
+						<li data-link="e6b" class="item" style="margin-top: 10px; z-index: 5;"><div><i class="icon icon-table"></i><div class="header">E6B</div><br><div class="subheader">Calculators</div></div></li>
+					</ul>
+				</nav>
+			</section>
+		</article>
+		<article id="checklist" class="theme-dark" style="display: none;">
+			<section class="page">
+				<div class="topbar">
+					<div class="item back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+					<div class="item-middle sections" style="text-align: center;">
+						<p><span id="area" style="margin-right: 5px;"></span><i class="icon icon-caret-down"></i></p>
+					</div>
+					<div class="item topmenu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
+					<div class="item edit-list">
+						<p><i class="icon icon-pencil"></i></p>
+					</div>
+				</div>
+				<div class="content">
+					<div class="grid checklist">
+						<div class="container">
+							<ul id="checklist-items" class="vertical">
+								
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="grid check-sections">
+					<div class="container">
+						<ul id="check-sections-items" class="vertical">
+						
+						</ul>
+					</div>
+				</div>
+			</section>
+		</article>
+		<article id="emergencies" class="theme-dark" style="display: none;">
+			<section class="page">
+				<div class="topbar">
+					<div class="item-large back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+					<div class="item-middle" style="text-align: center;">
+						<p>Emergencies</p>
+					</div>
+					<div class="item-large topmenu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
+				</div>
+				<div class="content">
+					<div class="grid emergencies">
+						<div class="container">
+							<ul id="emergency-items" class="full">
+								
+							</ul>
+						</div>
+					</div>
+				</div>
+			</section>
+		</article>
+		<article id="download" style="display: none;" class="theme-dark">
+			<section class="page">
+				<div class="topbar">
+					<div class="item-large back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+
+					<div class="item-large topmenu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
+				</div>
+				<div class="content" style="bottom: 0px;">
+					<div class="grid">
+						<ul id="download-listing" class="full">
+							
+						</ul>
+					</div>
+				</div>
+			</section>
+		</article>
+		<article id="editadd" style="display: none;" class="theme-dark">
+			<section class="page">
+				<div class="topbar">
+					<div class="item-large back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+					<div class="item-middle">
+						<p>Edit / Add</p>
+					</div>
+					<div class="item-large topmenu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
+				</div>
+				<div style="float: left; position: relative; width: 100%; margin-top: 40px;">
+					<form id="editAddForm" method="post" action="javascript:void(null);">
+						<input class="textbox required" type="text" value="check" id="check" name="check" onblur="inputBlur(this, 'check');" onfocus="inputFocus(this, 'check');" />
+						<input style="height: 100px;" class="textbox required" type="text" value="response" id="response" name="response" onfocus="inputFocus(this, 'response');" onblur="inputBlur(this, 'response');" />
+						
+						<input type="submit" style="margin: 10px auto;" class="button button-register" value="Save" />
+					</form>
+				</div>
+			</section>
+		</article>
+		<article id="signin" style="display: none;" class="theme-dark">
+			<section class="page">
+				<div class="topbar">
+					<div class="item-large back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+					<div class="item-middle">
+						<p>Sign in</p>
+					</div>
+					<div class="item-large topmenu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
+				</div>
+				<div class="content">
+					<div style="float: left; position: relative; width: 100%; margin-top: 40px;">
+						<form id="signinForm" method="post" action="javascript:void(null);">
+						<input class="textbox required" type="email" value="email" id="email" name="email" onblur="inputBlur(this, 'email');" onfocus="inputFocus(this, 'email');" />
+						<input class="textbox" type="text" value="password" id="fauxPassword" name="fauxPassword" onfocus="passwordFocus(this, 'password');" />
+						<input class="textbox required" type="password" style="display: none;" id="password" name="password" onblur="passwordBlur(this, 'fauxPassword');" />
+						<input type="submit" style="margin: 10px auto;" class="button button-signin" value="Sign in" />
+						</form>
+					</div>
+				</div>
+			</section>
+		</article>
+		<article id="register" style="display: none;" class="theme-dark">
+			<section class="page">
+				<div class="topbar">
+					<div class="item-large back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+					<div class="item-middle">
+						<p>Register</p>
+					</div>
+					<div class="item-large topmenu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
+				</div>
+				<div class="content">
+					<div style="float: left; position: relative; width: 100%; margin-top: 40px;">
+						<form id="registerForm" action="javascript:void(null);" method="post">
+						<input class="textbox required" type="email" value="email" id="emailRegister" name="emailRegister" onblur="inputBlur(this, 'email');" onfocus="inputFocus(this, 'email');" />
+						<input class="textbox" type="text" value="password" id="fauxPasswordRegister" name="fauxPasswordRegister" onfocus="passwordFocus(this, 'passwordRegister');" />
+						<input class="textbox required" type="password" style="display: none;" id="passwordRegister" name="passwordRegister" onblur="passwordBlur(this, 'fauxPasswordRegister');" />
+						<input class="textbox" type="text" value="confirm password" id="fauxConfirmPassword" name="fauxConfirmPassword" onfocus="passwordFocus(this, 'confirmPassword');" />
+						<input class="textbox required" type="password" style="display: none;" id="confirmPassword" name="confirmPassword" onblur="passwordBlur(this, 'fauxConfirmPassword');" />
+						<input type="submit" style="margin: 10px auto;" class="button button-register" value="Register"/>
+						</form>
+					</div>
+				</div>
+			</section>
+		</article>
+		<div id="menu" style="display: none;" class="theme-dark">
+			<div class="menu">
+				<ul>
+					<li data-link="settings"><p><i class="icon icon-cog"></i> Settings</p></li>
+					<li data-link="dashboard"><p><i class="icon icon-dashboard"></i> Dashboard</p></li>
+					<li data-link="signout" id="signout-menu" style="display: none;"><p><i class="icon icon-signout"></i> Sign out</p></li>
+					<li data-link="signin" id="signin-menu" style="display: none;"><p><i class="icon icon-signin" ></i> Sign in</p></li>
+					<li data-link="register" id="register-menu" style="display: none;"><p><i class="icon icon-pencil"></i> Register</p></li>
+					<li data-link="sync" id="sync-menu" style="display: none;"><p><i class="icon icon-repeat"></i> Sync</p></li>
+				</ul>
+			</div>
+		</div>
+		<div id="checklist-nav" style="display: none;" class="theme-dark">
+			<nav class="nav">
+				<ul>
+					<li data-link="preflight" class="item-25"><div><div class="subheader-only">Preflight</div></div></li>
+					<li data-link="takeoff" class="item-25"><div><div class="subheader-only">Take-off</div></div></li>
+					<li data-link="landing" class="item-25"><div><div class="subheader-only">Landing</div></div></li>
+					<li data-link="emergency" class="item-25"><div><div class="subheader-only">Emergency</div></div></li>
+				</ul>
+			</nav>
+		</div>
+		<div class="theme-dark model" id="loader">
+			<figure class="loader">
+				<img src="images/ajax-loader.gif" alt="Loading" />
+				<figcaption>Loading...</figcaption>
+			</figure>
+		</div>
+		<div class="theme-dark model" id="infobox">
+			<figure class="info" >
+				<figcaption class="data"></figcaption>
+				<button class="okay">OK</button>
+			</figure>
+		</div>
+		<div class="theme-dark model" id="confirmation">
+			<div class="dialog">
+				<div class="close icon-remove-sign"></div>
+				<div class="content">
+					<h1>You have unsaved changes. Would you like to Check In the list before continuing?</h1>
+					<button style="float: right; margin-top: 0px; margin-right: 5px;" class="no button"><i class="icon icon-remove-sign"></i> No </button>
+					<button style="float: right; margin-top: 0px;" class="yes button"><i class="icon icon-ok-sign"></i> Yes </button>
+					
+				</div>
+			</div>
+		</div>
+		<div id="modalListDiv" class="theme-dark">
+		<div id="AddNewItemDiv" class="ARitem"  style="color:white">
+			<div class="ARitem">
+				Section
+			</div>
+			<select id="Section_AddNew"></select>
+			<div style="width:100%; float:left; text-align:center; margin-bottom:10px;">
+				<button id="Item_Section_AddNew" onclick="AddNewSection()">Add New</button>
+			</div>
+			<div class="ARitem">
+				Check
+			</div>
+			<input class="ARitem" id="Check_AddNew" type="text" value="null">
+			<div class="ARitem">
+				Response
+			</div>
+			<input class="ARitem" id="Response_AddNew" type="text" value="null">
+			<button class="ARitem" id="OK_AR" onclick="AcceptNewCheckListItem()"> OK </button>
+			<button class="ARitem" id="Cancel_AR"onclick="CloseAddNewItemForm()"> Cancel </button>
+		</div>
+		<div id="OverlayText" class="CheckListItem">
+			Please Choose a Manufacturer.
+		</div>
+		<div id="modalText">
+			Selected Manufacturer:
+		</div>
+		<select id="modalSelectList" size="1" class="CheckListItem"></select>
+		<div id="previewPicDiv" class="pictureUpload">
+		<img id="previewPic" class="pictureUpload" src="">
+		</img>
+		<form id="picForm" enctype="multipart/form-data" class="pictureUpload">
+			<input id="picFile" type="file" class="pictureUpload" onchange="ShowPreviewPicture(this)"/>
+			<progress id="picProgress"></progress>
+		</form>
+		</div>
+		<button id="OK" class="CheckListItem" onclick="OK_MFG()">OK</button>
+		<button id="Cancel" class="CheckListItem" onclick="Reset()">Cancel</button>
+		<button id="AddNew" class="CheckListItem" onclick="AddNewMFG()">Add New</button>
+		<button id="AddPicture" class="CheckListItem" onclick="ShowPicUpload()">Add Picture</button>
+	</div>
+		<div id="modaldisplay"></div>
+	</body>
+</html>

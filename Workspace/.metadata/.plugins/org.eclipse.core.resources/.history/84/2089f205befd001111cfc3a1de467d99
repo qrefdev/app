@@ -1,0 +1,20 @@
+###
+Base class for all AJAX requests. The token field is optional by default. 
+The token field is required by certain methods and each method will dictate whether or not this field is required.   
+@author Nathan Klick
+@copyright QRef 2012
+@abstract
+###
+class AjaxRequest
+	###
+	@property [String] (Required) The type of request. Should always be "ajax".
+	###
+	mode: "ajax"
+	###
+	@property [String] (Optional) The authentication token to include the request.
+	###
+	token: null
+	constructor: (token) -> 
+		@mode = "ajax"
+		@token = token
+	 

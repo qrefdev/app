@@ -1,0 +1,78 @@
+mongoose = require('mongoose')
+Schema = mongoose.Schema
+ObjectId = Schema.ObjectId
+
+###
+@note
+  MongoDB Collection
+    db.users
+@note
+  MongoDB Indexes
+    db.users.ensureIndex({ userName: 1}, { unique: true })
+    
+@author Nathan Klick
+@copyright QRef 2012
+@abstract
+###
+class UserSchemaInternal 
+	###
+	@property [String] The username used to perform authentication. This should always be the user's email address.
+	###
+	userName: 
+		type: String
+		required: true
+		unique: true
+	###
+	@property [String] A SHA-512 HMAC representing the user's password.
+	###
+	passwordHash: 
+		type: String
+		required: false
+	###
+	@property [String] A random SHA-512 hash used as a salt value in the password HMAC. 
+	###
+	passwordSalt: 
+		type: String
+		required: true
+	###
+	@property [String] The first name of the user.
+	###
+	firstName: 
+		type: String
+		required: false
+	###
+	@property [String] The last name (surname) of the user.
+	###
+	lastName:
+		type: String
+		required: false
+	###
+	@property [String] The user's email address.
+	###
+	emailAddress:
+		type: String
+		required: true
+	###
+	@property [Array<ObjectId>] The list of roles possessed by this user.
+	###
+	roles: [
+		type: ObjectId,
+		ref: 'user.roles'
+	]
+	###
+	@property [ObjectId] The chosen recovery question for this user.
+	###
+	recoveryQuestion:
+		type: ObjectId
+		ref: 'user.recovery.questions'
+		required: false
+	###
+	@property [String] An SHA-512 HMAC represting the user's answer to their recovery question.
+	###
+	recoveryAnswer:
+		type: String
+		required: false
+
+UserSchema = new Schema(new UserSchemaInternal())
+module.exports = UserSchema
+	

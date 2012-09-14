@@ -16,6 +16,21 @@
 
   ProductManager = require('../../../../db/manager/ProductManager');
 
+  /*
+  Service route that allows the retrieval of all products owned by a current user.
+  @example Service Methods
+    Request Format: application/json
+    Response Format: application/json
+    
+    GET /services/ajax/user/products?token=:token
+      :token - (Required) A valid authentication token.
+      
+    Retrieves all products owned by a given user.
+  @author Nathan Klick
+  @copyright QRef 2012
+  */
+
+
   CurrentUserProductsRoute = (function(_super) {
 
     __extends(CurrentUserProductsRoute, _super);

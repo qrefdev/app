@@ -8,12 +8,29 @@
 
   QRefDatabase = require('../QRefDatabase');
 
+  /*
+  Utility class used to provide common operations on {ProductSchemaInternal} object instances.
+  @author Nathan Klick
+  @copyright QRef 2012
+  */
+
+
   ProductManager = (function() {
+    /*
+    	Creates a new instance of the ProductManager class.
+    */
 
     function ProductManager() {
       this.expandAll = __bind(this.expandAll, this);
 
     }
+
+    /*
+    	Performs deep property population on a single {ProductSchemaInternal} object.
+    	@param product [ProductSchemaInternal] The object to deeply populate.
+    	@param callback [Function] A function meeting the {Callbacks#managerExpandItemCallback} requirements.
+    */
+
 
     ProductManager.prototype.expand = function(product, callback) {
       var db, eProd;
@@ -71,6 +88,13 @@
         return callback(null, eProd);
       }
     };
+
+    /*
+    	Performs deep property population on an array of {ProductSchemaInternal} objects.
+    	@param arrProducts [Array<ProductSchemaInternal>] The array of objects to deeply populate.
+    	@param callback [Function] A function meeting the {Callbacks#managerExpandArrayCallback} requirements.
+    */
+
 
     ProductManager.prototype.expandAll = function(arrProducts, callback) {
       var eArrProducts,

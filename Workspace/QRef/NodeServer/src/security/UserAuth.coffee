@@ -2,20 +2,51 @@ crypto = require('crypto')
 mongoose = require('mongoose')
 QRefDatabase = require('../db/QRefDatabase')
 ObjectId = mongoose.Types.ObjectId
+###
+Secure utility methods for managing users, credentials, and tokens.
+@author Nathan Klick
+@copyright QRef 2012
+###
 class UserAuth 
+	###
+	Creates a new UserAuth object instance.
+	###
 	constructor: () ->
+	###
+	Generates a random salt.
+	@return [String] A hexadecimal string representing a SHA-512 hash.
+	###
 	salt: () -> 
 		hash = crypto.createHash('sha512')
 		hash.update(crypto.randomBytes(1024))
 		hash.digest('hex')
+	###
+	Performs an HMAC transformation on a password using a given key and salt values.
+	@param key [String] The key to use with the HMAC algorithm.
+	@param salt [String] A hexadecimal string representing a SHA-512 salt value.
+	@param password [String] The clear text password to be encoded.
+	@return [String] A hexadecimal string representing a secure SHA-512 HMAC representation of the clear text password.
+	###
 	securePassword: (key, salt, password) ->
 		sKey = key + salt
 		hmac = crypto.createHmac('sha512', sKey)
 		hmac.update(password)
 		hmac.digest('hex')
+	###
+	Generates a random secure token using the given key and salt values.
+	@param key [String] The key to use with the HMAC algorithm.
+	@param salt [String] A hexadecimal string representing a SHA-512 salt value.
+	@return [String] A hexadecimal string representing a secure random token.
+	###
 	secureToken: (key, salt) ->
 		sPassword = '' + Date.now() + crypto.randomBytes(64)
 		@.securePassword(key, salt, sPassword)
+	###
+	Validates a given userName and password against the database.
+	@param userName [String] The username to validate.
+	@param password [String] The clear text password to validate.
+	@param callback [Function] A function meeting the requirements of the {Callbacks#userAuthValidateCredentialCallback} method.
+	###
 	validateCredential: (userName, password, callback) ->
 		db = QRefDatabase.instance()
 		db.User.where('userName')
@@ -29,6 +60,11 @@ class UserAuth
 					else
 						callback(null, false)
 				)
+	###
+	Validate a secure token against the database records.
+	@param token [String] A hexadecimal string representing a secure token.
+	@param callback [Function] A function meeting the requirements of the {Callbacks#userAuthValidateCredentialCallback} method.
+	###
 	validateToken: (token, callback) ->
 		db = QRefDatabase.instance()
 		db.AuthToken.where('token')
@@ -42,6 +78,12 @@ class UserAuth
 					 	else
 					 		callback(null, false)
 					 )
+	###
+	Validates a set of user credentials against the database and issues a valid token if the credentials are valid.
+	@param userName [String] The username to validate.
+	@param password [String] The clear text password to validate.
+	@param callback [Function] A function meeting the requirements of the {Callbacks#userAuthLoginCallback} method.
+	###
 	login: (userName, password, callback) ->
 		db = QRefDatabase.instance()
 	
@@ -73,9 +115,18 @@ class UserAuth
 					else
 						callback(null, null, false)
 		)
-		
+	###
+	A helper method user to extract a token from the Authorization HTTP header and pass it to the {#validateToken} method.
+	@param req [Express.Request] The HTTP request object.
+	@param callback [Function] A function meeting the requirements of the {Callbacks#userAuthValidateCredentialCallback} method.
+	###
 	validateRequest: (req, callback) ->
 		@.validateToken(req.header('Authorization'), callback)
+	###
+	Validates and extends the life of an existing secure token.
+	@param token [String] A hexadecimal string representing a secure token.
+	@param callback [Function] A function meeting the requirements of the {Callbacks#userAuthValidateCredentialCallback} method.
+	###
 	refreshToken: (token, callback) ->
 		db = QRefDatabase.instance()
 		db.AuthToken.where('token')
@@ -100,6 +151,12 @@ class UserAuth
 					 	else
 					 		callback(null, false)
 					 )
+	###
+	Creates a new user account with no roles.
+	@param userName [String] The userName to create. This should always be the email address of the user.
+	@param password [String] The clear text password provided by the user.
+	@param callback [Function] A function meeting the requirements of the {Callbacks#userAuthCreateAccountCallback} method.
+	###
 	createAccount: (userName, password, callback) ->
 		db = QRefDatabase.instance()
 		userSalt = @.salt()
@@ -131,6 +188,11 @@ class UserAuth
 						)
 					
 				)
+	###
+	Retrieves the associate user account for a secure token.
+	@param token [String] A hexadecimal string representing a secure token.
+	@param callback [Function] A function meeting the requirements of the {Callbacks#userAuthUserFromTokenCallback} method.
+	###
 	userFromToken: (token, callback) ->
 		db = QRefDatabase.instance()
 		db.AuthToken.where('token')

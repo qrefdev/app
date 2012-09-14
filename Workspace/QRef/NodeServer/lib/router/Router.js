@@ -6,19 +6,55 @@
 
   fs = require('fs');
 
+  /*
+  Provides core request handling functionality and permits the auto-loading of routes at runtime.
+  @note Internal Usage Only - Not required outside the express bootstrap script.
+  @todo Remove dependency on relative and hard-coded paths.
+  @author Nathan Klick
+  @copyright QRef 2012
+  */
+
+
   Router = (function() {
+    /*
+    	@property [Express] A reference to the current express object instance.
+    */
 
     Router.prototype.express = null;
 
+    /*
+    	@property [Array<Route>] The list of routes associated with and loaded by this router instance.
+    */
+
+
     Router.prototype.routes = [];
+
+    /*
+    	Creates a new Router object instance attached to the specific express object instance.
+    	@param express [Express] A reference to the current express object instance.
+    */
+
 
     function Router(express) {
       this.express = express;
     }
 
+    /*
+    	Accessor method for retrieving the current express object instance.
+    	@return [Express] The express object instance.
+    */
+
+
     Router.prototype.getExpress = function() {
       return this.express;
     };
+
+    /*
+    	Adds a new {Route} to the list of routes associated with this {Router}.
+    	@param route [Route] The route to be associated with this Router.
+    	@return [Boolean] True on success, false otherwise.
+    */
+
 
     Router.prototype.registerRoute = function(route) {
       if ((route != null) && !(__indexOf.call(this.routes, route) >= 0)) {
@@ -26,6 +62,11 @@
       }
       return true;
     };
+
+    /*
+    	Installs the {Route} objects associated with this router into the express runtime.
+    */
+
 
     Router.prototype.setup = function() {
       var m, rt, _i, _j, _len, _len1, _ref, _ref1;
@@ -55,9 +96,19 @@
       return true;
     };
 
+    /*
+    	Dynamically loads the {Route} objects into the router from the 'routes' sub-directory.
+    */
+
+
     Router.prototype.load = function() {
       return this.internalLoadDirectory('./lib/router/routes', './routes', '/services');
     };
+
+    /*
+    	@private
+    */
+
 
     Router.prototype.internalLoadDirectory = function(path, requirePath, webPath) {
       var e, entries, m, route, stats, _i, _j, _len, _len1, _ref;
@@ -79,6 +130,11 @@
       }
       return true;
     };
+
+    /*
+    	@private
+    */
+
 
     Router.prototype.combinePath = function(path1, path2) {
       if (!(path1.lastIndexOf('/') === path1.length - 1)) {

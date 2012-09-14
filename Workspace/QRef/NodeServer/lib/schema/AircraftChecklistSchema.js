@@ -9,75 +9,163 @@
 
   AircraftChecklistSectionSchema = require('./AircraftChecklistSectionSchema');
 
-  AircraftChecklistSchemaInternal = {
-    manufacturer: {
+  /*
+  Schema representing a manufacturer/model specific checklist. 
+  @example MongoDB Collection
+    db.aircraft.checklists
+  @example MongoDB Indexes
+    db.aircraft.checklists.ensureIndex({ manufacturer: 1, model: 1, version: 1, tailNumber: 1 }, { unique: true })
+  @author Nathan Klick
+  @copyright QRef 2012
+  @abstract
+  */
+
+
+  AircraftChecklistSchemaInternal = (function() {
+
+    function AircraftChecklistSchemaInternal() {}
+
+    /*
+    	@property [ObjectId] (Required) The manufacturer that this checklist is built against.
+    	@see AircraftManufacturerSchemaInternal
+    */
+
+
+    AircraftChecklistSchemaInternal.prototype.manufacturer = {
       type: ObjectId,
       ref: 'aircraft.manufacturers',
       required: true
-    },
-    model: {
+    };
+
+    /*
+    	@property [ObjectId] (Required) The model that this checklist is built against.
+    	@see AircraftModelSchemaInternal
+    */
+
+
+    AircraftChecklistSchemaInternal.prototype.model = {
       type: ObjectId,
       ref: 'aircraft.models',
       required: true
-    },
-    modelYear: {
-      type: String,
-      required: true
-    },
-    index: {
+    };
+
+    /*
+    	@property [Number] (Optional) The order in which this checklist should appear relative to the other checklists.
+    */
+
+
+    AircraftChecklistSchemaInternal.prototype.index = {
       type: Number,
       required: false,
       "default": null
-    },
-    tailNumber: {
+    };
+
+    /*
+    	@property [String] (Optional) The tail number for a list which has been customized to a specific plane.
+    */
+
+
+    AircraftChecklistSchemaInternal.prototype.tailNumber = {
       type: String,
       required: false,
       "default": null
-    },
-    user: {
+    };
+
+    /*
+    	@property [ObjectId] (Optional) The user which owns this customized version of the checklist.
+    	@see UserSchemaInternal
+    */
+
+
+    AircraftChecklistSchemaInternal.prototype.user = {
       type: ObjectId,
       ref: 'users',
       required: false,
       "default": null
-    },
-    version: {
+    };
+
+    /*
+    	@property [Number] (Required) The version number of this checklist.
+    */
+
+
+    AircraftChecklistSchemaInternal.prototype.version = {
       type: Number,
       required: true,
       "default": 1
-    },
-    productIcon: {
-      type: String,
-      required: false
-    },
-    coverImage: {
-      type: String,
-      required: false
-    },
-    preflight: {
-      type: [AircraftChecklistSectionSchema],
-      required: false
-    },
-    takeoff: {
-      type: [AircraftChecklistSectionSchema],
-      required: false
-    },
-    landing: {
-      type: [AircraftChecklistSectionSchema],
-      required: false
-    },
-    emergencies: {
-      type: [AircraftChecklistSectionSchema],
-      required: false
-    }
-  };
+    };
 
-  AircraftChecklistSchema = new Schema(AircraftChecklistSchemaInternal);
+    /*
+    	@property [String] (Optional) A server-based relative path to the product icon. This path should be relative to the server root.
+    */
+
+
+    AircraftChecklistSchemaInternal.prototype.productIcon = {
+      type: String,
+      required: false
+    };
+
+    /*
+    	@property [Array<AircraftChecklistSectionSchemaInternal>] (Optional) The array of preflight sections.
+    */
+
+
+    AircraftChecklistSchemaInternal.prototype.preflight = {
+      type: [AircraftChecklistSectionSchema],
+      required: false
+    };
+
+    /*
+    	@property [Array<AircraftChecklistSectionSchemaInternal>] (Optional) The array of takeoff sections.
+    */
+
+
+    AircraftChecklistSchemaInternal.prototype.takeoff = {
+      type: [AircraftChecklistSectionSchema],
+      required: false
+    };
+
+    /*
+    	@property [Array<AircraftChecklistSectionSchemaInternal>] (Optional) The array of landing sections.
+    */
+
+
+    AircraftChecklistSchemaInternal.prototype.landing = {
+      type: [AircraftChecklistSectionSchema],
+      required: false
+    };
+
+    /*
+    	@property [Array<AircraftChecklistSectionSchemaInternal>] (Optional) The array of emergency sections.
+    */
+
+
+    AircraftChecklistSchemaInternal.prototype.emergencies = {
+      type: [AircraftChecklistSectionSchema],
+      required: false
+    };
+
+    /*
+    	@property [Boolean] (Required) A true/false value indicating whether this record has been deleted. Required for soft-delete support.
+    */
+
+
+    AircraftChecklistSchemaInternal.prototype.isDeleted = {
+      type: Boolean,
+      required: true,
+      "default": false
+    };
+
+    return AircraftChecklistSchemaInternal;
+
+  })();
+
+  AircraftChecklistSchema = new Schema(new AircraftChecklistSchemaInternal());
 
   AircraftChecklistSchema.index({
     manufacturer: 1,
     model: 1,
     version: 1,
-    modelYear: 1,
     tailNumber: 1
   }, {
     unique: true

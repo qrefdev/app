@@ -2,9 +2,9 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="257" key="DIALOG_WIDTH"/>
-		<item value="194" key="DIALOG_Y_ORIGIN"/>
+		<item value="109" key="DIALOG_Y_ORIGIN"/>
 		<item value="380" key="DIALOG_HEIGHT"/>
-		<item value="1180" key="DIALOG_X_ORIGIN"/>
+		<item value="1330" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
@@ -13,15 +13,19 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="db = QRefDatabase.instance()" key="selection"/>
+		<item value="insertModelstoList" key="selection"/>
 		<list key="findhistory">
-			<item value="db = new QRefDatabase()"/>
-			<item value="Touch"/>
-			<item value="this.scrollViews ="/>
-			<item value="updateIndices"/>
-			<item value="TouchSlideWindow"/>
+			<item value="insertModelstoList"/>
+			<item value="Request_Model"/>
+			<item value="RequestModel"/>
+			<item value="no models"/>
+			<item value="LoadObjects"/>
+			<item value="CheckIn"/>
+			<item value="function CheckIn"/>
+			<item value="function Load"/>
 		</list>
 		<list key="replacehistory">
+			<item value="{"/>
 			<item value="db = QRefDatabase.instance()"/>
 			<item value=""/>
 		</list>

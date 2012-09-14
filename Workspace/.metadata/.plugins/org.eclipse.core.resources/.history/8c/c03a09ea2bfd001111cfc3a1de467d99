@@ -1,0 +1,14 @@
+###
+@author Nathan Klick
+@copyright QRef 2012
+###
+class RpcRequest
+	###
+	@property [String] The type of request. Should always be "rpc" for URLs beginning with '/services/rpc/' prefix.
+	###
+	mode: "rpc"
+	token: null
+	constructor: (token) -> 
+		@mode = "rpc"
+		@token = token
+	 

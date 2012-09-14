@@ -1,0 +1,21 @@
+###
+@author Nathan Klick
+@copyright QRef 2012
+###
+class RpcRequest
+	###
+	@property [String] (Required) The type of request. Should always be "rpc" for URLs beginning with '/services/rpc/' prefix.
+	###
+	mode: "rpc"
+	###
+	@property [String] (Optional) The authentication token to include the request.
+	###
+	token: null
+	###
+	Initializes a new RpcRequest object with the provided authentication token and defaults the mode property to 'rpc'.
+	@param token [String] The authentication token to include in the request. Sets the token property.
+	###
+	constructor: (token) -> 
+		@mode = "rpc"
+		@token = token
+	 

@@ -2,6 +2,26 @@ AjaxRoute = require('../../../AjaxRoute')
 AjaxResponse = require('../../../../serialization/AjaxResponse')
 UserAuth = require('../../../../security/UserAuth')
 QRefDatabase = require('../../../../db/QRefDatabase')
+ChecklistManager = require('../../../../db/manager/ChecklistManager')
+###
+Service route that allows the retrieval and updation of an individual checklist.
+@example Service Methods (see {UpdateAircraftChecklistAjaxRequest})
+  Request Format: application/json
+  Response Format: application/json
+
+  GET /services/ajax/aircraft/checklist/:checklistId
+    :checklistId - (Required) The ID of the checklist you wish to retrieve
+    
+    This method retrieves an individual checklist.
+    
+  POST /services/ajax/aircraft/checklist/:checklistId
+  	:checklistId - (Required) The ID of the checklist you wish to update
+  	@BODY - (Required) UpdateAircraftChecklistAjaxRequest
+  	
+  	This method performs an update on a single checklist.
+@author Nathan Klick
+@copyright QRef 2012
+###
 class AircraftChecklistRoute extends AjaxRoute
 	constructor: () ->
 		super [{ method: 'POST', path: '/checklist/:checklistId' }, { method: 'GET', path: '/checklist/:checklistId' }]
@@ -13,6 +33,7 @@ class AircraftChecklistRoute extends AjaxRoute
 			return
 		
 		db = QRefDatabase.instance()
+		mgr = new ChecklistManager()
 		token = req.param('token')
 		checklistId = req.params.checklistId
 		
@@ -35,10 +56,19 @@ class AircraftChecklistRoute extends AjaxRoute
 					return
 					
 				if obj?
-					resp = new AjaxResponse()
-					resp.addRecord(obj)
-					resp.setTotal(1)
-					res.json(resp, 200)
+					mgr.expand(obj, (err1, item) ->
+						if err1?
+							resp = new AjaxResponse()
+							resp.failure('Internal Error', 500)
+							res.json(resp, 200)
+							return
+							
+						resp = new AjaxResponse()
+						resp.addRecord(item)
+						resp.setTotal(1)
+						res.json(resp, 200)
+						return
+					)
 				else
 					resp = new AjaxResponse()
 					resp.failure('Not Found', 404)
@@ -86,7 +116,8 @@ class AircraftChecklistRoute extends AjaxRoute
 				obj.preflight = req.body.preflight
 				obj.takeoff = req.body.takeoff
 				obj.landing = req.body.landing
-				obj.emergencies = req.body.emergenices
+				obj.emergencies = req.body.emergencies
+				#obj.modelYear = req.body.modelYear
 				
 				if req.body?.version?
 					obj.version = req.body.version
@@ -98,9 +129,11 @@ class AircraftChecklistRoute extends AjaxRoute
 					obj.productIcon = req.body.productIcon
 
 				
-				if req.body?.coverImage?
-					obj.coverImage = req.body.coverImage
+				#if req.body?.coverImage?
+				#	obj.coverImage = req.body.coverImage
 		
+				if req.body?.isDeleted?
+					obj.isDeleted = req.body.isDeleted
 					
 				obj.save((err) ->
 					if err?

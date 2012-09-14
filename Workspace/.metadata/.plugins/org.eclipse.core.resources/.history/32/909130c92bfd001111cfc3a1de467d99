@@ -1,0 +1,7 @@
+class RpcRequest
+	mode: "rpc"
+	token: null
+	constructor: (token) -> 
+		@mode = "rpc"
+		@token = token
+	 

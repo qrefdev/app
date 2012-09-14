@@ -1,0 +1,20 @@
+###
+Specification class for the purpose of documenting the signatures and parameters of the callback utilized in the application framework.
+@author Nathan Klick
+@copyright QRef 2012
+@abstract
+###
+class Callbacks
+	###
+	Standard callback used in the DB Manager utility classes for deeply populating a single object.
+	@param err [Error] An error object if an error occurred or null otherwise.
+	@param item [Object] The resulting deeply populated object.
+	###
+	managerExpandItemCallback: (err, item) ->
+	###
+	Standard callback used in the DB Manager utility class for deeply populating arrays of objects.
+	@param err [Error] An error object if an error occurred or null otherwise.
+	@param newArray [Array<Object>] The resulting deeply populated array of objects.
+	###
+	managerExpandArrayCallback: (err, newArray) ->
+module.exports = Callbacks

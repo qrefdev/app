@@ -1,5 +1,5 @@
 (function() {
-  var AircraftChecklistRoute, AjaxResponse, AjaxRoute, QRefDatabase, UserAuth,
+  var AircraftChecklistRoute, AjaxResponse, AjaxRoute, ChecklistManager, QRefDatabase, UserAuth,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -11,6 +11,29 @@
   UserAuth = require('../../../../security/UserAuth');
 
   QRefDatabase = require('../../../../db/QRefDatabase');
+
+  ChecklistManager = require('../../../../db/manager/ChecklistManager');
+
+  /*
+  Service route that allows the retrieval and updation of an individual checklist.
+  @example Service Methods (see {UpdateAircraftChecklistAjaxRequest})
+    Request Format: application/json
+    Response Format: application/json
+  
+    GET /services/ajax/aircraft/checklist/:checklistId
+      :checklistId - (Required) The ID of the checklist you wish to retrieve
+      
+      This method retrieves an individual checklist.
+      
+    POST /services/ajax/aircraft/checklist/:checklistId
+    	:checklistId - (Required) The ID of the checklist you wish to update
+    	@BODY - (Required) UpdateAircraftChecklistAjaxRequest
+    	
+    	This method performs an update on a single checklist.
+  @author Nathan Klick
+  @copyright QRef 2012
+  */
+
 
   AircraftChecklistRoute = (function(_super) {
 
@@ -32,7 +55,7 @@
     }
 
     AircraftChecklistRoute.prototype.get = function(req, res) {
-      var checklistId, db, resp, token;
+      var checklistId, db, mgr, resp, token;
       if (!this.isValidRequest(req)) {
         resp = new AjaxResponse();
         resp.failure('Bad Request', 400);
@@ -40,6 +63,7 @@
         return;
       }
       db = QRefDatabase.instance();
+      mgr = new ChecklistManager();
       token = req.param('token');
       checklistId = req.params.checklistId;
       return UserAuth.validateToken(token, function(err, isTokenValid) {
@@ -59,10 +83,18 @@
             return;
           }
           if (obj != null) {
-            resp = new AjaxResponse();
-            resp.addRecord(obj);
-            resp.setTotal(1);
-            return res.json(resp, 200);
+            return mgr.expand(obj, function(err1, item) {
+              if (err1 != null) {
+                resp = new AjaxResponse();
+                resp.failure('Internal Error', 500);
+                res.json(resp, 200);
+                return;
+              }
+              resp = new AjaxResponse();
+              resp.addRecord(item);
+              resp.setTotal(1);
+              res.json(resp, 200);
+            });
           } else {
             resp = new AjaxResponse();
             resp.failure('Not Found', 404);
@@ -111,7 +143,7 @@
           obj.preflight = req.body.preflight;
           obj.takeoff = req.body.takeoff;
           obj.landing = req.body.landing;
-          obj.emergencies = req.body.emergenices;
+          obj.emergencies = req.body.emergencies;
           if (((_ref = req.body) != null ? _ref.version : void 0) != null) {
             obj.version = req.body.version;
           }
@@ -121,8 +153,8 @@
           if (((_ref2 = req.body) != null ? _ref2.productIcon : void 0) != null) {
             obj.productIcon = req.body.productIcon;
           }
-          if (((_ref3 = req.body) != null ? _ref3.coverImage : void 0) != null) {
-            obj.coverImage = req.body.coverImage;
+          if (((_ref3 = req.body) != null ? _ref3.isDeleted : void 0) != null) {
+            obj.isDeleted = req.body.isDeleted;
           }
           return obj.save(function(err) {
             if (err != null) {

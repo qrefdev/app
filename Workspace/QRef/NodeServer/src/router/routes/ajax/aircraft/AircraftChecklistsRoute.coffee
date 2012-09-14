@@ -2,6 +2,25 @@ AjaxRoute = require('../../../AjaxRoute')
 AjaxResponse = require('../../../../serialization/AjaxResponse')
 UserAuth = require('../../../../security/UserAuth')
 QRefDatabase = require('../../../../db/QRefDatabase')
+ChecklistManager = require('../../../../db/manager/ChecklistManager')
+###
+Service route that allows the retrieval of all checklists and the creation of new checklists.
+@example Service Methods (see {CreateAircraftChecklistAjaxRequest})
+  Request Format: application/json
+  Response Format: application/json
+  
+  GET /services/ajax/aircraft/checklists?token=:token
+    :token - (Required) A valid authentication token.
+    
+  Retrieves all checklists.
+  
+  POST /services/ajax/aircraft/checklists
+  	@BODY - (Required) CreateAircraftChecklistAjaxRequest
+  	
+  Creates a new checklist.
+@author Nathan Klick
+@copyright QRef 2012
+###
 class AircraftChecklistsRoute extends AjaxRoute
 	constructor: () ->
 		super [{ method: 'POST', path: '/checklists' }, { method: 'GET', path: '/checklists' }]
@@ -13,6 +32,7 @@ class AircraftChecklistsRoute extends AjaxRoute
 			return
 		
 		db = QRefDatabase.instance()
+		mgr = new ChecklistManager()
 		token = req.param('token')
 		
 		UserAuth.validateToken(token, (err, isTokenValid) ->
@@ -22,38 +42,66 @@ class AircraftChecklistsRoute extends AjaxRoute
 				res.json(resp, 200)
 				return
 			
-			# Validate Admin Only Access
-			
-			query = db.AircraftChecklist.find()
-		
-			if req.query?.pageSize? and req.query?.page?
-				query = query.skip(req.query.page * req.query.pageSize).limit(req.query.pageSize)
-			else if req.query?.pageSize? and not req.query?.page?
-				query = query.limit(req.query.pageSize)
-			else if not req.query?.pageSize? and req.query?.page?
-				query = query.skip(req.query.page * 25).limit(25)
-			
-			query.exec((err, arrObjs) ->
+			UserAuth.userFromToken(token, (err, user) ->
 				if err?
 					resp = new AjaxResponse()
-					resp.failure('Internal Error', 500)
+					resp.failure('Not Authorized', 403)
 					res.json(resp, 200)
 					return
-					
-				db.AircraftChecklist.count((err, count) ->
+				
+				if not user?
+					resp = new AjaxResponse()
+					resp.failure('Not Authorized', 403)
+					res.json(resp, 200)
+					return
+				
+				query = db.AircraftChecklist.find()
+				query.where('isDeleted', false)
+				query.where('user', user._id)
+			
+				if req.query?.pageSize? and req.query?.page?
+					query = query.skip(req.query.page * req.query.pageSize).limit(req.query.pageSize)
+				else if req.query?.pageSize? and not req.query?.page?
+					query = query.limit(req.query.pageSize)
+				else if not req.query?.pageSize? and req.query?.page?
+					query = query.skip(req.query.page * 25).limit(25)
+				
+				query.exec((err, arrObjs) ->
 					if err?
 						resp = new AjaxResponse()
 						resp.failure('Internal Error', 500)
 						res.json(resp, 200)
 						return
+						
+					db.AircraftChecklist.count((err, count) ->
+						if err?
+							resp = new AjaxResponse()
+							resp.failure('Internal Error', 500)
+							res.json(resp, 200)
+							return
+						
+						#console.log('Expanding records.')
+						mgr.expandAll(arrObjs, (err, arrCheckLists) ->
+							if err?
+								resp = new AjaxResponse()
+								resp.failure('Internal Error', 500)
+								res.json(resp, 200)
+								return
+								
+							#console.log('Returning expanded records.')
+							resp = new AjaxResponse()
+							resp.addRecords(arrCheckLists)
+							resp.setTotal(count)
+							res.json(resp, 200)
+						)
+						
+					)
 					
-					resp = new AjaxResponse()
-					resp.addRecords(arrObjs)
-					resp.setTotal(count)
-					res.json(resp, 200)
 				)
-				
 			)
+			# Validate Admin Only Access
+			
+			
 		)
 	post: (req, res) =>
 		if not @.isValidRequest(req)
@@ -82,7 +130,7 @@ class AircraftChecklistsRoute extends AjaxRoute
 			newObj.takeoff = req.body.takeoff
 			newObj.landing = req.body.landing
 			newObj.emergencies = req.body.emergenices
-			newObj.modelYear = req.body.modelYear
+			#newObj.modelYear = req.body.modelYear
 			
 			if req.body?.tailNumber?
 				newObj.tailNumber = req.body.tailNumber
@@ -101,8 +149,8 @@ class AircraftChecklistsRoute extends AjaxRoute
 			if req.body?.productIcon?
 				newObj.productIcon = req.body.productIcon
 			
-			if req.body?.coverImage?
-				newObj.coverImage = req.body.coverImage
+			#if req.body?.coverImage?
+			#	newObj.coverImage = req.body.coverImage
 			
 			newObj.save((err) ->
 				if err?
@@ -125,7 +173,6 @@ class AircraftChecklistsRoute extends AjaxRoute
 			  (req.body? and req.body?.token? and req.body?.model? and  
 			 	req.body?.manufacturer? and req.body?.preflight? and req.body?.takeoff? and
 			 	req.body?.landing? and req.body?.emergencies? and
-			 	req.body?.modelYear and
 			 	req.body?.mode? and req.body.mode == 'ajax')
 			true
 		else

@@ -2,6 +2,24 @@ AjaxRoute = require('../../../AjaxRoute')
 AjaxResponse = require('../../../../serialization/AjaxResponse')
 UserAuth = require('../../../../security/UserAuth')
 QRefDatabase = require('../../../../db/QRefDatabase')
+###
+Service route that allows the retrieval of all manufacturers and the creation of new manufacturers.
+@example Service Methods (see {CreateAircraftManufacturerAjaxRequest})
+  Request Format: application/json
+  Response Format: application/json
+  
+  GET /services/ajax/aircraft/manufacturers?token=:token
+    :token - (Required) A valid authentication token.
+    
+  Retrieves all manufacturers.
+  
+  POST /services/ajax/aircraft/manufacturers
+  	@BODY - (Required) CreateAircraftManufacturerAjaxRequest
+  	
+  Creates a new aircraft manufacturer.
+@author Nathan Klick
+@copyright QRef 2012
+###
 class AircraftManufacturersRoute extends AjaxRoute
 	constructor: () ->
 		super [{ method: 'POST', path: '/manufacturers' }, { method: 'GET', path: '/manufacturers' }]

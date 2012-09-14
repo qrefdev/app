@@ -2,6 +2,26 @@ AjaxRoute = require('../../../AjaxRoute')
 AjaxResponse = require('../../../../serialization/AjaxResponse')
 UserAuth = require('../../../../security/UserAuth')
 QRefDatabase = require('../../../../db/QRefDatabase')
+ProductManager = require('../../../../db/manager/ProductManager')
+###
+Service route that allows the retrieval and updation of an individual product.
+@example Service Methods (see {UpdateAircraftProductAjaxRequest})
+  Request Format: application/json
+  Response Format: application/json
+  
+  GET /services/ajax/aircraft/product/:productId
+    :productId - (Required) The ID of the product you wish to retrieve
+    
+    This method retrieves an individual product.
+    
+  POST /services/ajax/aircraft/product/:productId
+  	:productId - (Required) The ID of the product you wish to update
+  	@BODY - (Required) UpdateAircraftProductAjaxRequest
+  	
+  	This method performs an update on a single product.
+@author Nathan Klick
+@copyright QRef 2012
+###
 class ProductRoute extends AjaxRoute
 	constructor: () ->
 		super [{ method: 'POST', path: '/product/:productId' }, { method: 'GET', path: '/product/:productId' }]
@@ -15,6 +35,7 @@ class ProductRoute extends AjaxRoute
 		db = QRefDatabase.instance()
 		token = req.param('token')
 		productId = req.params.productId
+		mgr = new ProductManager()
 		
 		UserAuth.validateToken(token, (err, isTokenValid) ->
 			if err? or not isTokenValid == true
@@ -40,10 +61,19 @@ class ProductRoute extends AjaxRoute
 					return
 				
 					
-				resp = new AjaxResponse()
-				resp.addRecord(obj)
-				resp.setTotal(1)
-				res.json(resp, 200)
+				mgr.expand(obj, (err, eProduct) ->
+					if err?
+						resp = new AjaxResponse()
+						resp.failure('Internal Error', 500)
+						res.json(resp, 200)
+						return
+					
+					resp = new AjaxResponse()
+					resp.addRecord(eProduct)
+					resp.setTotal(1)
+					res.json(resp, 200)
+				)
+				
 				
 			)
 		)
@@ -109,6 +139,11 @@ class ProductRoute extends AjaxRoute
 				if req.body?.aircraftChecklist?
 					obj.aircraftChecklist = req.body.aircraftChecklist
 					
+				if req.body?.coverImage?
+					obj.coverImage = req.body.coverImage
+					
+				if req.body?.productIcon?
+					obj.productIcon = req.body.productIcon
 				
 				obj.save((err) ->
 					if err?

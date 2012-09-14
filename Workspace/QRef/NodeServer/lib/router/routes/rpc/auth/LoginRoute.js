@@ -10,6 +10,21 @@
 
   UserAuth = require('../../../../security/UserAuth');
 
+  /*
+  Service route that performs user authentication.
+  @example Service Methods (see {LoginRpcRequest})
+    Request Format: application/json
+    Response Format: application/json
+    
+    POST /services/rpc/auth/login
+      @BODY - (Required) LoginRpcRequest
+      
+    Performs user authentication and returns a valid token if successful.
+  @author Nathan Klick
+  @copyright QRef 2012
+  */
+
+
   LoginRoute = (function(_super) {
 
     __extends(LoginRoute, _super);

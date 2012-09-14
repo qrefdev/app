@@ -1,5 +1,5 @@
 (function() {
-  var AjaxResponse, AjaxRoute, ProductRoute, QRefDatabase, UserAuth,
+  var AjaxResponse, AjaxRoute, ProductManager, ProductRoute, QRefDatabase, UserAuth,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -11,6 +11,29 @@
   UserAuth = require('../../../../security/UserAuth');
 
   QRefDatabase = require('../../../../db/QRefDatabase');
+
+  ProductManager = require('../../../../db/manager/ProductManager');
+
+  /*
+  Service route that allows the retrieval and updation of an individual product.
+  @example Service Methods (see {UpdateAircraftProductAjaxRequest})
+    Request Format: application/json
+    Response Format: application/json
+    
+    GET /services/ajax/aircraft/product/:productId
+      :productId - (Required) The ID of the product you wish to retrieve
+      
+      This method retrieves an individual product.
+      
+    POST /services/ajax/aircraft/product/:productId
+    	:productId - (Required) The ID of the product you wish to update
+    	@BODY - (Required) UpdateAircraftProductAjaxRequest
+    	
+    	This method performs an update on a single product.
+  @author Nathan Klick
+  @copyright QRef 2012
+  */
+
 
   ProductRoute = (function(_super) {
 
@@ -32,7 +55,7 @@
     }
 
     ProductRoute.prototype.get = function(req, res) {
-      var db, productId, resp, token;
+      var db, mgr, productId, resp, token;
       if (!this.isValidRequest(req)) {
         resp = new AjaxResponse();
         resp.failure('Bad Request', 400);
@@ -42,6 +65,7 @@
       db = QRefDatabase.instance();
       token = req.param('token');
       productId = req.params.productId;
+      mgr = new ProductManager();
       return UserAuth.validateToken(token, function(err, isTokenValid) {
         var query;
         if ((err != null) || !isTokenValid === true) {
@@ -64,10 +88,18 @@
             res.json(resp, 200);
             return;
           }
-          resp = new AjaxResponse();
-          resp.addRecord(obj);
-          resp.setTotal(1);
-          return res.json(resp, 200);
+          return mgr.expand(obj, function(err, eProduct) {
+            if (err != null) {
+              resp = new AjaxResponse();
+              resp.failure('Internal Error', 500);
+              res.json(resp, 200);
+              return;
+            }
+            resp = new AjaxResponse();
+            resp.addRecord(eProduct);
+            resp.setTotal(1);
+            return res.json(resp, 200);
+          });
         });
       });
     };
@@ -91,7 +123,7 @@
           return;
         }
         return db.Product.findById(productId, function(err, obj) {
-          var _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
+          var _ref, _ref1, _ref10, _ref11, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
           if (err != null) {
             resp = new AjaxResponse();
             resp.failure(err, 500);
@@ -133,6 +165,12 @@
           }
           if (((_ref9 = req.body) != null ? _ref9.aircraftChecklist : void 0) != null) {
             obj.aircraftChecklist = req.body.aircraftChecklist;
+          }
+          if (((_ref10 = req.body) != null ? _ref10.coverImage : void 0) != null) {
+            obj.coverImage = req.body.coverImage;
+          }
+          if (((_ref11 = req.body) != null ? _ref11.productIcon : void 0) != null) {
+            obj.productIcon = req.body.productIcon;
           }
           return obj.save(function(err) {
             if (err != null) {

@@ -1,0 +1,62 @@
+AjaxRoute = require('../../../AjaxRoute')
+AjaxResponse = require('../../../../serialization/AjaxResponse')
+UserAuth = require('../../../../security/UserAuth')
+QRefDatabase = require('../../../../db/QRefDatabase')
+class AircraftChecklistRoute extends AjaxRoute
+	constructor: () ->
+		super [{ method: 'POST', path: '/checklist/manufacturer/:manufacturerId/model/:modelId' }, { method: 'GET', path: '/checklist/manufacturer/:manufacturerId/model/:modelId' }]
+	get: (req, res) =>
+		if not @.isValidRequest(req)
+			resp = new AjaxResponse()
+			resp.failure('Bad Request', 400)
+			res.json(resp, 200)
+			return
+		
+		db = QRefDatabase.instance()
+		token = req.param('token')
+		mfg = req.params.manufacturerId
+		mdl = req.params.modelId
+		checklistId = req.params.checklistId
+		
+		UserAuth.validateToken(token, (err, isTokenValid) ->
+			if err? or not isTokenValid == true
+				resp = new AjaxResponse()
+				resp.failure('Not Authorized', 403)
+				res.json(resp, 200)
+				return
+			
+			# Validate Permissions Here
+			
+			query = db.AircraftChecklist.find({ db.AircraftChecklist.model : mdl, db.AircraftChecklist.manufacturer : mfg })
+		
+			query.exec((err, arrObjs) ->
+				if err?
+					resp = new AjaxResponse()
+					resp.failure('Internal Error', 500)
+					res.json(resp, 200)
+					return
+					
+				if arrObjs.length > 0
+					resp = new AjaxResponse()
+					resp.addRecords(arrObjs)
+					resp.setTotal(arrObjs.length)
+					res.json(resp, 200)
+				else
+					resp = new AjaxResponse()
+					resp.failure('Not Found', 404)
+					res.json(resp, 200)
+				
+			)
+		)
+	post: (req, res) =>
+		resp = new AjaxResponse()
+		resp.failure('Not Found', 404)
+		res.json(resp, 200)
+		return
+	isValidRequest: (req) ->
+		if (req.query? and req.query?.token? and req.params? and req.params?.modelId? and req.params?.manufacturerId?)
+			true
+		else
+			false 
+	
+module.exports = new AircraftChecklistRoute()

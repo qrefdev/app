@@ -2,8 +2,21 @@ async = require('async')
 mongoose = require('mongoose')
 QRefDatabase = require('../QRefDatabase')
 
+###
+Utility class used to provide common operations on {ProductSchemaInternal} object instances.
+@author Nathan Klick
+@copyright QRef 2012
+###
 class ProductManager
+	###
+	Creates a new instance of the ProductManager class.  
+	###
 	constructor: () ->
+	###
+	Performs deep property population on a single {ProductSchemaInternal} object.
+	@param product [ProductSchemaInternal] The object to deeply populate.
+	@param callback [Function] A function meeting the {Callbacks#managerExpandItemCallback} requirements. 
+	###
 	expand: (product, callback) ->
 		db = QRefDatabase.instance()
 		if not product?
@@ -61,6 +74,11 @@ class ProductManager
 						
 		else
 			callback(null, eProd)
+	###
+	Performs deep property population on an array of {ProductSchemaInternal} objects.
+	@param arrProducts [Array<ProductSchemaInternal>] The array of objects to deeply populate.
+	@param callback [Function] A function meeting the {Callbacks#managerExpandArrayCallback} requirements. 
+	###
 	expandAll: (arrProducts, callback) =>
 		if not arrProducts?
 			callback('Array cannot be a null reference', null)

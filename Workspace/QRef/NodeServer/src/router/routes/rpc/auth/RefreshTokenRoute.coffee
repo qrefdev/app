@@ -1,6 +1,19 @@
 RpcRoute = require('../../../RpcRoute')
 RpcResponse = require('../../../../serialization/RpcResponse')
 UserAuth = require('../../../../security/UserAuth')
+###
+Service route that is used to extend the life of an authentication token.
+@example Service Methods (see {RefreshTokenRpcRequest})
+  Request Format: application/json
+  Response Format: application/json
+  
+  POST /services/rpc/auth/refreshToken
+    @BODY - (Required) RefreshTokenRpcRequest
+    
+  Extends the life of an existing authentication token if successful.
+@author Nathan Klick
+@copyright QRef 2012
+###
 class RefreshTokenRoute extends RpcRoute
 	constructor: () ->
 		super [{ method: 'POST', path: '/refreshToken' }, { method: 'GET', path: '/refreshToken' }]

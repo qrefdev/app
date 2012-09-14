@@ -2,6 +2,26 @@ AjaxRoute = require('../../../AjaxRoute')
 AjaxResponse = require('../../../../serialization/AjaxResponse')
 UserAuth = require('../../../../security/UserAuth')
 QRefDatabase = require('../../../../db/QRefDatabase')
+ProductManager = require('../../../../db/manager/ProductManager')
+###
+Service route that allows the retrieval of all checklists and the creation of new checklists.
+@example Service Methods (see {CreateAircraftProductAjaxRequest})
+  Request Format: application/json
+  Response Format: application/json
+  
+  
+  GET /services/ajax/aircraft/products?token=:token
+    :token - (Required) A valid authentication token.
+    
+  Retrieves all products.
+  
+  POST /services/ajax/aircraft/products
+  	@BODY - (Required) CreateAircraftProductAjaxRequest
+  	
+  Creates a new product.
+@author Nathan Klick
+@copyright QRef 2012
+###
 class ProductsRoute extends AjaxRoute
 	constructor: () ->
 		super [{ method: 'POST', path: '/products' }, { method: 'GET', path: '/products' }]
@@ -14,6 +34,7 @@ class ProductsRoute extends AjaxRoute
 		
 		db = QRefDatabase.instance()
 		token = req.param('token')
+		mgr = new ProductManager()
 		
 		UserAuth.validateToken(token, (err, isTokenValid) ->
 			if err? or not isTokenValid == true
@@ -48,10 +69,18 @@ class ProductsRoute extends AjaxRoute
 						res.json(resp, 200)
 						return
 					
-					resp = new AjaxResponse()
-					resp.addRecords(arrObjs)
-					resp.setTotal(count)
-					res.json(resp, 200)
+					mgr.expandAll(arrObjs, (err, arrProducts) ->
+						if err?
+							resp = new AjaxResponse()
+							resp.failure('Internal Error', 500)
+							res.json(resp, 200)
+							return
+						resp = new AjaxResponse()
+						resp.addRecords(arrProducts)
+						resp.setTotal(count)
+						res.json(resp, 200)
+					)
+					
 				)
 				
 			)
@@ -79,7 +108,6 @@ class ProductsRoute extends AjaxRoute
 			newObj.productType = req.body.productType
 			newObj.manufacturer = req.body.manufacturer
 			newObj.model = req.body.model
-			newObj.modelYear = req.body.modelYear
 			
 			if req.body?.productCategory?
 				newObj.productCategory = req.body.productCategory
@@ -110,6 +138,12 @@ class ProductsRoute extends AjaxRoute
 			if req.body?.serialNumber?
 				newObj.serialNumber = req.body.serialNumber
 			
+			if req.body?.coverImage?
+				newObj.coverImage = req.body.coverImage
+				
+			if req.body?.productIcon?
+				newObj.productIcon = req.body.productIcon
+			
 			newObj.save((err) ->
 				if err?
 					resp = new AjaxResponse()
@@ -132,7 +166,7 @@ class ProductsRoute extends AjaxRoute
 			 (req.body? and req.body?.token? and req.body?.name? and 
 			 req.body?.productType? and req.body?.mode? and
 			 req.body?.manufacturer? and req.body?.model? and
-			 req.body?.modelYear? and req.body.mode == 'ajax')
+			 req.body.mode == 'ajax')
 			true
 		else
 			false 

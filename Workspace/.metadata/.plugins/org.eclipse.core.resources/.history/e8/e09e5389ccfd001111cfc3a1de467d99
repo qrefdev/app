@@ -1,0 +1,70 @@
+mongoose = require('mongoose')
+Schema = mongoose.Schema
+ObjectId = Schema.ObjectId
+AircraftChecklistSectionSchema = require('./AircraftChecklistSectionSchema')
+
+###
+@author Nathan Klick
+@copyright QRef 2012
+###
+class AircraftChecklistSchemaInternal  
+	manufacturer: 
+		type: ObjectId
+		ref: 'aircraft.manufacturers'
+		required: true
+	model: 
+		type: ObjectId
+		ref: 'aircraft.models'
+		required: true
+	index: 
+		type: Number
+		required: false
+		default: null
+	tailNumber:
+		type: String
+		required: false
+		default: null
+	user:
+		type: ObjectId
+		ref: 'users'
+		required: false
+		default: null
+	version:
+		type: Number
+		required: true
+		default: 1
+	productIcon:
+		type: String
+		required: false
+	###
+	@property [Array<AircraftChecklistSectionSchemaInternal>] The array of preflight sections.
+	###
+	preflight:
+		type: [AircraftChecklistSectionSchema]
+		required: false
+	###
+	@property [Array<AircraftChecklistSectionSchemaInternal>] The array of takeoff sections.
+	###
+	takeoff:
+		type: [AircraftChecklistSectionSchema]
+		required: false
+	###
+	@property [Array<AircraftChecklistSectionSchemaInternal>] The array of landing sections.
+	###
+	landing: 
+		type: [AircraftChecklistSectionSchema]
+		required: false
+	###
+	@property [Array<AircraftChecklistSectionSchemaInternal>] The array of emergency sections.
+	###
+	emergencies:
+		type: [AircraftChecklistSectionSchema]
+		required: false
+	isDeleted:
+		type: Boolean
+		required: true
+		default: false 
+
+AircraftChecklistSchema = new Schema(new AircraftChecklistSchemaInternal())
+AircraftChecklistSchema.index({ manufacturer: 1, model: 1, version: 1, tailNumber: 1 }, { unique: true })
+module.exports = AircraftChecklistSchema

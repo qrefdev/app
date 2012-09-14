@@ -12,6 +12,22 @@
 
   QRefDatabase = require('../../../../db/QRefDatabase');
 
+  /*
+  Service route that allows the retrieval of all products owned by a specific user.
+  @example Service Methods
+    Request Format: application/json
+    Response Format: application/json
+    
+    GET /services/ajax/user/:userId/products?token=:token
+      :userId - (Required) The user for which to get a list of owned products.
+      :token - (Required) A valid authentication token.
+      
+    Retrieves all products owned by the specified user.
+  @author Nathan Klick
+  @copyright QRef 2012
+  */
+
+
   UserProductsRoute = (function(_super) {
 
     __extends(UserProductsRoute, _super);

@@ -1,5 +1,5 @@
 (function() {
-  var AjaxResponse, AjaxRoute, ProductsRoute, QRefDatabase, UserAuth,
+  var AjaxResponse, AjaxRoute, ProductManager, ProductsRoute, QRefDatabase, UserAuth,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -11,6 +11,29 @@
   UserAuth = require('../../../../security/UserAuth');
 
   QRefDatabase = require('../../../../db/QRefDatabase');
+
+  ProductManager = require('../../../../db/manager/ProductManager');
+
+  /*
+  Service route that allows the retrieval of all checklists and the creation of new checklists.
+  @example Service Methods (see {CreateAircraftProductAjaxRequest})
+    Request Format: application/json
+    Response Format: application/json
+    
+    
+    GET /services/ajax/aircraft/products?token=:token
+      :token - (Required) A valid authentication token.
+      
+    Retrieves all products.
+    
+    POST /services/ajax/aircraft/products
+    	@BODY - (Required) CreateAircraftProductAjaxRequest
+    	
+    Creates a new product.
+  @author Nathan Klick
+  @copyright QRef 2012
+  */
+
 
   ProductsRoute = (function(_super) {
 
@@ -32,7 +55,7 @@
     }
 
     ProductsRoute.prototype.get = function(req, res) {
-      var db, resp, token;
+      var db, mgr, resp, token;
       if (!this.isValidRequest(req)) {
         resp = new AjaxResponse();
         resp.failure('Bad Request', 400);
@@ -41,6 +64,7 @@
       }
       db = QRefDatabase.instance();
       token = req.param('token');
+      mgr = new ProductManager();
       return UserAuth.validateToken(token, function(err, isTokenValid) {
         var query, _ref, _ref1, _ref2, _ref3, _ref4, _ref5;
         if ((err != null) || !isTokenValid === true) {
@@ -72,10 +96,18 @@
               res.json(resp, 200);
               return;
             }
-            resp = new AjaxResponse();
-            resp.addRecords(arrObjs);
-            resp.setTotal(count);
-            return res.json(resp, 200);
+            return mgr.expandAll(arrObjs, function(err, arrProducts) {
+              if (err != null) {
+                resp = new AjaxResponse();
+                resp.failure('Internal Error', 500);
+                res.json(resp, 200);
+                return;
+              }
+              resp = new AjaxResponse();
+              resp.addRecords(arrProducts);
+              resp.setTotal(count);
+              return res.json(resp, 200);
+            });
           });
         });
       });
@@ -92,7 +124,7 @@
       db = QRefDatabase.instance();
       token = req.param('token');
       return UserAuth.validateToken(token, function(err, isTokenValid) {
-        var newObj, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8;
+        var newObj, _ref, _ref1, _ref10, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
         if ((err != null) || !isTokenValid === true) {
           resp = new AjaxResponse();
           resp.failure('Not Authorized', 403);
@@ -104,7 +136,6 @@
         newObj.productType = req.body.productType;
         newObj.manufacturer = req.body.manufacturer;
         newObj.model = req.body.model;
-        newObj.modelYear = req.body.modelYear;
         if (((_ref = req.body) != null ? _ref.productCategory : void 0) != null) {
           newObj.productCategory = req.body.productCategory;
         } else {
@@ -134,6 +165,12 @@
         if (((_ref8 = req.body) != null ? _ref8.serialNumber : void 0) != null) {
           newObj.serialNumber = req.body.serialNumber;
         }
+        if (((_ref9 = req.body) != null ? _ref9.coverImage : void 0) != null) {
+          newObj.coverImage = req.body.coverImage;
+        }
+        if (((_ref10 = req.body) != null ? _ref10.productIcon : void 0) != null) {
+          newObj.productIcon = req.body.productIcon;
+        }
         return newObj.save(function(err) {
           if (err != null) {
             resp = new AjaxResponse();
@@ -150,8 +187,8 @@
     };
 
     ProductsRoute.prototype.isValidRequest = function(req) {
-      var _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7;
-      if (((req.query != null) && (((_ref = req.query) != null ? _ref.token : void 0) != null)) || ((req.body != null) && (((_ref1 = req.body) != null ? _ref1.token : void 0) != null) && (((_ref2 = req.body) != null ? _ref2.name : void 0) != null) && (((_ref3 = req.body) != null ? _ref3.productType : void 0) != null) && (((_ref4 = req.body) != null ? _ref4.mode : void 0) != null) && (((_ref5 = req.body) != null ? _ref5.manufacturer : void 0) != null) && (((_ref6 = req.body) != null ? _ref6.model : void 0) != null) && (((_ref7 = req.body) != null ? _ref7.modelYear : void 0) != null) && req.body.mode === 'ajax')) {
+      var _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6;
+      if (((req.query != null) && (((_ref = req.query) != null ? _ref.token : void 0) != null)) || ((req.body != null) && (((_ref1 = req.body) != null ? _ref1.token : void 0) != null) && (((_ref2 = req.body) != null ? _ref2.name : void 0) != null) && (((_ref3 = req.body) != null ? _ref3.productType : void 0) != null) && (((_ref4 = req.body) != null ? _ref4.mode : void 0) != null) && (((_ref5 = req.body) != null ? _ref5.manufacturer : void 0) != null) && (((_ref6 = req.body) != null ? _ref6.model : void 0) != null) && req.body.mode === 'ajax')) {
         return true;
       } else {
         return false;

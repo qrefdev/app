@@ -1,6 +1,19 @@
 RpcRoute = require('../../../RpcRoute')
 RpcResponse = require('../../../../serialization/RpcResponse')
 UserAuth = require('../../../../security/UserAuth')
+###
+Service route that is used to create a new user account.
+@example Service Methods (see {RegisterAccountRpcRequest})
+  Request Format: application/json
+  Response Format: application/json
+  
+  POST /services/rpc/auth/registerAccount
+    @BODY - (Required) RegisterAccountRpcRequest
+    
+  Creates a new user account with the specified email address and password.
+@author Nathan Klick
+@copyright QRef 2012
+###
 class RegisterAccountRoute extends RpcRoute
 	constructor: () ->
 		super [{ method: 'POST', path: '/registerAccount' }, { method: 'GET', path: '/registerAccount' }]

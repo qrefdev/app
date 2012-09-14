@@ -2,6 +2,24 @@ AjaxRoute = require('../../../AjaxRoute')
 AjaxResponse = require('../../../../serialization/AjaxResponse')
 UserAuth = require('../../../../security/UserAuth')
 QRefDatabase = require('../../../../db/QRefDatabase')
+###
+Service route that allows the retrieval of all models and the creation of new models.
+@example Service Methods (see {CreateAircraftModelAjaxRequest})
+  Request Format: application/json
+  Response Format: application/json
+  
+  GET /services/ajax/aircraft/manufacturers?token=:token
+    :token - (Required) A valid authentication token.
+    
+  Retrieves all models.
+  
+  POST /services/ajax/aircraft/manufacturers
+  	@BODY - (Required) CreateAircraftManufacturerAjaxRequest
+  	
+  Creates a new aircraft model.
+@author Nathan Klick
+@copyright QRef 2012
+###
 class AircraftModelsRoute extends AjaxRoute
 	constructor: () ->
 		super [{ method: 'POST', path: '/models' }, { method: 'GET', path: '/models' }]
@@ -88,6 +106,7 @@ class AircraftModelsRoute extends AjaxRoute
 				newObj = new db.AircraftModel()
 				newObj.name = req.body.name
 				newObj.manufacturer = mfr._id
+				newObj.modelYear = req.body.modelYear
 				
 				if req.body?.description?
 					newObj.description = req.body.description
@@ -120,7 +139,7 @@ class AircraftModelsRoute extends AjaxRoute
 
 	isValidRequest: (req) ->
 		if (req.query? and req.query?.token?) or
-			 (req.body? and req.body?.token? and req.body?.name? and req.body?.manufacturer? and req.body?.mode? and req.body.mode == 'ajax')
+			 (req.body? and req.body?.token? and req.body?.name? and req.body?.manufacturer? and req.body?.modelYear? and req.body?.mode? and req.body.mode == 'ajax')
 			true
 		else
 			false 

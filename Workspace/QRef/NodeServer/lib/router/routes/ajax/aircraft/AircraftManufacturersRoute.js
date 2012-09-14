@@ -12,6 +12,26 @@
 
   QRefDatabase = require('../../../../db/QRefDatabase');
 
+  /*
+  Service route that allows the retrieval of all manufacturers and the creation of new manufacturers.
+  @example Service Methods (see {CreateAircraftManufacturerAjaxRequest})
+    Request Format: application/json
+    Response Format: application/json
+    
+    GET /services/ajax/aircraft/manufacturers?token=:token
+      :token - (Required) A valid authentication token.
+      
+    Retrieves all manufacturers.
+    
+    POST /services/ajax/aircraft/manufacturers
+    	@BODY - (Required) CreateAircraftManufacturerAjaxRequest
+    	
+    Creates a new aircraft manufacturer.
+  @author Nathan Klick
+  @copyright QRef 2012
+  */
+
+
   AircraftManufacturersRoute = (function(_super) {
 
     __extends(AircraftManufacturersRoute, _super);

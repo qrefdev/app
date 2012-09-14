@@ -11,6 +11,22 @@
 
   os = require('os');
 
+  /*
+  **** DEVELOPER ONLY **** 
+  Route used to acquire detailed runtime info about the node server during development.
+  @example Service Methods
+    Request Format: application/json
+    Response Format: application/json
+    
+    GET /services/restful/node/stats
+     
+    Retrieves node runtime statistics.
+  @todo Remove prior to product publish.
+  @author Nathan Klick
+  @copyright QRef 2012
+  */
+
+
   NodeStatsRoute = (function(_super) {
 
     __extends(NodeStatsRoute, _super);

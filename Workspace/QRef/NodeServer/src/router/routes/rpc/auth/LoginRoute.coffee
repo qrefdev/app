@@ -1,6 +1,19 @@
 RpcRoute = require('../../../RpcRoute')
 RpcResponse = require('../../../../serialization/RpcResponse')
 UserAuth = require('../../../../security/UserAuth')
+###
+Service route that performs user authentication.
+@example Service Methods (see {LoginRpcRequest})
+  Request Format: application/json
+  Response Format: application/json
+  
+  POST /services/rpc/auth/login
+    @BODY - (Required) LoginRpcRequest
+    
+  Performs user authentication and returns a valid token if successful.
+@author Nathan Klick
+@copyright QRef 2012
+###
 class LoginRoute extends RpcRoute
 	constructor: () ->
 		super [{ method: 'POST', path: '/login' }, { method: 'GET', path: '/login' }]
