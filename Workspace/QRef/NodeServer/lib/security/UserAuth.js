@@ -1,5 +1,5 @@
 (function() {
-  var ObjectId, QRefDatabase, UserAuth, crypto, mongoose;
+  var Dictionary, ObjectId, QRefDatabase, UserAuth, async, crypto, mongoose;
 
   crypto = require('crypto');
 
@@ -8,6 +8,10 @@
   QRefDatabase = require('../db/QRefDatabase');
 
   ObjectId = mongoose.Types.ObjectId;
+
+  Dictionary = require('../collections/Dictionary');
+
+  async = require('async');
 
   /*
   Secure utility methods for managing users, credentials, and tokens.
@@ -217,33 +221,45 @@
 
 
     UserAuth.prototype.createAccount = function(userName, password, callback) {
-      var db, user, userGuid, userHash, userSalt;
+      var db, userGuid, userHash, userSalt;
       db = QRefDatabase.instance();
       userSalt = this.salt();
       userGuid = new ObjectId();
       userHash = this.securePassword(userGuid, userSalt, password);
-      user = new db.User();
-      user._id = userGuid;
-      user.passwordSalt = userSalt;
-      user.passwordHash = userHash;
-      user.emailAddress = userName;
-      user.userName = userName;
-      return db.User.where('userName').equals(userName).find(function(err, arrObjs) {
+      return db.Roles.where('roleName').equals('Users').findOne(function(err, role) {
+        var user;
         if (err != null) {
-          callback(err, false, 1);
+          callback(err, false, 4);
           return;
         }
-        if ((arrObjs != null) && arrObjs.length > 0) {
-          callback(null, false, 2);
-        } else {
-          return user.save(function(err) {
-            if (err != null) {
-              return callback(err, false, 3);
-            } else {
-              return callback(null, true, 0);
-            }
-          });
+        if (!(role != null)) {
+          callback(err, false, 5);
+          return;
         }
+        user = new db.User();
+        user._id = userGuid;
+        user.passwordSalt = userSalt;
+        user.passwordHash = userHash;
+        user.emailAddress = userName;
+        user.userName = userName;
+        user.roles.push(role._id);
+        return db.User.where('userName').equals(userName).find(function(err, arrObjs) {
+          if (err != null) {
+            callback(err, false, 1);
+            return;
+          }
+          if ((arrObjs != null) && arrObjs.length > 0) {
+            callback(null, false, 2);
+          } else {
+            return user.save(function(err) {
+              if (err != null) {
+                return callback(err, false, 3);
+              } else {
+                return callback(null, true, 0);
+              }
+            });
+          }
+        });
       });
     };
 
@@ -270,9 +286,111 @@
       });
     };
 
+    /*
+    	Determines if the currently authenticated user is in the given role.
+    	@param token [String] A hexadecimal string representing a secure token.
+    	@param roleName [String] The name of the role. 
+    	@param callback [Function] A function meeting the requirements of the {Callbacks#userAuthIsInRoleCallback} method.
+    */
+
+
+    UserAuth.prototype.isInRole = function(token, roleName, callback) {
+      var db;
+      db = QRefDatabase.instance();
+      return db.AuthToken.where('token').equals(token).populate('user').findOne(function(err, tk) {
+        if (err != null) {
+          callback(err, false);
+          return;
+        }
+        if (!(tk != null)) {
+          callback(null, false);
+          return;
+        }
+        return db.Role.where('roleName').equals(roleName).findOne(function(err, role) {
+          var bFound;
+          if (err != null) {
+            callback(err, false);
+            return;
+          }
+          if (!(role != null)) {
+            callback(null, false);
+            return;
+          }
+          bFound = false;
+          return async.forEach(tk.user.roles, function(item, cb) {
+            if (item.toString() === role._id.toString()) {
+              bFound = true;
+            }
+            return cb(null);
+          }, function(err) {
+            return callback(null, bFound);
+          });
+        });
+      });
+    };
+
     return UserAuth;
 
   })();
+
+  ({
+    /*
+    	Determines if the currently authenticated user is in any of the listed roles.
+    	@param token [String] A hexadecimal string representing a secure token.
+    	@param roles [Array<String>] The array of roles for which to check for membership.
+    	@param callback [Function] A function meeting the requirements of the {Callbacks#userAuthIsInRoleCallback} method.
+    */
+
+    isInAnyRole: function(token, roles, callback) {
+      var db;
+      db = QRefDatabase.instance();
+      return db.AuthToken.where('token').equals(token).populate('user').findOne(function(err, tk) {
+        var arrQueryEntries, r, _i, _len;
+        if (err != null) {
+          callback(err, false);
+          return;
+        }
+        if (!(tk != null)) {
+          callback(null, false);
+          return;
+        }
+        arrQueryEntries = [];
+        for (_i = 0, _len = roles.length; _i < _len; _i++) {
+          r = roles[_i];
+          arrQueryEntries.push({
+            roleName: r
+          });
+        }
+        return db.Role.find({
+          "$or": arrQueryEntries
+        }).exec(function(err, arrRoles) {
+          var bFound, dctRoleKeys, _j, _len1;
+          if (err != null) {
+            callback(err, false);
+            return;
+          }
+          if (arrRoles.length === 0) {
+            callback(null, false);
+            return;
+          }
+          bFound = false;
+          dctRoleKeys = new Dictionary();
+          for (_j = 0, _len1 = arrRoles.length; _j < _len1; _j++) {
+            r = arrRoles[_j];
+            dctRoleKeys.set(r._id.toString(), r.roleName);
+          }
+          return async.forEach(tk.user.roles, function(item, cb) {
+            if (dctRoleKeys.containsKey(item.toString())) {
+              bFound = true;
+            }
+            return cb(null);
+          }, function(err) {
+            return callback(err, bFound);
+          });
+        });
+      });
+    }
+  });
 
   module.exports = new UserAuth();
 

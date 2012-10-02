@@ -60,6 +60,10 @@ class QRefDatabase
 	###
 	UserProduct: null
 	###
+	@property [AircraftProductAuthorizationAttemptSchemaInternal] A reference to the AircraftProductAuthorizationAttempt model.
+	###
+	AircraftProductAuthorizationAttempt: null
+	###
 	@property [Mongoose.Schema] A convenience property for accessing the Mongoose.Schema object.
 	###
 	Schema: mongoose.Schema
@@ -91,6 +95,8 @@ class QRefDatabase
 		@Product = @connection.model('products', ProductSchema)
 		UserProductSchema = require('../schema/UserProductSchema')
 		@UserProduct = @connection.model('user.products', UserProductSchema)
+		AircraftProductAuthorizationAttemptSchema = require('../schema/AircraftProductAuthorizationAttemptSchema')
+		@AircraftProductAuthorizationAttempt = @connection.model('aircraft.product.authorization.attempt', AircraftProductAuthorizationAttemptSchema)
 	###
 	Returns a reference to the underlying mongoose connection.
 	@return [Mongoose.Connection] The underlying mongoose connection object.

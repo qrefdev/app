@@ -1,7 +1,0 @@
-class RestfulRequest
-	mode: "rest"
-	token: null
-	(token) -> 
-		@mode = "rest"
-		@token = token
-	 

@@ -1,7 +1,0 @@
-class RpcRequest
-	mode: "ajax"
-	token: null
-	(token) -> 
-		@mode = "ajax"
-		@token = token
-	 

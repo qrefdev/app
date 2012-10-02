@@ -99,5 +99,5 @@ class AircraftChecklistSchemaInternal
 		default: false 
 
 AircraftChecklistSchema = new Schema(new AircraftChecklistSchemaInternal())
-AircraftChecklistSchema.index({ manufacturer: 1, model: 1, version: 1, tailNumber: 1 }, { unique: true })
+AircraftChecklistSchema.index({ manufacturer: 1, model: 1, version: 1, tailNumber: 1, user: 1 }, { unique: true })
 module.exports = AircraftChecklistSchema

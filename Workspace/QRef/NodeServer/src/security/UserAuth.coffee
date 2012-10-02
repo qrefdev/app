@@ -2,6 +2,8 @@ crypto = require('crypto')
 mongoose = require('mongoose')
 QRefDatabase = require('../db/QRefDatabase')
 ObjectId = mongoose.Types.ObjectId
+Dictionary = require('../collections/Dictionary')
+async = require('async')
 ###
 Secure utility methods for managing users, credentials, and tokens.
 @author Nathan Klick
@@ -163,14 +165,27 @@ class UserAuth
 		userGuid = new ObjectId()
 		userHash = @.securePassword(userGuid, userSalt, password)
 		
-		user = new db.User()
-		user._id = userGuid
-		user.passwordSalt = userSalt
-		user.passwordHash = userHash
-		user.emailAddress = userName
-		user.userName = userName
-		
-		db.User.where('userName')
+		db.Roles.where('roleName')
+			.equals('Users')
+			.findOne((err, role) ->
+				
+				if err?
+					callback(err, false, 4)
+					return
+				
+				if not role?
+					callback(err, false, 5)
+					return
+				
+				user = new db.User()
+				user._id = userGuid
+				user.passwordSalt = userSalt
+				user.passwordHash = userHash
+				user.emailAddress = userName
+				user.userName = userName
+				user.roles.push(role._id)
+				
+				db.User.where('userName')
 				.equals(userName)
 				.find((err, arrObjs) ->
 					if err?
@@ -186,8 +201,8 @@ class UserAuth
 							else
 								callback(null, true, 0)
 						)
-					
 				)
+			)
 	###
 	Retrieves the associate user account for a secure token.
 	@param token [String] A hexadecimal string representing a secure token.
@@ -196,18 +211,113 @@ class UserAuth
 	userFromToken: (token, callback) ->
 		db = QRefDatabase.instance()
 		db.AuthToken.where('token')
-					.equals(token)
-					.populate('user')
-					.findOne((err, tk) ->
+				.equals(token)
+				.populate('user')
+				.findOne((err, tk) ->
+					
+					if err?
+						callback(err, null)
+						return
+					if not tk?
+						callback(true, null)
+						return
+					
+					callback(null, tk.user)
+		
+				)
+	###
+	Determines if the currently authenticated user is in the given role.
+	@param token [String] A hexadecimal string representing a secure token.
+	@param roleName [String] The name of the role. 
+	@param callback [Function] A function meeting the requirements of the {Callbacks#userAuthIsInRoleCallback} method.
+	###
+	isInRole: (token, roleName, callback) ->
+		db = QRefDatabase.instance()
+		db.AuthToken.where('token')
+				.equals(token)
+				.populate('user')
+				.findOne((err, tk) -> 
+					
+					if err?
+						callback(err, false);
+						return
 						
-						if err?
-							callback(err, null)
-							return
-						if not tk?
-							callback(true, null)
-							return
-						
-						callback(null, tk.user)
-			
-					)
+					if not tk?
+						callback(null, false);	
+						return
+					
+					db.Role.where('roleName')
+						.equals(roleName)
+						.findOne((err, role) ->
+							if err?
+								callback(err, false)
+								return
+							
+							if not role?
+								callback(null, false)
+								return
+							
+							bFound = false
+							
+							async.forEach(tk.user.roles, 
+								(item, cb) ->
+									if item.toString() == role._id.toString()
+										bFound = true
+									cb(null)
+								, (err) ->
+									callback(null, bFound)
+							)
+						)
+				)
+	###
+	Determines if the currently authenticated user is in any of the listed roles.
+	@param token [String] A hexadecimal string representing a secure token.
+	@param roles [Array<String>] The array of roles for which to check for membership.
+	@param callback [Function] A function meeting the requirements of the {Callbacks#userAuthIsInRoleCallback} method.
+	###
+	isInAnyRole: (token, roles, callback) ->
+		db = QRefDatabase.instance()
+		db.AuthToken.where('token')
+			.equals(token)
+			.populate('user')
+			.findOne((err, tk) -> 
+				
+				if err?
+					callback(err, false);
+					return
+					
+				if not tk?
+					callback(null, false);	
+					return
+					
+				arrQueryEntries = []
+				
+				arrQueryEntries.push({ roleName: r }) for r in roles
+				
+				db.Role.find({ "$or": arrQueryEntries })
+						.exec((err, arrRoles) ->
+							if err?
+								callback(err, false)
+								return
+							
+							if arrRoles.length == 0
+								callback(null, false)
+								return
+							
+							bFound = false
+							dctRoleKeys = new Dictionary()
+							
+							dctRoleKeys.set(r._id.toString(), r.roleName) for r in arrRoles
+							
+							
+							async.forEach(tk.user.roles, 
+								(item, cb) ->
+									if dctRoleKeys.containsKey(item.toString())
+										bFound = true
+									cb(null)
+								, (err) ->
+									callback(err, bFound)
+							)
+						)
+			)
 module.exports = new UserAuth()

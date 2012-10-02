@@ -60,7 +60,7 @@ if (cluster.isMaster) {
 	    res.header('Access-Control-Allow-Headers', 'Content-Type');
 
 	    next();
-	};
+	};	
 	// Configuration
 	
 	app.configure(function(){

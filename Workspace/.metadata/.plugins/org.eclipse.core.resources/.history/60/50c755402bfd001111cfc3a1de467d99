@@ -1,7 +1,0 @@
-class AjaxRequest
-	mode: "ajax"
-	token: null
-	(token) -> 
-		@mode = "ajax"
-		@token = token
-	 

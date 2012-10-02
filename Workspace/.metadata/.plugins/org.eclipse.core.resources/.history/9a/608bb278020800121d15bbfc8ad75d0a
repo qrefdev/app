@@ -1,0 +1,13 @@
+RpcRoute = require('../../RpcRoute')
+QRefDatabase = require('../../../db/QRefDatabase')
+class AuthorizeAppleAircraftProductRoute extends RpcRoute
+	constructor: () ->
+		super [{ method: 'POST', path: '/product/authorize/apple' }, { method: 'GET', path: '/product/authorize/apple' }]
+	post: (req, res) ->
+	isValidRequest: (req) ->
+		if req.body? and req.body?.mode? and req.body.mode == 'rpc'
+			and req.body?.product? and req.body?.receipt?
+			true
+		else
+			false
+module.exports = new AuthorizeAppleAircraftProductRoute()

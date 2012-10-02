@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete resource &apos;QRef/NodeServer/src/security/ResolvableRecordFilter.coffee&apos;" deleteContents="false" description="Delete resource &apos;QRef/NodeServer/src/security/ResolvableRecordFilter.coffee&apos;" element1="/QRef/NodeServer/src/security/ResolvableRecordFilter.coffee" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1348172277765"/>
+</session>

@@ -3,6 +3,7 @@ AjaxResponse = require('../../../../serialization/AjaxResponse')
 UserAuth = require('../../../../security/UserAuth')
 QRefDatabase = require('../../../../db/QRefDatabase')
 ChecklistManager = require('../../../../db/manager/ChecklistManager')
+AircraftChecklistFilter = require('../../../../security/filters/AircraftChecklistFilter')
 ###
 Service route that allows the retrieval and updation of an individual checklist.
 @example Service Methods (see {UpdateAircraftChecklistAjaxRequest})
@@ -36,6 +37,7 @@ class AircraftChecklistRoute extends AjaxRoute
 		mgr = new ChecklistManager()
 		token = req.param('token')
 		checklistId = req.params.checklistId
+		filter = new AircraftChecklistFilter(token)
 		
 		UserAuth.validateToken(token, (err, isTokenValid) ->
 			if err? or not isTokenValid == true
@@ -56,19 +58,34 @@ class AircraftChecklistRoute extends AjaxRoute
 					return
 					
 				if obj?
-					mgr.expand(obj, (err1, item) ->
-						if err1?
+					filter.retrieve(obj, (err, isAllowed, record) ->
+						if err?
 							resp = new AjaxResponse()
 							resp.failure('Internal Error', 500)
 							res.json(resp, 200)
 							return
+						
+						if not isAllowed
+							resp = new AjaxResponse()
+							resp.failure('Not Authorized', 403)
+							res.json(resp, 200)
+							return
 							
-						resp = new AjaxResponse()
-						resp.addRecord(item)
-						resp.setTotal(1)
-						res.json(resp, 200)
-						return
+						mgr.expand(obj, (err1, item) ->
+							if err1?
+								resp = new AjaxResponse()
+								resp.failure('Internal Error', 500)
+								res.json(resp, 200)
+								return
+								
+							resp = new AjaxResponse()
+							resp.addRecord(item)
+							resp.setTotal(1)
+							res.json(resp, 200)
+							return
+						)
 					)
+					
 				else
 					resp = new AjaxResponse()
 					resp.failure('Not Found', 404)
@@ -86,6 +103,7 @@ class AircraftChecklistRoute extends AjaxRoute
 		db = QRefDatabase.instance()
 		token = req.param('token')
 		checklistId = req.params.checklistId
+		filter = new AircraftChecklistFilter(token)
 		
 		UserAuth.validateToken(token, (err, isTokenValid) ->
 			if err? or not isTokenValid == true
@@ -111,42 +129,60 @@ class AircraftChecklistRoute extends AjaxRoute
 					res.json(resp, 200)
 					return
 					
-				obj.manufacturer = req.body.manufacturer
-				obj.model = req.body.model
-				obj.preflight = req.body.preflight
-				obj.takeoff = req.body.takeoff
-				obj.landing = req.body.landing
-				obj.emergencies = req.body.emergencies
-				#obj.modelYear = req.body.modelYear
-				
-				if req.body?.version?
-					obj.version = req.body.version
-					
-				if req.body?.index?
-					obj.index = req.body.index
-				
-				if req.body?.productIcon?
-					obj.productIcon = req.body.productIcon
-
-				
-				#if req.body?.coverImage?
-				#	obj.coverImage = req.body.coverImage
-		
-				if req.body?.isDeleted?
-					obj.isDeleted = req.body.isDeleted
-					
-				obj.save((err) ->
+				filter.update(obj, (err, isAllowed, record) ->
 					if err?
 						resp = new AjaxResponse()
 						resp.failure(err, 500)
 						res.json(resp, 200)
 						return
+						
+					if not isAllowed
+						resp = new AjaxResponse()
+						resp.failure('Not Authorized', 403)
+						res.json(resp, 200)
+						return
+						
+					obj.manufacturer = req.body.manufacturer
+					obj.model = req.body.model
+					obj.preflight = req.body.preflight
+					obj.takeoff = req.body.takeoff
+					obj.landing = req.body.landing
+					obj.emergencies = req.body.emergencies
+					#obj.modelYear = req.body.modelYear
 					
-					resp = new AjaxResponse()
-					resp.addRecord(obj)
-					resp.setTotal(1)
-					res.json(resp, 200)
-				)
+					if req.body?.tailNumber?
+						obj.tailNumber = req.body.tailNumber
+					
+					if req.body?.version?
+						obj.version = req.body.version
+						
+					if req.body?.index?
+						obj.index = req.body.index
+					
+					if req.body?.productIcon?
+						obj.productIcon = req.body.productIcon
+	
+					
+					#if req.body?.coverImage?
+					#	obj.coverImage = req.body.coverImage
+			
+					if req.body?.isDeleted?
+						obj.isDeleted = req.body.isDeleted
+						
+					obj.save((err) ->
+						if err?
+							resp = new AjaxResponse()
+							resp.failure(err, 500)
+							res.json(resp, 200)
+							return
+						
+						resp = new AjaxResponse()
+						resp.addRecord(obj)
+						resp.setTotal(1)
+						res.json(resp, 200)
+					)
+				) 
+				
 			)
 			
 		)

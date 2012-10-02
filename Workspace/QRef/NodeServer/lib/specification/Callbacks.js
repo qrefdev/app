@@ -70,6 +70,15 @@ Specification class for the purpose of documenting the signatures and parameters
 
     Callbacks.prototype.userAuthCreateAccountCallback = function(err, success, errorCode) {};
 
+    /*
+    	Standard callback used by the {UserAuth} security routines to return the status of a role check operation.
+    	@param err [Error] An error object if an error occurred or null otherwise.
+    	@param isInRole [Boolean] An true/false value indicating if the user has the specified role. True indicates that the user possesses the specified role.
+    */
+
+
+    Callbacks.prototype.userAuthIsInRoleCallback = function(err, isInRole) {};
+
     return Callbacks;
 
   })();

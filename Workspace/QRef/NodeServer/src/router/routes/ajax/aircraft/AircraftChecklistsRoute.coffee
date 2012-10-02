@@ -3,6 +3,7 @@ AjaxResponse = require('../../../../serialization/AjaxResponse')
 UserAuth = require('../../../../security/UserAuth')
 QRefDatabase = require('../../../../db/QRefDatabase')
 ChecklistManager = require('../../../../db/manager/ChecklistManager')
+AircraftChecklistFilter = require('../../../../security/filters/AircraftChecklistFilter')
 ###
 Service route that allows the retrieval of all checklists and the creation of new checklists.
 @example Service Methods (see {CreateAircraftChecklistAjaxRequest})
@@ -34,6 +35,7 @@ class AircraftChecklistsRoute extends AjaxRoute
 		db = QRefDatabase.instance()
 		mgr = new ChecklistManager()
 		token = req.param('token')
+		filter = new AircraftChecklistFilter(token)
 		
 		UserAuth.validateToken(token, (err, isTokenValid) ->
 			if err? or not isTokenValid == true
@@ -42,22 +44,20 @@ class AircraftChecklistsRoute extends AjaxRoute
 				res.json(resp, 200)
 				return
 			
-			UserAuth.userFromToken(token, (err, user) ->
+			filter.constrainQuery({}, (err, objQuery) ->
 				if err?
 					resp = new AjaxResponse()
 					resp.failure('Not Authorized', 403)
 					res.json(resp, 200)
 					return
 				
-				if not user?
+				if not objQuery?
 					resp = new AjaxResponse()
 					resp.failure('Not Authorized', 403)
 					res.json(resp, 200)
 					return
 				
-				query = db.AircraftChecklist.find()
-				query.where('isDeleted', false)
-				query.where('user', user._id)
+				query = db.AircraftChecklist.find(objQuery)
 			
 				if req.query?.pageSize? and req.query?.page?
 					query = query.skip(req.query.page * req.query.pageSize).limit(req.query.pageSize)
@@ -112,6 +112,7 @@ class AircraftChecklistsRoute extends AjaxRoute
 		
 		db = QRefDatabase.instance()
 		token = req.param('token')
+		filter = new AircraftChecklistFilter(token)
 		
 		UserAuth.validateToken(token, (err, isTokenValid) ->
 			if err? or not isTokenValid == true
@@ -120,50 +121,67 @@ class AircraftChecklistsRoute extends AjaxRoute
 				res.json(resp, 200)
 				return
 				
-			# Validate Permissions Here
 			
-			newObj = new db.AircraftChecklist()
-	
-			newObj.manufacturer = req.body.manufacturer
-			newObj.model = req.body.model
-			newObj.preflight = req.body.preflight
-			newObj.takeoff = req.body.takeoff
-			newObj.landing = req.body.landing
-			newObj.emergencies = req.body.emergenices
-			#newObj.modelYear = req.body.modelYear
-			
-			if req.body?.tailNumber?
-				newObj.tailNumber = req.body.tailNumber
+			filter.create((err, isAllowed) ->
 				
-			if req.body?.index?
-				newObj.index = req.body.index
-				
-			if req.body?.user?
-				newObj.user = req.body.user
-			
-			if req.body?.version?
-				newObj.version = req.body.version
-			else 
-				newObj.version = 1
-			
-			if req.body?.productIcon?
-				newObj.productIcon = req.body.productIcon
-			
-			#if req.body?.coverImage?
-			#	newObj.coverImage = req.body.coverImage
-			
-			newObj.save((err) ->
 				if err?
 					resp = new AjaxResponse()
-					resp.failure(err, 500)
+					resp.failure('Not Authorized', 403)
 					res.json(resp, 200)
 					return
 				
-				resp = new AjaxResponse()
-				resp.setTotal(1)
-				resp.addRecord(newObj)
-				res.json(resp, 200)
+				if not isAllowed
+					resp = new AjaxResponse()
+					resp.failure('Not Authorized', 403)
+					res.json(resp, 200)
+					return
+				
+				newObj = new db.AircraftChecklist()
+	
+				newObj.manufacturer = req.body.manufacturer
+				newObj.model = req.body.model
+				newObj.preflight = req.body.preflight
+				newObj.takeoff = req.body.takeoff
+				newObj.landing = req.body.landing
+				newObj.emergencies = req.body.emergenices
+				#newObj.modelYear = req.body.modelYear
+				
+				if req.body?.tailNumber?
+					newObj.tailNumber = req.body.tailNumber
+					
+				if req.body?.index?
+					newObj.index = req.body.index
+					
+				if req.body?.user?
+					newObj.user = req.body.user
+				
+				if req.body?.version?
+					newObj.version = req.body.version
+				else 
+					newObj.version = 1
+				
+				if req.body?.productIcon?
+					newObj.productIcon = req.body.productIcon
+				
+				#if req.body?.coverImage?
+				#	newObj.coverImage = req.body.coverImage
+				
+				newObj.save((err) ->
+					if err?
+						resp = new AjaxResponse()
+						resp.failure(err, 500)
+						res.json(resp, 200)
+						return
+					
+					resp = new AjaxResponse()
+					resp.setTotal(1)
+					resp.addRecord(newObj)
+					res.json(resp, 200)
+				)
 			)
+			# Validate Permissions Here
+			
+			
 			
 		)
 		

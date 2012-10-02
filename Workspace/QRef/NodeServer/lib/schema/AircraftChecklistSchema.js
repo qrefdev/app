@@ -166,7 +166,8 @@
     manufacturer: 1,
     model: 1,
     version: 1,
-    tailNumber: 1
+    tailNumber: 1,
+    user: 1
   }, {
     unique: true
   });

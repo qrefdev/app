@@ -1,5 +1,5 @@
 (function() {
-  var AircraftChecklistRoute, AjaxResponse, AjaxRoute, ChecklistManager, QRefDatabase, UserAuth,
+  var AircraftChecklistFilter, AircraftChecklistRoute, AjaxResponse, AjaxRoute, ChecklistManager, QRefDatabase, UserAuth,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -13,6 +13,8 @@
   QRefDatabase = require('../../../../db/QRefDatabase');
 
   ChecklistManager = require('../../../../db/manager/ChecklistManager');
+
+  AircraftChecklistFilter = require('../../../../security/filters/AircraftChecklistFilter');
 
   /*
   Service route that allows the retrieval and updation of an individual checklist.
@@ -55,7 +57,7 @@
     }
 
     AircraftChecklistRoute.prototype.get = function(req, res) {
-      var checklistId, db, mgr, resp, token;
+      var checklistId, db, filter, mgr, resp, token;
       if (!this.isValidRequest(req)) {
         resp = new AjaxResponse();
         resp.failure('Bad Request', 400);
@@ -66,6 +68,7 @@
       mgr = new ChecklistManager();
       token = req.param('token');
       checklistId = req.params.checklistId;
+      filter = new AircraftChecklistFilter(token);
       return UserAuth.validateToken(token, function(err, isTokenValid) {
         var query;
         if ((err != null) || !isTokenValid === true) {
@@ -83,17 +86,31 @@
             return;
           }
           if (obj != null) {
-            return mgr.expand(obj, function(err1, item) {
-              if (err1 != null) {
+            return filter.retrieve(obj, function(err, isAllowed, record) {
+              if (err != null) {
                 resp = new AjaxResponse();
                 resp.failure('Internal Error', 500);
                 res.json(resp, 200);
                 return;
               }
-              resp = new AjaxResponse();
-              resp.addRecord(item);
-              resp.setTotal(1);
-              res.json(resp, 200);
+              if (!isAllowed) {
+                resp = new AjaxResponse();
+                resp.failure('Not Authorized', 403);
+                res.json(resp, 200);
+                return;
+              }
+              return mgr.expand(obj, function(err1, item) {
+                if (err1 != null) {
+                  resp = new AjaxResponse();
+                  resp.failure('Internal Error', 500);
+                  res.json(resp, 200);
+                  return;
+                }
+                resp = new AjaxResponse();
+                resp.addRecord(item);
+                resp.setTotal(1);
+                res.json(resp, 200);
+              });
             });
           } else {
             resp = new AjaxResponse();
@@ -105,7 +122,7 @@
     };
 
     AircraftChecklistRoute.prototype.post = function(req, res) {
-      var checklistId, db, resp, token;
+      var checklistId, db, filter, resp, token;
       if (!this.isValidRequest(req)) {
         resp = new AjaxResponse();
         resp.failure('Bad Request', 400);
@@ -115,6 +132,7 @@
       db = QRefDatabase.instance();
       token = req.param('token');
       checklistId = req.params.checklistId;
+      filter = new AircraftChecklistFilter(token);
       return UserAuth.validateToken(token, function(err, isTokenValid) {
         var query;
         if ((err != null) || !isTokenValid === true) {
@@ -125,7 +143,6 @@
         }
         query = db.AircraftChecklist.findById(checklistId);
         return query.exec(function(err, obj) {
-          var _ref, _ref1, _ref2, _ref3;
           if (err != null) {
             resp = new AjaxResponse();
             resp.failure(err, 500);
@@ -138,35 +155,53 @@
             res.json(resp, 200);
             return;
           }
-          obj.manufacturer = req.body.manufacturer;
-          obj.model = req.body.model;
-          obj.preflight = req.body.preflight;
-          obj.takeoff = req.body.takeoff;
-          obj.landing = req.body.landing;
-          obj.emergencies = req.body.emergencies;
-          if (((_ref = req.body) != null ? _ref.version : void 0) != null) {
-            obj.version = req.body.version;
-          }
-          if (((_ref1 = req.body) != null ? _ref1.index : void 0) != null) {
-            obj.index = req.body.index;
-          }
-          if (((_ref2 = req.body) != null ? _ref2.productIcon : void 0) != null) {
-            obj.productIcon = req.body.productIcon;
-          }
-          if (((_ref3 = req.body) != null ? _ref3.isDeleted : void 0) != null) {
-            obj.isDeleted = req.body.isDeleted;
-          }
-          return obj.save(function(err) {
+          return filter.update(obj, function(err, isAllowed, record) {
+            var _ref, _ref1, _ref2, _ref3, _ref4;
             if (err != null) {
               resp = new AjaxResponse();
               resp.failure(err, 500);
               res.json(resp, 200);
               return;
             }
-            resp = new AjaxResponse();
-            resp.addRecord(obj);
-            resp.setTotal(1);
-            return res.json(resp, 200);
+            if (!isAllowed) {
+              resp = new AjaxResponse();
+              resp.failure('Not Authorized', 403);
+              res.json(resp, 200);
+              return;
+            }
+            obj.manufacturer = req.body.manufacturer;
+            obj.model = req.body.model;
+            obj.preflight = req.body.preflight;
+            obj.takeoff = req.body.takeoff;
+            obj.landing = req.body.landing;
+            obj.emergencies = req.body.emergencies;
+            if (((_ref = req.body) != null ? _ref.tailNumber : void 0) != null) {
+              obj.tailNumber = req.body.tailNumber;
+            }
+            if (((_ref1 = req.body) != null ? _ref1.version : void 0) != null) {
+              obj.version = req.body.version;
+            }
+            if (((_ref2 = req.body) != null ? _ref2.index : void 0) != null) {
+              obj.index = req.body.index;
+            }
+            if (((_ref3 = req.body) != null ? _ref3.productIcon : void 0) != null) {
+              obj.productIcon = req.body.productIcon;
+            }
+            if (((_ref4 = req.body) != null ? _ref4.isDeleted : void 0) != null) {
+              obj.isDeleted = req.body.isDeleted;
+            }
+            return obj.save(function(err) {
+              if (err != null) {
+                resp = new AjaxResponse();
+                resp.failure(err, 500);
+                res.json(resp, 200);
+                return;
+              }
+              resp = new AjaxResponse();
+              resp.addRecord(obj);
+              resp.setTotal(1);
+              return res.json(resp, 200);
+            });
           });
         });
       });

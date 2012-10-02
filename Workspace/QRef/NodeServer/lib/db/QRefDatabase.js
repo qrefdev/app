@@ -98,6 +98,13 @@
     QRefDatabase.prototype.UserProduct = null;
 
     /*
+    	@property [AircraftProductAuthorizationAttemptSchemaInternal] A reference to the AircraftProductAuthorizationAttempt model.
+    */
+
+
+    QRefDatabase.prototype.AircraftProductAuthorizationAttempt = null;
+
+    /*
     	@property [Mongoose.Schema] A convenience property for accessing the Mongoose.Schema object.
     */
 
@@ -120,7 +127,7 @@
 
 
     QRefDatabase.prototype.initialize = function() {
-      var AircraftChecklistSchema, AircraftManufacturerSchema, AircraftModelSchema, AuthTokenSchema, ProductSchema, RecoveryQuestionSchema, RoleSchema, UserProductSchema, UserSchema;
+      var AircraftChecklistSchema, AircraftManufacturerSchema, AircraftModelSchema, AircraftProductAuthorizationAttemptSchema, AuthTokenSchema, ProductSchema, RecoveryQuestionSchema, RoleSchema, UserProductSchema, UserSchema;
       RoleSchema = require('../schema/RoleSchema');
       this.Role = this.connection.model('user.roles', RoleSchema);
       RecoveryQuestionSchema = require('../schema/RecoveryQuestionSchema');
@@ -138,7 +145,9 @@
       ProductSchema = require('../schema/ProductSchema');
       this.Product = this.connection.model('products', ProductSchema);
       UserProductSchema = require('../schema/UserProductSchema');
-      return this.UserProduct = this.connection.model('user.products', UserProductSchema);
+      this.UserProduct = this.connection.model('user.products', UserProductSchema);
+      AircraftProductAuthorizationAttemptSchema = require('../schema/AircraftProductAuthorizationAttemptSchema');
+      return this.AircraftProductAuthorizationAttempt = this.connection.model('aircraft.product.authorization.attempt', AircraftProductAuthorizationAttemptSchema);
     };
 
     /*
