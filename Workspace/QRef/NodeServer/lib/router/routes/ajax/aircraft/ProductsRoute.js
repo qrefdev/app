@@ -124,7 +124,7 @@
       db = QRefDatabase.instance();
       token = req.param('token');
       return UserAuth.validateToken(token, function(err, isTokenValid) {
-        var newObj, _ref, _ref1, _ref10, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
+        var newObj, _ref, _ref1, _ref10, _ref11, _ref12, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
         if ((err != null) || !isTokenValid === true) {
           resp = new AjaxResponse();
           resp.failure('Not Authorized', 403);
@@ -170,6 +170,14 @@
         }
         if (((_ref10 = req.body) != null ? _ref10.productIcon : void 0) != null) {
           newObj.productIcon = req.body.productIcon;
+        }
+        if (((_ref11 = req.body) != null ? _ref11.isSampleProduct : void 0) != null) {
+          newObj.isSampleProduct = req.body.isSampleProduct;
+        } else {
+          newObj.isSampleProduct = false;
+        }
+        if (((_ref12 = req.body) != null ? _ref12.description : void 0) != null) {
+          newObj.description = req.body.description;
         }
         return newObj.save(function(err) {
           if (err != null) {

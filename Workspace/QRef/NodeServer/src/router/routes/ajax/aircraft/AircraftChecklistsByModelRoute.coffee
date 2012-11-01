@@ -42,7 +42,7 @@ class AircraftChecklistsByModelRoute extends AjaxRoute
 			
 			# Validate Permissions Here
 			
-			query = db.AircraftChecklist.find({ model : mdl, manufacturer : mfg, user: null, isDeleted: false })
+			query = db.AircraftChecklist.find({ model : mdl, manufacturer : mfg, user: null })
 		
 			query.exec((err, arrObjs) ->
 				if err?

@@ -49,7 +49,7 @@
     }
 
     AuthorizeAppleAircraftProductRoute.prototype.post = function(req, res) {
-      var db, productId, receiptData, resp, token,
+      var db, productId, receiptData, resp, tailNumber, token, _ref,
         _this = this;
       if (!this.isValidRequest(req)) {
         resp = new RpcResponse(null);
@@ -62,6 +62,10 @@
       productId = req.body.product;
       db = QRefDatabase.instance();
       receiptData = req.body.receipt;
+      tailNumber = null;
+      if (((_ref = req.body) != null ? _ref.tailNumber : void 0) != null) {
+        tailNumber = req.body.tailNumber;
+      }
       console.log('INFO: AppleRoute.post() - Body Parsed. { productId: "' + productId + '", token: "' + token + '", receiptData: "' + receiptData + '" }');
       return UserAuth.validateToken(token, function(err, isTokenValid) {
         if ((err != null) || !isTokenValid === true) {
@@ -161,7 +165,7 @@
                         return;
                       }
                       console.log('INFO: AppleRoute.post() - UserProduct record installed. Going to clone the checklist.');
-                      return _this.cloneChecklist(product.aircraftChecklist, user, function(err, checklistId) {
+                      return _this.cloneChecklist(product.aircraftChecklist, user, tailNumber, function(err, checklistId) {
                         if (err != null) {
                           console.log('INFO: AppleRoute.post() - Failed to clone the checklist due to errors. Rejecting the request.');
                           console.log('INFO: AppleRoute.post() - ' + err.toString());
@@ -214,14 +218,22 @@
       });
     };
 
-    AuthorizeAppleAircraftProductRoute.prototype.cloneChecklist = function(oChecklist, user, callback) {
+    AuthorizeAppleAircraftProductRoute.prototype.cloneChecklist = function(oChecklist, user, tailNumber, callback) {
       var db, nChecklist;
       db = QRefDatabase.instance();
       nChecklist = new db.AircraftChecklist();
+      if (!(oChecklist != null)) {
+        callback(new Error('Product does not have an associated checklist.'), null);
+        return;
+      }
       nChecklist.model = oChecklist.model;
       nChecklist.manufacturer = oChecklist.manufacturer;
       nChecklist.index = null;
-      nChecklist.tailNumber = null;
+      if (tailNumber != null) {
+        nChecklist.tailNumber = tailNumber;
+      } else {
+        nChecklist.tailNumber = null;
+      }
       nChecklist.user = user._id;
       nChecklist.version = 1;
       nChecklist.productIcon = oChecklist.productIcon;

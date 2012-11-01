@@ -1,0 +1,41 @@
+RpcRoute = require('../../../RpcRoute')
+QRefDatabase = require('../../../../db/QRefDatabase')
+RpcResponse = require('../../../../serialization/RpcResponse')
+UserAuth = require('../../../../security/UserAuth')
+https = require('https')
+async = require('async')
+###
+Service route that returns the next available version of a given checklist.
+@example Service Methods (see {ChecklistVersionRpcRequest})
+  Request Format: application/json
+  Response Format: application/json
+  
+  POST /services/rpc/aircraft/checklist/version
+    @BODY - (Required) ChecklistVersionRpcRequest
+    
+	Returns the next available version number in the returnValue field of the response object.
+@author Nathan Klick
+@copyright QRef 2012
+###
+class ChecklistVersionRoute extends RpcRoute
+	constructor: () ->
+		super [{ method: 'POST', path: '/checklist/version' }, { method: 'GET', path: '/checklist/version' }]
+	post: (req, res) =>
+		if not @.isValidRequest(req)
+			resp = new RpcResponse(null)
+			resp.failure('Bad Request', 400)
+			res.json(resp, 200)
+			return
+		
+		
+		
+		db = QRefDatabase.instance()
+		
+		
+	
+	isValidRequest: (req) ->
+		if req.body? and req.body?.mode? and req.body.mode == 'rpc' and req.body?.product? and req.body?.token?
+			true
+		else
+			false
+module.exports = new ChecklistVersionRoute()

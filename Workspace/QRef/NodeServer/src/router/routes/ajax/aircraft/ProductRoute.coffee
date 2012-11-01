@@ -144,6 +144,15 @@ class ProductRoute extends AjaxRoute
 					
 				if req.body?.productIcon?
 					obj.productIcon = req.body.productIcon
+					
+				if req.body?.serialNumber?
+					obj.serialNumber = req.body.serialNumber
+				
+				if req.body?.isSampleProduct?
+					obj.isSampleProduct = req.body.isSampleProduct
+					
+				if req.body?.description?
+					obj.description = req.body.description
 				
 				obj.save((err) ->
 					if err?

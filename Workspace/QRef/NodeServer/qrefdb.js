@@ -64,8 +64,9 @@ if (cluster.isMaster) {
 	// Configuration
 	
 	app.configure(function(){
-	  app.use(express.bodyParser());
+	  app.use(express.bodyParser({ keepExtensions: true }));
 	  app.use(express.methodOverride());
+	  app.use(express.compress());
 	  app.use(express.static('../WebContent'));
 	  app.use(allowCrossDomain);
 	  app.use(express.cookieParser());

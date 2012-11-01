@@ -13,9 +13,9 @@ class AircraftChecklistFilter extends RecordFilter
 					else
 						cb(null)
 				,(cb) =>
-					if @.isInRole('Administrators') and not record.user?
+					if @.isInRole('Administrators') and (not record.user? or record.user.toString() == @.getUser()._id.toString())
 						canRetrieve = true
-					else if @.isInRole('Users') and record.user == @.getUser()._id and record.isDeleted == false
+					else if @.isInRole('Users') and record.user? and record.user.toString() == @.getUser()._id.toString() and record.isDeleted == false
 						canRetrieve = true
 					else 
 						canRetrieve = false
@@ -89,7 +89,7 @@ class AircraftChecklistFilter extends RecordFilter
 				,(cb) =>
 					if @.isInRole('Administrators')
 						canDelete = true
-					else if @.isInRole('Users') and record.user == @.getUser()._id
+					else if @.isInRole('Users') and record.user? and record.user.toString() == @.getUser()._id.toString()
 						canDelete = true
 					else 
 						canDelete = false
@@ -109,7 +109,7 @@ class AircraftChecklistFilter extends RecordFilter
 						cb(null)
 				,(cb) =>
 					if @.isInRole('Administrators')
-						query['user'] = null
+						query['$or'] = [{ user: null}, { user: @user._id }]
 					else if @.isInRole('Users')
 						query['user'] = @user._id
 						query['isDeleted'] = false

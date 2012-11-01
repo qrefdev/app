@@ -27,9 +27,9 @@
             return cb(null);
           }
         }, function(cb) {
-          if (_this.isInRole('Administrators') && !(record.user != null)) {
+          if (_this.isInRole('Administrators') && (!(record.user != null) || record.user.toString() === _this.getUser()._id.toString())) {
             canRetrieve = true;
-          } else if (_this.isInRole('Users') && record.user === _this.getUser()._id && record.isDeleted === false) {
+          } else if (_this.isInRole('Users') && (record.user != null) && record.user.toString() === _this.getUser()._id.toString() && record.isDeleted === false) {
             canRetrieve = true;
           } else {
             canRetrieve = false;
@@ -115,7 +115,7 @@
         }, function(cb) {
           if (_this.isInRole('Administrators')) {
             canDelete = true;
-          } else if (_this.isInRole('Users') && record.user === _this.getUser()._id) {
+          } else if (_this.isInRole('Users') && (record.user != null) && record.user.toString() === _this.getUser()._id.toString()) {
             canDelete = true;
           } else {
             canDelete = false;
@@ -138,7 +138,13 @@
           }
         }, function(cb) {
           if (_this.isInRole('Administrators')) {
-            query['user'] = null;
+            query['$or'] = [
+              {
+                user: null
+              }, {
+                user: _this.user._id
+              }
+            ];
           } else if (_this.isInRole('Users')) {
             query['user'] = _this.user._id;
             query['isDeleted'] = false;

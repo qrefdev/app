@@ -123,7 +123,7 @@
           return;
         }
         return db.Product.findById(productId, function(err, obj) {
-          var _ref, _ref1, _ref10, _ref11, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
+          var _ref, _ref1, _ref10, _ref11, _ref12, _ref13, _ref14, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
           if (err != null) {
             resp = new AjaxResponse();
             resp.failure(err, 500);
@@ -171,6 +171,15 @@
           }
           if (((_ref11 = req.body) != null ? _ref11.productIcon : void 0) != null) {
             obj.productIcon = req.body.productIcon;
+          }
+          if (((_ref12 = req.body) != null ? _ref12.serialNumber : void 0) != null) {
+            obj.serialNumber = req.body.serialNumber;
+          }
+          if (((_ref13 = req.body) != null ? _ref13.isSampleProduct : void 0) != null) {
+            obj.isSampleProduct = req.body.isSampleProduct;
+          }
+          if (((_ref14 = req.body) != null ? _ref14.description : void 0) != null) {
+            obj.description = req.body.description;
           }
           return obj.save(function(err) {
             if (err != null) {

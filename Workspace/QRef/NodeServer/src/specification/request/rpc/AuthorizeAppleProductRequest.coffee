@@ -7,10 +7,15 @@ Object sent as the body of an HTTP POST request to perform user authentication.
 ###
 class AuthorizeAppleProductRequest extends RpcRequest
 	###
-	@property [ObjectId] The ID of the product for which to authorize a purchase.
+	@property [ObjectId] Required - The ID of the product for which to authorize a purchase.
 	###
 	product: null
 	###
-	@property [String] The base64 encoded receipt block from apple IAP libraries.
+	@property [String] Required - The base64 encoded receipt block from apple IAP libraries.
 	###
 	receipt: null
+	###
+	@property [String] Optional - The tailNumber to assign to the newly created checklist.
+	###
+	tailNumber: null
+module.exports = exports = AuthorizeAppleProductRequest

@@ -165,7 +165,7 @@ class UserAuth
 		userGuid = new ObjectId()
 		userHash = @.securePassword(userGuid, userSalt, password)
 		
-		db.Roles.where('roleName')
+		db.Role.where('roleName')
 			.equals('Users')
 			.findOne((err, role) ->
 				

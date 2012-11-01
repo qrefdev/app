@@ -226,7 +226,7 @@
       userSalt = this.salt();
       userGuid = new ObjectId();
       userHash = this.securePassword(userGuid, userSalt, password);
-      return db.Roles.where('roleName').equals('Users').findOne(function(err, role) {
+      return db.Role.where('roleName').equals('Users').findOne(function(err, role) {
         var user;
         if (err != null) {
           callback(err, false, 4);

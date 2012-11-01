@@ -33,6 +33,11 @@ class AuthorizeAppleAircraftProductRoute extends RpcRoute
 		db = QRefDatabase.instance()
 		receiptData = req.body.receipt
 		
+		tailNumber = null
+		
+		if req.body?.tailNumber?
+			tailNumber = req.body.tailNumber
+		
 		console.log('INFO: AppleRoute.post() - Body Parsed. { productId: "' + productId + '", token: "' + token + '", receiptData: "' + receiptData + '" }')
 		
 		UserAuth.validateToken(token, (err, isTokenValid) =>
@@ -137,7 +142,7 @@ class AuthorizeAppleAircraftProductRoute extends RpcRoute
 											return
 											
 										console.log('INFO: AppleRoute.post() - UserProduct record installed. Going to clone the checklist.')
-										@.cloneChecklist(product.aircraftChecklist, user, (err, checklistId) =>
+										@.cloneChecklist(product.aircraftChecklist, user, tailNumber, (err, checklistId) =>
 											if err?
 												console.log('INFO: AppleRoute.post() - Failed to clone the checklist due to errors. Rejecting the request.')
 												console.log('INFO: AppleRoute.post() - ' + err.toString())
@@ -194,14 +199,23 @@ class AuthorizeAppleAircraftProductRoute extends RpcRoute
 				)
 			)
 		)
-	cloneChecklist: (oChecklist, user, callback) ->
+	cloneChecklist: (oChecklist, user, tailNumber, callback) ->
 		db = QRefDatabase.instance()
 		nChecklist = new db.AircraftChecklist()
+		
+		if not oChecklist?
+			callback(new Error('Product does not have an associated checklist.'), null)
+			return
 		
 		nChecklist.model = oChecklist.model
 		nChecklist.manufacturer = oChecklist.manufacturer
 		nChecklist.index = null
-		nChecklist.tailNumber = null
+		
+		if tailNumber?
+			nChecklist.tailNumber = tailNumber
+		else
+			nChecklist.tailNumber = null
+		
 		nChecklist.user = user._id
 		nChecklist.version = 1
 		nChecklist.productIcon = oChecklist.productIcon

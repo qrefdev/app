@@ -72,8 +72,7 @@
         query = db.AircraftChecklist.find({
           model: mdl,
           manufacturer: mfg,
-          user: null,
-          isDeleted: false
+          user: null
         });
         return query.exec(function(err, arrObjs) {
           if (err != null) {
