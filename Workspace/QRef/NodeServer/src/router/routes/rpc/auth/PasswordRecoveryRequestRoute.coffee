@@ -15,7 +15,7 @@ class PasswordRecoveryRequestRoute extends RpcRoute
 			res.json(resp, 200)
 			return
 			
-		UserAuth.createPasswordRecoveryToken(req.body.username, (err, tk) ->
+		UserAuth.createPasswordRecoveryToken(req.body.userName, (err, tk) ->
 			if err?
 				resp = new RpcResponse(null)
 				resp.failure('Bad Request', 400)
@@ -64,7 +64,7 @@ class PasswordRecoveryRequestRoute extends RpcRoute
 		)
 				
 	isValidRequest: (req) ->
-		if req.body? and req.body?.mode? and req.body.mode == 'rpc' and req.body?.username?
+		if req.body? and req.body?.mode? and req.body.mode == 'rpc' and req.body?.userName?
 			true
 		else
 			false 
