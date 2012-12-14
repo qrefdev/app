@@ -225,6 +225,133 @@ class UserAuth
 					callback(null, tk.user)
 		
 				)
+	
+	createPasswordRecoveryToken: (userName, callback) ->
+		db = QRefDatabase.instance()
+		db.User.where('userName')
+		.equals(userName)
+		.findOne((err, user) ->
+			if err?
+				callback(err, null);
+				return
+				
+			if user?
+				expiry = new Date()
+				expiry.setHours(expiry.getHours() + 24)
+				tk = new db.AuthToken()
+				tk.token = @.secureToken(user._id, user.passwordSalt)
+				tk.expiresOn = expiry
+				tk.user = user
+				tk.save((error) ->
+					if error?
+						callback(error, null);
+						return
+					
+					callback(null, tk);
+					return
+				) 
+			
+			callback(null, null)
+		)
+	
+	applyPasswordRecovery: (token, callback) ->
+		@.validateToken(token, (err, success) ->
+			if err?
+				callback(err, null, null);
+				return
+			if success?
+				@.userFromToken(token, (error, user) ->
+					if error?
+						callback(error, null, null);
+						return
+		
+					if user?
+						newPassword = @.randomPassword(13)
+						user.passwordHash = @.securePassword(user._id, user.passwordSalt, newPassword)
+						
+						user.save((err) ->
+							if err?
+								callback(err, null);
+								return
+							
+							db = QRefDatabase.instance()
+							db.AuthToken.where('token')
+							.equals(token)
+							.findOne((err, tk) ->
+								if not err?
+									if tk?
+										tk.remove()
+							)
+							
+							callback(null, user, newPassword);
+							return
+						)
+								
+					callback(null, null, null);
+					return
+				)
+				
+			callback(null, null, null);
+			return
+		)
+				
+				
+	randomPassword: (passwordLength) ->
+		characters = "abcdefghijklmnopqrstuvxyzABCDEFGHIJKLMNOPQRSTUVXYZ01234567890!@#$%^&*()_-+="
+		
+		password = ""
+		
+		i = Math.abs(passwordLength)
+		
+		while i not 0
+			position = (Math.random() * (characters.length - 2))
+			char = characters.substring(position, (position + 1));
+			password += char
+			i--
+			
+		return password
+				
+	changePassword: (token, password, newPassword, callback) ->
+		@.validateToken(token, (err, success) ->
+			if err?
+				callback(err, null, 0);
+				return
+			
+			if success?
+				@.userFromToken(token, (error, user) ->
+					if error?
+						callback(error, null, 0);
+						return
+					
+					if user?
+						pwHash = @.securePassword(user._id, user.passwordSalt, password)
+								
+						if pwHash == user.passwordHash
+							if password == newPassword
+								callback(null, user, 2);
+								return
+								
+							user.passwordHash = @.securePassword(user._id, user.passwordSalt, newPassword)
+							
+							user.save((err) ->
+								if err?
+									callback(err, null, 0);
+									return								
+								
+								callback(null, user, 1);
+								return
+							)
+						
+						callback(null, user, 3);
+						return
+						
+					callback(null, null, 0);
+					return	
+				)
+				
+			callback(null, null, 0);
+			return
+		)						
 	###
 	Determines if the currently authenticated user is in the given role.
 	@param token [String] A hexadecimal string representing a secure token.
