@@ -53,7 +53,7 @@ class PasswordRecoveryRequestRoute extends RpcRoute
 		)
 	
 	getEmailTemplate: (file, callback) ->
-		FileSystem.readFile('../../../../../../email/' + file, 'utf8', (err, data) ->
+		FileSystem.readFile('../../../../../../WebContent/email/' + file, 'utf8', (err, data) ->
 			if err?
 				callback(null);
 				return
