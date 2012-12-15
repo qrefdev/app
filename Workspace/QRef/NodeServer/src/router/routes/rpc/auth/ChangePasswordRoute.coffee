@@ -16,7 +16,7 @@ class ChangePasswordRoute extends RpcRoute
 			res.json(resp, 200)
 			return
 			
-		UserAuth.changePassword(req.body.token, req.body.oldPassword, req.body.newPassword, (err, user, status) ->
+		UserAuth.changePassword(req.body.token, req.body.oldPassword, req.body.newPassword, (err, user, status) =>
 			if err?
 				resp = new RpcResponse(err)
 				resp.failure('Bad Request', 400)
@@ -74,7 +74,7 @@ class ChangePasswordRoute extends RpcRoute
 		return
 	
 	getEmailTemplate: (file, callback) ->
-		FileSystem.readFile('../../../../../../WebContent/email/' + file, 'utf8', (err, data) ->
+		FileSystem.readFile('../WebContent/email/' + file, 'utf8', (err, data) ->
 			if err?
 				callback(null);
 				return

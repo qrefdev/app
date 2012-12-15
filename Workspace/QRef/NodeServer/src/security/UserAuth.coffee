@@ -226,11 +226,11 @@ class UserAuth
 		
 				)
 	
-	createPasswordRecoveryToken: (userName, callback) ->
+	createPasswordRecoveryToken: (userName, callback) =>
 		db = QRefDatabase.instance()
 		db.User.where('userName')
 		.equals(userName)
-		.findOne((err, user) ->
+		.findOne((err, user) =>
 			if err?
 				callback(err, null);
 				return
@@ -254,13 +254,13 @@ class UserAuth
 			callback(null, null)
 		)
 	
-	applyPasswordRecovery: (token, callback) ->
-		@.validateToken(token, (err, success) ->
+	applyPasswordRecovery: (token, callback) =>
+		@.validateToken(token, (err, success) =>
 			if err?
 				callback(err, null, null);
 				return
 			if success?
-				@.userFromToken(token, (error, user) ->
+				@.userFromToken(token, (error, user) =>
 					if error?
 						callback(error, null, null);
 						return
@@ -311,14 +311,14 @@ class UserAuth
 			
 		return password
 				
-	changePassword: (token, password, newPassword, callback) ->
-		@.validateToken(token, (err, success) ->
+	changePassword: (token, password, newPassword, callback) =>
+		@.validateToken(token, (err, success) =>
 			if err?
 				callback(err, null, 0);
 				return
 			
 			if success?
-				@.userFromToken(token, (error, user) ->
+				@.userFromToken(token, (error, user) =>
 					if error?
 						callback(error, null, 0);
 						return

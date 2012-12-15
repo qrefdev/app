@@ -1,6 +1,8 @@
 RpcRoute = require('../../../RpcRoute')
 RpcResponse = require('../../../../serialization/RpcResponse')
 UserAuth = require('../../../../security/UserAuth')
+Mailer = require('mailer')
+fs = require('fs')
 ###
 Service route that is used to create a new user account.
 Password Recovery Request Email!
@@ -15,7 +17,7 @@ class PasswordRecoveryRequestRoute extends RpcRoute
 			res.json(resp, 200)
 			return
 			
-		UserAuth.createPasswordRecoveryToken(req.body.userName, (err, tk) ->
+		UserAuth.createPasswordRecoveryToken(req.body.userName, (err, tk) =>
 			if err?
 				resp = new RpcResponse(null)
 				resp.failure('Bad Request', 400)
@@ -53,7 +55,7 @@ class PasswordRecoveryRequestRoute extends RpcRoute
 		)
 	
 	getEmailTemplate: (file, callback) ->
-		FileSystem.readFile('../../../../../../WebContent/email/' + file, 'utf8', (err, data) ->
+		fs.readFile('../WebContent/email/' + file, 'utf8', (err, data) ->
 			if err?
 				callback(null);
 				return
