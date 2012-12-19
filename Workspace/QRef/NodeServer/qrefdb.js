@@ -22,20 +22,11 @@ if (cluster.isMaster) {
 	  } else if (msg.cmd && msg.cmd == 'clusterRecycle') {
 		console.log("Cluster received recycle request.");
 		
-		async.forEach(Object.keys(cluster.workers), 
-			function (id, feCb) {
-				cluster.workers[id].destroy();
-				feCb();
-			},
-			function (err) {
-			  for (var i = 0; i < numCPUs; i++) {
-				cluster.fork();
-			  }
-			  
-			  Object.keys(cluster.workers).forEach(function(id) {
-				 cluster.workers[id].on('message', messageHandler);
-			  });
-			});
+		cluster.disconnect();
+		  
+		Object.keys(cluster.workers).forEach(function(id) {
+			cluster.workers[id].destroy();
+		});
 		
 		
 	  }
@@ -120,9 +111,8 @@ if (cluster.isMaster) {
 				console.log("Express server recycling from api call.");
 		
 				var response = { status: 'ok' };
-				
 				res.json(response, 200);
-				process.send({ cmd: 'clusterRecycle' });
+				setTimeout(function() { process.send({ cmd: 'clusterRecycle' }); }, 1250);
 			});
 		} else {
 			res.json({ status: 'Not Authorized' }, 200);
