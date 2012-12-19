@@ -288,6 +288,18 @@ function NavigationHandler() {
 		
 		$("#settings").fadeIn();
 	};
+	
+	this.updateChangePasswordArea = function() {
+		self.hideOtherPages("changePassword");
+		$("#checklist-nav").fadeOut();
+		$("#changePassword").fadeIn();
+	};
+	
+	this.updatePasswordRecoveryArea = function() {
+		self.hideOtherPages("passwordRecovery");
+		$("#checklist-nav").fadeOut();
+		$("#passwordRecovery").fadeIn();
+	};
 
 	this.initNavBars = function() {
 		$(".checklistnav ul").children().tap(function(e) {
@@ -363,6 +375,8 @@ function NavigationHandler() {
 		this.simpleNavigation.add("conversions", self.updateE6BConversionsArea);
 		this.simpleNavigation.add("settings", self.updateSettingsArea);
 		this.simpleNavigation.add("sync", self.updateSyncArea);
+		this.simpleNavigation.add("changePassword", self.updateChangePasswordArea);
+		this.simpleNavigation.add("passwordRecovery", self.updatePasswordRecoveryArea);
 	};
 	
 	this.init = function() {
@@ -374,8 +388,17 @@ function NavigationHandler() {
             {
                 $(this).tap(function(e) {
                     Navigation.autoGo($(this));
-                })
+                });
             }
+        });
+        
+        $("a").each(function() {
+        	if($(this).attr("data-link"))
+        	{
+        		$(this).tap(function(e) {
+        			Navigation.autoGo($(this));
+        		});
+        	}
         });
 		
 		/*$(".scrollable").touchScroll({

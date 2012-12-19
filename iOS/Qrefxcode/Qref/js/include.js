@@ -33,6 +33,7 @@ function AuthenticationHandler() {
 			$("#signout-menu").hide();
 			$("#register-menu").show();
 			$("#sync-menu").hide();
+			$("#changepassword-menu").hide();
 		}
 		else
 		{
@@ -40,6 +41,7 @@ function AuthenticationHandler() {
 			$("#signout-menu").show();
 			$("#register-menu").hide();
 			$("#sync-menu").show();
+			$("#changepassword-menu").show();
 		}
 	};
 }

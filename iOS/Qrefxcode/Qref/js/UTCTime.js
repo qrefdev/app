@@ -4,7 +4,7 @@ function UTCTime () {
 	this.update = function() {
 		var now = new Date();
 		
-		this.checkThemeMode();
+		//this.checkThemeMode();
 		
 		$(".utcTime").html(now.toUTCString());
 		

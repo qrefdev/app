@@ -36,7 +36,7 @@ function passwordFocus(object, target) {
 }
 
 function RefreshToken(callback) {
-	if(token != "" && online)
+	if(token != "")
 	{
 		var refresh = { "mode":"rpc", "token": token}
 		
@@ -50,7 +50,7 @@ function RefreshToken(callback) {
 				if(response.success == true)
 				{
 					token = response.returnValue;
-					$.cookie.setCookie("QrefAuth", token, 30);
+					window.location.href = "qref://setToken=" + token;
 					
 					if(callback) 
 						callback(true);
@@ -64,11 +64,6 @@ function RefreshToken(callback) {
 					callback(false);
 			}
 		});
-	}
-	else if(online == false && token != "")
-	{
-		if(callback)
-			callback(true);
 	}
 	else
 	{

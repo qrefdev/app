@@ -14,7 +14,6 @@ $(window).load(function() {
 	loader.show();
     syncLoader = new Loader("#syncLoader");
     window.location.href = "qref://onload";
-    DataLoaded();
 });
 
 function BeginChecklistPackets() {
@@ -158,6 +157,18 @@ function DataLoaded() {
 	$("#signinForm").validate({
 		submitHandler: function() {
 			Signin();
+		}
+	});
+	
+	$("#passwordRecoveryForm").validate({
+		submitHandler: function() {
+			passwordRecovery();
+		}
+	});
+	
+	$("#changePasswordForm").validate({
+		submitHandler: function() {
+			changePassword();
 		}
 	});
 	

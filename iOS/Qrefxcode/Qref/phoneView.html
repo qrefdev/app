@@ -384,9 +384,61 @@
 						<input class="textbox required" type="email" value="email" id="email" name="email" onblur="inputBlur(this, 'email');" onfocus="inputFocus(this, 'email');" />
 						<input class="textbox" type="text" value="password" id="fauxPassword" name="fauxPassword" onfocus="passwordFocus(this, 'password');" />
 						<input class="textbox required" type="password" style="display: none;" id="password" name="password" onblur="passwordBlur(this, 'fauxPassword');" />
+						<a href="#" data-link="passwordRecovery">Forgot your password?</a> <a data-link="register">Need an account?</a>
 						<input type="submit" style="margin: 10px auto;" class="button button-signin" value="Sign in" />
-						<button data-link="register" style="margin: 10px auto;" class="button button-signin">Need an Account?</button>
                         </form>
+					</div>
+				</div>
+			</section>
+		</article>
+		
+		<!-- Password Recovery Screen -->
+		<article id="passwordRecovery" style="display: none;" class="theme-dark page">
+			<section class="page">
+				<div class="topbar">
+					<div class="item-large back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+					<div class="item-middle">
+						<p>Forgot Password</p>
+					</div>
+					<div class="item-large topmenu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
+				</div>
+				<div class="content">
+					<div style="float: left; position: relative; width: 100%; margin-top: 40px;">
+						<form id="passwordRecoveryForm" method="post" action="javascript:void(null);">
+						<input class="textbox required" type="email" value="email" id="recoveryEmail" name="recoveryEmail" onblur="inputBlur(this, 'email');" onfocus="inputFocus(this, 'email');" />
+						<input type="submit" style="margin: 10px auto;" class="button button-signin" value="Send E-mail" />
+						</form>
+					</div>
+				</div>
+			</section>
+		</article>
+		
+				<!-- Password Recovery Screen -->
+		<article id="changePassword" style="display: none;" class="theme-dark page">
+			<section class="page">
+				<div class="topbar">
+					<div class="item-large back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+					<div class="item-middle">
+						<p>Change Password</p>
+					</div>
+					<div class="item-large topmenu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
+				</div>
+				<div class="content">
+					<div style="float: left; position: relative; width: 100%; margin-top: 40px;">
+						<form id="changePasswordForm" method="post" action="javascript:void(null);">
+							<input class="textbox required" type="password" placeholder="old password" id="oldPassword" name="oldPassword" />
+							<input class="textbox required" type="password" placeholder="password" id="newPassword" name="newPassword" />
+							<input class="textbox required" type="password" placeholder="confirm password" id="newPasswordConfirm" name="newPasswordConfirm" />
+							<input type="submit" style="margin: 10px auto;" class="button button-signin" value="Change Password" />
+						</form>
 					</div>
 				</div>
 			</section>
@@ -425,8 +477,9 @@
 		<div id="menu" class="theme-dark">
 			<div class="menu">
 				<ul>
-					<li data-link="settings"><p><i class="icon icon-cog"></i> Settings</p></li>
+					<!--<li data-link="settings"><p><i class="icon icon-cog"></i> Settings</p></li>-->
 					<li data-link="dashboard"><p><i class="icon icon-dashboard"></i> Dashboard</p></li>
+					<li data-link="changePassword" id="changepassword-menu" style="display: none;"><p><i class="icon icon-lock"></i> Change Password</p></li>
 					<li data-link="signout" id="signout-menu" style="display: none;"><p><i class="icon icon-signout"></i> Sign out</p></li>
 					<li data-link="signin" id="signin-menu" style="display: none;"><p><i class="icon icon-signin" ></i> Sign in</p></li>
 					<li data-link="register" id="register-menu" style="display: none;"><p><i class="icon icon-pencil"></i> Register</p></li>
