@@ -6,6 +6,8 @@ var cluster = require('cluster');
 var numCPUs = require('os').cpus().length * 2;
 
 if (cluster.isMaster) {
+
+  var async = require('async');
   // Fork workers.
   function messageHandler(msg) {
 	  if (msg.cmd && msg.cmd == 'clusterTerminate') {
@@ -17,6 +19,25 @@ if (cluster.isMaster) {
 			  });
 		  
 		  
+	  } else if (msg.cmd && msg.cmd == 'clusterRecycle') {
+		console.log("Cluster received recycle request.");
+		
+		async.forEach(Object.keys(cluster.workers), 
+			function (id, feCb) {
+				cluster.workers[id].destroy();
+				feCb();
+			},
+			function (err) {
+			  for (var i = 0; i < numCPUs; i++) {
+				cluster.fork();
+			  }
+			  
+			  Object.keys(cluster.workers).forEach(function(id) {
+				 cluster.workers[id].on('message', messageHandler);
+			  });
+			});
+		
+		
 	  }
   }
   
@@ -48,7 +69,8 @@ if (cluster.isMaster) {
 } else {
 
 	var express = require('express'),
-		Router = require('./lib/router/Router');
+		Router = require('./lib/router/Router'),
+		UserAuth = require('./lib/security/UserAuth');
 	
 	var QRefDatabase = require('./lib/db/QRefDatabase');
 	
@@ -86,17 +108,30 @@ if (cluster.isMaster) {
 	rtr.load();
 	rtr.setup();
 	
-	/*
-	app.get('/api/node/exit', function(req, res) {
-		console.log("Express server exiting from api call.");
+	
+	app.get('/api/node/recycle', function(req, res) {
+	
+		if (req.query != null && req.query.token != null) {
+			UserAuth.isInRole(req.query.token, 'Administrators', function(err, hasRole) {
+				if (err != null || !hasRole) {
+					res.json({ status: 'Not Authorized' }, 200);
+				}
+				
+				console.log("Express server recycling from api call.");
 		
-		var response = { status: 'ok' };
+				var response = { status: 'ok' };
+				
+				res.json(response, 200);
+				process.send({ cmd: 'clusterRecycle' });
+			});
+		} else {
+			res.json({ status: 'Not Authorized' }, 200);
+			return;
+		}
 		
-		res.json(response, 200);
-		process.send({ cmd: 'clusterTerminate' });
 		
 	});
-	*/
+	
 	
 	
 	/*
@@ -124,7 +159,7 @@ if (cluster.isMaster) {
 	});
 	*/
 	
-	app.listen(80, '10.1.224.61', function(){
+	app.listen(80, '10.1.224.64', function(){
 	  console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 	});
 }
