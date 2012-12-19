@@ -1,0 +1,852 @@
+@font-face {
+	font-family: 'Myriad';
+	src: url('fonts/myriadpro.ttf') format('truetype');
+}
+
+html, body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	font-family: Myriad, Helvetica;
+}
+
+/** Text Boxes & Text Areas **/
+.textbox {
+	position: relative;
+	margin: 10px auto;
+	padding: 5px;
+	text-align: left;
+	width: 70%;
+	height: 16px;
+	font-size: 12px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	display:block;
+}
+
+/** Page Wrapper **/
+
+.page {
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	overflow-x: hidden;
+	overflow-y: visible;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+
+/** Bottom Nav Bar **/
+.nav {
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	width: 100%;
+	height: auto;
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+}
+
+.nav ul {
+	float: left;
+	position: relative;
+	width: 100%;
+	height: auto;
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+.nav ul li {
+	float: left;
+	position: relative;
+	width: auto;
+	height: 60px;
+	padding: 0;
+	margin: 0;
+	text-align: left;
+	cursor: pointer;
+}
+
+.nav ul .item {
+	width: 49.95%;
+	margin: 0;
+	padding: 0;
+}
+
+.nav ul .item-25 {
+	width: 24%;
+	margin: 0;
+	padding: 0;
+}
+
+.nav ul .item-33 {
+	width: 32%;
+	margin: 0;
+	padding: 0;
+}
+
+.nav ul .item .header {
+	font-size: 16px;
+	position: absolute;
+	left: 60px;
+	top: 15px;
+}
+
+.nav ul .item .subheader {
+	font-size: 12px;
+	left: 60px;
+	top: 35px;
+	position: absolute;
+}
+
+.nav ul .item-25 .header {
+	font-size: 12px;
+	position: absolute;
+	left: 60px;
+	top: 15px;
+}
+
+.nav ul .item-25 .subheader {
+	font-size: 10px;
+	left: 60px;
+	top: 35px;
+	position: absolute;
+}
+
+.nav ul .item-33 .header {
+	font-size: 14px;
+	position: absolute;
+	left: 60px;
+	top: 15px;
+}
+
+.nav ul .item-33 .subheader {
+	font-size: 12px;
+	left: 60px;
+	top: 35px;
+	position: absolute;
+}
+
+.nav ul .item div .icon {
+	font-size: 34px;
+	position: absolute;
+	top: 15px;
+	left: 5px;
+	display: block;
+}
+
+.nav ul .item-25 div .icon {
+	font-size: 18px;
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	display: block;
+}
+
+.nav ul .item-33 div .icon {
+	font-size: 24px;
+	float: left;
+	margin-top: 25px;
+	display: block;
+}
+
+.nav ul .header-only {
+	font-size: 16px;
+	position: absolute;
+	left: 60px;
+	top: 20px;
+}
+
+.nav ul .subheader-only {
+	font-size: 10px;
+	text-align: center;
+	width: 100%;
+	position:  absolute;
+	bottom: 10px;
+}
+
+/** Dashboard Top Bar **/
+.dashbar {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	width: 100%;
+	height: 80px;
+	font-size: 12px;
+	overflow: hidden;
+	padding: 0;
+	margin: 0;
+}
+
+.dashbar .item {
+	float: left;
+	position: relative;
+	width: auto;
+	height: 32px;
+	margin-right: 5px;
+	z-index: 5;
+	cursor: pointer;
+}
+
+.dashbar .item p {
+	margin: 0;
+	padding: 6px;
+}
+
+.dashbar .item-right p {
+	padding: 6px;
+	margin: 0;
+}
+
+.dashbar .item-right {
+	float: right;
+	position: relative;
+	width: 50px;
+	height: 32px;
+	margin-right: 10px;
+	z-index: 1100;
+	cursor: pointer;
+}
+
+.dashbar .icon {
+	font-size: 18px;
+}
+
+.dashbar .header {
+	position: absolute;
+	width: 100%;
+	z-index: 1;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	height: 32px;
+	padding: 0;
+	margin: 0;
+	text-align: center;
+	letter-spacing: 5px;
+}
+
+.dashbar .icon {
+	font-size: 18px;
+}
+
+
+/** Top Bar for all other pages **/
+.topbar {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	width: 100%;
+	height: auto;
+	font-size: 12px;
+	overflow: hidden;
+	padding: 0;
+	margin: 0;
+	z-index: 1100;
+}
+
+.topbar .item {
+	float: left;
+	position: relative;
+	width: 10%;
+	height: 32px;
+	z-index: 5;
+	cursor: pointer;
+	text-align: center;
+}
+
+.topbar .item-middle {
+	float: left;
+	position: relative;
+	width: 70%;
+	z-index: 10;
+	cursor: pointer;
+	text-align: center;
+}
+
+.topbar .item-middle p {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.topbar .item-large {
+	float: left;
+	position: relative;
+	width: 15%;
+	height: 32px;
+	z-index: 5;
+	cursor: pointer;
+	text-align: center;
+}
+
+.topbar .item p {
+	margin: 0;
+	padding: 6px;
+}
+
+.topbar .item-large p {
+	margin: 0;
+	padding: 6px;
+}
+
+.topbar .icon {
+	font-size: 18px;
+}
+
+
+/** Content Wrapper **/
+.content {
+	position: absolute;
+	top: 32px;
+	left: 0px;
+	right: 0px;
+	bottom: 60px;
+	width: 100%;
+	overflow: auto;
+	padding: 0;
+	margin: 0;
+}
+
+.content-full {
+	position: absolute;
+	top: 32px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	width: 100%;
+	overflow: auto;
+	padding: 0;
+	margin: 0;
+}
+
+
+/** Grid System **/
+.grid {
+	float: left;
+	position: relative;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+.grid .vertical {
+	float: left;
+	position: relative;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+.grid .vertical li {
+	float: left;
+	position: relative;
+	width: 100%;
+	margin-bottom: 2px;
+}
+
+.grid .vertical li:last-child {
+	margin-bottom: 0;
+}
+
+.grid .horizontal {
+	float: left;
+	position: relative;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.grid .horizontal li {
+	float: left;
+	position: relative;
+	width: auto;
+	margin-right: 2px;
+}
+
+.grid .horizontal li:last-child {
+	margin-right: 0;
+}
+
+.grid .full {
+	float: left;
+	position: relative;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.grid .full .span50 {
+	float: left;
+	position: relative;
+	width: 49%;
+	margin-right: 2px;
+	margin-bottom: 2px;
+}
+
+.grid .full .span50:nth-child(even) {
+	margin-right: 0;
+}
+
+.grid .full .span33 {
+	float: left;
+	position: relative;
+	width: 32%;
+	margin-right: 2px;
+	margin-bottom: 2px;
+}
+
+.grid .full .span33:nth-child(3n) {
+	margin-right: 0px;
+}
+
+.grid .full .span25 {
+	float: left;
+	position: relative;
+	width: 24%;
+	margin-right: 2px;
+	margin-bottom: 2px;
+}
+
+.grid .full .span25:nth-child(4n) {
+	margin-right: 0px;
+}
+
+.grid .separator {
+	width: 100%;
+	float: left;
+	position: relative;
+	margin: 0;
+	padding: 0;
+	height: auto;
+}
+
+.grid .separator p {
+	padding: 5px;
+}
+
+
+/** Sign in and Register Button */
+.button-signin, .button-register {
+	font-size: 22px;
+	padding: 20px 0px 20px 0px;
+	width: 70%;
+}
+
+/** Dashboard Listing && Download Listing **/
+.dashboard-planes-selector, .downloads {
+	overflow: auto;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	width: 100%;
+	height: 100%;
+}
+
+.dashboard-planes-selector .plane-icon, .downloads .plane-icon {
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+	top: 10px;
+	width:auto;
+	padding: 0;
+	margin: 0;
+	z-index: 0;
+}
+
+.dashboard-planes-selector .vertical li , .downloads .vertical li{
+	overflow: hidden;
+}
+
+.dashboard-planes-selector .plane-icon img, .downloads .plane-icon img {
+	width: 100px;
+	margin-top: 20px;
+}
+
+.dashboard-planes-selector .vertical li .holder, .downloads .vertical li .holder {
+	float: left;
+	position: relative;
+	margin-top: 10px;
+	margin-left: 5px;
+	padding: 10px;
+	width: auto;
+}
+
+.dashboard-planes-selector .vertical li .delete {
+	position: absolute;
+	left: 5px;
+	top: 10px;
+	display: none;
+}
+
+.dashboard-planes-selector .vertical li .handle {
+	position: absolute;
+	right: 0px;
+	width: 40px;
+	top: 10px;
+	display: none;
+	z-index: 10;
+}
+
+.dashboard-planes-selector .vertical li .handle .item {
+	float: left;
+	position: relative;
+	width: 3px;
+	height: 32px;
+	margin-right: 2px;
+}
+
+.dashboard-planes-selector .header, .downloads .header {
+	width: auto;
+	position: relative;
+	margin-left: 10px;
+	margin-top: 10px;
+}
+
+.dashboard-planes-selector .subheading, .downloads .subheading {
+	width: auto;
+	position: relative;
+	margin-left: 10px;
+	margin-top: 5px;
+}
+
+.dashboard-planes-selector .vertical li ul {
+	width: auto;
+	padding: 0;
+	position: relative;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	list-style-type: none;
+	background: none;
+}
+
+.dashboard-planes-selector .vertical li ul li {
+	float: left;
+	width: auto;
+	font-size: 10px;
+	position: relative;
+	margin-left: 10px;
+}
+
+/** Checklist **/
+.checklist {
+	position: absolute;
+	width: 100%;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	top: 0px;
+	height: 100%;
+}
+
+.checklist .vertical li .icon {
+	font-size: 34px;
+	float: left;
+	position: relative;
+	margin-top: 15px;
+	margin-left: 5px;
+	display: block;
+}
+
+.checklist .vertical li .holder {
+	float: left;
+	position: relative;
+	margin-top: 10px;
+	margin-left: 5px;
+	width: auto;
+}
+
+.checklist .vertical li .check {
+	font-size: 16px;
+	position: relative;
+	width: auto;
+}
+
+.checklist .vertical li .response {
+	font-size: 12px;
+	margin-top: 5px;	
+	margin-bottom: 10px;
+	position: relative;
+	width: auto;
+}
+
+.checklist .vertical li .delete {
+	position: absolute;
+	left: 5px;
+	top: 10px;
+	display: none;
+}
+
+.checklist .vertical li .handle {
+	position: absolute;
+	right: 0px;
+	width: 40px;
+	top: 10px;
+	display: none;
+}
+
+.checklist .vertical li .handle .item {
+	float: left;
+	position: relative;
+	width: 3px;
+	height: 32px;
+	margin-right: 2px;
+}
+
+.checklist .vertical li .add {
+	position: absolute;
+	right: 50px;
+	display: none;
+	top: 10px;
+}
+
+/** Checklist Sections Menu **/
+.check-sections {
+	position: absolute;
+	top: 32px;
+	left: 10%;
+	width: 70%;
+	bottom: 62px;
+	display: none;
+	z-index: 99999;
+	overflow: auto;
+}
+
+.check-sections .vertical {
+	float: left;
+	position: relative;
+	width: 100%;
+	margin: 0;
+	margin-top: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+.check-sections .vertical li {
+	float: left;
+	position: relative;
+	width: 100%;
+}
+
+/** Loader and Info Boxes **/
+.loader {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 300px;
+	margin-left: -150px;
+	height: 100px;
+	margin-top: -50px;
+	z-index: 99999999;
+}
+
+.loader img {
+	position: absolute;
+	top: 35px;
+	left: 25px;
+}
+
+.loader figcaption {
+	position: absolute;
+	top: 45px;
+	left: 85px;
+	font-size: 18px;
+}
+
+.info {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 300px;
+	margin-left: -150px;
+	height: 100px;
+	margin-top: -50px;
+	z-index: 9999;
+}
+
+.info figcaption {
+	float: left;
+	position: relative;
+	margin-top: 10px;
+	margin-left: 10px;
+	font-size: 14px;
+}
+
+.info button {
+	width: 100%;
+	position: absolute;
+	bottom: 0px;
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+	height: 30px;
+}
+
+.model {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	left: 0px;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	background: rgba(0,0,0,0.5);
+	display: none;
+	z-index: 99999999;
+}
+
+
+/** Form Stuff **/
+form {
+	float: left;
+	position: relative;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+form label {
+	position: relative;
+	margin: 10px auto;
+	padding: 5px;
+	text-align: left;
+	width: 70%;
+	height: 16px;
+	font-size: 12px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	display:block;
+}
+
+/** Container Wrapper for Scroll **/
+.container {
+	position: absolute;
+	width: 100%;
+	height: auto;
+	top: 0px;
+	left: 0px;
+}
+
+.dashcontent {
+	position: absolute;
+	width: 100%;
+	top: 80px;
+	bottom: 60px;
+	left: 0px;
+	right: 0px;
+}
+
+/** Emergency Sub Listing **/
+/** Checklist **/
+.emergencies {
+	position: absolute;
+	width: 100%;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	top: 0px;
+	height: 100%;
+}
+
+.emergencies .icon {
+	font-size: 32px;
+	float: left;
+	width: 100%;
+	text-align: center;
+	padding: 5px;
+}
+
+.emergencies .section-name {
+	float: left;
+	position: relative;
+	width: 100%;
+	text-align: center;
+	padding: 5px;
+}
+
+#emergency-items {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+/** Product Details **/
+.detailsHeading {
+	float: left;
+	position: relative;
+	width: 100%;
+	height: auto;
+	margin: 0;
+	padding: 0;
+}
+
+.detailsHeading h1 {
+	float: left;
+	position: relative;
+	padding: 5px;
+	margin: 5px;
+}
+
+.detailsHeading .buynow {
+	float: right;
+	margin: 5px;
+	padding: 10px;
+}
+
+.details {
+	float: left;
+	position: relative;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+}
+
+.details .serial {
+	float: left;
+	position: relative;
+	width: auto;
+	margin: 5px;
+	padding: 0;
+}
+
+.details .modelYear {
+	float: right;
+	position: relative;
+	width: auto;
+	margin: 5px;
+	padding: 0;
+}
+
+.details .description {
+	float: left;
+	position: relative;
+	margin: 5px;
+	width: 100%;
+}
+
+.details .row {
+	float: left;
+	position: relative;
+	width: 100%;
+}
+
+/** MISC **/
+.row {
+	float: left;
+	position: relative;
+	width: 100%;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}

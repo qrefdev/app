@@ -1,0 +1,47 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+		<title>QRef</title> 
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="css/theme-dark.css" />
+		<link rel="stylesheet" href="css/base.css" />
+		<link rel="stylesheet" href="css/fontawesome.css" />
+		<script src="js/jquery.js"></script>
+		<script src="js/jquery.hasplaceholder.js"></script>
+		<script>
+			function testAll() {
+				if($("input[type='text']").hasPlaceHolder())
+					$("#textResult").html("HAS PLACE HOLDER");
+				else
+					$("#textResult").html("NO PLACE HOLDER");
+			}
+			
+			function testLast() {
+				if($("#m3").hasPlaceHolder())
+					$("#textResult").html("HAS PLACE HOLDER");
+				else
+					$("#textResult").html("NO PLACE HOLDER");
+			}
+			
+			function testFirst() {
+				if($("#m1").hasPlaceHolder())
+					$("#textResult").html("HAS PLACE HOLDER");
+				else
+					$("#textResult").html("NO PLACE HOLDER");
+			}
+		</script>
+	</head> 
+	<body> 
+		<form action="javascript:void(null);">
+			<input id="m1" type="text" value="placeme" placeholder="placeme" />
+			<input id="m2" type="text" value="dontplaceme" placeholder="placeme" />
+			<input id="m3" type="text" value="" placeholder="placeme" />
+			<div id="textResult">
+			</div>
+			<button onclick="testAll();">Test against all!</button>
+			<button onclick="testLast();">Test against last</button>
+			<button onclick="testFirst();">Test against first</button>
+		</form>
+	</body>
+</html>
