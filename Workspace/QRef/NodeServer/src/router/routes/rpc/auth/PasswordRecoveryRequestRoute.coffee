@@ -1,7 +1,7 @@
 RpcRoute = require('../../../RpcRoute')
 RpcResponse = require('../../../../serialization/RpcResponse')
 UserAuth = require('../../../../security/UserAuth')
-Mailer = require('mailer')
+Mailer = require('nodemailer')
 fs = require('fs')
 ###
 Service route that is used to create a new user account.
@@ -20,7 +20,7 @@ class PasswordRecoveryRequestRoute extends RpcRoute
 		UserAuth.createPasswordRecoveryToken(req.body.userName, (err, tk) =>
 			if err?
 				resp = new RpcResponse(null)
-				resp.failure('Bad Request', 400)
+				resp.failure('Internal Error', 500)
 				res.json(resp, 200)
 				return
 				
@@ -32,36 +32,46 @@ class PasswordRecoveryRequestRoute extends RpcRoute
 				
 				@.getEmailTemplate('passwordRecoveryRequest.html', (data) ->
 					if data?
-						data.replace('{recoveryUrl}', 'http://my.qref.com/?passwordRecovery=' + tk.token)
-					
-						Mailer.send({
+						console.log(data)
+						data = data.replace(/\{recoveryUrl\}/g, 'http://my.qref.com/?passwordRecovery=' + tk.token)
+						transport = Mailer.createTransport("SMTP", {
 							host: '10.1.224.10',
-							port: '25',
+							port: 25,
+						})
+					
+						transport.sendMail({
 							to: user.userName,
 							from: 'admin@qref.com',
 							subject: 'QRef Mobile - Password Recovery',
-							body: data
+							html: data
 						}, (err, result) ->
-							
+							if err?
+								console.log(JSON.stringify(err))
 						)
+					else
+						console.log("No email template found")
 				)
 				
 				return
-
-			resp = new RpcResponse(null)
-			resp.failure('Failed to generate password recovery token', 400)
-			res.json(resp, 200)
-			return
+			else
+				resp = new RpcResponse(null)
+				resp.failure('Failed to generate password recovery token', 500)
+				res.json(resp, 200)
+				return
 		)
 	
 	getEmailTemplate: (file, callback) ->
 		fs.readFile('../WebContent/email/' + file, 'utf8', (err, data) ->
 			if err?
+				console.log(JSON.stringify(err))
 				callback(null);
 				return
 			
 			if data?
 				callback(data);
+				return
+			else
+				callback(null);
 				return
 		)
 				

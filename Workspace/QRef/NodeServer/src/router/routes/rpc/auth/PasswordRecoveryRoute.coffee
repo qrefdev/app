@@ -2,7 +2,7 @@ RpcRoute = require('../../../RpcRoute')
 RpcResponse = require('../../../../serialization/RpcResponse')
 UserAuth = require('../../../../security/UserAuth')
 fs = require('fs')
-Mailer = require('mailer')
+Mailer = require('nodemailer')
 ###
 Service route that is used to create a new user account.
 Password Recovery!
@@ -20,7 +20,7 @@ class PasswordRecoveryRoute extends RpcRoute
 		UserAuth.applyPasswordRecovery(req.body.token, (err, user, password) =>
 			if err?
 				resp = new RpcResponse(null)
-				resp.failure('Bad Request', 400)
+				resp.failure('Internal Error', 500)
 				res.json(resp, 200)
 				return
 				
@@ -30,36 +30,47 @@ class PasswordRecoveryRoute extends RpcRoute
 				
 				@.getEmailTemplate('passwordReset.html', (data) ->
 					if data?
-						data.replace('{password}', password)
+						console.log(data)
+						data = data.replace(/\{password\}/g, password)
 					
-						Mailer.send({
+						transport = Mailer.createTransport("SMTP", {
 							host: '10.1.224.10',
-							port: '25',
+							port: 25,
+						})
+					
+						transport.sendMail({
 							to: user.userName,
 							from: 'admin@qref.com',
 							subject: 'QRef Mobile - Password Reset',
-							body: data
+							html: data
 						}, (err, result) ->
-							
+							if err?
+								console.log(JSON.stringify(err))
 						)
+					else
+						console.log("No email template found")
 				)
 				
 				return
-
-			resp = new RpcResponse(null)
-			resp.failure('Failed to generate new password', 400)
-			res.json(resp, 200)
-			return
+			else
+				resp = new RpcResponse(null)
+				resp.failure('Failed to generate new password', 500)
+				res.json(resp, 200)
+				return
 		)
 	
 	getEmailTemplate: (file, callback) ->
 		fs.readFile('../WebContent/email/' + file, 'utf8', (err, data) ->
 			if err?
+				console.log(JSON.stringify(err))
 				callback(null);
 				return
 			
 			if data?
 				callback(data);
+				return
+			else
+				callback(null);
 				return
 		)
 		

@@ -246,12 +246,15 @@ class UserAuth
 					if error?
 						callback(error, null);
 						return
-					
-					callback(null, tk);
-					return
+					db.AuthToken.findById(tk._id)
+					.populate('user')
+					.exec((err, tk) ->
+						callback(err, tk);
+						return
+					)
 				) 
-			
-			callback(null, null)
+			else
+				callback(null, null)
 		)
 	
 	applyPasswordRecovery: (token, callback) =>
@@ -271,7 +274,7 @@ class UserAuth
 						
 						user.save((err) ->
 							if err?
-								callback(err, null);
+								callback(err, null, null);
 								return
 							
 							db = QRefDatabase.instance()
@@ -286,13 +289,13 @@ class UserAuth
 							callback(null, user, newPassword);
 							return
 						)
-								
-					callback(null, null, null);
-					return
+					else			
+						callback(null, null, null);
+						return
 				)
-				
-			callback(null, null, null);
-			return
+			else	
+				callback(null, null, null);
+				return
 		)
 				
 				
@@ -303,7 +306,7 @@ class UserAuth
 		
 		i = Math.abs(passwordLength)
 		
-		while i not 0
+		while i > 0
 			position = (Math.random() * (characters.length - 2))
 			char = characters.substring(position, (position + 1));
 			password += char
@@ -341,16 +344,16 @@ class UserAuth
 								callback(null, user, 1);
 								return
 							)
-						
-						callback(null, user, 3);
-						return
-						
-					callback(null, null, 0);
-					return	
+						else
+							callback(null, user, 3);
+							return
+					else	
+						callback(null, null, 0);
+						return	
 				)
-				
-			callback(null, null, 0);
-			return
+			else	
+				callback(null, null, 0);
+				return
 		)						
 	###
 	Determines if the currently authenticated user is in the given role.
