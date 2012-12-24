@@ -50,7 +50,7 @@ function ThemeHandler() {
 	
 	this.createEmergencySectionItem = function(item) {
 		var html = '<li class="span50" data-link="checklist" data-index="' + item.index + '">' +
-						'<div class="icon"><img src="' + item.sectionIcon + '" /></div>' +
+						'<div class="icon"><img src="images/' + item.name + '.png" /></div>' +
 						'<div class="section-name">' + item.name + '</div>' +
 					'</li>';
 					
