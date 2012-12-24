@@ -892,6 +892,30 @@ form label {
 	overflow-x: hidden;
 }
 
+/** Currently Logged in User Display **/
+.currentLogin {
+    width: 92%;
+    height: auto;
+    font-size: 12px;
+    position: relative;
+    padding: 5px;
+    margin: 5px;
+}
+.currentLogin .icon {
+    font-size: 14px;
+    color: #f1f1f1;
+    float: left;
+}
+
+.currentLogin .user {
+    float: left;
+    position: relative;
+    width: auto;
+    height: auto;
+    margin-left: 5px;
+    text-wrap: unrestricted;
+}
+
 /** MISC **/
 .row {
 	float: left;

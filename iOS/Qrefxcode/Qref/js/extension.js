@@ -27,23 +27,23 @@ function LoadChecklistPacket(data) {
 function PushImage(data) {
     var imageArray = data.split(";");
     
-        if(imageArray[2] == "productListing")
+        if(imageArray[2].toLowerCase() == "productlisting")
         {
             var item = $("#downloads-items li[data-id='" + imageArray[1] + "']");
         
             if(item.length > 0)
                 item.find(".plane-icon").html('<img src="' + imageArray[0] + '" />');
         }
-        else if(imageArray[2] == "checklistListing")
+        else if(imageArray[2].toLowerCase() == "checklistlisting")
         {
             var item = $("#dashboard-planes li[data-id='" + imageArray[1] + "']");
         
             if(item.length > 0)
                 item.find(".plane-icon").html('<img src="' + imageArray[0] + '" />');
         }
-        else if(imageArray[2] == "productDetails")
+        else if(imageArray[2].toLowerCase() == "productdetails")
         {
-            var detail = $("#productDetailsListing");
+            var details = $("#productDetailsListing");
             details.find(".productImage").html('<img src="' + imageArray[0] + '" />');
         }
 }
@@ -121,6 +121,10 @@ function SendReceipt(receiptData)
            dialog.show();
         }
     });
+}
+
+function UpdateLoginDisplay(email) {
+    $(".currentLogin .user").html(email);
 }
 
 function DataLoaded() {

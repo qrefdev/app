@@ -252,7 +252,6 @@
             {
                 NSString *imageInfo = cachedFilePath;
                 imageInfo = [NSString stringWithFormat:@"%@;%@;%@",imageInfo,[array objectAtIndex:1],[array objectAtIndex:2]];
-            
                 [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"PushImage('%@');", imageInfo]];
             }
             else
@@ -423,6 +422,11 @@
         [self->preferences setObject:uid forKey:@"UID"];
         
         UID = uid;
+    }
+    
+    if(user != nil)
+    {
+        [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"UpdateLoginDisplay('%@');", user]];
     }
     
     if(token != nil)

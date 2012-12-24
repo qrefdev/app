@@ -21,6 +21,7 @@ function AuthenticationHandler() {
 	this.signOut = function() {
 		token = "";
 		this.verify();
+        $(".currentLogin .user").html("");
 		window.location.href = "qref://clearToken&clearUser";
 	};
 	

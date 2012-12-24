@@ -470,7 +470,7 @@
 		46B2668815C054B1002E9931 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Aaron Klick (58FRZAEL2S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Aaron Klick (97YQ95B3S8)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Qref/Qref-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -485,7 +485,7 @@
 					"\"$(SDKROOT)/usr/include\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "23BBB92D-3F30-4F75-B79B-687ABC12DE95";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "75BC32B4-E1E2-4595-A2D6-3F3978C82BCA";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

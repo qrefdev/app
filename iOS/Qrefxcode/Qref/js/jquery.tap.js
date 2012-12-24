@@ -26,7 +26,7 @@
 	  var startTime = 0, endTime = 0;
 	
 	  var duration = 0;
-	  var threshold = 200;
+	  var threshold = 150;
 	  
 	  var TapHandler = undefined;	
   		

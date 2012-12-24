@@ -19,6 +19,7 @@ function Signin() {
 			{
 				token = response.returnValue;
 				Authentication.verify();
+                $(".currentLogin .user").html($("#email").val());
 				window.location.href = "qref://setToken=" + token + "&setUser=" + $("#email").val();
                 setTimeout(function() {
                       Navigation.go("dashboard");

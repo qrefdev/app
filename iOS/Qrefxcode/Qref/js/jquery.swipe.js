@@ -35,8 +35,8 @@
 	
 	  var duration = 0;
 	  var direction = -1;
-	  var swipeThreshold = 20;
-	  var durationThreshold = 1000;
+	  var swipeThreshold = 10;
+	  var durationThreshold = 265;
 	  
 	  if(options.threshold) swipeThreshold = options.threshold;
       if(options.durationThreshold) durationThreshold = options.durationThreshold;

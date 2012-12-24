@@ -220,8 +220,8 @@ function ThemeHandler() {
 					event.stopPropagation();
 				}
 			},
-			threshold: 20,
-			durationThreshold: 500
+			threshold: 10,
+			durationThreshold: 265
 		});
 	};
 	
