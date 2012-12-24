@@ -205,8 +205,35 @@ function ProductDetails() {
 		this.details.find(".modelDescription").html(product.model.description);
 		this.details.find(".manufacturerDescription").html(product.manufacturer.description);
 		
+		var price = product.suggestedRetailPrice + "";
+		
+		if(price)
+		{
+			if(price.indexOf(".") > -1)
+			{
+				var decimal = price.split(".");
+				var decimalText = "";
+				
+				if(decimal[1].length < 2)
+					decimalText = decimal[1] + "0";
+				else
+					decimalText = decimal[1];
+					
+				price = "$" + decimal[0] + "." + decimalText;
+			}
+			else
+			{
+				price = "$" + price + ".00";
+			}
+		}
+		else
+		{
+			price = "N/A";
+		}
+			
+		
 		if(!ownsProduct)
-			this.details.find(".buynow").html(product.suggestedRetailPrice);
+			this.details.find(".buynow").html(price);
 		else
 			this.details.find(".buynow").html("INSTALL");
 			

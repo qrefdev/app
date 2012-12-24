@@ -301,15 +301,34 @@
 				</div>
 				<div id="productDetailsListing" class="content scrollable" style="bottom: 0px;">
 					<div class="container">
-						<div class="detailsHeading"><div class="productImage"></div></div>
-						<div class="detailsHeading"><h1 class="productModel"></h1><button class="button buynow">INSTALL</button></div>
+						<div class="row">
+							<div class="productImage"></div>
+						</div>
+						<div class="row detailsHeading">
+							<h1 class="productModel"></h1> 
+							<button class="button buynow">INSTALL</button>
+						</div>
 						<div class="details">
-							<div class="row"><div class="serial manufacturerDescription"></div></div>
-							<div class="row"><div class="serial modelDescription"></div></div>
-							<div class="row"><div class="serial"><p>Serial Number(s):</p></div><div class="modelYear"><p>Model Year(s): <span class="productModelYear"></span></p></div></div>
-							<div class="row"><div class="serial productSerialNumbers"></div></div>
-							<div class="detailsHeading"><h1>Description</h1></div>
-							<div class="description"></div>
+							<div class="row detailsHeading">
+								<h1>Manufacturer Information</h1>
+								<p class="serial manufacturerDescription"></p>
+							</div>
+							<div class="row detailsHeading">
+								<h1>Model Information</h1>
+								<p class="serial modelDescription"></p>
+							</div>
+							<div class="row detailsHeading">
+								<h1>Serial Number(s)</h1>
+								<p class="serial productSerialNumbers"></p>
+							</div>
+							<div class="row detailsHeading">
+								<h1>Model Year(s)</h1>
+								<p class="serial productModelYear"></p>
+							</div>
+							<div class="row detailsHeading">
+								<h1>Description</h1>
+								<p class="description"></p>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -332,8 +351,8 @@
 				</div>
 				<div style="float: left; position: relative; width: 100%; margin-top: 40px;">
 					<form id="editAddForm" method="post" action="javascript:void(null);">
-						<input class="textbox required" type="text" value="check" id="check" name="check" onblur="inputBlur(this, 'check');" onfocus="inputFocus(this, 'check');" />
-						<input class="textbox required" type="text" value="response" id="response" name="response" onfocus="inputFocus(this, 'response');" onblur="inputBlur(this, 'response');" />
+						<input class="textbox required" type="text" id="check" name="check" placeholder="check" />
+						<input class="textbox required" type="text" id="response" name="response" placeholder="response" />
 						
 						<input type="submit" style="margin: 10px auto;" class="button button-register" value="Save" />
 					</form>
@@ -357,7 +376,7 @@
 				</div>
 				<div style="float: left; position: relative; width: 100%; margin-top: 40px;">
 					<form id="editTailForm" method="post" action="javascript:void(null);">
-						<input class="textbox required" type="text" value="tail number" id="tailnumber" name="tailnumber" onblur="inputBlur(this, 'tail number');" onfocus="inputFocus(this, 'tail number');" />
+						<input class="textbox required" type="text" id="tailnumber" name="tailnumber" placeholder="tail number" />
 						<input type="submit" style="margin: 10px auto;" class="button button-register" value="Save" />
 					</form>
 				</div>
@@ -381,10 +400,9 @@
 				<div class="content">
 					<div style="float: left; position: relative; width: 100%; margin-top: 40px;">
 						<form id="signinForm" method="post" action="javascript:void(null);">
-						<input class="textbox required" type="email" value="email" id="email" name="email" onblur="inputBlur(this, 'email');" onfocus="inputFocus(this, 'email');" />
-						<input class="textbox" type="text" value="password" id="fauxPassword" name="fauxPassword" onfocus="passwordFocus(this, 'password');" />
-						<input class="textbox required" type="password" style="display: none;" id="password" name="password" onblur="passwordBlur(this, 'fauxPassword');" />
-						<a href="#" data-link="passwordRecovery">Forgot your password?</a> <a data-link="register">Need an account?</a>
+						<input class="textbox required" type="email" id="email" name="email" placeholder="email" />
+						<input class="textbox required" type="password" id="password" name="password" placeholder="password" />
+						<p style="text-align: center;"><a href="javascript:void(null);" data-link="passwordRecovery">Forgot your password?</a> <a data-link="register" href="javascript:void(null);">Need an account?</a></p>
 						<input type="submit" style="margin: 10px auto;" class="button button-signin" value="Sign in" />
                         </form>
 					</div>
@@ -409,8 +427,8 @@
 				<div class="content">
 					<div style="float: left; position: relative; width: 100%; margin-top: 40px;">
 						<form id="passwordRecoveryForm" method="post" action="javascript:void(null);">
-						<input class="textbox required" type="email" value="email" id="recoveryEmail" name="recoveryEmail" onblur="inputBlur(this, 'email');" onfocus="inputFocus(this, 'email');" />
-						<input type="submit" style="margin: 10px auto;" class="button button-signin" value="Send E-mail" />
+						<input class="textbox required" type="email" value="email" id="recoveryEmail" name="recoveryEmail" placeholder="email" />
+						<input type="submit" style="margin: 10px auto;" class="button button-signin" value="Send Email" />
 						</form>
 					</div>
 				</div>
@@ -461,11 +479,9 @@
 				<div class="content">
 					<div style="float: left; position: relative; width: 100%; margin-top: 40px;">
 						<form id="registerForm" action="javascript:void(null);" method="post">
-						<input class="textbox required" type="email" value="email" id="emailRegister" name="emailRegister" onblur="inputBlur(this, 'email');" onfocus="inputFocus(this, 'email');" />
-						<input class="textbox" type="text" value="password" id="fauxPasswordRegister" name="fauxPasswordRegister" onfocus="passwordFocus(this, 'passwordRegister');" />
-						<input class="textbox required" type="password" style="display: none;" id="passwordRegister" name="passwordRegister" onblur="passwordBlur(this, 'fauxPasswordRegister');" />
-						<input class="textbox" type="text" value="confirm password" id="fauxConfirmPassword" name="fauxConfirmPassword" onfocus="passwordFocus(this, 'confirmPassword');" />
-						<input class="textbox required" type="password" style="display: none;" id="confirmPassword" name="confirmPassword" onblur="passwordBlur(this, 'fauxConfirmPassword');" />
+						<input class="textbox required" type="email" id="emailRegister" name="emailRegister" placeholder="email" />
+						<input class="textbox required" type="password" id="passwordRegister" name="passwordRegister" placeholder="password" />
+						<input class="textbox required" type="password" id="confirmPassword" name="confirmPassword" placeholder="confirm password" />
 						<input type="submit" style="margin: 10px auto;" class="button button-register" value="Register"/>
 						</form>
 					</div>

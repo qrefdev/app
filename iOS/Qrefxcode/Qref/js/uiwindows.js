@@ -49,7 +49,7 @@ function ThemeHandler() {
 	};
 	
 	this.createEmergencySectionItem = function(item) {
-		var html = '<li class="span50 max-64" data-link="checklist" data-index="' + item.index + '">' +
+		var html = '<li class="span50" data-link="checklist" data-index="' + item.index + '">' +
 						'<div class="icon"><img src="' + item.sectionIcon + '" /></div>' +
 						'<div class="section-name">' + item.name + '</div>' +
 					'</li>';
@@ -416,14 +416,18 @@ function ImageHandler(itemsToProcess, cacheType, icon) {
             {
                 if(item.productIcon)
                 {
-                    window.location = "qref://imageCache=" + item.productIcon.substring(1) + ";" + item._id + ";" + this.type + "&timestamp=" + Date.now();
+                    var iconImageLocation = item.productIcon;
+                    
+                    window.location = "qref://imageCache=" + iconImageLocation + ";" + item._id + ";" + this.type + "&timestamp=" + Date.now();
                 }
             }
             else
             {
                 if(item.coverImage)
                 {
-                    window.location = "qref://imageCache=" + item.coverImage.substring(1) + ";" + item._id + ";" + this.type + "&timestamp=" +Date.now();
+                    var coverImageLocation = item.coverImage;
+                    
+                    window.location = "qref://imageCache=" + coverImageLocation + ";" + item._id + ";" + this.type + "&timestamp=" +Date.now();
                 }
             }
         

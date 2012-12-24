@@ -30,7 +30,7 @@
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Qref/QRefWebView.m"
@@ -104,6 +104,32 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "256"
          endingLineNumber = "256"
+         landmarkName = "-hasImageInCache:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Qref/QRefWebView.m"
+         timestampString = "378061753.418298"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "245"
+         endingLineNumber = "245"
+         landmarkName = "-hasImageInCache:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Qref/QRefWebView.m"
+         timestampString = "378061756.92501"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "268"
+         endingLineNumber = "268"
          landmarkName = "-hasImageInCache:"
          landmarkType = "5">
       </FileBreakpoint>

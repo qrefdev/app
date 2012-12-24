@@ -773,11 +773,15 @@ form label {
 }
 
 .emergencies .icon {
-	font-size: 32px;
 	float: left;
-	width: 100%;
+	width: 97%;
+	position: relative;
 	text-align: center;
 	padding: 5px;
+}
+
+.emergencies .icon img {
+	width: 75%;
 }
 
 .emergencies .section-name {
@@ -786,6 +790,7 @@ form label {
 	width: 100%;
 	text-align: center;
 	padding: 5px;
+	font-size: 11px;
 }
 
 #emergency-items {
@@ -804,8 +809,22 @@ form label {
 	padding: 0;
 }
 
+.productImage {
+	float: left;
+	position: relative;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+	text-align: center;
+}
+
+.productImage img {
+	width: 100%;
+}
+
 .detailsHeading h1 {
 	float: left;
+	width: 100%;
 	position: relative;
 	padding: 5px;
 	margin: 5px;
@@ -826,33 +845,51 @@ form label {
 	overflow: hidden;
 }
 
-.details .serial {
+.details p {
+	float: left;
+	position: relative;
+	width: 97%;
+	margin: 0px;
+	margin-left: 5px;
+	padding: 5px;
+}
+
+.detailsHeading .productModel {
 	float: left;
 	position: relative;
 	width: auto;
 	margin: 5px;
-	padding: 0;
+	padding: 5px;
 }
 
 .details .modelYear {
-	float: right;
-	position: relative;
-	width: auto;
+	width: 97%;
 	margin: 5px;
-	padding: 0;
+	padding: 0px;
+	float: left;
+	position: relative;
 }
 
 .details .description {
 	float: left;
 	position: relative;
-	margin: 5px;
-	width: 100%;
+	margin: 0px;
+	margin-left: 5px;
+	padding: 5px;
+	width: 97%;
 }
 
 .details .row {
 	float: left;
 	position: relative;
 	width: 100%;
+	margin: 0;
+	
+}
+
+.productDetailsListing {
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 /** MISC **/
@@ -862,8 +899,4 @@ form label {
 	width: 100%;
 	padding-top: 5px;
 	padding-bottom: 5px;
-}
-
-.max-64 {
-    height: 64px;
 }

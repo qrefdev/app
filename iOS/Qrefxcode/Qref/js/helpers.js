@@ -35,7 +35,7 @@ function passwordFocus(object, target) {
 	t.toggle().focus();
 }
 
-function RefreshToken(callback) {
+function RefreshToken() {
 	if(token != "")
 	{
 		var refresh = { "mode":"rpc", "token": token}
@@ -51,24 +51,13 @@ function RefreshToken(callback) {
 				{
 					token = response.returnValue;
 					window.location.href = "qref://setToken=" + token;
-					
-					if(callback) 
-						callback(true);
 				}
 			
-				if(callback)
-					callback(false);
 			},
 			error: function(data) {
-				if(callback)
-					callback(false);
+				
 			}
 		});
-	}
-	else
-	{
-		if(callback)
-			callback(false);
 	}
 }
 

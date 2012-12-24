@@ -16,6 +16,7 @@
     QrefInAppPurchaseManager *purchaseManager;
     NSMutableString *incomingData;
     NSString *server;
+    NSTimer *refreshTimer;
 }
 
 - (void) gotoURL: (NSURLRequest *) url;
@@ -28,5 +29,6 @@
 - (void) canceledTransaction;
 - (void) loadChecklist: (NSString *) user checklists: (NSData *) checklistData uid: (NSString *) UID;
 - (void) hasImageInCache: (NSString *) imageJSON;
+- (void) refreshToken: (NSTimer *) timer;
 
 @end

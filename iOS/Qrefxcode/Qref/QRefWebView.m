@@ -458,6 +458,12 @@
     }
     
     [self->webView stringByEvaluatingJavaScriptFromString:@"DataLoaded();"];
+    
+    self->refreshTimer = [NSTimer scheduledTimerWithTimeInterval:600.0 target:self selector:@selector(refreshToken:) userInfo:nil  repeats:YES];
+}
+
+- (void) refreshToken:(NSTimer *)timer {
+    [self->webView stringByEvaluatingJavaScriptFromString:@"RefreshToken();"];
 }
 
 @end

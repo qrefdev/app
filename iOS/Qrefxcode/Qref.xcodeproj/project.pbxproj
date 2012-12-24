@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4645BBB51688B1F500DB971E /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 4645BBB41688B1F500DB971E /* Icon-72.png */; };
+		4645BBB71688B1F900DB971E /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = 4645BBB61688B1F900DB971E /* Icon-144.png */; };
+		4645BBB91688B6CE00DB971E /* Icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = 4645BBB81688B6CE00DB971E /* Icon-114.png */; };
+		4645BBBB1688B6D200DB971E /* Icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = 4645BBBA1688B6D200DB971E /* Icon-57.png */; };
+		4645BBBD1688B7B300DB971E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 4645BBBC1688B7B300DB971E /* Default.png */; };
+		4645BBBF1688B7B800DB971E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4645BBBE1688B7B800DB971E /* Default-568h@2x.png */; };
+		4645BBC11688B7BC00DB971E /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4645BBC01688B7BC00DB971E /* Default@2x.png */; };
 		4659C5CC1625E851000A68E2 /* css in Resources */ = {isa = PBXBuildFile; fileRef = 4659C5C81625E851000A68E2 /* css */; };
 		4659C5CD1625E851000A68E2 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 4659C5C91625E851000A68E2 /* images */; };
 		4659C5CE1625E851000A68E2 /* js in Resources */ = {isa = PBXBuildFile; fileRef = 4659C5CA1625E851000A68E2 /* js */; };
@@ -44,6 +51,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4645BBB41688B1F500DB971E /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
+		4645BBB61688B1F900DB971E /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-144.png"; sourceTree = "<group>"; };
+		4645BBB81688B6CE00DB971E /* Icon-114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-114.png"; sourceTree = "<group>"; };
+		4645BBBA1688B6D200DB971E /* Icon-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-57.png"; sourceTree = "<group>"; };
+		4645BBBC1688B7B300DB971E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		4645BBBE1688B7B800DB971E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		4645BBC01688B7BC00DB971E /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		4659C5C81625E851000A68E2 /* css */ = {isa = PBXFileReference; lastKnownFileType = folder; path = css; sourceTree = "<group>"; };
 		4659C5C91625E851000A68E2 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = images; sourceTree = "<group>"; };
 		4659C5CA1625E851000A68E2 /* js */ = {isa = PBXFileReference; lastKnownFileType = folder; path = js; sourceTree = "<group>"; };
@@ -110,6 +124,13 @@
 		46B2664815C054B0002E9931 = {
 			isa = PBXGroup;
 			children = (
+				4645BBC01688B7BC00DB971E /* Default@2x.png */,
+				4645BBBE1688B7B800DB971E /* Default-568h@2x.png */,
+				4645BBBC1688B7B300DB971E /* Default.png */,
+				4645BBBA1688B6D200DB971E /* Icon-57.png */,
+				4645BBB81688B6CE00DB971E /* Icon-114.png */,
+				4645BBB61688B1F900DB971E /* Icon-144.png */,
+				4645BBB41688B1F500DB971E /* Icon-72.png */,
 				469F6F9C160A87EE00279439 /* Security.framework */,
 				469F6F89160A506100279439 /* StoreKit.framework */,
 				46B2665F15C054B1002E9931 /* Qref */,
@@ -286,6 +307,13 @@
 				4659C5CD1625E851000A68E2 /* images in Resources */,
 				4659C5CE1625E851000A68E2 /* js in Resources */,
 				4659C5CF1625E851000A68E2 /* phoneView.html in Resources */,
+				4645BBB51688B1F500DB971E /* Icon-72.png in Resources */,
+				4645BBB71688B1F900DB971E /* Icon-144.png in Resources */,
+				4645BBB91688B6CE00DB971E /* Icon-114.png in Resources */,
+				4645BBBB1688B6D200DB971E /* Icon-57.png in Resources */,
+				4645BBBD1688B7B300DB971E /* Default.png in Resources */,
+				4645BBBF1688B7B800DB971E /* Default-568h@2x.png in Resources */,
+				4645BBC11688B7BC00DB971E /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,12 +446,12 @@
 		46B2668715C054B1002E9931 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Aaron Klick (58FRZAEL2S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Aaron Klick (97YQ95B3S8)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Qref/Qref-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Qref/Qref-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SDKROOT)/usr/lib/system\"",
@@ -433,7 +461,8 @@
 					"\"$(SDKROOT)/usr/include\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "23BBB92D-3F30-4F75-B79B-687ABC12DE95";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "75BC32B4-E1E2-4595-A2D6-3F3978C82BCA";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -446,7 +475,7 @@
 				GCC_PREFIX_HEADER = "Qref/Qref-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Qref/Qref-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SDKROOT)/usr/lib/system\"",
@@ -457,6 +486,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "23BBB92D-3F30-4F75-B79B-687ABC12DE95";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -1,3 +1,24 @@
+a {
+	font-size: 11px;
+	font-weight: normal;
+	color: #e1e1e1;
+	text-decoration: none;
+}
+
+a:visited {
+	font-size: 11px;
+	font-weight: normal;
+	color: #e1e1e1;
+	text-decoration: none;
+}
+
+a:hover {
+	font-size: 11px;
+	font-weight: normal;
+	color: #f1f1f1;
+	text-decoration: none;
+}
+
 /** Text Box **/
 .theme-dark .textbox {
 	border: 1px solid #292E32;
@@ -376,6 +397,8 @@ background: -ms-linear-gradient(top,  #2d313a 0%,#0f0f11 100%); /* IE10+ */
 background: linear-gradient(to bottom, #2d313a 0%,#0f0f11 100%); /* W3C */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2d313a', endColorstr='#0f0f11',GradientType=0 ); /* IE6-9 */
 border-top: 1px solid #2b2f32;
+height: 64px;
+overflow: hidden;
 
 }
 
@@ -397,19 +420,16 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#11467c', end
 }
 
 .theme-dark .detailsHeading {
-	background: #010101;
+	background: #2d313a;
+	border-top: 1px solid #535353;
+	border-bottom: 2px solid #1f1f1f;
 }
 
-.theme-dark .modelDescription {
-	color: #999999;
-	font-size: 12px;
+.theme-dark .detailsHeading .serial {
+	color: #dce1e5;
 }
 
-.theme-dark .productSerialNumbers {
-	color: #999999;
-}
-
-.theme-dark #productDetailsListing h1 {
+.theme-dark .detailsHeading h1 {
 	color: #CCCCCC;
 }
 
