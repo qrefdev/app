@@ -164,6 +164,7 @@ function ThemeHandler() {
 		subItems.tap(function(e) {
 			if(!Checklist.productEditMode) {
 				e.stopPropagation();
+                     e.preventDefault();
 				var parent = $(this).parent().parent().parent();
 				var dataid = parent.attr("data-id");
 				var datalink = $(this).attr("data-link");
@@ -220,7 +221,7 @@ function ThemeHandler() {
 					event.stopPropagation();
 				}
 			},
-			threshold: 10,
+			threshold: 40,
 			durationThreshold: 265
 		});
 	};
@@ -253,8 +254,8 @@ function ThemeHandler() {
 					event.stopPropagation();
 				}
 			},
-			threshold: 20,
-			durationThreshold: 500
+			threshold: 40,
+			durationThreshold: 1000
 		});
 		
 		

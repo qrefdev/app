@@ -36,7 +36,7 @@
 	  var duration = 0;
 	  var direction = -1;
 	  var swipeThreshold = 10;
-	  var durationThreshold = 265;
+	  var durationThreshold = 1000;
 	  
 	  if(options.threshold) swipeThreshold = options.threshold;
       if(options.durationThreshold) durationThreshold = options.durationThreshold;
@@ -47,17 +47,17 @@
       
       $element = $(element);
       
-      if(typeof TouchEvent == 'undefined' || typeof Touch == "undefined")
-      {
-      	$element.mouseup(touchEnd);
-      	$element.mousedown(touchStart);
-      }
-      else
-      {
-      	  $element[0].addEventListener("touchend", touchEnd, true);
-		  $element[0].addEventListener("touchstart", touchStart, true);
+      //if(typeof TouchEvent == 'undefined' || typeof Touch == "undefined")
+      //{
+      	//$element.mouseup(touchEnd);
+      	//$element.mousedown(touchStart);
+      //}
+      //else
+      //{
+      	  $element[0].addEventListener("touchend", touchEnd, false);
+		  $element[0].addEventListener("touchstart", touchStart, false);
 		  $element[0].addEventListener("touchmove", touchMove, true);
-  	  }
+  	  //}
 	  
 	  /** Prevent the dragstart on the element **/
 	  //$element.bind("dragstart", function(e) { e.preventDefault(); });
@@ -66,10 +66,10 @@
 	  		var clientX = event.pageX;
 	  		var clientY = event.pageY;
 	  		
-	  		if(event.touches)
+	  		if(event.targetedTouches)
 	  		{
-				first = event.touches[0]
-				
+                first = event.targetedTouches[0];
+	
 				clientX = first.pageX;
 				clientY = first.pageY;
 	  		}
@@ -87,11 +87,11 @@
 	  function touchMove(event) {
 	  		var clientX = event.pageX;
 	  		var clientY = event.pageY;
-	  
-	  		if(event.changedTouches)
+	
+	  		if(event.targetedTouches)
 	  		{
-				first = event.changedTouches[0]
-				
+                first = event.targetedTouches[0];
+	
 				clientX = first.pageX;
 				clientY = first.pageY;
 	  		}
@@ -107,20 +107,25 @@
 	  		
 	  		direction = getDirection();
 			duration = getDuration();
-			
-			if(duration < durationThreshold && direction != -1)
-				event.preventDefault();
-				
+	
+            if(direction == UP && SwipeUpHandler)
+                event.preventDefault();
+            else if(direction == DOWN && SwipeDownHandler)
+                event.preventDefault();
+            else if(direction == LEFT && SwipeLeftHandler)
+                event.preventDefault();
+            else if(direction == RIGHT && SwipeRightHandler)
+                event.preventDefault();
 	  }
-	  
+	
 	  function touchEnd(event) {
 	  		var clientX = event.pageX;
 	  		var clientY = event.pageY;
 	  
 	  		if(event.changedTouches)
 	  		{
-				first = event.changedTouches[0]
-				
+                first = event.changedTouches[0];
+	
 				clientX = first.pageX;
 				clientY = first.pageY;
 	  		}
@@ -137,7 +142,7 @@
 			direction = getDirection();
 			duration = getDuration();
 			
-			if(duration < durationThreshold && direction != -1) {
+			if(direction != -1) {
 				triggerHandler(event);
 			}
 			
