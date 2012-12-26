@@ -153,6 +153,9 @@ class ProductRoute extends AjaxRoute
 					
 				if req.body?.description?
 					obj.description = req.body.description
+					
+				if req.body?.isDeleted?
+					obj.isDeleted = req.body.isDeleted
 				
 				obj.save((err) ->
 					if err?

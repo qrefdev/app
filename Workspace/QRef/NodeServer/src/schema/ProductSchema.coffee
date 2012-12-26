@@ -133,7 +133,13 @@ class ProductSchemaInternal
 	productIcon:
 		type: String
 		required: false
-	
+	###
+	@property [Boolean] For performing soft deletes
+	###
+	isDeleted:
+		type: Boolean
+		required: true
+		default: false
 	
 ProductSchema = new Schema(new ProductSchemaInternal())
 ProductSchema.index({ manufacturer: 1, model: 1 })
