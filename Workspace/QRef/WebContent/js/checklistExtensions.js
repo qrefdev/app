@@ -4,14 +4,7 @@ var stateOf = 0;
 var postingChecklist = "";
 var AddNewItem_SectionList = "";
 var SectionList = new Array();
-var loader = null;
-var host = "http://66.128.48.242/";
-var token = null;
 var FileContents = "";
-
-$(window).load(function () {
-	loader = new Loader('#loader');
-});
 
 function show_prompt(question)
 {
@@ -246,6 +239,7 @@ function OK_Model()
 			}
 			else
 			{
+				g_checklist = response.records[0];
 				LoadObjects(response.records);
 			}
 		});
@@ -312,7 +306,7 @@ function AcceptDupChecklist()
 //Picture Overlay
 function ShowPicUpload()
 {
-	ShowMainOverlay(false);
+	//ShowMainOverlay(false);
 }
 
 function ShowMainOverlay(visible)
@@ -380,7 +374,7 @@ function progressbarHandler(e)
 {
 	if(e.lengthComputable)
 	{
-		$('picProgress').attr({value:e.loaded,max:e.total});
+		$('.picProgressBar').attr({value:e.loaded,max:e.total});
 	}
 }
 
@@ -511,7 +505,7 @@ function SetCheckListItemHTML(Section, Check, Response)
 	return '<div class="CheckListItem_Section">Section: <span class="CheckListItem_Values">' + Section + '</span></div><div class="CheckListItem_Check">Check: <span class="CheckListItem_Values">' + Check + '</span></div><div class="CheckListItem_Response">' + 'Response: <span class="CheckListItem_Values">' + Response + '</span></div>';
 }
 
-function LoadObjects(checklist)
+function LoadObjects(records)
 {
 	$("#ChecklistName").html(selectedmfg.name + " " + selectedmodel.name + " (Version: " + g_checklist.version + ")");
 	
@@ -520,13 +514,14 @@ function LoadObjects(checklist)
 	var landing = document.getElementById('s3');
 	var emergencies = document.getElementById('s4');
 	var counter = 0;
+	var RecordToLoad = "";
 	
 	if(postingChecklist)
 	{
-		for(var i = 0; i < checklist.length; i++)
+		for(var i = 0; i < records.length; i++)
 		{
-			if(checklist[i].version == g_checklist.version)
-				RecordToLoad = checklist[i];
+			if(records[i].version == g_checklist.version)
+				RecordToLoad = records[i];
 		}
 		
 		if(RecordToLoad.preflight.length > 0)
@@ -543,16 +538,27 @@ function LoadObjects(checklist)
 	}
 	else
 	{
-		if(checklist.preflight.length > 0)
-			AddOptions(checklist, "preflight",$(preflight));
-		if(checklist.takeoff.length > 0)
-			AddOptions(checklist, "takeoff",$(takeOffCruise));
-		if(checklist.landing.length > 0)
-			AddOptions(checklist, "landing",$(landing));
-		if(checklist.emergencies.length > 0)
-			AddOptions(checklist, "emergencies",$(emergencies));
+		if(records.length == undefined)
+		{
+			RecordToLoad = records;
+		}
+		else if(records.length > 0)
+		{
+			RecordToLoad = records[0];
+		}
+		else
+			return;
+		
+		if(RecordToLoad.preflight.length > 0)
+			AddOptions(RecordToLoad, "preflight",$(preflight));
+		if(RecordToLoad.takeoff.length > 0)
+			AddOptions(RecordToLoad, "takeoff",$(takeOffCruise));
+		if(RecordToLoad.landing.length > 0)
+			AddOptions(RecordToLoad, "landing",$(landing));
+		if(RecordToLoad.emergencies.length > 0)
+			AddOptions(RecordToLoad, "emergencies",$(emergencies));
 			
-		PopulateCategoryList(checklist);
+		PopulateCategoryList(RecordToLoad);
 	}
 	
 	
@@ -598,14 +604,14 @@ function EditChecklist()
 {
 	if(HaveMadeChanges)
 	{
-		var confirmdialog = new ConfirmationDialog($("#confirmation"), function(result) {
+		var confirmdialog = new ConfirmationDialog("#confirmation", function(result) {
 			if(result)
 			{
 				if(token != null)
 				{
 					CheckIn();
 					ClearCheckLists();
-				
+					
 					postingChecklist = false;
 		
 					GetToken(function(token) 
@@ -624,6 +630,9 @@ function EditChecklist()
 			else
 			{
 				ClearCheckLists();
+				g_checklist = "";
+				$('#ChecklistName').html("");
+				
 				postingChecklist = false;
 		
 				GetToken(function(token) 
@@ -766,6 +775,58 @@ function ClearCheckLists()
 function ClearList(list)
 {
 	list.html("");
+}
+
+function deleteChecklist(){
+	
+	if(g_checklist != "")
+	{
+		var confirmdialog = new ConfirmationDialog("#confirmation-delete", function(result) {
+			if(result)
+			{
+				loader.show();
+				findChecklistProduct(token, function(list){
+					
+					if( list != "" && !list.isDeleted)
+					{
+						//Check to see if the list is published
+						if(list.isPublished)
+						{
+							//Warn that it must be unassigned from the product before deletion
+							loader.hide();
+							var dialog = new Dialog("#infobox","To delete a checklist, it must first be unassigned from a published product.");
+							dialog.show();
+						}
+						else
+						{
+							//Can be deleted
+							deleteChecklistById(token, list.aircraftChecklist, function(){
+								
+								ClearCheckLists();
+								g_checklist = "";
+								$('#ChecklistName').html("");
+								
+							});
+						}
+					}
+					else
+					{
+						//Can be deleted
+						deleteChecklistById(token, g_checklist._id, function(){
+							ClearCheckLists();
+							g_checklist = "";
+							$('#ChecklistName').html("");
+						});
+					}
+				});
+			}
+			else
+			{
+				return;
+			}
+		});
+		confirmdialog.show();
+	}
 }
 
 function AddNewCheckListItem(e)
@@ -1073,7 +1134,7 @@ function GetToken(callback)
 	{
 		token = $.cookie.getCookie("QrefAuth");
 	}
-	//*/
+	///*/
 	/*
 	var signin = { mode: "rpc", userName: "nathan.klick@b2datastream.com", password: "test" };
                 
@@ -1098,13 +1159,13 @@ function GetToken(callback)
 					callback(null);
 			}              
 		},
-		error: function() 
+		error: function(data, err, msg) 
 		{
 			if (callback)
 				callback(null);
 		}
 	});
-	*/
+	//*/
 }
 
 function UploadFiles()

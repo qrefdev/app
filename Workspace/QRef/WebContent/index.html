@@ -4,9 +4,11 @@
 		<title>QRef</title> 
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="css/theme-dark.css" />
 		<link rel="stylesheet" href="css/base.css" />
+		<link rel="stylesheet" href="css/theme-dark.css" />
 		<link rel="stylesheet" href="css/fontawesome.css" />
+		<link rel="stylesheet" href="css/theme-dark-extension.css" />
+		<link rel="stylesheet" href="css/jquerytheme.css" />
 		<script src="js/jquery.js"></script>
 		<script src="js/jquery.ui.js"></script>
 		<script src="js/jquery.punch.js"></script>
@@ -14,22 +16,32 @@
 		<script src="js/jquery.cookie.js"></script>
 		<script src="js/jquery.swipe.js"></script>
 		<script src="js/jquery.tap.js"></script>
-		<script src="js/jquery.mousewheel.js"></script>
-		<script src="js/jquery.touchscroll.js"></script>
-		<script src="js/jquery.mousescroll.js"></script>
 		<script src="js/underscore.js"></script>
 		<script src="js/listitemhandler.js"></script>
 		<script src="js/helpers.js"></script>
 		<script src="js/signin.js"></script>
 		<script src="js/register.js"></script>
 		<script src="js/uiwindows.js"></script>
+		<script src="js/SimpleNavigationHandler.js"></script>
 		<script src="js/navigationhandler.js"></script>
 		<script src="js/checklisthandler.js"></script>
 		<script src="js/producthandler.js"></script>
+		<script src="js/UTCTime.js"></script>
+		<script src="js/converter.js"></script>
+		<script src="js/settingseditorhandler.js"></script>
+		<script src="js/synchandler.js"></script>
+		<script src="js/include.js"></script>
 		<script src="js/extension.js"></script>
+		<script src="js/sortableInitializer.js"></script>
+		<script src="js/checklistExtensions.js"></script>
+		<script src="js/checklistparser.js"></script>
+		<script src="js/checklistPostRequest.js"></script>
+		<script src="js/productEditor.js"></script>
 	</head> 
 	<body> 
-		<article id="dashboard" class="theme-dark">
+	
+<!-- Dashboard Screen -->
+		<article id="dashboard" class="theme-dark page">
 			<section class="page">
 				<div class="dashbar">
 					<div class="item" style="background: url('images/logo.png') 50% 50% no-repeat; background-size: 100% 100%; width: 150px; height: 60px;">
@@ -45,7 +57,7 @@
 					</div>
 				</div>
 				<div class="dashcontent">
-					<div class="grid dashboard-planes-selector">
+					<div class="grid dashboard-planes-selector scrollable">
 						<div class="container">
 							<ul id="dashboard-planes" class="vertical">
 								
@@ -55,13 +67,14 @@
 				</div>
 				<nav class="nav dashnav">
 					<ul>
-						<li data-link="download" class="item" style="padding-top: 10px; z-index: 10;"><div><i class="icon icon-download"></i><div class="header">Download</div><br><div class="subheader">Models</div></div></li>
 						<li data-link="e6b" class="item" style="margin-top: 10px; z-index: 5;"><div><i class="icon icon-table"></i><div class="header">E6B</div><br><div class="subheader">Calculators</div></div></li>
 					</ul>
 				</nav>
 			</section>
 		</article>
-		<article id="checklist" class="theme-dark" style="display: none;">
+		
+<!-- Checklist Screen -->
+		<article id="checklist" class="theme-dark page" style="display: none;">
 			<section class="page">
 				<div class="topbar">
 					<div class="item back">
@@ -70,15 +83,15 @@
 					<div class="item-middle sections" style="text-align: center;">
 						<p><span id="area" style="margin-right: 5px;"></span><i class="icon icon-caret-down"></i></p>
 					</div>
-					<div class="item topmenu">
-						<p><i class="icon icon-th-list"></i></p>
-					</div>
 					<div class="item edit-list">
 						<p><i class="icon icon-pencil"></i></p>
 					</div>
+					<div class="item topmenu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
 				</div>
 				<div class="content">
-					<div class="grid checklist">
+					<div class="grid checklist scrollable">
 						<div class="container">
 							<ul id="checklist-items" class="vertical">
 								
@@ -86,7 +99,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="grid check-sections">
+				<div class="grid check-sections scrollable">
 					<div class="container">
 						<ul id="check-sections-items" class="vertical">
 						
@@ -95,7 +108,9 @@
 				</div>
 			</section>
 		</article>
-		<article id="emergencies" class="theme-dark" style="display: none;">
+		
+<!-- Emergencies Special Section Screen -->
+		<article id="emergencies" class="theme-dark page" style="display: none;">
 			<section class="page">
 				<div class="topbar">
 					<div class="item-large back">
@@ -109,7 +124,7 @@
 					</div>
 				</div>
 				<div class="content">
-					<div class="grid emergencies">
+					<div class="grid emergencies scrollable">
 						<div class="container">
 							<ul id="emergency-items" class="full">
 								
@@ -119,7 +134,9 @@
 				</div>
 			</section>
 		</article>
-		<article id="downloads" style="display: none;" class="theme-dark">
+		
+<!-- Product Download Listing -->
+		<article id="downloads" style="display: none;" class="theme-dark page">
 			<section class="page">
 				<div class="topbar">
 					<div class="item-large back">
@@ -133,7 +150,7 @@
 					</div>
 				</div>
 				<div class="content" style="bottom: 0px;">
-					<div class="grid downloads">
+					<div class="grid downloads scrollable">
 						<div class="container">
 							<ul id="downloads-items" class="vertical">
 								
@@ -143,7 +160,170 @@
 				</div>
 			</section>
 		</article>
-		<article id="editadd" style="display: none;" class="theme-dark">
+		
+<!-- E6B Selection -->
+	<article id="e6bselection" style="display: none;" class="theme-dark page">
+			<section class="page">
+				<div class="topbar">
+					<div class="item-large back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+					<div class="item-middle" style="text-align: center;">
+						<p>E6B</p>
+					</div>
+					<div class="item-large topmenu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
+				</div>
+				<div class="content" style="bottom: 0px;">
+					<div class="grid e6b scrollable">
+						<div class="container">
+							<div class="utcTime"></div>
+							<ul id="e6bList" class="vertical">
+								<li data-link="conversions"><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-left"></i> <div class="header">Conversions</div></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</section>
+		</article>
+
+
+<!-- E6B Conversions -->
+		<article id="e6bconversions" style="display: none;" class="theme-dark page">
+			<section class="page">
+				<div class="topbar">
+					<div class="item-large back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+					<div class="item-middle" style="text-align: center;">
+						<p>E6B Conversions</p>
+					</div>
+					<div class="item-large topmenu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
+				</div>
+				<div class="content e6b" style="bottom: 0px;">
+					<div class="utcTime"></div>
+					<div class="row">
+						<input id="convertTop" class="textbox" style=" width: 80%;float: left; text-align: center;" type="number" id="topConversionNumber" value="0" /> <div style="margin-top: 15px; float: left; position: relative; margin-left: 10px;" class="topConversionType">MPH</div>
+					</div>
+					<div class="row">
+						<select id="convertMethod" class="textbox" style="height: 26px; float: left; width: 95%; margin-left: 10px; color: #000000" id="conversionSelect">
+							<option data-multiplier="0.868976242" data-inverse="1.150779448" data-top="MPH" data-bottom="KTS" value="0">Miles per Hour -><- Knots</option>
+							<option data-multiplier="0.3048" data-inverse="3.280839895" data-top="FT" data-bottom="M" value="1">Feet -><- Meters</option>
+							<option data-multiplier="1.15077945" data-inverse="0.86897624" data-top="NM" data-bottom="SM" value="2">Nautical Miles -><- Statute Miles</option>
+							<option data-multiplier="1.852" data-inverse="0.539956803" data-top="NM" data-bottom="KM" value="3">Nautical Miles -><- Kilometers</option>
+							<option data-multiplier="3.78541" data-inverse="0.264172177" data-top="GAL" data-bottom="LIT" value="4">Gallons -><- Litres</option>
+							<option data-multiplier="0.453592" data-inverse="2.20462442" data-top="LB" data-bottom="KG" value="5">Pounds -><- Kilograms</option>
+							<option data-top="HH:MM:SS" data-bottom="HH.HHH" value="6">Time -><- Decimal Time</option>
+						</select>
+					</div>
+					<div class="row">
+						<input id="convertBottom" class="textbox" style="width: 80%;float: left; text-align: center;" type="number" id="bottomConversionNumber" value="0" /> <div style="margin-top: 15px; float: left; position: relative; margin-left: 10px;" class="bottomConversionType">KTS</div>
+					</div>
+				</div>
+			</section>
+		</article>	
+		
+<!-- Setting Screen -->
+		<article id="settings" style="display: none;" class="theme-dark page">
+			<section class="page">
+				<div class="topbar">
+					<div class="item-large back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+					<div class="item-middle" style="text-align: center;">
+						<p>Settings</p>
+					</div>
+					<div class="item-large topmenu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
+				</div>
+				<div class="content scrollable" style="bottom: 0px;">
+					<div class="grid settingsItems">
+						<ul class="vertical">
+							<li>
+								<div class="row dark-bg">
+									<h2>Day Time Theme</h2>
+								</div>
+								<select class="textbox" style="width: 95%; height: 30px; color: #000000;" id="dayTheme">
+									<option value="theme-light">Light</option>
+									<option value="theme-dark">Dark</option>
+								</select>
+								<div class="row dark-bg">
+									<h2>Night Time Theme</h2>
+								</div>
+								<select class="textbox" style="width: 95%; height: 30px; color: #000000;" id="nightTheme">
+									<option value="theme-dark">Dark</option>
+									<option value="theme-light">Light</option>
+								</select>
+							</li>
+							<li>
+								<div class="row dark-bg">
+									<h2>Switch to Night Theme at</h2>
+								</div>
+								<div class="row">
+									<input type="number" class="textbox" style="width: 50px; margin: 0px 10px; float: left;" maxlength="2" value="18" id="nightTimeModeOnHour" /><div style="float: left; font-size: 18px;"> : </div><input type="number" class="textbox" style="width: 50px; margin: 0px 10px; float: left;" maxlength="2" id="nightTimeModeOnMinutes" value="00" /><div style="float: left; margin-left: 10px; margin-top: 8px; font-size: 11px;"> 24H Format (HH:MM)</div>
+								</div>
+								<div class="row dark-bg">
+									<h2>Switch to Day Theme at</h2>
+								</div>
+								<div class="row">
+									<input type="number" class="textbox" style="width: 50px; margin: 0px 10px; float: left;" maxlength="2" value="18" id="nightTimeModeOffHour" /><div style="float: left; font-size: 18px;"> : </div><input type="number" class="textbox" style="width: 50px; margin: 0px 10px; float: left;" maxlength="2" id="nightTimeModeOffMinutes" value="00" /><div style="float: left; margin-left: 10px; margin-top: 8px; font-size: 11px;"> 24H Format (HH:MM)</div>
+								</div>
+							</li>
+							<li>
+								<div class="row dark-bg">
+									<h2>Auto Theme Switching</h2>
+								</div>
+								<select class="textbox" style="width: 95%; height: 30px; color: #000000" id="autoThemeMode">
+									<option value="0">Off</option>
+									<option value="1">On</option>
+								</select>
+							</li>
+							<li>
+								<button class="button button-register saveSettings" style="margin: 0px; width: 100%;">Save</save>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+		</article>
+
+<!-- Product Details -->
+		<article id="productdetails" style="display: none;" class="theme-dark page">
+			<section class="page">
+				<div class="topbar">
+					<div class="item-large back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+					<div class="item-middle" style="text-align: center;">
+						<p>Product Details</p>
+					</div>
+					<div class="item-large topmenu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
+				</div>
+				<div id="productDetailsListing" class="content scrollable" style="bottom: 0px;">
+					<div class="container">
+						<div class="detailsHeading"><div class="productImage"></div></div>
+						<div class="detailsHeading"><h1 class="productModel"></h1><button class="button buynow">INSTALL</button></div>
+						<div class="details">
+							<div class="row"><div class="serial manufacturerDescription"></div></div>
+							<div class="row"><div class="serial modelDescription"></div></div>
+							<div class="row"><div class="serial"><p>Serial Number(s):</p></div><div class="modelYear"><p>Model Year(s): <span class="productModelYear"></span></p></div></div>
+							<div class="row"><div class="serial productSerialNumbers"></div></div>
+							<div class="detailsHeading"><h1>Description</h1></div>
+							<div class="description"></div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</article>
+		
+<!-- Edit Checklist / Add Checklist Item Screen -->
+		<article id="editadd" style="display: none;" class="theme-dark page">
 			<section class="page">
 				<div class="topbar">
 					<div class="item-large back">
@@ -159,14 +339,16 @@
 				<div style="float: left; position: relative; width: 100%; margin-top: 40px;">
 					<form id="editAddForm" method="post" action="javascript:void(null);">
 						<input class="textbox required" type="text" value="check" id="check" name="check" onblur="inputBlur(this, 'check');" onfocus="inputFocus(this, 'check');" />
-						<input style="height: 100px;" class="textbox required" type="text" value="response" id="response" name="response" onfocus="inputFocus(this, 'response');" onblur="inputBlur(this, 'response');" />
+						<input class="textbox required" type="text" value="response" id="response" name="response" onfocus="inputFocus(this, 'response');" onblur="inputBlur(this, 'response');" />
 						
 						<input type="submit" style="margin: 10px auto;" class="button button-register" value="Save" />
 					</form>
 				</div>
 			</section>
 		</article>
-		<article id="edittail" style="display: none;" class="theme-dark">
+		
+<!-- Edit Tail Number Screen -->
+		<article id="edittail" style="display: none;" class="theme-dark page">
 			<section class="page">
 				<div class="topbar">
 					<div class="item-large back">
@@ -187,7 +369,9 @@
 				</div>
 			</section>
 		</article>
-		<article id="signin" style="display: none;" class="theme-dark">
+		
+<!-- Sign in Screen -->
+		<article id="signin" style="display: none;" class="theme-dark page">
 			<section class="page">
 				<div class="topbar">
 					<div class="item-large back">
@@ -206,13 +390,68 @@
 						<input class="textbox required" type="email" value="email" id="email" name="email" onblur="inputBlur(this, 'email');" onfocus="inputFocus(this, 'email');" />
 						<input class="textbox" type="text" value="password" id="fauxPassword" name="fauxPassword" onfocus="passwordFocus(this, 'password');" />
 						<input class="textbox required" type="password" style="display: none;" id="password" name="password" onblur="passwordBlur(this, 'fauxPassword');" />
+						<p style="text-align: center;"><a href="javascript:void(null);" data-link="passwordRecovery">Forgot your password?</a> <a data-link="register" href="javascript:void(null);">Need an account?</a></p>
 						<input type="submit" style="margin: 10px auto;" class="button button-signin" value="Sign in" />
+                        </form>
+					</div>
+				</div>
+			</section>
+		</article>
+		
+		<!-- Password Recovery Screen -->
+		<article id="passwordRecovery" style="display: none;" class="theme-dark page">
+			<section class="page">
+				<div class="topbar">
+					<div class="item-large back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+					<div class="item-middle">
+						<p>Forgot Password</p>
+					</div>
+					<div class="item-large topmenu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
+				</div>
+				<div class="content">
+					<div style="float: left; position: relative; width: 100%; margin-top: 40px;">
+						<form id="passwordRecoveryForm" method="post" action="javascript:void(null);">
+						<input class="textbox required" type="email" value="email" id="recoveryEmail" name="recoveryEmail" onblur="inputBlur(this, 'email');" onfocus="inputFocus(this, 'email');" />
+						<input type="submit" style="margin: 10px auto;" class="button button-signin" value="Send E-mail" />
 						</form>
 					</div>
 				</div>
 			</section>
 		</article>
-		<article id="register" style="display: none;" class="theme-dark">
+		
+				<!-- Password Recovery Screen -->
+		<article id="changePassword" style="display: none;" class="theme-dark page">
+			<section class="page">
+				<div class="topbar">
+					<div class="item-large back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+					<div class="item-middle">
+						<p>Change Password</p>
+					</div>
+					<div class="item-large topmenu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
+				</div>
+				<div class="content">
+					<div style="float: left; position: relative; width: 100%; margin-top: 40px;">
+						<form id="changePasswordForm" method="post" action="javascript:void(null);">
+							<input class="textbox required" type="password" placeholder="old password" id="oldPassword" name="oldPassword" />
+							<input class="textbox required" type="password" placeholder="password" id="newPassword" name="newPassword" />
+							<input class="textbox required" type="password" placeholder="confirm password" id="newPasswordConfirm" name="newPasswordConfirm" />
+							<input type="submit" style="margin: 10px auto;" class="button button-signin" value="Change Password" />
+						</form>
+					</div>
+				</div>
+			</section>
+		</article>
+		
+<!-- Register Area -->
+		<article id="register" style="display: none;" class="theme-dark page">
 			<section class="page">
 				<div class="topbar">
 					<div class="item-large back">
@@ -239,18 +478,24 @@
 				</div>
 			</section>
 		</article>
+		
+<!-- Menu -->
 		<div id="menu" style="display: none;" class="theme-dark">
 			<div class="menu">
 				<ul>
-					<li data-link="settings"><p><i class="icon icon-cog"></i> Settings</p></li>
 					<li data-link="dashboard"><p><i class="icon icon-dashboard"></i> Dashboard</p></li>
+					<li data-link="changePassword" id="changepassword-menu" style="display: none;"><p><i class="icon icon-lock"></i> Change Password</p></li>
 					<li data-link="signout" id="signout-menu" style="display: none;"><p><i class="icon icon-signout"></i> Sign out</p></li>
 					<li data-link="signin" id="signin-menu" style="display: none;"><p><i class="icon icon-signin" ></i> Sign in</p></li>
 					<li data-link="register" id="register-menu" style="display: none;"><p><i class="icon icon-pencil"></i> Register</p></li>
-					<li data-link="sync" id="sync-menu" style="display: none;"><p><i class="icon icon-repeat"></i> Sync</p></li>
+					<li data-link="parser" id="parser-menu" style="display: none;"><p><i class="icon icon-cog"></i> Checklist Editor</p></li>
+					<li data-link="productEditor" id="product-editor-menu" style="display: none;"><p><i class="icon icon-cog"></i> Product Editor</p></li>
+					<li id="refresh-server-menu" onclick="Authentication.refreshServer();" style="display: none;"><p>Restart Server</p></li>
 				</ul>
 			</div>
 		</div>
+		
+<!-- Checklist Bottom Navigation -->
 		<div id="checklist-nav" style="display: none;" class="theme-dark">
 			<nav class="nav checklistnav">
 				<ul>
@@ -261,27 +506,572 @@
 				</ul>
 			</nav>
 		</div>
+		
+<!-- Loader Screen -->
 		<div class="theme-dark model" id="loader">
 			<figure class="loader">
 				<img src="images/ajax-loader.gif" alt="Loading" />
 				<figcaption>Loading...</figcaption>
 			</figure>
 		</div>
+        <div class="theme-dark model" id="syncLoader">
+			<figure class="loader">
+				<img src="images/ajax-loader.gif" alt="Syncing" />
+				<figcaption>Syncing...</figcaption>
+			</figure>
+		</div>
+		
+<!-- Info Dialog -->
 		<div class="theme-dark model" id="infobox">
 			<figure class="info" >
 				<figcaption class="data"></figcaption>
 				<button class="okay">Okay</button>
 			</figure>
 		</div>
-		<div class="theme-dark model" id="confirmation">
-			<div class="dialog">
-				<div class="close icon-remove-sign"></div>
-				<div class="content">
-					<h1 style="margin-top: 30px;">Save Information?</h1>
-					<button style="float: right; margin-top: 20px;" class="no button"><i class="icon icon-remove-sign"></i> Save It!</button>
-					<button style="float: right; margin-top: 20px; margin-right: 5px;" class="yes button"><i class="icon icon-ok-sign"></i> No Not Yet!</button>
+		
+<!-- Begin Administration Section -->
+
+<!-- Product Editor -->
+		<article id="producteditor" class="theme-dark page" style="display: none;">
+			<section class="page">
+				<div class="dashbar">
+					<div class="item" style="background: url('images/logo.png') 50% 50% no-repeat; background-size: 100% 100%; width: 150px; height: 60px;">
+					</div>
+					<div id="checkInBtn" class="item-right topmenu" onclick="checkIn()">
+						<p>Check In</p>
+					</div>
+					<div class="item-right topmenu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
+				</div>
+				<div class="content producteditor" style="top: 85px; bottom: 0px;">
+					<div class="productsCont rounded">
+						<div id="editButtons">
+							<button onclick="addNewProduct()">New Product</button>
+							<button onclick="deleteProduct()">Delete Item</button>
+						</div>
+						<div id="productsWrapper" class="rounded">
+						</div>
+						<div class="productDetailsWrapper rounded">
+							<div class="productsGeneral">
+								<div class="productLabel">
+									Name
+								</div>
+								<div class="productInput">
+									<input id="productName" type="text" style="width:250px;"></input>
+								</div>
+								<div class="productLabel">
+									Description
+								</div>
+								<div class="productInput">
+									<textarea id="productDescription" type="text" style="width:250px;"></textarea>
+								</div>
+								<div class="productInput">
+									<input id="productIsPublished" type="checkbox"> Published</input>
+								</div>
+							</div>
+							<div class="productsPlatform">
+								<div class="productLabel">
+										Platform
+								</div>
+								<div class="border rounded">
+									<div class="productLabel">
+										Apple Product Id
+									</div>
+									<div class="productInput">
+										<input id="productAppleId" type="text" style="width:250px;"></input>
+									</div>
+									<div class="productInput">
+										<input id="productIsAppleEnabled" type="checkbox"> Apple Enabled</input>
+									</div>
+									<div class="productLabel">
+										Android Product Id
+									</div>
+									<div class="productInput">
+										<input id="productAndroidId" type="text" style="width:250px;"></input>
+									</div>
+									<div class="productInput">
+										<input id="productIsAndroidEnabled" type="checkbox"> Android Enabled</input>
+									</div>
+								</div>
+							</div>
+							<div class="productDetails">
+								<div class="productLabel">
+									Details
+								</div>
+								<div class="border rounded" style="float:left;">
+									<div class="productColumnLeft">
+										<div class="productLabel">
+											Suggested Retail Price
+										</div>
+										<div class="productInput">
+											<input id="productRetailPrice" type="text" style="width:170px;"></input>
+										</div>
+										<div class="productLabel">
+											Product Category
+										</div>
+										<div class="productInput">
+											<select id="productCategory" style="width:170px;">
+												<option value="0">aviation</option>
+												<option value="1">marine</option>
+												<option value="2">navigation</option>
+											</select>
+										</div>
+										<div class="productLabel">
+											Product Type
+										</div>
+										<div class="productInput">
+											<select id="productType" style="width:170px;">
+												<option value="0">checklist</option>
+												<option value="1">manual</option>
+												<option value="2">guide</option>
+											</select>
+										</div>
+										<div class="productLabel">
+											Checklist
+										</div>
+										<div class="productInput">
+											<select id="productChecklist"  style="width:170px;" onchange="addChecklistToProduct(this)"></select>
+										</div>
+									</div>
+									<div class="productColumnLeft">
+										<div class="productSpacer"></div>
+										<div class="productInput">
+											<input id="productIsSample" type="checkbox"> Sample Product</input>
+										</div>
+										<div class="productLabel">
+											Serial Number
+										</div>
+										<div class="productInput">
+											<input id="productSerialNumber" type="text" style="width:170px;"></input>
+										</div>
+										<div class="productLabel">
+											Cover Image
+										</div>
+										<div class="productInput">
+											<div class="productImage">
+												<img  id="productCoverImage" src="images/notFound.jpg" style="width:80px;" onclick="changePicture(event)"/>
+											</div>
+										</div>
+									</div>
+									<div class="productColumnLeft">
+										<div class="productLabel">
+											Manufacturer
+										</div>
+										<div class="productInput">
+											<select id="productManufacturer" style="width:170px;"></select>
+										</div>
+										<div class="productLabel">
+											Model
+										</div>
+										<div class="productInput">
+											<select id="productModel" style="width:170px;"></select>
+										</div>
+										<div class="productLabel">
+											Product Icon
+										</div>
+										<div class="productInput">
+											<div class="productImage">
+												<img id="productIcon" src="images/notFound.jpg" style="width:80px;" onclick="changePicture(event)"/>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</article>
+
+<!-- Checklist Parser / Editor -->
+		<article id="checklistparser" class="theme-dark page" style="display: none;">
+			<section class="page">
+				<div class="dashbar">
+					<div class="item" style="background: url('images/logo.png') 50% 50% no-repeat; background-size: 100% 100%; width: 150px; height: 60px;">
+					</div>
+					<div class="item-right topmenu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
+				</div>
+				<div class="content checklistparser" style="top: 85px; bottom: 0px;">
+					<div class="overflow-container">
+						<div style="width:100%; overflow:hidden;">
+							<button  class="button2" style="float:left; width:120px; height:35px; margin-left:30px; margin-top:20px;" onclick="EditChecklist()"><b>Edit Checklist</b></button>
+							<div id="ChecklistName" style="color: white;font-size: 2em;text-align: center;position: absolute;top: 10px;bottom: 0px;right: 0px;left: 25%;width: 600px;height: 60px;"></div>
+							<button class="button2" id="globalAddNewSection" onclick="AddNewSection(this)" style="display:none; float:left; width:150px; height:35px; margin-left:30px; margin-top:20px;"><b>Add New Section</b></button>
+							<button class="button2" style="float:right;width:100px; height:35px; margin-right:30px; margin-top:20px;" id="CheckIn" onclick="CheckIn()"><b>Check In</b></button>
+							<button style="float:right;width:150px; height:35px; margin-right:60px; margin-top:20px;" id="deleteList" onclick="deleteChecklist()"><b>Delete Checklist</b></button>
+						</div>
+						<input type="file" id="fileinput"  style="margin-top:10px; margin-bottom:10px; margin-left:20px; padding:10px; float:left;" />
+						<button class="button2" onclick="UploadFiles()" style="margin-left: -48px;float: left;width: 150px;height: 35px;margin-top: 15px;"><b>Upload Selected File</b></button>
+						<div id="maindiv" style="float:left; width:100%; height:100%; text-align:center; overflow:hidden; color:white;">
+							<div id="CheckListInputsDiv">
+								<div class="CheckListInputs">
+									<div style="width:100%">
+										Section
+									</div>
+									<select id="Item_Section"></select>
+								</div>
+								<div class="CheckListInputs">
+									<div style="width:100%">
+										Index
+									</div>
+									<input id="Item_Index"></input>
+								</div>
+								<div class="CheckListInputs">
+									<div style="width:100%">
+										Check
+									</div>
+									<input id="Item_Check"></input>
+								</div>
+								<div class="CheckListInputs">
+									<div style="width:100%">
+										Response
+									</div>
+									<input id="Item_Response"></input>
+								</div>
+								<div style="width:100%; float:left; text-align:center; overflow:hidden;">
+									<button class="button2" style="width:150px; float:left; margin-left:80px; height:40px;" onclick="ApplyItemChanges()"><b>Apply Section Changes</b></button>
+									<button class="button2" style="width:150px; float:left; margin-left:300px; height:40px;" onclick="HideItemProperties()"><b>Close</b></button>
+								</div>
+							</div>
+							<div class="cont" id="1">
+								<div class="title">
+									Preflight
+								</div>
+								<div class="buttons">
+									<div class="buttonPM_cont">
+										<button class="button2" id="AddToSection_1" onclick="AddNewCheckListItem(this)"><i class="icon icon-plus-sign" id="centerbutton"></i></button>
+										<button class="button2" id="RemoveFromSection_1" onclick="RemoveFromList(this)"><i class="icon icon-minus-sign" id="centerbutton"></i></button>
+									</div>
+								</div>
+							</div>
+							<div class="cont" id="2">
+								<div class="title">
+									TakeOff Cruise
+								</div>
+								<div class="buttons">
+									<div class="buttonPM_cont">
+										<button class="button2" id="AddToSection_2" onclick="AddNewCheckListItem(this)"><i class="icon icon-plus-sign" id="centerbutton"></i></button>
+										<button class="button2" id="RemoveFromSection_2" onclick="RemoveFromList(this)"><i class="icon icon-minus-sign" id="centerbutton"></i></button>
+									</div>
+								</div>
+							</div>
+							<div class="cont" id="3">
+								<div class="title">
+									Landing
+								</div>
+								<div class="buttons">
+									<div class="buttonPM_cont">
+										<button class="button2" id="AddToSection_3" onclick="AddNewCheckListItem(this)"><i class="icon icon-plus-sign" id="centerbutton"></i></button>
+										<button class="button2" id="RemoveFromSection_3" onclick="RemoveFromList(this)"><i class="icon icon-minus-sign" id="centerbutton"></i></button>
+									</div>
+								</div>
+							</div>
+							<div class="cont" id="4">
+								<div class="title">
+									Emergency
+								</div>
+								<div class="buttons">
+									<div class="buttonPM_cont">
+										<button class="button2" id="AddToSection_4" onclick="AddNewCheckListItem(this)"><i class="icon icon-plus-sign" id="centerbutton"></i></button>
+										<button class="button2" id="RemoveFromSection_4" onclick="RemoveFromList(this)"><i class="icon icon-minus-sign" id="centerbutton"></i></button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div style="width:100%; position:absolute;top:177px;right:10px;left:0px;bottom:0px;">
+							<div class="box">
+									<div class="selectboxdiv">
+										<div id="Section1_Select" class="Select-Container">
+											<ul id="s1" class="selectable">
+											</ul>
+										</div>
+									</div>
+								</div>
+								<div class="box">
+									<div class="selectboxdiv">
+										<div id="Section2_Select" class="Select-Container">
+											<ul id="s2" class="selectable">
+											</ul>
+										</div>
+									</div>
+								</div>
+								<div class="box">
+									<div class="selectboxdiv">
+										<div id="Section3_Select" class="Select-Container">
+											<ul id="s3" class="selectable">
+											</ul>
+										</div>
+									</div>
+								</div>
+								<div class="box">
+									<div class="selectboxdiv">
+										<div id="Section4_Select" class="Select-Container">
+											<ul id="s4" class="selectable">
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</article>
+		<div class="theme-dark">
+			<div class="theme-dark model" id="confirmation">
+				<div class="dialog" style="position:absolute;top:25%;left:25%;bottom:0px;right:0px;height:200px;width:50%;">
+					<div class="close icon-remove-sign"></div>
+					<div class="content">
+						<h1 style="font-size:1.0em;font-weight:normal;">You have unsaved changes. Would you like to Check In the list before continuing?</h1>
+						<button class="button2 no" style="float: right; margin-top: 0px; margin-right: 5px;"><i class="icon icon-remove-sign"></i> No </button>
+						<button class="button2 yes" style="float: right; margin-top: 0px;"><i class="icon icon-ok-sign"></i> Yes </button>
+					</div>
 				</div>
 			</div>
-		</div>
+			<div class="theme-dark model" id="confirmation-duplicate">
+				<div class="dialog" style="position:absolute;top:25%;left:25%;bottom:0px;right:0px;height:200px;width:50%;">
+					<div class="close icon-remove-sign"></div>
+					<div class="content">
+						<h1 style="font-size:1.0em;font-weight:normal;">A duplicate checklist was found. Would you like to increase the version number?</h1>
+						<button class="button2 no" style="float: right; margin-top: 40px; margin-right: 5px;"><i class="icon icon-remove-sign"></i> Cancel </button>
+						<button class="button2 yes" style="float: right; margin-top: 40px;"><i class="icon icon-ok-sign"></i> Yes </button>
+					</div>
+				</div>
+			</div>
+			<div class="theme-dark model" id="confirmation-delete">
+				<div class="dialog" style="position:absolute;top:25%;left:25%;bottom:0px;right:0px;height:200px;width:50%;">
+					<div class="close icon-remove-sign"></div>
+					<div class="content">
+						<h1 style="font-size:1.0em;font-weight:normal;">Are you sure you want to delete this checklist?</h1>
+						<button style="float: right; margin-top: 40px; margin-right: 5px;" class="no button"><i class="icon icon-remove-sign"></i> Cancel </button>
+						<button style="float: right; margin-top: 40px;" class="yes button"><i class="icon icon-ok-sign"></i> Yes </button>
+					</div>
+				</div>
+			</div>
+			<div id="duplicateListDiv" class="theme-dark" style="color:white;">
+				<div class="returnedCheckLists">
+					<div style="text-align:center; margin-bottom:50px;">
+						Please choose the checklist to edit.
+					</div>
+					<select id="dupChklist_Select"></select>
+					<button class="button2" id="dupChklist_Button_OK" onclick="AcceptDupChecklist()">OK</button>
+					<button class="button2" id="dupChklist_Button_Cancel" onclick="HideDuplicateList()">Cancel</button>
+				</div>
+			</div>
+			<div id="modalListDiv" class="theme-dark" style="overflow:hidden;":>
+			<div id="AddNewItemDiv" class="ARitem"  style="color:white">
+				<div class="ARitem">
+					Section
+				</div>
+				<select id="Section_AddNew"></select>
+				<div style="width:100%; float:left; text-align:center; margin-bottom:10px;">
+					<button class="button2" id="Item_Section_AddNew" onclick="AddNewSection()">Add New</button>
+				</div>
+				<div class="ARitem">
+					Check
+				</div>
+				<input class="ARitem" id="Check_AddNew" type="text" value="null">
+				<div class="ARitem">
+					Response
+				</div>
+				<input class="ARitem" id="Response_AddNew" type="text" value="null">
+				<button class="button2" class="ARitem" id="OK_AR" onclick="AcceptNewCheckListItem()"> OK </button>
+				<button class="button2" class="ARitem" id="Cancel_AR"onclick="CloseAddNewItemForm()"> Cancel </button>
+			</div>
+			<div id="OverlayText" class="CheckListItem">
+				Please Choose a Manufacturer.
+			</div>
+			<div id="modalText">
+				Selected Manufacturer:
+			</div>
+			<select id="modalSelectList" size="1" class="CheckListItem"></select>
+			<!--<div id="previewPicDiv" class="pictureUpload">
+			<img id="previewPic" class="pictureUpload" src="">
+			</img>
+			<form id="picForm" enctype="multipart/form-data" class="pictureUpload">
+				<input id="picFile" type="file" class="pictureUpload" onchange="ShowPreviewPicture(this)"/>
+				<progress id="picProgress"></progress>
+			</form>
+			</div>-->
+			<button class="button2" id="OK" class="CheckListItem" onclick="OK_MFG()">OK</button>
+			<button class="button2" id="Cancel" class="CheckListItem" onclick="Reset()">Cancel</button>
+			<button class="button2" id="AddNew" class="CheckListItem" onclick="AddNewMFG()">Add New</button>
+			</div>
+			<div id="modalWindow" class="rounded border">
+				<div id="results">
+					
+				</div>
+				<div id="popUp">
+					
+				</div>
+				<div id="hiddenDivs">
+					<div id="addNewProduct">
+						<div class="productsGeneral">
+							<div class="productLabel">
+								Name
+							</div>
+							<div class="productInput">
+								<input id="addNewProductName" type="text" style="width:250px;"></input>
+							</div>
+							<div class="productLabel">
+								Description
+							</div>
+							<div class="productInput">
+								<input id="addNewProductDescription" type="text" style="width:250px;"></input>
+							</div>
+							<div class="productInput">
+								<input id="addNewProductIsPublished" type="checkbox"> Published</input>
+							</div>
+						</div>
+						<div class="productsPlatform">
+							<div class="productLabel">
+									Platform
+							</div>
+							<div class="border rounded">
+								<div class="productLabel">
+									Apple Product Id
+								</div>
+								<div class="productInput">
+									<input id="addNewProductAppleId" type="text" style="width:250px;"></input>
+								</div>
+								<div class="productInput">
+									<input id="addNewProductIsAppleEnabled" type="checkbox"> Apple Enabled</input>
+								</div>
+								<div class="productLabel">
+									Android Product Id
+								</div>
+								<div class="productInput">
+									<input id="addNewProductAndroidId" type="text" style="width:250px;"></input>
+								</div>
+								<div class="productInput">
+									<input id="addNewProductIsAndroidEnabled" type="checkbox"> Android Enabled</input>
+								</div>
+							</div>
+						</div>
+						<div class="productDetails">
+							<div class="productLabel">
+								Details
+							</div>
+							<div class="border rounded" style="float:left;">
+								<div class="productColumnLeft">
+									<div class="productLabel">
+										Suggested Retail Price
+									</div>
+									<div class="productInput">
+										<input id="addNewProductRetailPrice" type="text" style="width:170px;" value="0"></input>
+									</div>
+									<div class="productLabel">
+										Product Category
+									</div>
+									<div class="productInput">
+										<select id="addNewProductCategory" style="width:170px;">
+											<option value="0">aviation</option>
+											<option value="1">marine</option>
+											<option value="2">navigation</option>
+										</select>
+									</div>
+									<div class="productLabel">
+										Product Type
+									</div>
+									<div class="productInput">
+										<select id="addNewProductType" style="width:170px;">
+											<option value="0">checklist</option>
+											<option value="1">manual</option>
+											<option value="2">guide</option>
+										</select>
+									</div>
+									<div class="productLabel">
+										Checklist
+									</div>
+									<div class="productInput">
+										<select id="addNewProductChecklist"  style="width:170px;"></select>
+									</div>
+								</div>
+								<div class="productColumnLeft">
+									<div class="productSpacer"></div>
+									<div class="productInput">
+										<input id="addNewProductIsSample" type="checkbox"> Sample Product</input>
+									</div>
+									<div class="productLabel">
+										Serial Number
+									</div>
+									<div class="productInput">
+										<input id="addNewProductSerialNumber" type="text" style="width:170px;"></input>
+									</div>
+									<!--<div class="productLabel">
+										Cover Image
+									</div>
+									<div class="productInput">
+										<div class="productImage">
+											<img  id="addNewProductCoverImage" src="images/notFound.jpg" style="width:80px;" onclick="changePicture(event,true)"/>
+										</div>
+									</div>-->
+								</div>
+								<div class="productColumnLeft">
+									<div class="productLabel">
+										Manufacturer
+									</div>
+									<div class="productInput">
+										<select id="addNewProductManufacturer" style="width:170px;"></select>
+									</div>
+									<div class="productLabel">
+										Model
+									</div>
+									<div class="productInput">
+										<select id="addNewProductModel" style="width:170px;"></select>
+									</div>
+									<!--<div class="productLabel">
+										Product Icon
+									</div>
+									<div class="productInput">
+										<div class="productImage">
+											<img id="addNewProductIcon" src="images/notFound.jpg" style="width:80px;" onclick="changePicture(event,true)"/>
+										</div>
+									</div>-->
+								</div>
+							</div>
+							<button id="addNewProductBtn" onclick="acceptNewProduct()">Add</button>
+							<button id="addNewProductCancelBtn" onclick="resetNewProduct()">Cancel</button>
+						</div>
+					</div>
+					<div id="changePictureWindow">
+						<div class="addPicCont center" style="width:100%;">
+							<form id="picForm" enctype="multipart/form-data" method="POST" action="javascript:void(null)" style="width:80%;">
+								<div class="addPicHeader">
+									Select a file to upload
+								</div>
+								<div class="addPicSelect">
+									<input type="file" accept="image/*" onchange="showPicturePreview(this)"/>
+									<input  id="picUploadToken" type="text" value="" style="display:none;"/>
+									<input  id="picUploadProduct" type="text" value="" style="display:none;"/>
+								</div>
+								<div class="addPicPreview">
+									<img src=""/>
+								</div>
+								<progress class="picProgress"></progress>
+								<div class="addPicAccept">
+									<button onclick="acceptPicture(this)">Accept</button>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div id="pictureBrowser">
+						<div class="pbContainer">
+							<div class="pbImagesCont border center rounded"></div>
+							<div style="text-align:center;">
+								<button id="pbButtonAccept" class="pbButton" onclick="pbAccept()">Accept</button>
+								<button id="pbButtonUpload" class="pbButton" onclick="pbUpload()">Upload</button>
+								<button id="pbButtonCancel" class="pbButton" onclick="pbCancel()">Cancel</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="modalDisplay"></div>
+			<div id="modalPopUp"></div>
+		</div>	
 	</body>
 </html>

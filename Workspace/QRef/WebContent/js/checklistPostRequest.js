@@ -68,6 +68,90 @@ function getMaxVersion(records) {
 	return maxVersion;
 }
 
+function deleteChecklistById(loginToken, checklist, callback) {
+
+	var request = { "mode":"ajax", "token":loginToken, "preflight": checklist.preflight,
+	"takeoff":checklist.takeoff, "landing":checklist.landing, "emergencies":checklist.emergencies,
+	"manufacturer":checklist.manufacturer, "model":checklist.model, "modelYear":checklist.model.modelYear, "isDeleted":true }
+	
+	$.ajax
+	({
+		type: "post",
+		data: JSON.stringify(request),
+		contentType:"application/json; charset=utf-8",
+		dataType: "json",
+		url: host + "services/ajax/aircraft/checklist/" + checklist._id,
+		success: function(data) 
+		{
+			if(response.success == true)
+			{
+				loader.hide();
+				var dialog = new Dialog("#infobox", "Deleted Checklist Successfully");
+				dialog.show();
+				if(callback)
+					callback();
+			}
+			else
+			{
+				Reset();
+				loader.hide();
+				var dialog = new Dialog("#infobox", "Deleting Checklist: " + response.message);
+				dialog.show();
+			}	
+		},
+		error: function() 
+		{
+			Reset();
+			loader.hide();
+			var dialog = new Dialog("#infobox", "Deleting Checklist: " + response.message);
+				dialog.show();
+		}
+	})
+}
+
+function findChecklistProduct(loginToken, callback){
+	
+	var request = { "mode":"ajax", "token":loginToken }
+	
+	$.ajax
+	({
+		type: "get",
+		data: JSON.stringify(request),
+		contentType:"application/json; charset=utf-8",
+		dataType: "json",
+		url: host + "services/ajax/aircraft/products?token=" + loginToken,
+		success: function(data) 
+		{
+			var response = data;
+								
+			if(response.success == true)
+			{
+				var returnList = "";
+				
+				for(var i = 0; i < response.records.length; i++)
+				{
+					var list = response.records[i];
+					
+					if(list.aircraftChecklist == g_checklist._id)
+					{
+						returnList = list;
+						break;
+					}
+				}
+				
+				callback(returnList);
+			}
+			else
+			{
+				alert("Request Failed");
+			}	
+		},
+		error: function(a,b,c) 
+		{
+			alert("Request Errored Out");
+		}
+	})
+}
 
 function PostCheckListData(logintoken, mfg, model)
 {
@@ -95,12 +179,15 @@ function PostCheckListData(logintoken, mfg, model)
 			if(response.success == true)
 			{
 				loader.hide();
-				var dialog = new Dialog("#infobox","Successfully uploaded Version " + (selectedVersion + 1));
+				var dialog = new Dialog("#infobox","Successfully uploaded Version " + (selectedVersion));
 				dialog.show();
 				
 				if (response.records.length > 0)
+				{
 					g_checklist = response.records[0];
-				
+				}
+				else
+					return;
 				RequestChecklistData(logintoken, mfg, model, function(response)
 				{
 					LoadObjects(response.records);
@@ -108,20 +195,18 @@ function PostCheckListData(logintoken, mfg, model)
 			}
 			else
 			{
-				if( response.message.err != undefined && response.message.err.contains("E11000")) //Duplicate Entry!
+				if( response.message != null && response.message.code == 11000) //Duplicate Entry!
 				{
-					var confirmdialog = new ConfirmationDialog($("#confirmation-duplicate"), function(result) {
+					var confirmdialog = new ConfirmationDialog("#confirmation-duplicate", function(result) {
 						if(result)
 						{
-							RequestChecklistData(logintoken,mfg,model,function(response)
-							{
+							RequestVersionNumber(logintoken, g_checklist.manufacturer,g_checklist.model, function(response) {
+							
+								selectedVersion = response.returnValue;
 								
-								selectedVersion = getMaxVersion(response.records);
+								g_checklist.version = response.returnValue;
 								
-								g_checklist.version = selectedVersion + 1;
-								
-								
-								PostCheckListData(logintoken, mfg, model);
+								PostCheckListData(logintoken, g_checklist.manufacturer, g_checklist.model);
 								
 							});
 						}
@@ -154,6 +239,41 @@ function PostCheckListData(logintoken, mfg, model)
 
 }
 
+function RequestVersionNumber(logintoken,mfg,model, callback) {
+	var request = { "mode":"rpc","token":logintoken,"manufacturer":mfg._id,"model":model._id }
+	loader.show();
+	
+	$.ajax({
+		type:"post",
+		data: JSON.stringify(request),
+		dataType: "json",
+		contentType:"application/json; charset=utf-8",
+		url: host + "services/rpc/aircraft/checklist/version",
+		success: function(data) {
+			
+			var response = data;
+			
+			if(response.success == true) {
+				exitOverlay();
+				loader.hide();
+				if(callback)
+					callback(response);
+			}
+			else {
+				loader.hide();
+				var dialog = new Dialog("#infobox", "Error Requesting Checklist Version");
+				dialog.show();
+			}
+			
+		},
+		error: function() {
+			loader.hide();
+			var dialog = new Dialog("#infobox", "Requesting Checklist Version: " + response.message);
+			dialog.show();
+		}
+	})
+}
+
 function RequestChecklistData(logintoken, mfg, model, callback)
 {
 	var checklist = { "mode":"ajax", "token":logintoken}
@@ -174,8 +294,20 @@ function RequestChecklistData(logintoken, mfg, model, callback)
 			{
 				exitOverlay();
 				loader.hide();
+				
+				var records = [];
+				
+				for(var i = 0; i < response.records.length; i++)
+				{
+					if(!response.records[i].isDeleted)
+						records.push(response.records[i]);
+				}
+				
+				response.records = records;
+				
 				checklistResponse = response;
-				callback(response);
+				if(callback)
+					callback(response);
 			}
 			else
 			{
@@ -188,7 +320,7 @@ function RequestChecklistData(logintoken, mfg, model, callback)
 		error: function() 
 		{
 			loader.hide();
-			var dialog = new Dialog("#infobox", "Requesting Checklist Data: " + response.message);
+			var dialog = new Dialog("#infobox", "Error Requesting Checklist Data");
 			dialog.show();
 		}
 	})
