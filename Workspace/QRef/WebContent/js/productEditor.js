@@ -462,6 +462,16 @@ function getProducts(loginToken, callback) {
 								
 			if(response.success == true)
 			{
+				records = [];
+				
+				for(var i = 0; i < response.records.length; i++)
+				{
+					if(!response.records[i].isDeleted)
+						records.push(response.records[i]);
+				}
+				
+				response.records = records;
+				
 				addProductsToList(response.records, callback);
 			}
 			else
@@ -495,7 +505,7 @@ function getChecklists(callback) {
 				var records = response.records;
 				checklistList = [];
 				for(var i = 0; i < records.length; i++) {
-					if( records[i].user == null) {
+					if( records[i].user == null && !records[i].isDeleted) {
 						checklistList.push(records[i]);
 					}
 				}
@@ -522,6 +532,9 @@ function addNewProduct(callback) {
 	reset();
 	
 	showHTML('#addNewProduct');
+	
+	$('#addNewProductName').focus();
+	
 	if(callback)
 		callback();
 }
@@ -532,15 +545,76 @@ function deleteProduct() {
 	if($(productHTML).length == 0)
 		return;
 	
-	var product = findProductById($(productHTML).find($('.id')).text());
-	
-	if(product.isNew) {
-		productList.splice(productList.indexOf(product),1);
-	}
-	else {
-		product.isDeleted = true;
-	}
-	productHTML.remove();
+	var confirmdialog = new ConfirmationDialog("#confirmation-delete-product", function(result) {
+		if(result)
+		{
+			productHTML = $('.selected').closest('.product');
+			var product = findProductById($(productHTML).find($('.id')).text());
+			
+			if(product == null)
+				product = findProductById($(productHTML).attr('id'));
+			
+			if(product.isNew) {
+				$('.selected').closest('.product').toggleClass('productBackground');
+				$('.selected').closest('.product').toggleClass('selected');
+				productHTML.remove();
+				productList.splice(productList.indexOf(product),1);
+				reset();
+			}
+			else {
+				product.isDeleted = true;
+				
+				loader.show();
+				
+				var request = { "mode":"ajax", "token":token, "name":product.name, "description":product.description,
+				"isPublished":product.isPublished,"appleProductIdentifier":product.appleProductId ,"androidProductIdentifier":product.androidProductId ,
+				"isAppleEnabled":product.isAppleEnabled ,"isAndroidEnabled":product.isAndroidEnabled ,"suggestedRetailPrice":parseInt(product.suggestedRetailPrice) ,
+				"productCategory":product.productCategory ,"productType":product.productType ,"isSampleProduct":product.isSampleProduct ,
+				"serialNumber":product.serialNumber ,"manufacturer":product.manufacturer ,"model":product.model, "isDeleted":product.isDeleted };
+				
+				$.ajax
+				({
+					type: "post",
+					contentType:"application/json; charset=utf-8",
+					dataType: "json",
+					data: JSON.stringify(request),
+					url: host + "services/ajax/aircraft/product/" + product.id + "?token=" + token +"&mode=ajax",
+					success: function(response)
+					{								
+						if(response.success == true)
+						{
+							loader.hide();
+							var dialog = new Dialog("#infobox2","Product deleted successfully");
+							dialog.show();
+							$('.selected').closest('.product').toggleClass('productBackground');
+							$('.selected').closest('.product').toggleClass('selected');
+							productHTML.remove();
+							productList.splice(productList.indexOf(product),1);
+							reset();
+						}
+						else
+						{
+							loader.hide();
+							var dialog = new Dialog("#infobox2","Failed to delete selected product: " + response.message);
+							dialog.show();
+						}	
+					},
+					error: function(a,b,c) 
+					{
+						loader.hide();
+						var dialog = new Dialog("#infobox2","Error Deleting Product: " + response.message);
+						dialog.show();
+					}
+				});
+				
+			}
+		}
+		else
+		{
+			return;
+		}
+	});
+	confirmdialog.show();
 }
 
 ///*
@@ -880,8 +954,7 @@ function getChecklistById(id, image, callback) {
 	});
 }
 
-function updateChecklistImage(chklistResponse, image)
-{
+function updateChecklistImage(chklistResponse, image) {
 	var checklist = chklistResponse.records[0];
 	
 	var postData = { "mode":"ajax", "token":token, "preflight": checklist.preflight,
@@ -1045,6 +1118,8 @@ function addManufacturersToList(records, callback) {
 	$('#productManufacturer').attr('onchange','');
 		
 	$('#productManufacturer').html("");
+	$('#addNewProductManufacturer').html("");
+	
 	var blankOption = document.createElement('Option');
 	blankOption.text = "";
 	blankOption.value = 0;
@@ -1074,7 +1149,8 @@ function addManufacturersToList(records, callback) {
 	}
 	
 	$('#productManufacturer').attr('onchange','alterProductMfg(false)');
-	$('#addNewProductManufacturer').attr('onchange','populateModelList(false,true)');
+	//$('#addNewProductManufacturer').attr('onchange','populateModelList(false,true)');
+	$('#addNewProductManufacturer').attr('onchange','alterProductMfg(true)');
 	
 	if(callback)
 		callback();
@@ -1164,18 +1240,72 @@ function addProductImagesToList(records,callback) {
 
 function alterProductMfg(isAddNewProduct) {
 	
-	if($('.selected').length == 0)
-		return;
+	if(!isAddNewProduct){
+		if($('.selected').length == 0)
+			return;
 	
-	var productHTML = $('.selected').closest('.product');
-	var product = findProductById($(productHTML).find($('.id')).text());
+		var productHTML = $('.selected').closest('.product');
+		var product = findProductById($(productHTML).find($('.id')).text());
+
+		product.manufacturer = findProductManufacturerById($('#productManufacturer').val());
+		product.hasChanged = true;
+		$(productHTML).find('.pMfg').text(product.manufacturer.name);
+		setProductStatus("notCheckedIn");
+	}
+	if(!isAddNewProduct)
+		populateModelList(true);
+	else
+		populateModelList(false,true);
 	
-	product.manufacturer = findProductManufacturerById($('#productManufacturer').val());
-	product.hasChanged = true;
-	$(productHTML).find('.pMfg').text(product.manufacturer.name);
-	setProductStatus("notCheckedIn");
+	filterChecklists();
+}
+
+function filterChecklists(){
+	if(isNewProductShowing){
+		
+		$('#addNewProductChecklist').html("");
+		
+		sortCheckListByMode('#addNewProductChecklist');
+	}
+	else {
 	
-	populateModelList(true);
+		$('#productChecklist').html("");
+		
+		sortCheckListByMode('#productChecklist');
+	}
+}
+
+function sortCheckListByMode(mode){
+	var sortedList = [];
+	loader.show();
+	for(var i = 0; i < checklistList.length; i++)
+	{
+		var currList = checklistList[i];
+		
+		if(mode == '#productChecklist')
+		{
+			if(currList.manufacturer.name == findProductManufacturerById($('#productManufacturer').val()).name &&
+				currList.model.name == findProductModelById($('#productModel').val()).name)
+				{
+					var option = document.createElement('option');
+					option.text = currList.manufacturer.name + ' ' + currList.model.name + ' Version: ' + currList.version;
+					option.value = currList._id;
+					$('#productChecklist').append($(option));
+				}
+		}
+		else
+		{
+			if(currList.manufacturer.name == findProductManufacturerById($('#addNewProductManufacturer').val()).name &&
+				currList.model.name == findProductModelById($('#addNewProductModel').val()).name)
+				{
+					var option = document.createElement('option');
+					option.text = currList.manufacturer.name + ' ' + currList.model.name + ' Version: ' + currList.version;
+					option.value = currList._id;
+					$('#addNewProductChecklist').append($(option));
+				}
+		}
+	}
+	loader.hide();
 }
 
 function populateModelList(shouldMakeChanges, isAddNewProduct) {
@@ -1221,9 +1351,11 @@ function populateModelList(shouldMakeChanges, isAddNewProduct) {
 	}
 	
 	$('#productModel').attr('onchange','alterProductModel()');
+	$('#addNewProductModel').attr('onchange','alterProductModel()');
 }
 
 function alterProductModel(isAddNewProduct) {
+	filterChecklists();
 	shouldMakeChanges = true;
 	var productHTML = $('.selected').closest('.product');
 	var product = findProductById($(productHTML).find($('.id')).text());
@@ -1419,7 +1551,7 @@ function checkIn() {
 							if(checkedInList.length == 0) {
 								getProducts(token, function() {
 									loader.hide();
-									var dialog = new Dialog("#infobox","Uploaded Successfully");
+									var dialog = new Dialog("#infobox2","Uploaded Successfully");
 									dialog.show();
 								});
 							}
@@ -1494,7 +1626,7 @@ function checkIn() {
 						if(checkedInList.length == 0) {
 							getProducts(token, function() {
 								loader.hide();
-								var dialog = new Dialog("#infobox","Uploaded Successfully");
+								var dialog = new Dialog("#infobox2","Uploaded Successfully");
 								dialog.show();
 							});
 						}

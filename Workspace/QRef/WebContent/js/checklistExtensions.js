@@ -202,7 +202,7 @@ function insertModelstoList(modellist)
 	
 	if(modellist.length == 0)
 	{
-		var dialog = new Dialog("#infobox","No Models Found. Please Create a new Model");
+		var dialog = new Dialog("#infobox2","No Models Found. Please Create a new Model");
 		dialog.show();
 	}
 	else
@@ -229,7 +229,7 @@ function OK_Model()
 	document.getElementById("OverlayText").innerHTML = "Please Select a Manufacturer";
 	
 	if(postingChecklist)
-		PostCheckListData(token, selectedmfg, selectedmodel);
+		PostCheckListData(token, selectedmfg, selectedmodel,false);
 	else
 		RequestChecklistData(token, selectedmfg, selectedmodel, function(response)
 		{
@@ -406,17 +406,17 @@ function OK_PictureUpload()
 			
 				if(data.success)
 				{
-					var dialog = new Dialog("#infobox","Picture Uploaded Successfully");
+					var dialog = new Dialog("#infobox2","Picture Uploaded Successfully");
 					dialog.show();
 				}
 				else
 				{
-					var dialog = new Dialog("#infobox","Failed to Upload Picture");
+					var dialog = new Dialog("#infobox2","Failed to Upload Picture");
 					dialog.show();
 				}				
 			},
 			error: function(){
-				var dialog = new Dialog("#infobox","Error to Uploading Picture");
+				var dialog = new Dialog("#infobox2","Error to Uploading Picture");
 					dialog.show();
 			},
 			data: formData,
@@ -507,6 +507,7 @@ function SetCheckListItemHTML(Section, Check, Response)
 
 function LoadObjects(records)
 {
+	$('#SaveAs').show();
 	$("#ChecklistName").html(selectedmfg.name + " " + selectedmodel.name + " (Version: " + g_checklist.version + ")");
 	
 	var preflight = document.getElementById('s1');
@@ -602,6 +603,8 @@ function PopulateCategoryList(checklist)
 
 function EditChecklist()
 {
+	$('#SaveAs').hide();
+	
 	if(HaveMadeChanges)
 	{
 		var confirmdialog = new ConfirmationDialog("#confirmation", function(result) {
@@ -611,6 +614,8 @@ function EditChecklist()
 				{
 					CheckIn();
 					ClearCheckLists();
+					g_checklist = "";
+					$('#ChecklistName').html("");
 					
 					postingChecklist = false;
 		
@@ -623,7 +628,7 @@ function EditChecklist()
 				}
 				else
 				{
-					var dialog = new Dialog("#infobox","Please sign in");
+					var dialog = new Dialog("#infobox2","Please sign in");
 					dialog.show();
 				}
 			}
@@ -652,10 +657,12 @@ function EditChecklist()
 		if(token != null)
 		{
 			ClearCheckLists();
+			g_checklist = "";
+			$('#ChecklistName').html("");
 			
 			postingChecklist = false;
 			
-			GetToken(function(token) 
+			GetToken(function(token)
 			{
 				GetandPost("", token)
 			});
@@ -664,7 +671,7 @@ function EditChecklist()
 		}
 		else
 		{
-			var dialog = new Dialog("#infobox","Please sign in");
+			var dialog = new Dialog("#infobox2","Please sign in");
 			dialog.show();
 		}
 	}
@@ -704,7 +711,7 @@ function CheckIn()
 	}
 	else
 	{
-		var dialog = new Dialog("#infobox","No Checklist Items to Check In");
+		var dialog = new Dialog("#infobox2","No Checklist Items to Check In");
 		dialog.show();
 	}
 	
@@ -777,6 +784,12 @@ function ClearList(list)
 	list.html("");
 }
 
+function SaveAs(){
+	if(g_checklist != "") {
+		PostCheckListData(token,selectedmfg,selectedmodel,true);
+	}
+}
+
 function deleteChecklist(){
 	
 	if(g_checklist != "")
@@ -794,13 +807,13 @@ function deleteChecklist(){
 						{
 							//Warn that it must be unassigned from the product before deletion
 							loader.hide();
-							var dialog = new Dialog("#infobox","To delete a checklist, it must first be unassigned from a published product.");
+							var dialog = new Dialog("#infobox2","To delete a checklist, it must first be unassigned from a published product.");
 							dialog.show();
 						}
 						else
 						{
 							//Can be deleted
-							deleteChecklistById(token, list.aircraftChecklist, function(){
+							deleteChecklistById(token, list, function(){
 								
 								ClearCheckLists();
 								g_checklist = "";
@@ -812,7 +825,7 @@ function deleteChecklist(){
 					else
 					{
 						//Can be deleted
-						deleteChecklistById(token, g_checklist._id, function(){
+						deleteChecklistById(token, g_checklist, function(){
 							ClearCheckLists();
 							g_checklist = "";
 							$('#ChecklistName').html("");
@@ -1170,6 +1183,7 @@ function GetToken(callback)
 
 function UploadFiles()
 {
+	$('#SaveAs').hide();
 	var file = $("#fileinput")[0].files
 	
 	if(file.length == 1)

@@ -143,7 +143,7 @@ class AircraftChecklistsRoute extends AjaxRoute
 				newObj.preflight = req.body.preflight
 				newObj.takeoff = req.body.takeoff
 				newObj.landing = req.body.landing
-				newObj.emergencies = req.body.emergenices
+				newObj.emergencies = req.body.emergencies
 				#newObj.modelYear = req.body.modelYear
 				
 				if req.body?.tailNumber?

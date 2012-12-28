@@ -33,7 +33,7 @@ function PostEditedCheckListData(logintoken, editedchecklist, callback)
 			if(response.success == true)
 			{
 				loader.hide();
-				var dialog = new Dialog("#infobox", "Successfully Posted Edited Data");
+				var dialog = new Dialog("#infobox2", "Successfully Posted Edited Data");
 				dialog.show();
 				callback();
 			}
@@ -41,7 +41,7 @@ function PostEditedCheckListData(logintoken, editedchecklist, callback)
 			{
 				Reset();
 				loader.hide();
-				var dialog = new Dialog("#infobox", "Post Checklist Data: " + response.message);
+				var dialog = new Dialog("#infobox2", "Post Checklist Data: " + response.message);
 				dialog.show();
 			}	
 		},
@@ -49,7 +49,7 @@ function PostEditedCheckListData(logintoken, editedchecklist, callback)
 		{
 			Reset();
 			loader.hide();
-			var dialog = new Dialog("#infobox", "Post Checklist Data: " + response.message);
+			var dialog = new Dialog("#infobox2", "Post Checklist Data: " + response.message);
 				dialog.show();
 		}
 	})
@@ -81,12 +81,12 @@ function deleteChecklistById(loginToken, checklist, callback) {
 		contentType:"application/json; charset=utf-8",
 		dataType: "json",
 		url: host + "services/ajax/aircraft/checklist/" + checklist._id,
-		success: function(data) 
+		success: function(response) 
 		{
 			if(response.success == true)
 			{
 				loader.hide();
-				var dialog = new Dialog("#infobox", "Deleted Checklist Successfully");
+				var dialog = new Dialog("#infobox2", "Deleted Checklist Successfully");
 				dialog.show();
 				if(callback)
 					callback();
@@ -95,7 +95,7 @@ function deleteChecklistById(loginToken, checklist, callback) {
 			{
 				Reset();
 				loader.hide();
-				var dialog = new Dialog("#infobox", "Deleting Checklist: " + response.message);
+				var dialog = new Dialog("#infobox2", "Deleting Checklist: " + response.message);
 				dialog.show();
 			}	
 		},
@@ -103,7 +103,7 @@ function deleteChecklistById(loginToken, checklist, callback) {
 		{
 			Reset();
 			loader.hide();
-			var dialog = new Dialog("#infobox", "Deleting Checklist: " + response.message);
+			var dialog = new Dialog("#infobox2", "Deleting Checklist: " + response.message);
 				dialog.show();
 		}
 	})
@@ -153,7 +153,7 @@ function findChecklistProduct(loginToken, callback){
 	})
 }
 
-function PostCheckListData(logintoken, mfg, model)
+function PostCheckListData(logintoken, mfg, model, suppressDialog)
 {
 	
 	g_checklist.manufacturer = mfg;
@@ -179,7 +179,7 @@ function PostCheckListData(logintoken, mfg, model)
 			if(response.success == true)
 			{
 				loader.hide();
-				var dialog = new Dialog("#infobox","Successfully uploaded Version " + (selectedVersion));
+				var dialog = new Dialog("#infobox2","Successfully uploaded Version " + (selectedVersion));
 				dialog.show();
 				
 				if (response.records.length > 0)
@@ -197,33 +197,48 @@ function PostCheckListData(logintoken, mfg, model)
 			{
 				if( response.message != null && response.message.code == 11000) //Duplicate Entry!
 				{
-					var confirmdialog = new ConfirmationDialog("#confirmation-duplicate", function(result) {
-						if(result)
-						{
-							RequestVersionNumber(logintoken, g_checklist.manufacturer,g_checklist.model, function(response) {
+					if(suppressDialog)
+					{
+						RequestVersionNumber(logintoken, g_checklist.manufacturer,g_checklist.model, function(response) {
+								
+							selectedVersion = response.returnValue;
 							
-								selectedVersion = response.returnValue;
+							g_checklist.version = response.returnValue;
+							
+							PostCheckListData(logintoken, g_checklist.manufacturer, g_checklist.model, true);
+							
+						});
+					}
+					else
+					{
+						var confirmdialog = new ConfirmationDialog("#confirmation-duplicate", function(result) {
+							if(result)
+							{
+								RequestVersionNumber(logintoken, g_checklist.manufacturer,g_checklist.model, function(response) {
 								
-								g_checklist.version = response.returnValue;
-								
-								PostCheckListData(logintoken, g_checklist.manufacturer, g_checklist.model);
-								
-							});
-						}
-						else
-						{
-							Reset();
-							loader.hide();
-							return;
-						}
-					});
-					confirmdialog.show();
+									selectedVersion = response.returnValue;
+									
+									g_checklist.version = response.returnValue;
+									
+									PostCheckListData(logintoken, g_checklist.manufacturer, g_checklist.model, false);
+									
+								});
+							}
+							else
+							{
+								Reset();
+								loader.hide();
+								return;
+							}
+						});
+						confirmdialog.show();
+					}
 				}
 				else
 				{
 					Reset();
 					loader.hide();
-					var dialog = new Dialog("#infobox", "Post Checklist Data: " + response.message);
+					var dialog = new Dialog("#infobox2", "Post Checklist Data: " + response.message);
 					dialog.show();
 				}
 			}	
@@ -232,7 +247,7 @@ function PostCheckListData(logintoken, mfg, model)
 		{
 			loader.hide();
 			Reset();
-			var dialog = new Dialog("#infobox", "Error Checklist Data: " + response.message);
+			var dialog = new Dialog("#infobox2", "Error Checklist Data: " + response.message);
 				dialog.show();
 		}
 	})
@@ -261,14 +276,14 @@ function RequestVersionNumber(logintoken,mfg,model, callback) {
 			}
 			else {
 				loader.hide();
-				var dialog = new Dialog("#infobox", "Error Requesting Checklist Version");
+				var dialog = new Dialog("#infobox2", "Error Requesting Checklist Version");
 				dialog.show();
 			}
 			
 		},
 		error: function() {
 			loader.hide();
-			var dialog = new Dialog("#infobox", "Requesting Checklist Version: " + response.message);
+			var dialog = new Dialog("#infobox2", "Requesting Checklist Version: " + response.message);
 			dialog.show();
 		}
 	})
@@ -313,14 +328,14 @@ function RequestChecklistData(logintoken, mfg, model, callback)
 			{
 				Reset();
 				loader.hide();
-				var dialog = new Dialog("#infobox", "Requesting Checklist Data: " + response.message);
+				var dialog = new Dialog("#infobox2", "Requesting Checklist Data: " + response.message);
 				dialog.show();
 			}	
 		},
 		error: function() 
 		{
 			loader.hide();
-			var dialog = new Dialog("#infobox", "Error Requesting Checklist Data");
+			var dialog = new Dialog("#infobox2", "Error Requesting Checklist Data");
 			dialog.show();
 		}
 	})
@@ -347,13 +362,13 @@ function Post_Mfg(token, mfg, model)
 			else
 			{
 				loader.hide();
-				var dialog = new Dialog("#infobox", "Post Manufacturer: " + response.message);
+				var dialog = new Dialog("#infobox2", "Post Manufacturer: " + response.message);
 				dialog.show();
 			}	
 		},
 		error: function() {
 			loader.hide();
-			var dialog = new Dialog("#infobox", "Post Manufacturer: " + response.message);
+			var dialog = new Dialog("#infobox2", "Post Manufacturer: " + response.message);
 			dialog.show();
 		}
 	})
@@ -383,14 +398,14 @@ function Request_Mfg(token, mfg, model)
 			{
 				Reset();
 				loader.hide();
-				var dialog = new Dialog("#infobox", "Requesting Manufacturer Data: " + response.message);
+				var dialog = new Dialog("#infobox2", "Requesting Manufacturer Data: " + response.message);
 				dialog.show();
 			}	
 		},
 		error: function() {
 			Reset();
 			loader.hide();
-			var dialog = new Dialog("#infobox", "Requesting Manufacturer Data: " + response.message);
+			var dialog = new Dialog("#infobox2", "Requesting Manufacturer Data: " + response.message);
 				dialog.show();
 		}
 	})
@@ -422,14 +437,14 @@ function Request_Model(token, model, mfg)
 			{
 				Reset();
 				loader.hide();
-				var dialog = new Dialog("#infobox", "Requesting Model Data: " + response.message);
+				var dialog = new Dialog("#infobox2", "Requesting Model Data: " + response.message);
 				dialog.show();
 			}	
 		},
 		error: function() {
 			Reset();
 			loader.hide();
-			var dialog = new Dialog("#infobox", "Requesting Model Data: " + response.message);
+			var dialog = new Dialog("#infobox2", "Requesting Model Data: " + response.message);
 				dialog.show();
 		}
 	})
@@ -457,13 +472,13 @@ function Post_Model(token, model, year, mfg)
 			{
 				Reset();
 				loader.hide();
-				var dialog = new Dialog("#infobox", "Posting Model: " + response.message);
+				var dialog = new Dialog("#infobox2", "Posting Model: " + response.message);
 				dialog.show();
 			}	
 		},
 		error: function() {
 			loader.hide();
-			var dialog = new Dialog("#infobox", "Posting Model: " + response.message);
+			var dialog = new Dialog("#infobox2", "Posting Model: " + response.message);
 				dialog.show();
 		}
 	})
