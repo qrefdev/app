@@ -1,9 +1,62 @@
 function ThemeHandler() {
+	this.previousTheme = "theme-dark";
 	var self = this;
-	this.themes = [{id: "theme-dark"}, {id: "theme-light"}];
+	
+	this.apply = function(themeClass) {
+		$("." + this.previousTheme).removeClass(this.previousTheme).addClass(themeClass);
+		this.previousTheme = themeClass;
+	};
+	
+	
+	this.createDashboardItem = function(product) {
+		var modelName = (product.model.name != null) ? product.model.name : "";
+
+		var manufacturerName = (product.manufacturer.name != null) ? product.manufacturer.name : "";
+
+		var modelDesc = (product.model.description != null) ? product.model.description : "";
+ 
+		var modelYear = (product.model.modelYear != null) ? product.model.modelYear : "";
+ 
+		var tailNumber = (product.tailNumber != null) ? product.tailNumber : "";
+
+		var html = '<li data-index="' + product.index + '" data-id="' + product._id + '"><div class="plane-icon"><img src="' + product.productIcon + '" /></div><div class="holder"><div class="heading">' + manufacturerName +
+        " " + modelName + '</div>' +
+            '<div class="subheading">' + modelDesc  + " | " + modelYear + '</div>' +
+                '<div class="subheading">' + tailNumber + '</div>' +
+						'<ul><li class="product-subarea" data-link="preflight">preflight</li><li class="product-subarea" data-link="takeoff">take-off</li>' +
+						'<li class="product-subarea" data-link="landing">landing</li><li class="product-subarea" data-link="emergency">emergency</li></ul>' +
+						'</div>' +
+						'<div class="delete"><button class="item-delete-button">delete</button></div>' +
+						'<div class="handle"><div class="item"></div><div class="item"></div><div class="item"></div></div>' +
+						'</li>';
+						
+		return html;
+	};
+	
+	this.createDownloadItem = function(product, userOwnsProduct) {
+        
+		var modelName = (product.model.name != null) ? product.model.name : "";
+
+		var manufacturerName = (product.manufacturer.name != null) ? product.manufacturer.name : "";
+
+		var modelDesc = (product.model.description != null) ? product.model.description : "";
+
+		var modelYear = (product.model.modelYear != null) ? product.model.modelYear : "";
+
+		var serialNumber = (product.serialNumber != null) ? product.serialNumber : "";
+   
+		     
+		var html = '<li data-id="' + product._id + '" class="' + userOwnsProduct + '"><div class="plane-icon"><img src="' + product.productIcon + '" /></div><div class="holder"><div class="heading">' + manufacturerName +
+        " " + modelName + '</div>' +
+            '<div class="subheading">' + modelDesc + " | " +  modelYear + '</div>' +
+				'<div class="subheading">' + serialNumber + '</div>' +
+				'</div></li>'
+				
+		return html;
+	};
 	
 	this.createChecklistItem = function(item) {
-		var html = '<li data-index="' + item.index + '">' +
+		var html = '<li data-id="' + item._id + '" data-index="' + item.index + '">' +
 					'<div class="icon"><i class="' + item.icon + '"></i></div>' +
 					'<div class="holder">' +
 						'<div class="check">' + item.check + '</div>' +
@@ -19,7 +72,7 @@ function ThemeHandler() {
 	
 	this.createEmergencySectionItem = function(item) {
 		var html = '<li class="span50" data-link="checklist" data-index="' + item.index + '">' +
-						'<div class="icon"><i class="icon-plane"></i></div>' +
+						'<div class="icon"><img src="' + item.sectionIcon + '" /></div>' +
 						'<div class="section-name">' + item.name + '</div>' +
 					'</li>';
 					
@@ -94,6 +147,118 @@ function ThemeHandler() {
 		});
 	};
 	
+	this.addDashboardItemHandlers = function() {
+		Theme.updateDashboardEditMode();
+		MyProducts.listing.children().tap(function(e) {
+			e.stopPropagation();
+			
+			if($(this).find(".delete").css("display") != "none")
+			{
+				self.clearDeleteStatus($("#checklist-items").children());
+			}
+			
+			if(!Checklist.productEditMode) {
+				var id = $(this).attr("data-id");
+				
+				Navigation.loadChecklist(id);
+				Navigation.go("checklist");
+			}
+			else
+			{
+				var itemToEdit = $(this);
+				
+				var item = MyProducts.getProduct(Checklist.checklists, itemToEdit.attr("data-id"));
+				
+				if(item)
+				{
+					TailNumberEditor.editingItem = itemToEdit;
+					
+					$("#tailnumber").val(item.tailNumber);
+					$("#tailnumber").blur();
+					
+					Navigation.go("edittail");
+				}
+			}
+		});
+		
+		var subItems = MyProducts.listing.find(".product-subarea");
+		
+		subItems.tap(function(e) {
+			if(!Checklist.productEditMode) {
+				e.stopPropagation();
+				var parent = $(this).parent().parent().parent();
+				var dataid = parent.attr("data-id");
+				var datalink = $(this).attr("data-link");
+				
+				Navigation.loadChecklist(dataid);
+				Navigation.updateChecklist(datalink);
+				
+				if(datalink == "emergency")
+				{
+					Navigation.go("checklist");
+					Navigation.go("emergency");
+				}
+				else
+				{
+					Navigation.go("checklist");
+				}
+			}
+		});
+		
+		MyProducts.listing.find(".handle").punch();
+		
+		MyProducts.listing.find(".delete").tap(function(e) {
+			e.stopPropagation();
+			var parent = $(this).parent();
+			var holder = parent.find(".holder");
+			
+			$(this).fadeOut(function() {
+				holder.animate({"margin-left":"5px"}, 500, function() {
+					var removedId = parent.attr("data-id");
+					var item = MyProducts.getProduct(Checklist.checklists, removedId);
+					
+					if(item)
+					{
+						item.isDeleted = true;
+						parent.remove();
+						
+						Sync.syncToPhone();
+					}
+				});
+			});
+		});
+		
+		MyProducts.listing.children().swipe({
+			swipeRight: function(event, duration) {
+				if(Checklist.productEditMode)
+				{
+					var deleteButton = $(this).find(".delete");
+					var holder = $(this).find(".holder");
+					
+					holder.animate({"margin-left": "75px"}, 500, function() {
+						deleteButton.fadeIn();
+					});
+			
+					event.stopPropagation();
+				}
+			},
+			threshold: 20,
+			durationThreshold: 500
+		});
+	};
+	
+	this.addDownloadItemHandlers = function() {
+		MyProducts.productListing.children().tap(function(e) {
+			MyProducts.product = MyProducts.getProduct(MyProducts.allProducts, $(this).attr("data-id"));
+			
+			if(MyProducts.product)
+			{
+				MyProducts.selectProductDetails();
+				Navigation.go("download-details");
+			}
+		});
+	};
+	
 	this.addChecklistItemHandlers = function() {
 		this.updateChecklistEditMode();
 		$("#checklist-items").children().swipe({
@@ -129,6 +294,8 @@ function ThemeHandler() {
 				
 				$("#check").val($(this).find(".check").html());
 				$("#response").val($(this).find(".response").html());
+				$("#check").blur();
+				$("#response").blur();
 				
 				Navigation.go("editadd");
 			}
@@ -147,6 +314,8 @@ function ThemeHandler() {
 			Navigation.go("editadd");
 		});
 		
+		$("#checklist-items").find(".handle").punch();
+		
 		$("#checklist-items").find(".delete").tap(function(e) {
 			e.stopPropagation();
 			var parent = $(this).parent();
@@ -154,31 +323,27 @@ function ThemeHandler() {
 			
 			$(this).fadeOut(function() {
 				holder.animate({"margin-left":"5px"}, 500, function() {
-					var removedIndice = parseInt(parent.attr("data-index"))
-					Checklist.remove(Navigation.checklist[Navigation.currentChecklistSection].items, removedIndice, function(items) {
+					var removedId = parent.attr("data-id");
+					var item = MyProducts.getProduct(Navigation.checklist[Navigation.currentChecklistSection].items, removedId);
+					var items = _.without(Navigation.checklist[Navigation.currentChecklistSection].items, item);
 						parent.remove();
 						Navigation.checklist[Navigation.currentChecklistSection].items = items;
-						var indices = new Array();
-						$("#checklist-items").children().each(function(index, item) {	
-								$(this).attr("data-index", index);
-						});
-					});
 				});
 			});
 		});
 	};
 }
 
-function Loader() {
-	this.element = $("#loader");
+function Loader(id) {
+	this.element = $(id);
 	
 	this.show = function() {
 		this.element.show();
-	}
+	};
 	
 	this.hide = function() {
 		this.element.hide();
-	}
+	};
 }
 
 function Dialog(element, message, callback) {
@@ -197,15 +362,15 @@ function Dialog(element, message, callback) {
 	});
 	
 	this.show = function() {
-		this.element.fadeIn();
+		this.element.show();
 	};
 	
 	this.close = function() {
-		this.element.fadeOut();
+		this.element.hide();
 		
-		if(this.callback)
+		if(self.callback)
 		{
-			this.callback();
+			self.callback();
 		}
 	};
 }
@@ -233,12 +398,11 @@ function ConfirmationDialog(element, callback) {
 	});
 	
 	this.close = function(confirm) {
-		this.element.fadeOut(function() {
-			if(callback)
+		this.element.fadeOut();
+			if(self.callback)
 			{
-				callback(confirm);
+				self.callback(confirm);
 			}
-		});
 	};
 	
 	this.show = function() {
