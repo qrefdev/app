@@ -16,6 +16,10 @@
 			{
 				plugin.triggerTap();
 			}
+			else if(plugin && options)
+			{
+				plugin.updateOptions(options);
+			}
     	});
     }
   };
@@ -26,7 +30,7 @@
 	  var startTime = 0, endTime = 0;
 	
 	  var duration = 0;
-	  var threshold = 200;
+	  var threshold = 220;
 	  
 	  var TapHandler = undefined;	
   		
@@ -34,22 +38,26 @@
       
       $element = $(element);
       
-      if(typeof TouchEvent == 'undefined' || typeof Touch == "undefined")
-      {
+     // if(typeof TouchEvent == 'undefined' || typeof Touch == "undefined")
+      //{
       	$element.mouseup(touchEnd);
       	$element.mousedown(touchStart);
-      }
-      else
+      //}
+     /*( else
       {
       	$element.bind("touchstart", touchStart);
       	$element.bind("touchend", touchEnd);
-  	  }
+  	  }*/
   	  
 	  function touchStart(event) {
 			startTime = endTime = Date.now();
 			
 			duration = 0;
 	  }
+	  
+	  this.updateOptions = function(options) {
+	  		TapHandler = options;
+	  };
 	  
 	  this.triggerTap = function() {
 			trigger();

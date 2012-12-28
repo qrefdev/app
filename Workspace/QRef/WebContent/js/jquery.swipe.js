@@ -56,11 +56,11 @@
       {
       	  $element[0].addEventListener("touchend", touchEnd, true);
 		  $element[0].addEventListener("touchstart", touchStart, true);
-		  $element[0].addEventListener("touchmove", function(e) { e.preventDefault();} , true);
+		  $element[0].addEventListener("touchmove", touchMove, true);
   	  }
 	  
 	  /** Prevent the dragstart on the element **/
-	  $element.bind("dragstart", function(e) { e.preventDefault(); });
+	  //$element.bind("dragstart", function(e) { e.preventDefault(); });
 	  
 	  function touchStart(event) {
 	  		var clientX = event.pageX;
@@ -82,6 +82,35 @@
 			direction = -1;
 			
 			touched = true;
+	  }
+	  
+	  function touchMove(event) {
+	  		var clientX = event.pageX;
+	  		var clientY = event.pageY;
+	  
+	  		if(event.changedTouches)
+	  		{
+				first = event.changedTouches[0]
+				
+				clientX = first.pageX;
+				clientY = first.pageY;
+	  		}
+	  
+	  		endTime = Date.now();
+			endPosition.x = clientX;
+			endPosition.y = clientY;
+			
+			delta.x = Math.abs(endPosition.x - startPosition.x);
+			delta.y = Math.abs(endPosition.y - startPosition.y);
+			deltaDirection.x = endPosition.x - startPosition.x;
+			deltaDirection.y = endPosition.y - startPosition.y;
+	  		
+	  		direction = getDirection();
+			duration = getDuration();
+			
+			if(duration < durationThreshold && direction != -1)
+				event.preventDefault();
+				
 	  }
 	  
 	  function touchEnd(event) {

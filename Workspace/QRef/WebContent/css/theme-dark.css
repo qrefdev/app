@@ -1,3 +1,15 @@
+a {
+	color: #f1f1f1;
+}
+
+a:hover {
+	color: #ffffff;
+}
+
+a:visited {
+	color: #f1f1f1;
+}
+
 /** Text Box **/
 .theme-dark .textbox {
 	border: 1px solid #292E32;
@@ -176,10 +188,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#292e32', end
 	border-radius: 5px;
 	display:block;
 	cursor: pointer;
-	padding:5px;
-	margin-top:5px;
-	margin-bottom:5px;
-	float:left;
 }
 
 /** Menu Theme **/
@@ -343,26 +351,10 @@ border-top: 1px solid #2b2f32;
 
 .theme-dark .check-sections .vertical li:hover {
 	background: #11467c; /* Old browsers */
-background: -moz-linear-gradient(top,  #11467c 0%, #001b36 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#11467c), color-stop(100%,#001b36)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top,  #11467c 0%,#001b36 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top,  #11467c 0%,#001b36 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top,  #11467c 0%,#001b36 100%); /* IE10+ */
-background: linear-gradient(to bottom,  #11467c 0%,#001b36 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#11467c', endColorstr='#001b36',GradientType=0 ); /* IE6-9 */
-
 }
 
 .theme-dark .check-sections .vertical .active {
 		background: #11467c; /* Old browsers */
-background: -moz-linear-gradient(top,  #11467c 0%, #001b36 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#11467c), color-stop(100%,#001b36)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top,  #11467c 0%,#001b36 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top,  #11467c 0%,#001b36 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top,  #11467c 0%,#001b36 100%); /* IE10+ */
-background: linear-gradient(to bottom,  #11467c 0%,#001b36 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#11467c', endColorstr='#001b36',GradientType=0 ); /* IE6-9 */
-
 }
 
 /** Loader, Info, and Forms **/
@@ -373,14 +365,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#11467c', end
 	color: #98adb1;
 }
 
-.theme-dark .info, .theme-dark .dialog {
+.theme-dark .info {
 	border: 1px solid #292E32;
 	background: #000813;
 	color: #98adb1;
-}
-
-.theme-dark .dialog .icon {
-	color: #f1f1f1;
 }
 
 .theme-dark form label {
@@ -414,265 +402,104 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#11467c', end
 
 }
 
-.cont {
-	width: 25%;
-	height:100%;
-	float: left;
-	text-align: center;
+/** Product Details **/
+.theme-dark #productDetailsListing {
+	color: #CCCCCC;
 }
 
-.title {
+.theme-dark .detailsHeading {
+	background: #010101;
+}
+
+.theme-dark .modelDescription {
+	color: #999999;
+	font-size: 12px;
+}
+
+.theme-dark .productSerialNumbers {
+	color: #999999;
+}
+
+.theme-dark #productDetailsListing h1 {
+	color: #CCCCCC;
+}
+
+/** E6B **/
+.theme-dark .e6b .vertical li {
+		color: #dce1e5;
+background: #2d313a; /* Old browsers */
+background: -moz-linear-gradient(top, #2d313a 0%, #0f0f11 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#2d313a), color-stop(100%,#0f0f11)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #2d313a 0%,#0f0f11 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #2d313a 0%,#0f0f11 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #2d313a 0%,#0f0f11 100%); /* IE10+ */
+background: linear-gradient(to bottom, #2d313a 0%,#0f0f11 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2d313a', endColorstr='#0f0f11',GradientType=0 ); /* IE6-9 */
+border-top: 1px solid #2b2f32;
+padding-top: 10px;
+padding-bottom: 10px;
+}
+
+.theme-dark .e6b .vertical li:hover {
+background: #11467c; /* Old browsers */
+background: -moz-linear-gradient(top,  #11467c 0%, #001b36 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#11467c), color-stop(100%,#001b36)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #11467c 0%,#001b36 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #11467c 0%,#001b36 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #11467c 0%,#001b36 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #11467c 0%,#001b36 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#11467c', endColorstr='#001b36',GradientType=0 ); /* IE6-9 */
+
+}
+
+.theme-dark .e6b .vertical li .icon {
+	font-size: 20px;
+	float: left;
+}
+
+.theme-dark .e6b {
+	color: #f1f1f1;
+}
+
+.theme-dark .e6b .utcTime {
 	width: 100%;
-	float: left;
+	background: #1f1f1f;
+	color: #f1f1f1;
+	font-size: 18px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 	text-align: center;
 }
 
-.buttons {
-	width: 100%;
+.theme-dark .e6b .header {
+	font-size: 18px;
 	float: left;
-	text-align: center;
 }
 
-.buttonPM_cont {
-	width: 150px;
-	margin-left: auto;
-	margin-right: auto;
-	float: none;
-}
-.box {
-	width: 25%;
-	float: left;
-	text-align: center;
-	height:100%;
+.theme-dark .e6b .row {
+	border-bottom: 1px solid #223333;
+	background: #0f0f11;
 }
 
-.selectboxdiv {
-	width: 100%;
-	float: left;
-	background-color:#454a4e;
-	height: 100%;
+/** MISC **/
+.theme-dark .dark-bg {
+	background: #0f0f11;
 }
 
-.Select-Container {
-        overflow:auto; 
-        height:100%;
+/** Settings **/
+.theme-dark .settingsItems {
+    color: #f1f1f1;
 }
 
-.returnedCheckLists {
-	
+.theme-dark .settingsItems h2 {
+	font-size: 18px;
+	font-weight: normal;
+	color: #f1f1f1;
+    margin-left: 10px;
 }
 
-.listbox {
-	width:80%;
-	overflow:auto;
-}
-#s1,#s2,#s3,#s4
-{
-	width:100%;
-	min-height:60px;
-	background-color:#26292b;
-	padding-bottom:3px;
-	float:left;
-	height:100%;
-}
-
-#centerbutton {
-	margin-left:20px;
-	margin-right:20px;
-}
-
-.ARitem {
-	display:none;
-}
-
-.CheckListItem {
-	display:none;
-}
-
-#modalListDiv, #duplicateListDiv {
-	display:none;
-	height:350px;
-	width:500px;
-	background-color: #292D35;
-	text-align:center;
-	padding-top:20px;
-	position:relative;
-	z-index:200;
-}
-
-#modalSelectList, #dupChklist_Select {
-	display:block;
-	float:left;
-	margin-top:auto;
-	margin-left:100px;
-	margin-top:0px;
-	margin-bottom:100px;
-	width:300px;
-}
-
-#modaldisplay {
-	background-color: black;
-	position:fixed;
-	height:100%;
-	width:100%;
-	top:0;
-	left:0;
-	display:none;
-	z-index:100;
-}
-
-#dupChklist_Button_OK, #OK , #OK_AR{
-	display:block;
-	float:left; 
-	margin-left:130px; 
-	margin-top:50px; 
-	padding:10px; 
-	width:100px;
-}
-
-#dupChklist_Button_Cancel, #Cancel, #Cancel_AR {
-	display:block;
-	float:right; 
-	margin-right:130px; 
-	margin-top:50px; 
-	padding:10px; 
-	width:100px;
-}
-
-#AddNew {
-	display:block;
-	float:left; 
-	margin-left:130px; 
-	margin-top:20px; 
-	padding:10px; 
-	width:100px;
-}
-
-#modalText {
-	display:none;
-	float:none;
-	color: gray;
-}
-
-#OverlayText{
-	display:block;
-	margin-bottom:20px; 
-	float:none; 
-	color:white;
-}
-
-#AddPicture {
-	display:block;
-	float:right; 
-	margin-right:130px; 
-	margin-top:20px; 
-	padding:10px; 
-	width:100px;
-}
-
-#picFile {
-	float:left;
-}
-
-#previewPic {
-	float:left;
-	width:100px;
-	height:100px;
-	margin-left:50px;
-	border: dashed 2px white;
-}
-
-#previewPicDiv {
-	float:left;
-	width:100%;
-	height:100px;
-}
-
-.pictureUpload{
-	display:none;
-}
-
-#picForm {
-	float:left;
-	width:50%;
-	margin-left:25px;
-}
-
-#picProgress {
-	display:none;
-	float:left;
-	width:100%;
-	margin-top:60px;
-}
-
-#Check_AddNew, #Response_AddNew , #Section_AddNew{
-	float:left;
-	width:90%;
-	margin-left:20px;
-	margin-top:10px; 
-	margin-bottom:10px;
-}
-
-#CheckListInputsDiv {
-	position:absolute;
-	top:0px;
-	left:0px;
-	background:rgba(0,0,0,0.5);
-	width:100%;
-	display:none;
-	text-align:center;
-	z-index:9999;
-}
-
-#Item_Section, #Item_Index, #Item_Check, #Item_Response {
-	width:100%;
-}
-
-#Item_Section_AddNew {
-	margin-left:auto;
-	margin-right:auto;
-	float:none;
-	width:100px;
-	height:35px;
-}
-
-.CheckListInputs {
-	width: 20%;
-	float:left;
-	margin-left:30px;
-	margin-right:10px;
-	margin-top:10px;
-	margin-bottom:10px;
-}
-
-.CheckListItem_Section {
-	width:100%;
-	float:right;
-	margin-right:20px;
-	text-align:right;
-	color:#AAA
-}
-
-.CheckListItem_Check {
-	width:100%;
-	float:left;
-	margin-left:20px;
-	text-align:left;
-	color:#AAA
-}
-
-.CheckListItem_Response {
-	width:100%;
-	float:left;
-	margin-left:20px;
-	text-align:left;
-	color:#AAA
-}
-
-.CheckListItem_Values {
-	color:#FFF;
-}
-
-.NewSectionButton {
-	float:left;
+.theme-dark .settingsItems .row {
+    padding: 0px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }

@@ -368,9 +368,9 @@ function Dialog(element, message, callback) {
 	this.close = function() {
 		this.element.hide();
 		
-		if(self.callback)
+		if(this.callback)
 		{
-			self.callback();
+			this.callback();
 		}
 	};
 }

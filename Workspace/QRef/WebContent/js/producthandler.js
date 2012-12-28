@@ -4,40 +4,18 @@ function MyProductsHandler() {
 	this.allProducts = new Array();
 	this.productListing = undefined;
 	this.product = undefined;
+	this.productDetails = undefined;
 	
 	var self = this;
 	
 	this.init = function() {
+		this.productDetails = new ProductDetails();
 		this.listing = $("#dashboard-planes");
 		this.productListing = $("#downloads-items");
-		$(".dashboard-planes-selector").touchScroll({
-			threshold: 200,
-			direction: "vertical",
-			onBeforeScroll: function(event) {
-				if(Checklist.productEditMode && Checklist.isSorting)
-				{
-					$(".dashboard-planes-selector").touchScroll("disableScroll");
-					//$(this).touchScroll("disableScroll");
-				}
-				else
-				{
-					$(".dashboard-planes-selector").touchScroll("enableScroll");
-					//$(this).touchScroll("enableScroll");
-				}
-			}
-		});
-		
-		$(".dashboard-planes-selector").mouseScroll({
-			scrollAmount: 2,
-			direction: "vertical"
-		});
-		
-		$(".downloads").touchScroll({
-			threshold: 200,
-			direction: "vertical"
-		});
 	};
 	
+	
+	//Loads all available published products from the server
 	this.loadAllProducts = function(updateCallback) {
 		$.ajax({
 			type: "get",
@@ -66,6 +44,7 @@ function MyProductsHandler() {
 		});
 	};
 	
+	//Loads only the products that the user own from the server
 	this.loadUserProducts = function(updateCallback) {
 		$.ajax({
 			type: "get",
@@ -106,16 +85,12 @@ function MyProductsHandler() {
 			{
 				userOwnsProduct = (this.getProduct(this.products, product._id)) ? "owns" : "buy";
 				
-				html += '<li data-id="' + product._id + '" class="' + userOwnsProduct + '"><div class="plane-icon"><img src="images/aircraft.png" /></div><div class="holder"><div class="heading">' + product.manufacturer.name +
-				" " + product.model.name + '</div>' +
-				'<div class="subheading">' + product.modelYear + '</div>' +
-				'<div class="subheading">' + product.serialNumber + '</div>' +
-				'</div></li>'
+				html = Theme.createDownloadItem(product, userOwnsProduct);
+                this.productListing.append(html);
 			}
 		}
-		
-		this.productListing.html(html);
-		this.addProductHandlers();
+    
+		Theme.addDownloadItemHandlers();
 	};
 	
 	this.populate = function() {
@@ -128,84 +103,21 @@ function MyProductsHandler() {
 		
 			if(product)
 			{
-				html += '<li data-index="' + product.index + '" data-id="' + product._id + '"><div class="plane-icon"><img src="images/aircraft.png" /></div><div class="holder"><div class="heading">' + product.manufacturer.name + 
-						" " + product.model.name + '</div>' +
-						'<div class="subheading">' + product.modelYear + '</div>' +
-						'<div class="subheading">' + product.tailNumber + '</div>' + 
-						'<ul><li class="product-subarea" data-link="preflight">preflight</li><li class="product-subarea" data-link="takeoff">take-off</li>' +
-						'<li class="product-subarea" data-link="landing">landing</li><li class="product-subarea" data-link="emergency">emergency</li></ul>' +
-						'</div>' +
-						'<div class="delete"><button class="item-delete-button">delete</button></div>' +
-						'<div class="handle"><div class="item"></div><div class="item"></div><div class="item"></div>' +
-						'</li>';
+				if(!product.isDeleted)
+                {
+					html = Theme.createDashboardItem(product);
+                    this.listing.append(html);
+                }
 			}
 		}
 		
-		this.listing.html(html);
-		this.addHandlers();
+		Theme.addDashboardItemHandlers();
 	};
 	
-	this.populateDownloadDetails = function() {
-	
-	};
-	
-	this.addProductHandlers = function() {
-		this.productListing.children().tap(function(e) {
-			self.product = self.getProduct(self.allProducts, $(this).attr("data-id"));
-			
-			if(self.product)
-			{
-				self.populateDownloadDetails();
-				Navigation.go("download-details");
-			}
-		});
-	};
-	
-	this.addHandlers = function() {
-		Theme.updateDashboardEditMode();
-		this.listing.children().tap(function(e) {
-			if(!Checklist.productEditMode) {
-				var id = $(this).attr("data-id");
-				
-				Navigation.loadChecklist(id);
-			}
-			else
-			{
-				Theme.clearDeleteStatus(self.listing.children());
-			}
-		});
-		var subItems = this.listing.find(".product-subarea");
+	this.selectProductDetails = function() {
+		var owns = this.getProduct(this.products, this.product._id);
 		
-		subItems.tap(function(e) {
-			if(!Checklist.productEditMode) {
-				e.stopPropagation();
-				var parent = $(this).parent().parent().parent();
-				var dataid = parent.attr("data-id");
-				var datalink = $(this).attr("data-link");
-				
-				Navigation.loadChecklist(dataid, function() {
-					Navigation.updateChecklist(datalink);
-				});
-			}
-		});
-		
-		this.listing.children().swipe({
-			swipeRight: function(event, duration) {
-				if(Checklist.productEditMode)
-				{
-					var deleteButton = $(this).find(".delete");
-					var holder = $(this).find(".holder");
-					
-					holder.animate({"margin-left": "75px"}, 500, function() {
-						deleteButton.fadeIn();
-					});
-			
-					event.stopPropagation();
-				}
-			},
-			threshold: 20,
-			durationThreshold: 500
-		});
+		this.productDetails.load(this.product, owns);
 	};
 	
 	this.getProduct = function(tProducts, id) {
@@ -253,10 +165,36 @@ function MyProductsHandler() {
 				
 				sortedArray = sortedArray.concat(arrProd);
 			}
-			
 		}
 		
 		return sortedArray;
 		
+	};
+}
+
+//Handles the loading of the product details
+function ProductDetails() {
+	this.details = $("#productDetailsListing");
+	var self = this;
+	
+	//Do whatever necessary to start the purchase
+	this.details.find(".buynow").tap(function(e) {
+        loader.show();
+	});
+	
+	this.load = function(product, ownsProduct) {
+		this.details.find(".productImage").html('<img src="' + product.coverImage + '" />');
+		this.details.find(".productModel").html(product.manufacturer.name + " " + product.model.name);
+		this.details.find(".modelDescription").html(product.model.description);
+		this.details.find(".manufacturerDescription").html(product.manufacturer.description);
+		
+		if(!ownsProduct)
+			this.details.find(".buynow").html(product.suggestedRetailPrice);
+		else
+			this.details.find(".buynow").html("INSTALL");
+			
+		this.details.find(".productSerialNumbers").html(product.serialNumber);
+		this.details.find(".productModelYear").html(product.model.modelYear);
+		this.details.find(".description").html(product.description);
 	};
 }

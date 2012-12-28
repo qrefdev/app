@@ -1,42 +1,36 @@
 function NavigationHandler() {
+	this.simpleNavigation = new SimpleNavigationHandler();
 	this.checklist = undefined;
 	this.product = undefined;
-	this.currentArea = "dashboard"
 	this.currentChecklistCategory = "preflight";
 	this.previousChecklistCategory = "preflight"; 
 	this.currentChecklistSection = 0;
 	this.currentChecklistSections = new Array();
 	this.currentChecklistItems = new Array();
-	this.previousAreas = new Array();
-	this.previousArea = "";
 	
 	var self = this;
 	
 	this.back = function() {
-		if(this.previousAreas.length > 0)
-		{
-			this.previousArea = this.currentArea;
-			this.currentArea = this.previousAreas.pop();
-			this.updateArea();
-		}
+		this.simpleNavigation.back();
 	};
 	
-	this.go = function(place, callback) {
-		this.previousArea = "";
-		this.previousAreas.push(this.currentArea);
-		this.currentArea = place;
-		this.updateArea(function() {
-			if(callback)
-				callback();
-		});
+	this.go = function(place) {
+		this.simpleNavigation.go(place);
 	};
 	
 	this.autoGo = function(sender) {
-		if(sender != null) {
-			this.previousAreas.push(this.currentArea);
-			this.currentArea = sender.attr("data-link");
-			this.updateArea();
-		};
+		this.simpleNavigation.autoGo(sender);
+	};
+	
+	this.hideOtherPages = function(id) {
+		$(".page").each(function() {
+			var item = $(this);
+			
+			var itemId = item.attr("id");
+			
+			if(itemId != id && itemId != undefined)
+				item.fadeOut();
+		});
 	};
 	
 	this.updateChecklist = function(category) {
@@ -71,17 +65,13 @@ function NavigationHandler() {
 		this.loadChecklistItems();
 	};
 	
-	this.loadChecklist = function(id, callback) {
+	this.loadChecklist = function(id) {
 		this.product = MyProducts.getProduct(Checklist.checklists, id);
 		
 		if(this.product)
 		{
 			this.currentChecklistSection = 0;
 			this.updateChecklist("preflight");
-			this.go("checklist", function() {
-				if(callback)
-					callback();
-			});
 		}
 	};
 	
@@ -101,19 +91,20 @@ function NavigationHandler() {
 		for(var i = 0; i < this.currentChecklistSections.length; i++) {
 			if(this.currentChecklistSections[i].index == this.currentChecklistSection)
 			{
-				html += '<li class="active" data-index="' + this.currentChecklistSections[i].index + '">' +
+				html = '<li class="active" data-index="' + this.currentChecklistSections[i].index + '">' +
 							'<p>' + this.currentChecklistSections[i].name + '</p>' +
 						'</li>';
 			}
 			else
 			{
-				html += '<li data-index="' + this.currentChecklistSections[i].index + '">' +
+				html = '<li data-index="' + this.currentChecklistSections[i].index + '">' +
 							'<p>' + this.currentChecklistSections[i].name + '</p>' +
 						'</li>';
 			}
+            
+            
+            $("#check-sections-items").append(html);
 		}
-		
-		$("#check-sections-items").html(html);
 		
 		Theme.addSectionHandlers(listHandler);
 	};
@@ -130,10 +121,11 @@ function NavigationHandler() {
 			for(var i = 0; i < this.currentChecklistItems.length; i++)
 			{
 				var item = this.currentChecklistItems[i];
-				html += Theme.createChecklistItem(item);
+				html = Theme.createChecklistItem(item);
+                
+                $("#checklist-items").append(html);
 			}
-			
-			$("#checklist-items").html(html);
+
 			Theme.addChecklistItemHandlers();
 		}
 	};
@@ -151,10 +143,12 @@ function NavigationHandler() {
 				var item = this.checklist[i];
 				
 				if(item.items.length > 0)
-					html += Theme.createEmergencySectionItem(item);
+					html = Theme.createEmergencySectionItem(item);
+                
+                if(html != "")
+                    $("#emergency-items").append(html);
 			}
 			
-			$("#emergency-items").html(html);
 			Theme.addEmergencySectionHandlers();
 		}
 	};
@@ -168,153 +162,158 @@ function NavigationHandler() {
 		});
 	};
 	
-	this.updateArea = function(callback) {
-		if(this.currentArea == "dashboard")
-		{
-			this.previousAreas = new Array();
+	this.updateE6BArea = function() {
+		self.hideOtherPages("e6bselection");
+		$("#checklist-nav").fadeOut();
+		$("#e6bselection").fadeIn();
+	};
+	
+	this.updateE6BConversionsArea = function() {
+		self.hideOtherPages("e6bconversions");
+		$("#checklist-nav").fadeOut();
+		$("#e6bconversions").fadeIn();
+	};
+	
+	this.updateDashboardArea = function() {
+			self.simpleNavigation.clearHistory();
 		
 			Checklist.load(function(status) {
-				if(status)
-				{
+                if(status)
 					MyProducts.populate();
-				}
 			});
 		
-			$("#signin").fadeOut();
-			$("#register").fadeOut();
-			$("#checklist").fadeOut();
-			$("#editadd").fadeOut();
+			self.hideOtherPages("dashboard");
 			$("#checklist-nav").fadeOut();
-			$("#emergencies").fadeOut();
-			$("#downloads").fadeOut();
-			$("#download-details").fadeOut();
-			$("#dashboard").fadeIn(function() {
-				if(callback)
-					callback();
-			});
-		}
-		else if(this.currentArea == "download")
-		{
-			MyProducts.loadUserProducts(function(success) {
-				if(success)
-				{
-					MyProducts.loadAllProducts(function(success) {
-						if(success)
-						{
-							MyProducts.populateDownloads();
-						
-							$("#signin").fadeOut();
-							$("#register").fadeOut();
-							$("#checklist").fadeOut();
-							$("#editadd").fadeOut();
-							$("#checklist-nav").fadeOut();
-							$("#dashboard").fadeOut();
-							$("#download-details").fadeOut();
-							$("#emergencies").fadeOut();
-							$("#downloads").fadeIn(function() {
-								if(callback)
-									callback();
-							});
-						}
-						else
-						{
-							var dialog = new Dialog("#infobox", "Cannot connect to server.");
-							dialog.show();
-						}
-					});
-				}
-				else
-				{
-					var dialog = new Dialog("#infobox", "Cannot connect to server.");
-					dialog.show();
-				}
-			});
-		}
-		else if(this.currentArea == "emergency")
-		{
+			$("#dashboard").fadeIn();
+	};
+	
+	this.updateDownloadArea = function() {
+		MyProducts.loadUserProducts(function(success) {
+			if(success)
+			{
+				MyProducts.loadAllProducts(function(success) {
+					if(success)
+					{
+						MyProducts.populateDownloads();
+					
+						self.hideOtherPages("downloads");
+						$("#checklist-nav").fadeOut();
+						$("#downloads").fadeIn();
+					}
+					else
+					{
+						var dialog = new Dialog("#infobox", "Cannot connect to server.");
+						dialog.show();
+					}
+				});
+			}
+			else
+			{
+				var dialog = new Dialog("#infobox", "You must be signed in to access the store.");
+				dialog.show();
+			}
+		});
+	};
+	
+	this.updateEmergenciesArea = function() {
+
 			Navigation.updateChecklist("emergency");
 			Navigation.loadEmergencySections();
 		
-			$("#signin").fadeOut();
-			$("#register").fadeOut();
-			$("#checklist").fadeOut();
-			$("#editadd").fadeOut();
-			$("#checklist-nav").fadeIn();
-			$("#dashboard").fadeOut();
-			$("#downloads").fadeOut();
-			$("#download-details").fadeOut();
-			$("#emergencies").fadeIn(function() {
-				if(callback)
-					callback();
+			self.hideOtherPages("emergencies");
+			$("#checklist-nav").fadeIn(function() {
+				self.selectNavButton("emergency");
 			});
-		}
-		else if(this.currentArea == "editadd")
-		{
-			$("#dashboard").fadeOut();
-			$("#register").fadeOut();
-			$("#checklist").fadeOut();
+			$("#emergencies").fadeIn();
+	};
+	
+	this.updateEditAddArea = function() {
+			self.hideOtherPages("editadd");
 			$("#checklist-nav").fadeOut();
-			$("#signin").fadeOut();
-			$("#emergencies").fadeOut();
-			$("#downloads").fadeOut();
-			$("#download-details").fadeOut();
-			$("#editadd").fadeIn(function() {
-				if(callback)
-					callback();
-			});
-		}
-		else if(this.currentArea == "signin")
-		{
-			$("#dashboard").fadeOut();
-			$("#register").fadeOut();
-			$("#checklist").fadeOut();
-			$("#editadd").fadeOut();
-			$("#emergencies").fadeOut();
-			$("#checklist-nav").fadeOut();
-			$("#downloads").fadeOut();
-			$("#download-details").fadeOut();
-			$("#signin").fadeIn(function() {
-				if(callback)
-					callback();
-			});
-		}
-		else if(this.currentArea == "register")
-		{
-			$("#dashboard").fadeOut();
-			$("#register").fadeOut();
-			$("#signin").fadeOut();
-			$("#checklist").fadeOut();
-			$("#editadd").fadeOut();
-			$("#emergencies").fadeOut();
-			$("#checklist-nav").fadeOut();
-			$("#downloads").fadeOut();
-			$("#download-details").fadeOut();
-			$("#register").fadeIn(function() {
-				if(callback)
-					callback();
-			});
-		}
-		else if(this.currentArea == "checklist")
-		{
-			if(this.previousArea == "emergency")
-				this.updateChecklist(this.previousChecklistCategory);
-			else
-				this.updateChecklist(this.currentChecklistCategory);
+			$("#editadd").fadeIn();
+	};
+	
+	this.updateSignoutArea = function() {
+			self.simpleNavigation.currentArea = self.simpleNavigation.previousAreas.pop();
 			
-			$("#dashboard").fadeOut();
-			$("#register").fadeOut();
-			$("#signin").fadeOut();
-			$("#editadd").fadeOut();
-			$("#register").fadeOut();
-			$("#emergencies").fadeOut();
-			$("#downloads").fadeOut();
-			$("#download-details").fadeOut();
-			$("#checklist").fadeIn(function() {
-				if(callback)
-					callback();
-			});
+			Authentication.signOut();
+	};
+	
+	this.updateSyncArea = function() {
+		self.simpleNavigation.currentArea = self.simpleNavigation.previousAreas.pop();
+		
+		syncLoader.show();
+		
+        setTimeout(function() {
+            Sync.sync();
+        }, 300);
+	};
+	
+	this.updateSigninArea = function() {
+			self.hideOtherPages("signin");
+			$("#checklist-nav").fadeOut();
+			$("#signin").fadeIn();
+	};
+		
+	this.updateRegisterArea = function() {
+			self.hideOtherPages("register");
+			$("#checklist-nav").fadeOut();
+			$("#register").fadeIn();
+	};
+	this.updateChecklistArea = function() {
+			if(self.simpleNavigation.previousArea == "emergency")
+				self.updateChecklist(self.previousChecklistCategory);
+			else
+				self.updateChecklist(self.currentChecklistCategory);
+			
+			self.hideOtherPages("checklist");
+			$("#checklist").fadeIn();
 			$("#checklist-nav").fadeIn();
-		}
+	};
+	this.updateEditTailArea = function() {
+			self.hideOtherPages("edittail");
+			$("#checklist-nav").fadeOut();
+			$("#edittail").fadeIn();
+	};
+	this.updateDownloadDetailsArea = function() {
+			self.hideOtherPages("productdetails");
+			$("#checklist-nav").fadeOut();
+			$("#productdetails").fadeIn();
+	};
+
+	this.updateSettingsArea = function() {
+		self.hideOtherPages("settings");
+		$("#checklist-nav").fadeOut();
+		
+		SettingsEditor.updateSettingsView();
+		
+		$("#settings").fadeIn();
+	};
+
+	this.checklistParserArea = function() {
+		self.hideOtherPages("#checklistparser");
+		$("#checklist-nav").fadeOut();
+		
+		$("#checklistparser").fadeIn();
+	};
+	
+	this.productEditorArea = function() {
+		self.hideOtherPages("#producteditor");
+		$("#checklist-nav").fadeOut();
+		$("#producteditor").fadeIn();
+		prepareDocument();
+	};
+
+	this.updateChangePasswordArea = function() {
+		self.hideOtherPages("changePassword");
+		$("#checklist-nav").fadeOut();
+		$("#changePassword").fadeIn();
+	};
+	
+	this.updatePasswordRecoveryArea = function() {
+		self.hideOtherPages("passwordRecovery");
+		$("#checklist-nav").fadeOut();
+		$("#passwordRecovery").fadeIn();
 	};
 
 	this.initNavBars = function() {
@@ -328,7 +327,7 @@ function NavigationHandler() {
 			}
 			else
 			{
-				if(Navigation.currentArea == "emergency")
+				if(Navigation.simpleNavigation.currentArea == "emergency")
 				{
 					Navigation.back();
 				}
@@ -360,42 +359,66 @@ function NavigationHandler() {
 		$(".sections").tap(function(e) {
 			$(".check-sections").toggle();
 		});
+		
+		$("#e6bList").children().tap(function(e) {
+			self.autoGo($(this));
+		});
+	};
+	
+	this.initLocations = function() {
+		this.simpleNavigation.add("dashboard", self.updateDashboardArea);
+		this.simpleNavigation.add("download", self.updateDownloadArea);
+		this.simpleNavigation.add("emergency", self.updateEmergenciesArea);
+		this.simpleNavigation.add("editadd", self.updateEditAddArea);
+		this.simpleNavigation.add("checklist", self.updateChecklistArea);
+		this.simpleNavigation.add("edittail", self.updateEditTailArea);
+		this.simpleNavigation.add("download-details", self.updateDownloadDetailsArea);
+		this.simpleNavigation.add("signout", self.updateSignoutArea);
+		this.simpleNavigation.add("register", self.updateRegisterArea);
+		this.simpleNavigation.add("signin", self.updateSigninArea);
+		this.simpleNavigation.add("e6b", self.updateE6BArea);
+		this.simpleNavigation.add("conversions", self.updateE6BConversionsArea);
+		this.simpleNavigation.add("settings", self.updateSettingsArea);
+		this.simpleNavigation.add("sync", self.updateSyncArea);
+		this.simpleNavigation.add("parser", self.checklistParserArea);
+		this.simpleNavigation.add("productEditor", self.productEditorArea);
+		this.simpleNavigation.add("changePassword", self.updateChangePasswordArea);
+		this.simpleNavigation.add("passwordRecovery", self.updatePasswordRecoveryArea);
 	};
 	
 	this.init = function() {
 		this.initNavBars();
+		this.initLocations();
 		
-		$(".check-sections").touchScroll({ 
-			threshold: 200,
-			direction: "vertical"
-		});
+		$("a").each(function() {
+        	if($(this).attr("data-link"))
+        	{
+        		$(this).tap(function(e) {
+        			Navigation.autoGo($(this));
+        		});
+        	}
+        });
 		
-		$(".check-sections").mouseScroll({
-			scrollAmount: 2,
-			direction: "vertical"
-		});
-		
-		$(".checklist").touchScroll({
-			threshold: 200,
+		/*$(".scrollable").touchScroll({
 			direction: "vertical",
-			onBeforeScroll: function(event) {
-				if(Checklist.editMode && Checklist.isSorting)
+			threshold: 200,
+			onBeforeScroll: function(e) {
+				if(Checklist.isSorting)
 				{
-					$(".checklist").touchScroll("disableScroll");
-					//$(this).touchScroll("disableScroll");
+					$(this).touchScroll("disableScroll");
 				}
 				else
 				{
-					$(".checklist").touchScroll("enableScroll");
-					//$(this).touchScroll("enableScroll");
+					$(this).touchScroll("enableScroll");
 				}
 			}
 		});
 		
-		$(".checklist").mouseScroll({
-			scrollAmount: 2,
-			direction: "vertical"
+		$(".scrollable").mouseScroll({
+			direction: "vertical",
+			scrollAmount: 4
 		});
+		*/
 		
 		$(".edit-check").tap(function(e) {
 			Checklist.productEditMode = !Checklist.productEditMode;
@@ -415,17 +438,16 @@ function NavigationHandler() {
 				Checklist.isSorting = false;
 				var indices = new Array();
 				$("#checklist-items").children().each(function(index, item) {
-					var original = parseInt($(this).attr("data-index"));
+					var id = $(this).attr("data-id");
 					 
-					if( original != index)
-					{
-						indices.push({original: original, index: index});	
-						$(this).attr("data-index", index);
-					}
+					indices.push({id: id, index: index});	
+					$(this).attr("data-index", index);
 				});
 			
 				if(indices.length > 0)
 					Navigation.checklist[Navigation.currentChecklistSection].items = Checklist.reindex(Navigation.checklist[Navigation.currentChecklistSection].items, indices);
+			
+				Sync.syncToPhone();
 			},
 			start: function(event, ui) {
 				Checklist.isSorting = true;
@@ -439,6 +461,19 @@ function NavigationHandler() {
 			axis: "y",
 			stop: function(event, ui) {
 				Checklist.isSorting = false;
+				var indices = new Array();
+				$("#dashboard-planes").children().each(function(index, item) {
+					var id = $(this).attr("data-id");
+
+						indices.push({id: id, index: index});	
+						$(this).attr("data-index", index);
+				
+				});
+			
+				if(indices.length > 0)
+					Checklist.checklists = Checklist.reindex(Checklist.checklists, indices);
+
+				Sync.syncToPhone();
 			},
 			start: function(event, ui) {
 				Checklist.isSorting = true;

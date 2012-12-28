@@ -41,7 +41,8 @@ var TAG_BODY_CHART = "@Body CHART";
 var TAG_NOTE = "@Note";
 var TAG_TOC = "@TOC 1";
 var TAG_TOC_SECONDARY = "@TOC";
-var BULLET = "•";
+var BULLET = "ï¿½";
+var TAG_EMPTY="@:";
 
 var HTML_TAG_OPN_UL = "<ul>";
 var HTML_TAG_CLS_UL = "</ul>";
@@ -129,8 +130,13 @@ function IsPopulated(o)
 }
 function WriteToJSON(rawdata)
 {
+	
 	var splitLines = CreateList(rawdata);
 	var Document = "";
+	
+	docTags = new Array();
+	docTags.push(TAG_EMPTY);
+	
 	for(var i = 1; i < splitLines.length; i++)
 	{
 		var line = splitLines[i];	
@@ -198,7 +204,7 @@ function WriteToJSON(rawdata)
 			Section_N.Subheading = CurrentValue.replace("\r","");
 			continue;
 		}
-		if(Tag.contains(TAG_BODY))
+		if(Tag.contains(TAG_BODY) || Tag.contains(TAG_EMPTY))
 		{
 			var splitlines = CreateList(CurrentValue);
 			
@@ -390,7 +396,6 @@ function WriteToJSON(rawdata)
 	}
 	
 	postingChecklist = true;
-	//return new ChecklistDev();
 	return CreateJSON();
 	
 	
@@ -426,6 +431,42 @@ function CreateJSON()
 		
 		chkList.preflight.push(section);
 	}
+	
+	
+	//Reset
+	FileContents = "";
+		
+	TAG_HEADER = "@Header 1";
+	TAG_HEADER_SECONDARY = "@Header";
+	TAG_BODY = "@Body";
+	TAG_BODY_INDENT = "@Body Indent";
+	TAG_BODY_CHART = "@Body CHART";
+	TAG_NOTE = "@Note";
+	TAG_TOC = "@TOC 1";
+	TAG_TOC_SECONDARY = "@TOC";
+	BULLET = "ï¿½";
+	TAG_EMPTY="@:";
+
+	HTML_TAG_OPN_UL = "<ul>";
+	HTML_TAG_CLS_UL = "</ul>";
+	HTML_TAG_OPN_LI = "<li>";
+	HTML_TAG_CLS_LI = "</li>";
+
+	QStartTagReg = /@[A-Za-z0-9\s]+=/;
+	docTags = new Array();
+
+	TagIndex = 0;
+	TagStartPos = 0;
+
+	Qref_N 		= new Qref();
+	Section_N 	= new Section("","","","");
+	Item_N 		= new Item("","","","");
+	TOC_N 		= new TOC("");
+	TOCItem_N	= new TOCItem("","");
+	Table_N		= new Table();
+	Row_N 		= new Row();
+	Column_N	= new Column("","");
+	Qref_N = new Qref();
 	
 	return chkList;
 }

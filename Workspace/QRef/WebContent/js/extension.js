@@ -1,28 +1,26 @@
+var cachePack = "";
 
-var token = "";
-
+//Initialize
 var Checklist = new CheckListHandler();
 var ChecklistEditor = new ChecklistEditorHandler();
-var Navigation = new NavigationHandler();
+var TailNumberEditor = new TailNumberEditorHandler();
 var MyProducts = new MyProductsHandler();
-var Authentication = new AuthenticationHandler();
+var SettingsEditor = new SettingsEditorHandler();
+var Sync = new SyncHandler();
+var syncLoader = undefined;
 var Theme = new ThemeHandler();
-var loader = undefined;
-var cached = false;
-var online = true;
-var cachedUserProducts = "";
-var previousProduct = "";
-var previousArea = "";
-var previousCategory = "";
-var host = "http://66.128.48.242/";
 
-$(function() {
-	$.android = /iphone|ipad/.test(navigator.userAgent.toLowerCase())
+$(window).load(function() {
+	loader.show();
+    syncLoader = new Loader("#syncLoader");
+    DataLoaded();
+});
 
-	loader = new Loader();
+function DataLoaded() {
 	Navigation.init();
 	MyProducts.init();
-	Authentication.init();
+	SettingsEditor.init();
+	Authentication.verify();
 	
 	$("#editAddForm").validate({
 		submitHandler: function() {
@@ -34,6 +32,12 @@ $(function() {
 			{
 				ChecklistEditor.add();
 			}
+		}
+	});
+	
+	$("#editTailForm").validate({
+		submitHandler: function() {
+			TailNumberEditor.edit();
 		}
 	});
 	
@@ -49,35 +53,26 @@ $(function() {
 		}
 	});
 	
-	Navigation.updateArea();
-});
-
-function AuthenticationHandler() {
-	this.init = function() {
-		token = $.cookie.getCookie("QrefAuth");
-
-		this.verify();
-	};
+	$("#passwordRecoveryForm").validate({
+		submitHandler: function() {
+			passwordRecovery();
+		}
+	});
 	
-	this.verify = function() {
-		if(token == undefined || token == "") 
-		{
-			token = "";
-			
-			$("#signin-menu").show();
-			$("#signout-menu").hide();
-			$("#register-menu").show();
-			$("#sync-menu").hide();
+	$("#changePasswordForm").validate({
+		submitHandler: function() {
+			changePassword();
 		}
-		else
-		{
-			$("#signin-menu").hide();
-			$("#signout-menu").show();
-			$("#register-menu").hide();
-			$("#sync-menu").show();
-		}
-	};
+	});
+	
+	var UTC = new UTCTime();
+	UTC.update();
+	var converter = new Converter();
+	converter.init();
+	
+	loader.hide();
+	Navigation.go("dashboard");
+	
+	resetPassword();
 }
-
-
 

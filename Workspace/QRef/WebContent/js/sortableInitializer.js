@@ -1,65 +1,89 @@
 var shifted = false;
-var ctrled = false;
+var alted = false;
 var firstSelectedIndex = -1;
 
-//Start Shift-MultiSelect Functionality
-$(window).keydown(function(e) {
-	if(e.which == 16)
-	{
-		shifted = true;
-	}
-});
+$(window).load(function() {
 
-$(window).keyup(function(e) {
-	if(e.which == 16)
-	{
-		shifted = false;
-	}
-});
-
-$(window).keydown(function(e) {
-	if(e.which == 17)
-	{
-		ctrled = false;
-	}
-});
-
-$(window).keyup(function(e) {
-	if(e.which == 17)
-	{
-		ctrled = true;
-	}
+	//Start Shift-MultiSelect Functionality
+	$(window).keydown(function(e) {
+		if(e.which == 16)
+		{
+			shifted = true;
+		}
+	});
+	
+	$(window).keyup(function(e) {
+		if(e.which == 16)
+		{
+			shifted = false;
+		}
+	});
+	
+	$(window).keydown(function(e) {
+		if(e.altKey == true)
+		{
+			alted = true;
+		}
+	});
+	
+	$(window).keyup(function(e) {
+		if(e.altKey == true)
+		{
+			alted = false;
+		}
+	});
 });
 
 function AddMultiSelect(item)
 {
-	item.toggleClass("ui-selected");
-	
 	var children = item.parent().children();
-	/*
-	if(ctrled)
-	{
-		firstSelectedIndex = index(item[0].parentNode, item[0]);
+	item.toggleClass('ui-selected');
+	
+	if(alted) {
+		item.removeClass("ui-selected");
+		var currentIndex = index(item[0].parentNode, item[0]);
+		
+		if(currentIndex < firstSelectedIndex)
+		{
+			for(var i = firstSelectedIndex; i > currentIndex; i--)
+			{
+				
+				$(children[i]).removeClass("ui-selected");
+			}
+		}
+		else
+		{
+			for(var i = firstSelectedIndex; i < currentIndex; i++)
+			{
+				$(children[i]).removeClass("ui-selected");
+			}
+		}
+		
+		firstSelectedIndex = currentIndex;
+		alted = false;
 	}
-	else
-	{*/
+	
+	else {
 		if(shifted)
 		{
+			if(!item.hasClass("ui-selected"))
+				item.addClass("ui-selected");
 			var currentIndex = index(item[0].parentNode, item[0]);
 			
 			
 			if(currentIndex < firstSelectedIndex)
 			{
-				for(var i = firstSelectedIndex - 1; i > currentIndex; i--)
+				for(var i = firstSelectedIndex; i > currentIndex; i--)
 				{
-					$(children[i]).toggleClass("ui-selected");
+					
+					$(children[i]).addClass("ui-selected");
 				}
 			}
 			else
 			{
-				for(var i = firstSelectedIndex + 1; i < currentIndex; i++)
+				for(var i = firstSelectedIndex; i < currentIndex; i++)
 				{
-					$(children[i]).toggleClass("ui-selected");
+					$(children[i]).addClass("ui-selected");
 				}
 			}
 			
@@ -69,15 +93,14 @@ function AddMultiSelect(item)
 		{					
 			firstSelectedIndex = index(item[0].parentNode, item[0]);
 		}
-		
-	//}
+	}
 	
 	CalculateItemInputVisibility();
 }
 
 function index(parent, item)
 {
-	var children = parent.childNodes;
+	var children = parent.children;
 	
 	if(children)
 	{
@@ -107,7 +130,7 @@ function index(parent, item)
 }
 
 //Set Sortables, Stop Propagation
-$(function() {
+$(window).load(function() {
 	
 	$("ul").bind("sortreceive", function(sortevent, ui)
 	{
@@ -122,11 +145,11 @@ $(function() {
 	{
 	start: function(event, ui) {
 			event.stopPropagation();
-			$(".dashboard-planes-selector").touchScroll("disableScroll");
+			//$(".dashboard-planes-selector").touchScroll("disableScroll");
 		},
 	stop: function(event, ui) {
 		event.stopPropagation();
-		$(".dashboard-planes-selector").touchScroll("enableScroll");
+		//$(".dashboard-planes-selector").touchScroll("enableScroll");
 	},
 		scroll: true,
 		connectWith:"ul"
@@ -135,11 +158,11 @@ $(function() {
 	{
 	start: function(event, ui) {
 			event.stopPropagation();
-			$(".dashboard-planes-selector").touchScroll("disableScroll");
+			//$(".dashboard-planes-selector").touchScroll("disableScroll");
 		},
 	stop: function(event, ui) {
 		event.stopPropagation();
-		$(".dashboard-planes-selector").touchScroll("enableScroll");
+		//$(".dashboard-planes-selector").touchScroll("enableScroll");
 	},
 		scroll: true,
 		connectWith:"ul"
@@ -148,11 +171,11 @@ $(function() {
 	{
 	start: function(event, ui) {
 			event.stopPropagation();
-			$(".dashboard-planes-selector").touchScroll("disableScroll");
+			//$(".dashboard-planes-selector").touchScroll("disableScroll");
 		},
 	stop: function(event, ui) {
 		event.stopPropagation();
-		$(".dashboard-planes-selector").touchScroll("enableScroll");
+		//$(".dashboard-planes-selector").touchScroll("enableScroll");
 	},
 		scroll: true,
 		connectWith:"ul"
@@ -161,11 +184,11 @@ $(function() {
 	{
 	start: function(event, ui) {
 			event.stopPropagation();
-			$(".dashboard-planes-selector").touchScroll("disableScroll");
+			//$(".dashboard-planes-selector").touchScroll("disableScroll");
 		},
 	stop: function(event, ui) {
 		event.stopPropagation();
-		$(".dashboard-planes-selector").touchScroll("enableScroll");
+		//$(".dashboard-planes-selector").touchScroll("enableScroll");
 	},
 		scroll: true,
 		connectWith:"ul"

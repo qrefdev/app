@@ -42,8 +42,6 @@
 									   false, false, false, 0,null);
 			
 				event.preventDefault();
-				event.stopPropagation();
-			
 				first.target.dispatchEvent(simulatedEvent);
 			} 
 		}
