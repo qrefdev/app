@@ -12,6 +12,9 @@
 				plugin = new DoubleTap(item, options);
 				$this.data("jquery.dbltap", plugin);
 			}
+			else if(plugin && options) {
+				plugin.updateOptions(options);
+			}
     	});
     }
   };
@@ -41,6 +44,10 @@
       	$element.bind("touchstart", touchStart);
       	$element.bind("touchend", touchEnd);
   	  }
+  
+  	this.updateOptions = function(options) {
+  		TapHandler = options;
+  	};
   
 	function touchStart(event) {
 

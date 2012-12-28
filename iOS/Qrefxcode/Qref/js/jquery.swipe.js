@@ -12,6 +12,9 @@
 				plugin = new Swipe(item, options);
 				$this.data("jquery.swipe", plugin);
 			}
+			else if(plugin && options) {
+				plugin.updateOptions(options);
+			}
     	});
     }
   };
@@ -61,6 +64,15 @@
 	  
 	  /** Prevent the dragstart on the element **/
 	  //$element.bind("dragstart", function(e) { e.preventDefault(); });
+	  
+	  this.updateOptions = function(options) {
+		  if(options.threshold) swipeThreshold = options.threshold;
+		  if(options.durationThreshold) durationThreshold = options.durationThreshold;
+		  if(options.swipeLeft) SwipeLeftHandler = options.swipeLeft;
+		  if(options.swipeRight) SwipeRightHandler = options.swipeRight;
+		  if(options.swipeDown) SwipeDownHandler = options.swipeDown;
+		  if(options.swipeUp) SwipeUpHandler = options.swipeUp;
+	  };
 	  
 	  function touchStart(event) {
 	  		var clientX = event.pageX;

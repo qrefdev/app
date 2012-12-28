@@ -16,6 +16,10 @@
 			{
 				plugin.triggerTap();
 			}
+			else if(plugin && options)
+			{
+				plugin.updateOptions(options);
+			}
     	});
     }
   };
@@ -50,6 +54,10 @@
 			
 			duration = 0;
 	  }
+	  
+	  this.updateOptions = function(options) {
+	  		TapHandler = options;
+	  };
 	  
 	  this.triggerTap = function() {
 			trigger();
