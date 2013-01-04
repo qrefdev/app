@@ -330,11 +330,13 @@ function NavigationHandler() {
 			if($(".menu").hasClass("slided"))
             {
                 $(".page").animate({left:"0px"});
+                $(".nav").animate({left:"0px"});
                 $(".menu").animate({right:"-150px"}).removeClass("slided");
             }
             else
             {
                 $(".page").animate({left:"-70px"});
+                $(".nav").animate({left:"-145px"});
                 $(".menu").animate({right:"-5px"}).addClass("slided");
             }
 		});
@@ -348,6 +350,7 @@ function NavigationHandler() {
 			var item = $(this);
 			Navigation.autoGo(item);
             $(".page").animate({left:"0px"});
+            $(".nav").animate({left:"0px"});
             $(".menu").animate({right:"-150px"}).removeClass("slided");
 		});
 		
