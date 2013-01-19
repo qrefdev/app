@@ -38,20 +38,20 @@
       
       $element = $(element);
       
-     // if(typeof TouchEvent == 'undefined' || typeof Touch == "undefined")
-      //{
+      if(typeof TouchEvent == 'undefined' || typeof Touch == "undefined")
+      {
       	$element.mouseup(touchEnd);
       	$element.mousedown(touchStart);
-      //}
-     /*( else
+      }
+      else
       {
       	$element.bind("touchstart", touchStart);
       	$element.bind("touchend", touchEnd);
-  	  }*/
+  	  }
   	  
 	  function touchStart(event) {
 			startTime = endTime = Date.now();
-			
+			$element.addClass('active');
 			duration = 0;
 	  }
 	  
@@ -67,6 +67,8 @@
 			endTime = Date.now();
 			
 			duration = getDuration();
+			
+			$element.removeClass('active');
 			
 			if(duration < threshold) {
 				triggerHandler(event);

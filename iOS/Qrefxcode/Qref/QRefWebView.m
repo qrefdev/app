@@ -181,6 +181,7 @@
                 else if([key isEqualToString:@"clearUser"])
                 {
                     [self->preferences setValue:@"" forKey:@"User"];
+                    [self->preferences setValue:@"" forKey:@"Checklists"];
                     somethingChanged = YES;
                 }
                 else if([key isEqualToString:@"purchase"])

@@ -9,24 +9,42 @@ function ThemeHandler() {
 	
 	this.createDashboardItem = function(product) {
         
-		var html = '<li data-index="' + product.index + '" data-id="' + product._id + '"><div class="plane-icon"><img src="images/notFound.jpg" /></div><div class="holder"><div class="heading">' + product.manufacturer.name +
-                        " " + product.model.name + '</div>' +
-						'<div class="subheading">' + product.model.description + " | " + product.model.modelYear + '</div>' +
-						'<div class="subheading">' + product.tailNumber + '</div>' + 
-						'<ul><li class="product-subarea" data-link="preflight">preflight</li><li class="product-subarea" data-link="takeoff">take-off</li>' +
-						'<li class="product-subarea" data-link="landing">landing</li><li class="product-subarea" data-link="emergency">emergency</li></ul>' +
-						'</div>' +
-						'<div class="delete"><button class="item-delete-button">delete</button></div>' +
-						'<div class="handle"><div class="item"></div><div class="item"></div><div class="item"></div></div>' +
-						'</li>';
+		var html = '<li data-index="' + product.index + '" data-id="' + product._id + '"><div class="plane-icon"></div><div class="holder"><div class="heading">' + product.manufacturer.name +
+                        " " + product.model.name + '</div>';
+                        
+        if(product.model.description)
+        	html += '<div class="subheading">' + product.model.description + '</div>';
+        
+        html += '<div class="subheading">';
+        	
+        if(product.tailNumber)
+        	html += '<span class="tailNumber">' + product.tailNumber + '</span> ';
+		
+		if(product.model.modelYear)
+			html += '<span class="modelYear">' + product.model.modelYear + '</span>';
+	
+		html += '</div>';
+		
+		html += '<ul><li class="product-subarea" data-link="preflight">Preflight</li><li class="product-subarea" data-link="takeoff">Takeoff</li>' +
+				'<li class="product-subarea" data-link="landing">Landing</li><li class="product-subarea" data-link="emergency">Emergencies</li>';
+		
+		if(ChecklistLast.containsKey(product._id))
+			html += '<li class="product-subarea" data-link="last">Last</li>';		
+				
+			html +=	'</ul></div>' +
+				'<div class="delete">delete</div>' +
+				'<div class="handle"><div class="item"></div><div class="item"></div><div class="item"></div></div>' +
+				'</li>';
 						
 		return html;
 	};
 	
 	this.createDownloadItem = function(product, userOwnsProduct) {
-		var html = '<li data-id="' + product._id + '" class="' + userOwnsProduct + '"><div class="plane-icon"><img src="images/notFound.jpg" /></div><div class="holder"><div class="heading">' + product.manufacturer.name +
-				" " + product.model.name + '</div>' +
-				'<div class="subheading">' + product.model.description + " | " + product.model.modelYear + '</div>' +
+		var html = '<li data-id="' + product._id + '" class="' + userOwnsProduct + '"><div class="plane-icon"></div><div class="holder"><div class="heading">' + product.manufacturer.name +
+				" " + product.model.name + '</div>';
+		if(product.model.description)
+			html += '<div class="subheading">' + product.model.description + '</div>';
+			html +=	'<div class="subheading">' + product.model.modelYear + '</div>' +
 				'<div class="subheading">' + product.serialNumber + '</div>' +
 				'</div></li>'
 				
@@ -40,8 +58,8 @@ function ThemeHandler() {
 						'<div class="check">' + item.check + '</div>' +
 						'<div class="response">' + item.response + '</div>' +
 					'</div>' +
-					'<div class="delete"><button class="item-delete-button">delete</button></div>' +
-					'<div class="add"><button class="item-add-button">add</button></div>' +
+					'<div class="delete">delete</div>' +
+					'<div class="add"><i class="icon-plus"></i></div>' +
 					'<div class="handle"><div class="item"></div><div class="item"></div><div class="item"></div>' +
 					'</li>';
 					
@@ -132,29 +150,31 @@ function ThemeHandler() {
 			
 			if($(this).find(".delete").css("display") != "none")
 			{
-				self.clearDeleteStatus($("#checklist-items").children());
-			}
-			
-			if(!Checklist.productEditMode) {
-				var id = $(this).attr("data-id");
-				
-				Navigation.loadChecklist(id);
-				Navigation.go("checklist");
+				self.clearDeleteStatus($("#dashboard-planes").children());
 			}
 			else
 			{
-				var itemToEdit = $(this);
-				
-				var item = MyProducts.getProduct(Checklist.checklists, itemToEdit.attr("data-id"));
-				
-				if(item)
+				if(!Checklist.productEditMode) {
+					var id = $(this).attr("data-id");
+					
+					Navigation.loadChecklist(id);
+					Navigation.go("checklist");
+				}
+				else
 				{
-					TailNumberEditor.editingItem = itemToEdit;
+					var itemToEdit = $(this);
 					
-					$("#tailnumber").val(item.tailNumber);
-					$("#tailnumber").blur();
+					var item = MyProducts.getProduct(Checklist.checklists, itemToEdit.attr("data-id"));
 					
-					Navigation.go("edittail");
+					if(item)
+					{
+						TailNumberEditor.editingItem = itemToEdit;
+						
+						$("#tailnumber").val(item.tailNumber);
+						$("#tailnumber").blur();
+						
+						Navigation.go("edittail");
+					}
 				}
 			}
 		});
@@ -169,12 +189,19 @@ function ThemeHandler() {
 				var dataid = parent.attr("data-id");
 				var datalink = $(this).attr("data-link");
 				
+				if(datalink == 'last') {
+					var lp = ChecklistLast.get(dataid);
+				}
+				
 				Navigation.loadChecklist(dataid);
+				
+				if(datalink == 'last')
+					ChecklistLast.set(dataid, lp);
+				
 				Navigation.updateChecklist(datalink);
 				
 				if(datalink == "emergency")
 				{
-					Navigation.go("checklist");
 					Navigation.go("emergency");
 				}
 				else
@@ -221,7 +248,7 @@ function ThemeHandler() {
 					event.stopPropagation();
 				}
 			},
-			threshold: 40,
+			threshold: 10,
 			durationThreshold: 265
 		});
 	};
@@ -255,7 +282,7 @@ function ThemeHandler() {
 				}
 			},
 			threshold: 40,
-			durationThreshold: 1000
+			durationThreshold: 265
 		});
 		
 		

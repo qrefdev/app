@@ -5,15 +5,22 @@ function Converter() {
 	this.selection = undefined;
 	
 	this.init = function() {
-		this.selection = $("#convertMethod");
-		this.currentOption = $(this.selection.children()[0]);
-		this.selection.change(function(e) {
-			self.currentOption = self.selection.find("option:selected");
+		this.currentOption = $("#conversion-items li[class='active']");
+		
+		$("#selectedConversion").html(this.currentOption.text());
+	
+		$("#conversion-items li").tap(function(e) {
+			$("#conversion-items li").removeClass('active');
+			$(this).addClass('active');
+			self.currentOption = $(this);
 			self.updateConversionTypes();
 			self.convertTopToBottom();
-			self.convertBottomToTop();
+			$("#selectedConversion").html($(this).text());
+			$(".available-conversions").fadeOut();		
 		});
+	
 		this.updateConversionTypes();
+		
 		$("#convertTop").keyup(function() {
 			self.convertTopToBottom();
 		});
@@ -31,14 +38,14 @@ function Converter() {
 	this.updateConversionTypes = function() {
 		if(this.currentOption)
 		{
-			$(".topConversionType").html(this.currentOption.attr("data-top"));
-			$(".bottomConversionType").html(this.currentOption.attr("data-bottom"));
+			$(".topConversion").html(this.currentOption.attr("data-top"));
+			$(".bottomConversion").html(this.currentOption.attr("data-bottom"));
 		}
 	};
 	
 	this.convertTopToBottom = function() {
 		if(this.currentOption) {
-			if(parseInt(this.currentOption.val()) != 6)
+			if(parseInt(this.currentOption.attr('data-value')) != 6)
 			{
 				var multiplier = parseFloat(this.currentOption.attr("data-multiplier"));
 				var currentValue = parseFloat($("#convertTop").val()) * multiplier;
@@ -77,7 +84,7 @@ function Converter() {
 	
 	this.convertBottomToTop = function() {
 		if(this.currentOption) {
-			if(parseInt(this.currentOption.val()) != 6)
+			if(parseInt(this.currentOption.attr('data-value')) != 6)
 			{
 				var multiplier = parseFloat(this.currentOption.attr("data-inverse"));
 				var currentValue = parseFloat($("#convertBottom").val()) * multiplier;

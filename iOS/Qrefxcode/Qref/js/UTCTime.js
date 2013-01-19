@@ -6,7 +6,7 @@ function UTCTime () {
 		
 		//this.checkThemeMode();
 		
-		$(".utcTime").html(now.toUTCString());
+		$(".utcCurrent").html(now.toUTCString());
 		
 		setTimeout(function() {
 			self.update();

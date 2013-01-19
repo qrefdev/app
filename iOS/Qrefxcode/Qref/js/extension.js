@@ -9,6 +9,7 @@ var SettingsEditor = new SettingsEditorHandler();
 var Sync = new SyncHandler();
 var syncLoader = undefined;
 var Theme = new ThemeHandler();
+var ChecklistLast = new Dictionary();
 
 $(window).load(function() {
 	loader.show();

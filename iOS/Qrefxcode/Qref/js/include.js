@@ -13,7 +13,12 @@ var NightTheme = "theme-dark";
 var DayTheme = "theme-light";
 
 $(window).load(function() {
-               loader = new Loader("#loader");
+	
+	window.addEventListener("touchmove", function(e) {
+				e.preventDefault();
+		  }, true);
+		  
+    loader = new Loader("#loader");
 });
 
 function AuthenticationHandler() {
@@ -23,6 +28,13 @@ function AuthenticationHandler() {
 		this.verify();
         $(".currentLogin .user").html("");
 		window.location.href = "qref://clearToken&clearUser";
+		cachePack = "";
+		Checklist.checklists = undefined;
+		$("#emergency-items").html('');
+		$("#check-sections-items").html('');
+		$("#checklist-items").html('');
+		$("#dashboard-planes").html('');
+		Navigation.go('dashboard');
 	};
 	
 	this.verify = function() {
@@ -35,6 +47,7 @@ function AuthenticationHandler() {
 			$("#register-menu").show();
 			$("#sync-menu").hide();
 			$("#changepassword-menu").hide();
+			this.addFrontPageButtons();
 		}
 		else
 		{
@@ -44,5 +57,17 @@ function AuthenticationHandler() {
 			$("#sync-menu").show();
 			$("#changepassword-menu").show();
 		}
+	};
+	
+	this.addFrontPageButtons = function() {
+		$("#dashboard-planes").html($("#frontPageButtons").html());
+		$("#dashboard-planes li").each(function() {
+        	if($(this).attr("data-link"))
+        	{
+        		$(this).tap(function(e) {
+        			Navigation.autoGo($(this));
+        		});
+        	}
+        });
 	};
 }
