@@ -11,26 +11,62 @@ function NavigationHandler() {
 	var self = this;
 	
 	this.back = function() {
-		this.simpleNavigation.back();
+		if($("#editadd").css('display') != 'none') {
+			$("#editadd").animate({left: '-100%'}, 250, function(e) {
+					$("#editadd").hide();
+			});
+		}
+		else if($("#edittail").css('display') != 'none') {
+			$("#edittail").animate({left: '-100%'}, 250, function(e) {
+					$("#edittail").hide();
+			});
+		}
+		else {
+			this.simpleNavigation.back();
+		}
 	};
 	
 	this.go = function(place) {
-		this.simpleNavigation.go(place);
+		var self = this;
+		
+		if($("#editadd").css('display') != 'none') {
+			$("#editadd").animate({left: '-100%'}, 250, function(e) {
+					$("#editadd").hide();
+					self.simpleNavigation.go(place);
+			});
+		}
+		else if($("#edittail").css('display') != 'none') {
+			$("#edittail").animate({left: '-100%'}, 250, function(e) {
+					$("#edittail").hide();
+					self.simpleNavigation.go(place);
+			});
+		}
+		else {
+			this.simpleNavigation.go(place);
+		}
 	};
 	
 	this.autoGo = function(sender) {
-		this.simpleNavigation.autoGo(sender);
+		var self = this;
+		if($("#editadd").css('display') != 'none') {
+			$("#editadd").animate({left: '-100%'}, 250, function(e) {
+					$("#editadd").hide();
+					self.simpleNavigation.autoGo(sender);
+			});
+		}
+		else if($("#edittail").css('display') != 'none') {
+			$("#edittail").animate({left: '-100%'}, 250, function(e) {
+					$("#edittail").hide();
+					self.simpleNavigation.autoGo(sender);
+			});
+		}
+		else {
+			this.simpleNavigation.autoGo(sender);
+		}
 	};
 	
-	this.hideOtherPages = function(id) {
-		$(".page").each(function() {
-			var item = $(this);
-			
-			var itemId = item.attr("id");
-			
-			if(itemId != id && itemId != undefined)
-				item.fadeOut();
-		});
+	this.hideOtherPages = function(id, hide) {
+		$(".page").hide();
 	};
 	
 	this.updateChecklist = function(cat) {
@@ -154,15 +190,37 @@ function NavigationHandler() {
 			
 			var html = "";
 			
+			var count = 0;
 			for(var i = 0; i < this.checklist.length; i++)
 			{
+				if(count == 0) {
+					html += '<li><ul>';
+				}
+				else if(count == 2) {
+					html += '</ul></li>';
+					count = 0;
+					
+					if(html != "")
+                    	$("#emergency-items").append(html);
+                    
+                    html = '<li><ul>';
+				}
+				
 				var item = this.checklist[i];
 				
 				if(item.items.length > 0)
-					html = Theme.createEmergencySectionItem(item);
+					html += Theme.createEmergencySectionItem(item);
                 
-                if(html != "")
-                    $("#emergency-items").append(html);
+                if(count == 1 && i == this.checklist.length - 1) {
+                	html += '</ul></li>';
+                	
+                	if(html != "")
+                    	$("#emergency-items").append(html);
+                    	
+                    count = 0;
+                }
+                
+                count++;
 			}
 			
 			Theme.addEmergencySectionHandlers();
@@ -180,30 +238,33 @@ function NavigationHandler() {
 	
 	this.updateE6BArea = function() {
 		self.hideOtherPages("e6bconversions");
-		$("#checklist-nav").fadeOut();
-		$("#e6bconversions").fadeIn();
+		$("#checklist-nav").fadeOut(200);
+		$("#e6bconversions").fadeIn(200);
 	};
 	
 	this.updateE6BConversionsArea = function() {
 		self.hideOtherPages("e6bconversions");
-		$("#checklist-nav").fadeOut();
-		$("#e6bconversions").fadeIn();
+		$("#checklist-nav").fadeOut(200);
+		$("#e6bconversions").fadeIn(200);
 	};
 	
 	this.updateDashboardArea = function() {
+			loader.show();
 			self.simpleNavigation.clearHistory();
 		
 			Checklist.load(function(status) {
 					MyProducts.populate();
 					Authentication.verify();
+					loader.hide();
 			});
 		
-			self.hideOtherPages("dashboard");
-			$("#checklist-nav").fadeOut();
-			$("#dashboard").fadeIn();
+			self.hideOtherPages("dashboard", true);
+			$("#checklist-nav").fadeOut(200);
+			$("#dashboard").show();
 	};
 	
 	this.updateDownloadArea = function() {
+		loader.show();
 		MyProducts.loadUserProducts(function(succ) {
 			if(succ == true)
 			{
@@ -212,14 +273,16 @@ function NavigationHandler() {
 					{
 						MyProducts.populateDownloads();
 					
-						self.hideOtherPages("downloads");
-						$("#checklist-nav").fadeOut();
-						$("#downloads").fadeIn();
+						self.hideOtherPages("downloads", true);
+						$("#checklist-nav").hide();
+						$("#downloads").show();
+						loader.hide();
 					}
 					else
 					{
 						var dialog = new Dialog("#infobox", "Cannot connect to server.");
 						dialog.show();
+						loader.hide();
 					}
 				});
 			}
@@ -227,26 +290,25 @@ function NavigationHandler() {
 			{
 				var dialog = new Dialog("#infobox", "You must be signed in to access the store.");
 				dialog.show();
+				loader.hide();
 			}
 		});
 	};
 	
 	this.updateEmergenciesArea = function() {
-
-			Navigation.updateChecklist("emergency");
-			Navigation.loadEmergencySections();
-		
-			self.hideOtherPages("emergencies");
-			$("#checklist-nav").fadeIn(function() {
-				self.selectNavButton("emergency");
-			});
-			$("#emergencies").fadeIn();
+		Navigation.updateChecklist("emergency");
+		Navigation.loadEmergencySections();
+	
+		self.hideOtherPages("emergencies");
+		$("#checklist-nav").fadeIn(200);
+		self.selectNavButton("emergency");
+		$("#emergencies").show();
 	};
 	
 	this.updateEditAddArea = function() {
-			self.hideOtherPages("editadd");
-			$("#checklist-nav").fadeOut();
-			$("#editadd").fadeIn();
+		$("#editadd").css({left: '-100%'});
+		$("#editadd").show();
+		$("#editadd").animate({left: '0%'}, 250);
 	};
 	
 	this.updateSignoutArea = function() {
@@ -267,14 +329,14 @@ function NavigationHandler() {
 	
 	this.updateSigninArea = function() {
 			self.hideOtherPages("signin");
-			$("#checklist-nav").fadeOut();
-			$("#signin").fadeIn();
+			$("#checklist-nav").fadeOut(200);
+			$("#signin").fadeIn(200);
 	};
 		
 	this.updateRegisterArea = function() {
 			self.hideOtherPages("register");
-			$("#checklist-nav").fadeOut();
-			$("#register").fadeIn();
+			$("#checklist-nav").fadeOut(200);
+			$("#register").fadeIn(200);
 	};
 	this.updateChecklistArea = function() {
 			if(self.simpleNavigation.previousArea == "emergency")
@@ -282,40 +344,40 @@ function NavigationHandler() {
 			else
 				self.updateChecklist(self.currentChecklistCategory);
 			
-			self.hideOtherPages("checklist");
-			$("#checklist").fadeIn();
-			$("#checklist-nav").fadeIn();
+			self.hideOtherPages("checklist", true);
+			$("#checklist").show();
+			$("#checklist-nav").fadeIn(200);
 	};
 	this.updateEditTailArea = function() {
-			self.hideOtherPages("edittail");
-			$("#checklist-nav").fadeOut();
-			$("#edittail").fadeIn();
+		$("#edittail").css({left: '-100%'});
+		$("#edittail").show();
+		$("#edittail").animate({left: '0%'}, 250);
 	};
 	this.updateDownloadDetailsArea = function() {
 			self.hideOtherPages("productdetails");
-			$("#checklist-nav").fadeOut();
-			$("#productdetails").fadeIn();
+			$("#checklist-nav").fadeOut(200);
+			$("#productdetails").fadeIn(200);
 	};
 
 	this.updateSettingsArea = function() {
 		self.hideOtherPages("settings");
-		$("#checklist-nav").fadeOut();
+		$("#checklist-nav").fadeOut(200);
 		
 		SettingsEditor.updateSettingsView();
 		
-		$("#settings").fadeIn();
+		$("#settings").fadeIn(200);
 	};
 	
 	this.updateChangePasswordArea = function() {
 		self.hideOtherPages("changePassword");
-		$("#checklist-nav").fadeOut();
-		$("#changePassword").fadeIn();
+		$("#checklist-nav").fadeOut(200);
+		$("#changePassword").fadeIn(200);
 	};
 	
 	this.updatePasswordRecoveryArea = function() {
 		self.hideOtherPages("passwordRecovery");
-		$("#checklist-nav").fadeOut();
-		$("#passwordRecovery").fadeIn();
+		$("#checklist-nav").fadeOut(200);
+		$("#passwordRecovery").fadeIn(200);
 	};
 
 	this.initNavBars = function() {
@@ -324,6 +386,10 @@ function NavigationHandler() {
 			$(this).addClass("active");
 			if($(this).attr("data-link") == "emergency" && Navigation.currentChecklistCategory != "emergency")
 			{
+				Navigation.currentChecklistCategory == "emergency";
+				Navigation.go("emergency");
+			}
+			else if($(this).attr("data-link") == "emergency" && Navigation.currentChecklistCategory == "emergency") {
 				Navigation.currentChecklistCategory == "emergency";
 				Navigation.go("emergency");
 			}
@@ -398,23 +464,35 @@ function NavigationHandler() {
 			}).removeClass("slided");
 		});
 		
+		$(".check-sections").hide();
+		
 		$(".sections").tap(function(e) {
 			if($(".check-sections").css("display") == 'none') {
-				$(".check-sections").fadeIn();
+				$(".check-sections").show();
+				var anim = new Animation($(".check-sections"), 'fadeIn');
+				anim.start();
 			}
 			else {
-				$(".check-sections").fadeOut();
+				var anim2 = new Animation($(".check-sections"), 'fadeOut', function(e) {
+					$(".check-sections").hide();
+				});
+				anim2.start();
 			}
 		});
 		
-		$(".available-conversions").css({display: "none"});
+		$(".available-conversions").hide();
 		
 		$(".conversions").tap(function(e) {
 			if($(".available-conversions").css("display") == 'none') {
-				$(".available-conversions").fadeIn();
+				$(".available-conversions").show();
+				var anim = new Animation($(".available-conversions"), 'fadeIn');
+				anim.start();
 			}
 			else {
-				$(".available-conversions").fadeOut();
+				var anim2 = new Animation($(".available-conversions"), 'fadeOut', function(e) {
+					$(".available-conversions").hide();
+				});
+				anim2.start();
 			}
 		});
 		
@@ -425,15 +503,33 @@ function NavigationHandler() {
 		$(".submit").tap(function(e) {
 			$(this).closest('form').submit();
 		});
+		
+		$("#editadd").swipe({
+			swipeLeft: function(event, duration) {
+				$("#editadd").animate({left: '-100%'}, 250, function(e) {
+					$("#editadd").hide();
+				});
+			},
+			threshold: 50,
+			durationThreshold: 265
+		});
+		
+		$("#edittail").swipe({
+			swipeLeft: function(event, duration) {
+				$("#edittail").animate({left: '-100%'}, 250, function(e) {
+					$("#edittail").hide();
+				});
+			},
+			threshold: 50,
+			durationThreshold: 265
+		});
 	};
 	
 	this.initLocations = function() {
 		this.simpleNavigation.add("dashboard", self.updateDashboardArea);
 		this.simpleNavigation.add("download", self.updateDownloadArea);
 		this.simpleNavigation.add("emergency", self.updateEmergenciesArea);
-		this.simpleNavigation.add("editadd", self.updateEditAddArea);
 		this.simpleNavigation.add("checklist", self.updateChecklistArea);
-		this.simpleNavigation.add("edittail", self.updateEditTailArea);
 		this.simpleNavigation.add("download-details", self.updateDownloadDetailsArea);
 		this.simpleNavigation.add("signout", self.updateSignoutArea);
 		this.simpleNavigation.add("register", self.updateRegisterArea);

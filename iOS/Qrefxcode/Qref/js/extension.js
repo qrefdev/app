@@ -15,6 +15,7 @@ $(window).load(function() {
 	loader.show();
     syncLoader = new Loader("#syncLoader");
     window.location.href = "qref://onload";
+    //DataLoaded();
 });
 
 function BeginChecklistPackets() {
@@ -186,4 +187,46 @@ function DataLoaded() {
 	Navigation.go("dashboard");
 	Sync.init();
 }
+
+function Animation(element, animation, callback) {
+	this.element = element;
+	this.animation = animation;
+	this.callback = callback;
+	this.playing = false;
+	
+	this.start = function() {
+		if(!this.playing) {
+			this.playing = true;
+			this.element.data('animationClassBefore', element.attr('class'));
+			this.element.addClass('animated');
+			this.element.addClass(this.animation);
+			var raw = this.element[0];
+			
+			raw.addEventListener('animationend', this.end.bind(this));
+			raw.addEventListener('webkitAnimationEnd', this.end.bind(this));
+			raw.addEventListener('MSAnimationEnd', this.end.bind(this));
+			raw.addEventListener('oAnimationEnd', this.end.bind(this));
+		}
+		
+	};
+	
+	this.end = function(e) {
+		var raw = this.element[0];
+		var elem = this.element;
+		
+		this.playing = false;
+		raw.removeEventListener('animationend', this.end);
+		raw.removeEventListener('webkitAnimationEnd', this.end)
+		raw.removeEventListener('MSAnimationEnd', this.end)
+		raw.removeEventListener('oAnimationEnd', this.end);
+	
+		elem.attr('class', elem.data('animationClassBefore'));
+		elem.data('animationClassBefore', undefined);
+		
+		if(this.callback) {
+			this.callback.call(this, e);
+			this.callback = undefined;
+		}
+	};
+};
 

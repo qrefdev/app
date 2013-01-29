@@ -18,9 +18,14 @@
         
         self->server = @"http://my.qref.com/";
         
+        self->startUpImage = [UIImage imageNamed:@"Default@2x.png"];
+        self->imageView = [[UIImageView alloc] initWithImage:self->startUpImage];
+        
         self->webView = [[UIWebView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
         self->webView.delegate = self;
         [self setView:self->webView];
+        
+        //[self setView:self->imageView];
         
         self->preferences = [NSUserDefaults standardUserDefaults];
         self->purchaseManager = [[QrefInAppPurchaseManager alloc] init];
@@ -61,6 +66,18 @@
     {
         return;
     }
+}
+
+- (BOOL) canPerformAction:(SEL)action withSender:(id)sender
+{
+    if (action == @selector(copy:) ||
+        action == @selector(paste:)||
+        action == @selector(cut:))
+    {
+        return NO;
+    }
+    
+    return [super canPerformAction:action withSender:sender];
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
@@ -402,6 +419,8 @@
 }
 
 - (void) onload {
+    //[self setView:self->webView];
+    
     NSString *nightTimeModeTime = [self->preferences stringForKey:@"NightTimeModeTime"];
     NSString *nightTimeModeTimeOff = [self->preferences stringForKey:@"NightTimeModeTimeOff"];
     NSString *nightTheme = [self->preferences stringForKey:@"NightTheme"];
@@ -411,6 +430,9 @@
     NSString *token = [self->preferences stringForKey:@"Token"];
     NSString *UID = [self->preferences stringForKey:@"UID"];
     NSData *checklistData = [self->preferences dataForKey:@"Checklists"];
+    
+    NSString * jsCallBack = @"window.getSelection().removeAllRanges();";
+    [self->webView stringByEvaluatingJavaScriptFromString:jsCallBack];
     
     if(UID == nil)
     {

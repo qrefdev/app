@@ -16,8 +16,8 @@
 			<array>
 				<string>Icon-72.png</string>
 				<string>Icon-144.png</string>
-				<string>Icon-114.png</string>
-				<string>Icon-57.png</string>
+				<string>Icon@2x.png</string>
+				<string>Icon.png</string>
 			</array>
 			<key>UIPrerenderedIcon</key>
 			<true/>

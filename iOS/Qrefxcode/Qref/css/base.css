@@ -8,6 +8,11 @@
 	src: url('fonts/myriadprobold.ttf') format('truetype');
 }
 
+div, section, article, img {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none; /* Disable selection/Copy of UIWebView */
+}
+
 html, body {
 	margin: 0;
 	padding: 0;
@@ -26,6 +31,18 @@ html, body {
     bottom: 0px;
     left: 0px;
     right: 0px;
+}
+
+.wrap {
+	position: absolute;
+	float: left;
+	width: 100%;
+	height: 100%;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	overflow: hidden;
 }
 
 /** Text Boxes & Text Areas **/
@@ -51,11 +68,11 @@ html, body {
 	left: 0px;
 	right: 0px;
 	top: 0px;
-	overflow-x: hidden;
-	overflow-y: visible;
+	overflow: visible;
 	width: 100%;
 	margin: 0;
 	padding: 0;
+	z-index: 100;
 }
 
 
@@ -70,6 +87,7 @@ html, body {
 	overflow: hidden;
 	margin: 0;
 	padding: 0;
+	z-index: 110;
 }
 
 .nav ul {
@@ -100,7 +118,7 @@ html, body {
 }
 
 .nav ul .item-25 {
-	width: 24%;
+	width: 24.99%;
 	margin: 0;
 	padding: 0;
 }
@@ -153,6 +171,16 @@ html, body {
 	position: absolute;
 }
 
+.nav ul .item div:first-child {
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	top: 0px;
+	width: 100%;
+	height: 80px;
+}
+
 .nav ul .item div .icon {
 	font-size: 34px;
 	position: absolute;
@@ -162,11 +190,15 @@ html, body {
 }
 
 .nav ul .item-25 div .icon {
-	font-size: 18px;
-	position: absolute;
-	top: 5px;
-	left: 5px;
+	width: 100%;
+	text-align: center;
+	padding-top: 0px;
 	display: block;
+	height: 80px;
+}
+
+.nav ul .item-25 div .icon img {
+	width: 50%;
 }
 
 .nav ul .item-33 div .icon {
@@ -188,7 +220,11 @@ html, body {
 	text-align: center;
 	width: 100%;
 	position:  absolute;
-	bottom: 10px;
+	bottom: 3px;
+}
+
+.checklistnav ul .subheader-only {
+	font-size: 14px;
 }
 
 /** Dashboard Top Bar **/
@@ -210,8 +246,8 @@ html, body {
 	position: relative;
 	width: auto;
 	height: 32px;
-	margin-right: 5px;
-	z-index: 5;
+	margin: 0px;
+	z-index: 1;
 	cursor: pointer;
 }
 
@@ -228,10 +264,10 @@ html, body {
 .dashbar .item-right {
 	float: right;
 	position: relative;
-	width: 50px;
+	width: 20%;
 	height: 32px;
-	margin-right: 10px;
-	z-index: 1100;
+	margin: 0px;
+	z-index: 1;
 	cursor: pointer;
 }
 
@@ -267,7 +303,7 @@ html, body {
 	width: 100%;
 	height: auto;
 	font-size: 12px;
-	overflow: hidden;
+	overflow: visible;
 	padding: 0;
 	margin: 0;
 	z-index: 1100;
@@ -276,7 +312,7 @@ html, body {
 .topbar .item {
 	float: left;
 	position: relative;
-	width: 10%;
+	width: 18.25%;
 	height: 32px;
 	z-index: 5;
 	cursor: pointer;
@@ -286,21 +322,42 @@ html, body {
 .topbar .item-middle {
 	float: left;
 	position: relative;
-	width: 70%;
+	width: 45%;
 	z-index: 10;
 	cursor: pointer;
 	text-align: center;
+	text-overflow: ellipsis;
+}
+
+.topbar .item-middle-large {
+	float: left;
+	position: relative;
+	width: 50%;
+	z-index: 10;
+	cursor: pointer;
+	height: 32px;
+	text-align: center;
+	text-overflow: ellipsis;
+}
+
+.topbar .item-middle-large p {
+	text-overflow: ellipsis;
+	margin: 8px;
+	overflow: hidden;
+	max-height: 32px;
 }
 
 .topbar .item-middle p {
-	margin-top: 10px;
-	margin-bottom: 10px;
+	margin: 8px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	max-height: 32px;
 }
 
 .topbar .item-large {
 	float: left;
 	position: relative;
-	width: 15%;
+	width: 25%;
 	height: 32px;
 	z-index: 5;
 	cursor: pointer;
@@ -318,7 +375,7 @@ html, body {
 }
 
 .topbar .icon {
-	font-size: 18px;
+	font-size: 24px;
 }
 
 
@@ -477,7 +534,7 @@ html, body {
 	position: absolute;
 	right: 0px;
 	bottom: 0px;
-	top: 0px;
+	top: 20px;
 	padding: 0;
 	margin: 0;
 	z-index: 0;
@@ -541,7 +598,7 @@ html, body {
 	width: auto;
 	position: relative;
 	margin-left: 0px;
-	margin-top: 5px;
+	margin-top: 12px;
 }
 
 .dashboard-planes-selector .vertical li ul {
@@ -643,7 +700,6 @@ html, body {
 	left: 10%;
 	width: 70%;
 	bottom: 62px;
-	display: none;
 	z-index: 99999;
 	overflow: auto;
 }
@@ -771,7 +827,7 @@ form label {
 
 .emergencies .icon {
 	float: left;
-	width: 97%;
+	width: 100%;
 	position: relative;
 	text-align: center;
 	padding: 5px;
@@ -787,7 +843,31 @@ form label {
 	width: 100%;
 	text-align: center;
 	padding: 5px;
-	font-size: 11px;
+	font-size: 11px; 
+}
+
+.emergencies ul li {
+	float: left;
+	width: 100%;
+	position: relative;
+	margin: 0px;
+	padding: 0px;
+}
+
+.emergencies ul li ul {
+	float: left;
+	position: relative;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+
+.emergencies ul li ul li {
+	float: left;
+	position: relative;
+	width: 43%;
+	margin: 0px;
+	padding: 10px;
 }
 
 #emergency-items {
@@ -944,6 +1024,7 @@ border-radius: 8px;
 box-shadow:  0px 0px 0px 1px rgba(73, 73, 73, 0.75);
 border: 1px solid #0f0f0f;
 overflow: visible;
+z-index: 999999;
 }
 
 .flyover:before {
@@ -968,11 +1049,11 @@ background: -o-linear-gradient(-45deg,  #9fa3ab 49%,#3b4458 100%); /* Opera 11.1
 background: -ms-linear-gradient(-45deg,  #9fa3ab 49%,#3b4458 100%); /* IE10+ */
 background: linear-gradient(135deg,  #9fa3ab 49%,#3b4458 100%); /* W3C */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9fa3ab', endColorstr='#3b4458',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-
+z-index: 999999;
 }
 
 .flyover .inside {
-	background: #fffcfc;
+	background: #0c0c0c;
 	-webkit-box-shadow: inset 0px 0px 5px 3px rgba(0, 0, 0, 0.35);
     box-shadow: inset 0px 0px 5px 3px rgba(0, 0, 0, 0.35);
     border-radius: 8px;
@@ -984,6 +1065,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9fa3ab', end
 	left: 5px;
 	right: 5px;
 	bottom: 5px;
+	z-index: 999999;
 }
 
 .flyover ul { 
@@ -992,6 +1074,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9fa3ab', end
 	list-style-type: none;
 	margin: 0px;
 	padding: 0px;
+	z-index: 999999;
 }
 
 .flyover ul li {
@@ -999,7 +1082,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9fa3ab', end
 	width: 100%;
 	margin: 0px;
 	padding: 0px;
-	border-bottom: 1px solid #e5e2e2;
+	border-bottom: 1px solid #242424;
 }
 
 .flyover ul li:hover{
@@ -1042,9 +1125,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9fa3ab', end
 	width: 100%;
 	padding: 10px;
 	margin: 0px;
-	font-family: Helvetica;
-	font-size: 16px;
-	color: #000000;
+	font-family: Myriad;
+	font-size: 22px;
+	color: #ffffff;
 }
 
 /** Loading Symbol **/

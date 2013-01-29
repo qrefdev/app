@@ -7,6 +7,7 @@
 		<link rel="stylesheet" href="css/fontawesome.css" />
 		<link rel="stylesheet" href="css/base.css" />
 		<link rel="stylesheet" href="css/theme-dark.css" />
+		<link rel="stylesheet" href="css/animate.css" />
 		<script src="js/jquery.js"></script>
 		<script src="js/jquery.ui.js"></script>
 		<script src="js/jquery.punch.js"></script>
@@ -36,113 +37,121 @@
 	<div class="wrapper">
 <!-- Dashboard Screen -->
 		<article id="dashboard" class="theme-dark page">
-			<div class="dashbar">
-				<div class="item" style="background: url('images/logo.png') 50% 50% no-repeat; background-size: 100% 100%; width: 150px; height: 60px;">
-				</div>
-				<div class="item-right topmenu">
-					<p><i class="icon icon-th-list"></i></p>
-				</div>
-				<div class="item-right edit-check">
-					<p><i class="icon icon-pencil"></i></p>
-				</div>
-				<div class="header">
-					<p>MY AIRCRAFT</p>
-				</div>
-			</div>
-			<div class="dashcontent">
-				<div class="grid dashboard-planes-selector scrollable">
-					<div class="container">
-						<ul id="dashboard-planes" class="vertical">
-							
-						</ul>
+			<div class="wrap">
+				<div class="dashbar">
+					<div class="item" style="background: url('images/logo.png') 50% 50% no-repeat; background-size: 100% 100%; width: 150px; height: 60px;">
+					</div>
+					<div class="item item-right topmenu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
+					<div class="item item-right edit-check">
+						<p><i class="icon icon-pencil"></i></p>
+					</div>
+					<div class="header">
+						<p>MY AIRCRAFT</p>
 					</div>
 				</div>
+				<div class="dashcontent">
+					<div class="grid dashboard-planes-selector scrollable">
+						<div class="container">
+							<ul id="dashboard-planes" class="vertical">
+								
+							</ul>
+						</div>
+					</div>
+				</div>
+				<nav class="nav dashnav">
+					<ul>
+						<li data-link="download" class="item" style="padding-top: 10px; z-index: 10;"><div><i class="icon icon-download"></i><div class="header">Download</div><br><div class="subheader">Aircraft Models</div></div></li>
+						<li data-link="e6b" class="item" style="margin-top: 10px; z-index: 5;"><div><i class="icon icon-table"></i><div class="header">Conversions</div></div></li>
+					</ul>
+				</nav>
 			</div>
-			<nav class="nav dashnav">
-				<ul>
-					<li data-link="download" class="item" style="padding-top: 10px; z-index: 10;"><div><i class="icon icon-download"></i><div class="header">Download</div><br><div class="subheader">Aircraft Models</div></div></li>
-					<li data-link="e6b" class="item" style="margin-top: 10px; z-index: 5;"><div><i class="icon icon-table"></i><div class="header">Conversions</div></div></li>
-				</ul>
-			</nav>
 		</article>
 		
 <!-- Checklist Screen -->
-		<article id="checklist" class="theme-dark page" style="display: none;">
-			<div class="topbar">
-				<div class="item back">
-					<p><i class="icon icon-chevron-left"></i></p>
-				</div>
-				<div class="item-middle sections" style="text-align: center;">
-					<p><span id="area" style="margin-right: 5px;"></span><i class="icon icon-caret-down"></i></p>
-				</div>
-				<div class="item edit-list">
-					<p><i class="icon icon-pencil"></i></p>
-				</div>
-				<div class="item topmenu">
-					<p><i class="icon icon-th-list"></i></p>
-				</div>
-			</div>
-			<div class="content">
-				<div class="grid checklist scrollable">
-					<div class="container">
-						<ul id="checklist-items" class="vertical">
-							
-						</ul>
+		<article id="checklist" class="theme-dark page">
+			<div class="wrap">
+				<div class="topbar">
+					<div class="item back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+					<div class="item-middle sections" style="text-align: center;">
+						<p><span id="area" style="margin-right: 5px;"></span><i class="icon icon-caret-down"></i></p>
+					</div>
+					<div class="item edit-list">
+						<p><i class="icon icon-pencil"></i></p>
+					</div>
+					<div class="item topmenu">
+						<p><i class="icon icon-th-list"></i></p>
 					</div>
 				</div>
-			</div>
-			<div class="grid check-sections flyover">
-				<div class="container inside scrollable">
-					<ul id="check-sections-items" class="vertical">
-					
-					</ul>
+				<div class="content">
+					<div class="grid checklist scrollable">
+						<div class="container">
+							<ul id="checklist-items" class="vertical">
+								
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="grid check-sections flyover" style="bottom: 70px;">
+					<div class="container inside scrollable">
+						<ul id="check-sections-items" class="vertical">
+						
+						</ul>
+					</div>
 				</div>
 			</div>
 		</article>
 		
 <!-- Emergencies Special Section Screen -->
-		<article id="emergencies" class="theme-dark page" style="display: none;">
-			<div class="topbar">
-				<div class="item-large back">
-					<p><i class="icon icon-chevron-left"></i></p>
+		<article id="emergencies" class="theme-dark page">
+			<div class="wrap">
+				<div class="topbar">
+					<div class="item-large back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+					<div class="item-middle-large" style="text-align: center;">
+						<p>Emergencies</p>
+					</div>
+					<div class="item-large topmenu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
 				</div>
-				<div class="item-middle" style="text-align: center;">
-					<p>Emergencies</p>
-				</div>
-				<div class="item-large topmenu">
-					<p><i class="icon icon-th-list"></i></p>
-				</div>
-			</div>
-			<div class="content">
-				<div class="grid emergencies scrollable">
-					<div class="container">
-						<ul id="emergency-items" class="full">
-							
-						</ul>
+				<div class="content">
+					<div class="grid emergencies scrollable">
+						<div class="container">
+							<ul id="emergency-items" class="full">
+								
+							</ul>
+						</div>
 					</div>
 				</div>
 			</div>
 		</article>
 		
 <!-- Product Download Listing -->
-		<article id="downloads" style="display: none;" class="theme-dark page">
-			<div class="topbar">
-				<div class="item-large back">
-					<p><i class="icon icon-chevron-left"></i></p>
+		<article id="downloads" class="theme-dark page">
+			<div class="wrap">
+				<div class="topbar">
+					<div class="item-large back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+					<div class="item-middle-large" style="text-align: center;">
+						<p>Product Downloads</p>
+					</div>
+					<div class="item-large topmenu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
 				</div>
-				<div class="item-middle" style="text-align: center;">
-					<p>Product Downloads</p>
-				</div>
-				<div class="item-large topmenu">
-					<p><i class="icon icon-th-list"></i></p>
-				</div>
-			</div>
-			<div class="content" style="bottom: 0px;">
-				<div class="grid downloads scrollable">
-					<div class="container">
-						<ul id="downloads-items" class="vertical">
-							
-						</ul>
+				<div class="content" style="bottom: 0px;">
+					<div class="grid downloads scrollable">
+						<div class="container">
+							<ul id="downloads-items" class="vertical">
+								
+							</ul>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -177,147 +186,153 @@
 
 
 <!-- E6B Conversions -->
-		<article id="e6bconversions" style="display: none;" class="theme-dark page">
-			<div class="topbar">
-				<div class="item-large back">
-					<p><i class="icon icon-chevron-left"></i></p>
+		<article id="e6bconversions" class="theme-dark page">
+			<div class="wrap">
+				<div class="topbar">
+					<div class="item-large back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+					<div class="item-middle-large conversions" style="text-align: center;">
+						<p><span id="selectedConversion" style="margin-right: 5px;"></span><i class="icon icon-caret-down"></i></p>
+					</div>
+					<div class="item-large topmenu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
 				</div>
-				<div class="item-middle conversions" style="text-align: center;">
-					<p><span id="selectedConversion" style="margin-right: 5px;"></span><i class="icon icon-caret-down"></i></p>
+				<div class="content e6b" style="bottom: 0px;">
+					<div class="utcTime"><p class="utcCurrent"></p> <i class="icon icon-time"></i></div>
+					<div class="row" style="margin-top: 40px;">
+						<div class="topConversion">MPH</div><input id="convertTop" type="text" class="textbox" style="" value="0" />
+					</div>
+					<div class="row">
+						<div class="bottomConversion">KTS</div><input id="convertBottom" class="textbox" type="text" value="0" />
+					</div>
 				</div>
-				<div class="item-large topmenu">
-					<p><i class="icon icon-th-list"></i></p>
-				</div>
-			</div>
-			<div class="content e6b" style="bottom: 0px;">
-				<div class="utcTime"><p class="utcCurrent"></p> <i class="icon icon-time"></i></div>
-				<div class="row">
-					<div class="topConversion">MPH</div><input id="convertTop" type="text" class="textbox" style="" value="0" />
-				</div>
-				<div class="row">
-					<div class="bottomConversion">KTS</div><input id="convertBottom" class="textbox" type="text" value="0" />
-				</div>
-			</div>
-			<div class="grid available-conversions flyover">
-				<div class="container inside scrollable">
-					<ul id="conversion-items" class="vertical">
-						<li class="active" data-multiplier="0.868976242" data-inverse="1.150779448" data-top="MPH" data-bottom="KTS" data-value="0"><p>Miles per Hour <-> Knots</p></li>
-						<li data-multiplier="0.3048" data-inverse="3.280839895" data-top="FT" data-bottom="M" data-value="1"><p>Feet <-> Meters</p></li>
-						<li data-multiplier="1.15077945" data-inverse="0.86897624" data-top="NM" data-bottom="SM" data-value="2"><p>Nautical Miles <-> Statute Miles</p></li>
-						<li data-multiplier="1.852" data-inverse="0.539956803" data-top="NM" data-bottom="KM" data-value="3"><p>Nautical Miles <-> Kilometers</p></li>
-						<li data-multiplier="3.78541" data-inverse="0.264172177" data-top="GAL" data-bottom="LIT" data-value="4"><p>Gallons <-> Litres</p></li>
-						<li data-multiplier="0.453592" data-inverse="2.20462442" data-top="LB" data-bottom="KG" data-value="5"><p>Pounds <-> Kilograms</p></li>
-						<li data-top="HH:MM:SS" data-bottom="HH.HHH" data-value="6"><p>Time <-> Decimal Time</p></li>
-					</ul>
+				<div class="grid available-conversions flyover">
+					<div class="container inside scrollable">
+						<ul id="conversion-items" class="vertical">
+							<li class="active" data-multiplier="0.868976242" data-inverse="1.150779448" data-top="MPH" data-bottom="KTS" data-value="0"><p>MPH <> KTS</p></li>
+							<li data-multiplier="0.3048" data-inverse="3.280839895" data-top="FT" data-bottom="M" data-value="1"><p>FT <> M</p></li>
+							<li data-multiplier="1.15077945" data-inverse="0.86897624" data-top="NM" data-bottom="SM" data-value="2"><p>NM <>  SM</p></li>
+							<li data-multiplier="1.852" data-inverse="0.539956803" data-top="NM" data-bottom="KM" data-value="3"><p>NM <> KM</p></li>
+							<li data-multiplier="3.78541" data-inverse="0.264172177" data-top="GAL" data-bottom="LIT" data-value="4"><p>GAL <> LIT</p></li>
+							<li data-multiplier="0.453592" data-inverse="2.20462442" data-top="LB" data-bottom="KG" data-value="5"><p>LB <> KG</p></li>
+							<li data-top="HH:MM:SS" data-bottom="HH.HHH" data-value="6"><p>HH:MM <> HH.HHH</p></li>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</article>	
 		
 <!-- Setting Screen -->
-		<article id="settings" style="display: none;" class="theme-dark page">
-			<div class="topbar">
-				<div class="item-large back">
-					<p><i class="icon icon-chevron-left"></i></p>
+		<article id="settings" class="theme-dark page">
+			<div class="wrap">
+				<div class="topbar">
+					<div class="item-large back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+					<div class="item-middle-large" style="text-align: center;">
+						<p>Settings</p>
+					</div>
+					<div class="item-large topmenu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
 				</div>
-				<div class="item-middle" style="text-align: center;">
-					<p>Settings</p>
-				</div>
-				<div class="item-large topmenu">
-					<p><i class="icon icon-th-list"></i></p>
-				</div>
-			</div>
-			<div class="content scrollable" style="bottom: 0px;">
-				<div class="grid settingsItems">
-					<ul class="vertical">
-						<li>
-							<div class="row dark-bg">
-								<h2>Day Time Theme</h2>
-							</div>
-							<select class="textbox" style="width: 95%; height: 30px; color: #000000;" id="dayTheme">
-								<option value="theme-light">Light</option>
-								<option value="theme-dark">Dark</option>
-							</select>
-							<div class="row dark-bg">
-								<h2>Night Time Theme</h2>
-							</div>
-							<select class="textbox" style="width: 95%; height: 30px; color: #000000;" id="nightTheme">
-								<option value="theme-dark">Dark</option>
-								<option value="theme-light">Light</option>
-							</select>
-						</li>
-						<li>
-							<div class="row dark-bg">
-								<h2>Switch to Night Theme at (Must be different from day theme time)</h2>
-							</div>
-							<div class="row">
-								<input type="number" class="textbox" style="width: 50px; margin: 0px 10px; float: left;" maxlength="2" value="18" id="nightTimeModeOnHour" /><div style="float: left; font-size: 18px;"> : </div><input type="number" class="textbox" style="width: 50px; margin: 0px 10px; float: left;" maxlength="2" id="nightTimeModeOnMinutes" value="00" /><div style="float: left; margin-left: 10px; margin-top: 8px; font-size: 11px;"> 24H Format (HH:MM)</div>
-							</div>
-							<div class="row dark-bg">
-								<h2>Switch to Day Theme at</h2>
-							</div>
-							<div class="row">
-								<input type="number" class="textbox" style="width: 50px; margin: 0px 10px; float: left;" maxlength="2" value="18" id="nightTimeModeOffHour" /><div style="float: left; font-size: 18px;"> : </div><input type="number" class="textbox" style="width: 50px; margin: 0px 10px; float: left;" maxlength="2" id="nightTimeModeOffMinutes" value="00" /><div style="float: left; margin-left: 10px; margin-top: 8px; font-size: 11px;"> 24H Format (HH:MM)</div>
-							</div>
-						</li>
-						<li>
-							<div class="row dark-bg">
-								<h2>Auto Theme Switching</h2>
-							</div>
-							<select class="textbox" style="width: 95%; height: 30px; color: #000000" id="autoThemeMode">
-								<option value="0">Off</option>
-								<option value="1">On</option>
-							</select>
-						</li>
-						<li>
-							<button class="button-register saveSettings" style="margin: 0px; width: 100%;">Save</save>
-						</li>
-					</ul>
+				<div class="content scrollable" style="bottom: 0px;">
+					<div class="grid settingsItems">
+						<ul class="vertical">
+							<li>
+								<div class="row dark-bg">
+									<h2>Day Time Theme</h2>
+								</div>
+								<select class="textbox" style="width: 95%; height: 30px; color: #000000;" id="dayTheme">
+									<option value="theme-light">Light</option>
+									<option value="theme-dark">Dark</option>
+								</select>
+								<div class="row dark-bg">
+									<h2>Night Time Theme</h2>
+								</div>
+								<select class="textbox" style="width: 95%; height: 30px; color: #000000;" id="nightTheme">
+									<option value="theme-dark">Dark</option>
+									<option value="theme-light">Light</option>
+								</select>
+							</li>
+							<li>
+								<div class="row dark-bg">
+									<h2>Switch to Night Theme at (Must be different from day theme time)</h2>
+								</div>
+								<div class="row">
+									<input type="number" class="textbox" style="width: 50px; margin: 0px 10px; float: left;" maxlength="2" value="18" id="nightTimeModeOnHour" /><div style="float: left; font-size: 18px;"> : </div><input type="number" class="textbox" style="width: 50px; margin: 0px 10px; float: left;" maxlength="2" id="nightTimeModeOnMinutes" value="00" /><div style="float: left; margin-left: 10px; margin-top: 8px; font-size: 11px;"> 24H Format (HH:MM)</div>
+								</div>
+								<div class="row dark-bg">
+									<h2>Switch to Day Theme at</h2>
+								</div>
+								<div class="row">
+									<input type="number" class="textbox" style="width: 50px; margin: 0px 10px; float: left;" maxlength="2" value="18" id="nightTimeModeOffHour" /><div style="float: left; font-size: 18px;"> : </div><input type="number" class="textbox" style="width: 50px; margin: 0px 10px; float: left;" maxlength="2" id="nightTimeModeOffMinutes" value="00" /><div style="float: left; margin-left: 10px; margin-top: 8px; font-size: 11px;"> 24H Format (HH:MM)</div>
+								</div>
+							</li>
+							<li>
+								<div class="row dark-bg">
+									<h2>Auto Theme Switching</h2>
+								</div>
+								<select class="textbox" style="width: 95%; height: 30px; color: #000000" id="autoThemeMode">
+									<option value="0">Off</option>
+									<option value="1">On</option>
+								</select>
+							</li>
+							<li>
+								<button class="button-register saveSettings" style="margin: 0px; width: 100%;">Save</save>
+							</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</article>
 
 <!-- Product Details -->
-		<article id="productdetails" style="display: none;" class="theme-dark page">
-			<div class="topbar">
-				<div class="item-large back">
-					<p><i class="icon icon-chevron-left"></i></p>
-				</div>
-				<div class="item-middle" style="text-align: center;">
-					<p>Product Details</p>
-				</div>
-				<div class="item-large topmenu">
-					<p><i class="icon icon-th-list"></i></p>
-				</div>
-			</div>
-			<div id="productDetailsListing" class="content scrollable" style="bottom: 0px;">
-				<div class="container">
-					<div class="row detailsHeading">
-						<h1 class="productModel"></h1> 
-						<div class="buynow">Install</div>
+		<article id="productdetails" class="theme-dark page">
+			<div class="wrap">
+				<div class="topbar">
+					<div class="item-large back">
+						<p><i class="icon icon-chevron-left"></i></p>
 					</div>
-					<div class="row">
-						<div class="productImage"></div>
+					<div class="item-middle-large" style="text-align: center;">
+						<p>Product Details</p>
 					</div>
-					<div class="details">
+					<div class="item-large topmenu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
+				</div>
+				<div id="productDetailsListing" class="content scrollable" style="bottom: 0px;">
+					<div class="container">
 						<div class="row detailsHeading">
-							<h1>Manufacturer Information</h1>
-							<p class="serial manufacturerDescription"></p>
+							<h1 class="productModel"></h1> 
+							<div class="buynow">Install</div>
 						</div>
-						<div class="row detailsHeading">
-							<h1>Model Information</h1>
-							<p class="serial modelDescription"></p>
+						<div class="row">
+							<div class="productImage"></div>
 						</div>
-						<div class="row detailsHeading">
-							<h1>Serial Number(s)</h1>
-							<p class="serial productSerialNumbers"></p>
-						</div>
-						<div class="row detailsHeading">
-							<h1>Model Year(s)</h1>
-							<p class="serial productModelYear"></p>
-						</div>
-						<div class="row detailsHeading">
-							<h1>Description</h1>
-							<p class="description"></p>
+						<div class="details">
+							<div class="row detailsHeading">
+								<h1>Manufacturer Information</h1>
+								<p class="serial manufacturerDescription"></p>
+							</div>
+							<div class="row detailsHeading">
+								<h1>Model Information</h1>
+								<p class="serial modelDescription"></p>
+							</div>
+							<div class="row detailsHeading">
+								<h1>Serial Number(s)</h1>
+								<p class="serial productSerialNumbers"></p>
+							</div>
+							<div class="row detailsHeading">
+								<h1>Model Year(s)</h1>
+								<p class="serial productModelYear"></p>
+							</div>
+							<div class="row detailsHeading">
+								<h1>Description</h1>
+								<p class="description"></p>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -325,148 +340,160 @@
 		</article>
 		
 <!-- Edit Checklist / Add Checklist Item Screen -->
-		<article id="editadd" style="display: none;" class="theme-dark page">
-			<div class="topbar">
-				<div class="item-large back">
-					<p><i class="icon icon-chevron-left"></i></p>
+		<article id="editadd" class="theme-dark page">
+			<div class="wrap">
+				<div class="topbar">
+					<div class="item-large back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+					<div class="item-middle-large">
+						<p>Edit / Add</p>
+					</div>
+					<div class="item-large topmenu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
 				</div>
-				<div class="item-middle">
-					<p>Edit / Add</p>
-				</div>
-				<div class="item-large topmenu">
-					<p><i class="icon icon-th-list"></i></p>
-				</div>
-			</div>
-			<div class="content">
-				<div style="float: left; position: relative; width: 100%; margin-top: 5px;">
-					<form id="editAddForm" method="post" action="javascript:void(null);">
-						<input class="textbox required" type="text" id="check" name="check" placeholder="check" />
-						<input class="textbox required" type="text" id="response" name="response" placeholder="response" />
-						
-						<div style="margin: 10px auto; width: 90%" class="submit"><div class="special"><p>Save</p><i class="icon icon-arrow-right"></i></div></div>
-					</form>
+				<div class="content">
+					<div style="float: left; position: relative; width: 100%; margin-top: 5px;">
+						<form id="editAddForm" method="post" action="javascript:void(null);">
+							<input class="textbox required" type="text" id="check" name="check" placeholder="check" />
+							<input class="textbox required" type="text" id="response" name="response" placeholder="response" />
+							
+							<div style="margin: 10px auto; width: 90%" class="submit"><div class="special"><p>Save</p><i class="icon icon-arrow-right"></i></div></div>
+						</form>
+					</div>
 				</div>
 			</div>
 		</article>
 		
 <!-- Edit Tail Number Screen -->
 		<article id="edittail" style="display: none;" class="theme-dark page">
-			<div class="topbar">
-				<div class="item-large back">
-					<p><i class="icon icon-chevron-left"></i></p>
+			<div class="wrap">
+				<div class="topbar">
+					<div class="item-large back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+					<div class="item-middle-large">
+						<p>Edit Tail Number</p>
+					</div>
+					<div class="item-large topmenu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
 				</div>
-				<div class="item-middle">
-					<p>Edit Tail Number</p>
-				</div>
-				<div class="item-large topmenu">
-					<p><i class="icon icon-th-list"></i></p>
-				</div>
-			</div>
-			<div class="content">
-				<div style="float: left; position: relative; width: 100%; margin-top: 5px;">
-					<form id="editTailForm" method="post" action="javascript:void(null);">
-						<input class="textbox required" type="text" id="tailnumber" name="tailnumber" placeholder="tail number" />
-						<div style="margin: 10px auto; width: 90%" class="submit"><div class="special"><p>Save</p><i class="icon icon-arrow-right"></i></div></div>
-					</form>
+				<div class="content">
+					<div style="float: left; position: relative; width: 100%; margin-top: 5px;">
+						<form id="editTailForm" method="post" action="javascript:void(null);">
+							<input class="textbox required" type="text" id="tailnumber" name="tailnumber" placeholder="tail number" />
+							<div style="margin: 10px auto; width: 90%" class="submit"><div class="special"><p>Save</p><i class="icon icon-arrow-right"></i></div></div>
+						</form>
+					</div>
 				</div>
 			</div>
 		</article>
 		
 <!-- Sign in Screen -->
-		<article id="signin" style="display: none;" class="theme-dark page">
-			<div class="topbar">
-				<div class="item-large back">
-					<p><i class="icon icon-chevron-left"></i></p>
+		<article id="signin" class="theme-dark page">
+			<div class="wrap">
+				<div class="topbar">
+					<div class="item-large back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+					<div class="item-middle-large">
+						<p>Sign in</p>
+					</div>
+					<div class="item-large topmenu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
 				</div>
-				<div class="item-middle">
-					<p>Sign in</p>
-				</div>
-				<div class="item-large topmenu">
-					<p><i class="icon icon-th-list"></i></p>
-				</div>
-			</div>
-			<div class="content">
-				<div style="float: left; position: relative; width: 100%; margin-top: 5px;">
-					<form id="signinForm" method="post" action="javascript:void(null);">
-					<input class="textbox required" type="email" id="email" name="email" placeholder="email" />
-					<input class="textbox required" type="password" id="password" name="password" placeholder="password" />
-					<div style="margin: 10px auto 0px auto; width: 90%" class="submit"><div class="special"><p>Sign in</p><i class="icon icon-arrow-right"></i></div></div>
-					<div class="button" data-link="passwordRecovery" style="border-radius: 0px; margin: 10px auto 0px auto; width: 90%; -webkit-border-radius: 0px;"><div class="special2"><p>Forgot password</p><i class="icon icon-question-sign"></i></div></div>
-					<div class="button" data-link="register" style="border-radius: 0px; margin: 0px auto; width: 90%; -webkit-border-radius: 0px;" ><div class="special2"><p>Need an account</p><i class="icon icon-question-sign"></i></div></div>
-					</form>
+				<div class="content">
+					<div style="float: left; position: relative; width: 100%; margin-top: 5px;">
+						<form id="signinForm" method="post" action="javascript:void(null);">
+						<input class="textbox required" type="email" id="email" name="email" placeholder="email" />
+						<input class="textbox required" type="password" id="password" name="password" placeholder="password" />
+						<div style="margin: 10px auto 0px auto; width: 90%" class="submit"><div class="special"><p>Sign in</p><i class="icon icon-arrow-right"></i></div></div>
+						<div class="button" data-link="passwordRecovery" style="border-radius: 0px; margin: 10px auto 0px auto; width: 90%; -webkit-border-radius: 0px;"><div class="special2"><p>Forgot password</p><i class="icon icon-question-sign"></i></div></div>
+						<div class="button" data-link="register" style="border-radius: 0px; margin: 0px auto; width: 90%; -webkit-border-radius: 0px;" ><div class="special2"><p>Need an account</p><i class="icon icon-question-sign"></i></div></div>
+						</form>
+					</div>
 				</div>
 			</div>
 		</article>
 		
 		<!-- Password Recovery Screen -->
-		<article id="passwordRecovery" style="display: none;" class="theme-dark page">
-			<div class="topbar">
-				<div class="item-large back">
-					<p><i class="icon icon-chevron-left"></i></p>
+		<article id="passwordRecovery" class="theme-dark page">
+			<div class="wrap">
+				<div class="topbar">
+					<div class="item-large back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+					<div class="item-middle-large">
+						<p>Forgot Password</p>
+					</div>
+					<div class="item-large topmenu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
 				</div>
-				<div class="item-middle">
-					<p>Forgot Password</p>
-				</div>
-				<div class="item-large topmenu">
-					<p><i class="icon icon-th-list"></i></p>
-				</div>
-			</div>
-			<div class="content">
-				<div style="float: left; position: relative; width: 100%; margin-top: 5px;">
-					<form id="passwordRecoveryForm" method="post" action="javascript:void(null);">
-					<input class="textbox required" type="email" value="email" id="recoveryEmail" name="recoveryEmail" placeholder="email" />
-					<div style="margin: 10px auto; width: 90%" class="submit"><div class="special"><p>Send Email</p><i class="icon icon-arrow-right"></i></div></div>
-					</form>
+				<div class="content">
+					<div style="float: left; position: relative; width: 100%; margin-top: 5px;">
+						<form id="passwordRecoveryForm" method="post" action="javascript:void(null);">
+						<input class="textbox required" type="email" value="email" id="recoveryEmail" name="recoveryEmail" placeholder="email" />
+						<div style="margin: 10px auto; width: 90%" class="submit"><div class="special"><p>Send Email</p><i class="icon icon-arrow-right"></i></div></div>
+						</form>
+					</div>
 				</div>
 			</div>
 		</article>
 		
 				<!-- Password Recovery Screen -->
-		<article id="changePassword" style="display: none;" class="theme-dark page">
-			<div class="topbar">
-				<div class="item-large back">
-					<p><i class="icon icon-chevron-left"></i></p>
+		<article id="changePassword" class="theme-dark page">
+			<div class="wrap">
+				<div class="topbar">
+					<div class="item-large back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+					<div class="item-middle-large">
+						<p>Change Password</p>
+					</div>
+					<div class="item-large topmenu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
 				</div>
-				<div class="item-middle">
-					<p>Change Password</p>
-				</div>
-				<div class="item-large topmenu">
-					<p><i class="icon icon-th-list"></i></p>
-				</div>
-			</div>
-			<div class="content">
-				<div style="float: left; position: relative; width: 100%; margin-top: 5px;">
-					<form id="changePasswordForm" method="post" action="javascript:void(null);">
-						<input class="textbox required" type="password" placeholder="old password" id="oldPassword" name="oldPassword" />
-						<input class="textbox required" type="password" placeholder="password" id="newPassword" name="newPassword" />
-						<input class="textbox required" type="password" placeholder="confirm password" id="newPasswordConfirm" name="newPasswordConfirm" />
-						<div style="margin: 10px auto; width: 90%" class="submit"><div class="special"><p>Change Password</p><i class="icon icon-arrow-right"></i></div></div>
-					</form>
+				<div class="content">
+					<div style="float: left; position: relative; width: 100%; margin-top: 5px;">
+						<form id="changePasswordForm" method="post" action="javascript:void(null);">
+							<input class="textbox required" type="password" placeholder="old password" id="oldPassword" name="oldPassword" />
+							<input class="textbox required" type="password" placeholder="password" id="newPassword" name="newPassword" />
+							<input class="textbox required" type="password" placeholder="confirm password" id="newPasswordConfirm" name="newPasswordConfirm" />
+							<div style="margin: 10px auto; width: 90%" class="submit"><div class="special"><p>Change Password</p><i class="icon icon-arrow-right"></i></div></div>
+						</form>
+					</div>
 				</div>
 			</div>
 		</article>
 		
 <!-- Register Area -->
-		<article id="register" style="display: none;" class="theme-dark page">
-			<div class="topbar">
-				<div class="item-large back">
-					<p><i class="icon icon-chevron-left"></i></p>
+		<article id="register" class="theme-dark page">
+			<div class="wrap">
+				<div class="topbar">
+					<div class="item-large back">
+						<p><i class="icon icon-chevron-left"></i></p>
+					</div>
+					<div class="item-middle-large">
+						<p>Register</p>
+					</div>
+					<div class="item-large topmenu">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
 				</div>
-				<div class="item-middle">
-					<p>Register</p>
-				</div>
-				<div class="item-large topmenu">
-					<p><i class="icon icon-th-list"></i></p>
-				</div>
-			</div>
-			<div class="content">
-				<div style="float: left; position: relative; width: 100%; margin-top: 5px;">
-					<form id="registerForm" action="javascript:void(null);" method="post">
-						<input class="textbox required" type="email" id="emailRegister" name="emailRegister" placeholder="email" />
-						<input class="textbox required" type="password" id="passwordRegister" name="passwordRegister" placeholder="password" />
-						<input class="textbox required" type="password" id="confirmPassword" name="confirmPassword" placeholder="confirm password" />
-						<div style="margin: 10px auto; width: 90%" class="submit"><div class="special"><p>Register</p><i class="icon icon-arrow-right"></i></div></div>
-					</form>
+				<div class="content">
+					<div style="float: left; position: relative; width: 100%; margin-top: 5px;">
+						<form id="registerForm" action="javascript:void(null);" method="post">
+							<input class="textbox required" type="email" id="emailRegister" name="emailRegister" placeholder="email" />
+							<input class="textbox required" type="password" id="passwordRegister" name="passwordRegister" placeholder="password" />
+							<input class="textbox required" type="password" id="confirmPassword" name="confirmPassword" placeholder="confirm password" />
+							<div style="margin: 10px auto; width: 90%" class="submit"><div class="special"><p>Register</p><i class="icon icon-arrow-right"></i></div></div>
+						</form>
+					</div>
 				</div>
 			</div>
 		</article>
@@ -482,6 +509,7 @@
 					<li data-link="signout" id="signout-menu" style="display: none;"><i class="icon icon-signout"></i><p>Sign out</p></li>
 					<li data-link="signin" id="signin-menu" style="display: none;"><i class="icon icon-signin" ></i><p>Sign in</p></li>
 					<li data-link="register" id="register-menu" style="display: none;"><i class="icon icon-pencil"></i><p>Register</p></li>
+					<li data-link="e6b"><i class="icon icon-table"></i><p>Conversions</p></li>
 					<li data-link="sync" id="sync-menu" style="display: none;"><i class="icon icon-repeat"></i><p>Sync</p></li>
 				</ul>
 			</div>
@@ -491,10 +519,13 @@
 		<div id="checklist-nav" style="display: none;" class="theme-dark">
 			<nav class="nav checklistnav">
 				<ul>
-					<li data-link="preflight" class="item-25"><div><div class="subheader-only">Preflight</div></div></li>
-					<li data-link="takeoff" class="item-25"><div><div class="subheader-only">Take-off</div></div></li>
-					<li data-link="landing" class="item-25"><div><div class="subheader-only">Landing</div></div></li>
-					<li data-link="emergency" class="item-25"><div><div class="subheader-only">Emergency</div></div></li>
+					<li data-link="preflight" class="item-25"><div><div class="icon"><img src="images/tab-preflight@2x.png" /></div><div class="subheader-only">Preflight</div></div></li>
+					<li data-link="takeoff" class="item-25"><div><div class="icon" style="margin-top: 5px;"><img src="images/tab-takeoff@2x.png" /></div><div class="subheader-only">Takeoff</div></div></li>
+					<li data-link="landing" class="item-25"><div><div class="icon" style="margin-top: 5px;"><img src="images/tab-landing@2x.png" /></div><div class="subheader-only">Landing</div></div></li>
+					<li data-link="emergency" class="item-25"><div style="background: url('images/stripe-pattern.png') top left repeat;">
+							<div class="icon"><img src="images/tab-emergencies@2x.png" /></div><div class="subheader-only">Emergency</div>
+						</div>
+					</li>
 				</ul>
 			</nav>
 		</div>

@@ -17,6 +17,8 @@
     NSMutableString *incomingData;
     NSString *server;
     NSTimer *refreshTimer;
+    UIImage *startUpImage;
+    UIImageView *imageView;
 }
 
 - (void) gotoURL: (NSURLRequest *) url;

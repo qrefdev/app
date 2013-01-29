@@ -19,6 +19,8 @@ function ThemeHandler() {
         	
         if(product.tailNumber)
         	html += '<span class="tailNumber">' + product.tailNumber + '</span> ';
+		else
+			html += '<span class="tailNumber"></span> ';
 		
 		if(product.model.modelYear)
 			html += '<span class="modelYear">' + product.model.modelYear + '</span>';
@@ -67,7 +69,7 @@ function ThemeHandler() {
 	};
 	
 	this.createEmergencySectionItem = function(item) {
-		var html = '<li class="span50" data-link="checklist" data-index="' + item.index + '">' +
+		var html = '<li data-link="checklist" data-index="' + item.index + '">' +
 						'<div class="icon"><img src="images/' + item.name + '.png" /></div>' +
 						'<div class="section-name">' + item.name + '</div>' +
 					'</li>';
@@ -79,15 +81,19 @@ function ThemeHandler() {
 		if(Checklist.editMode)
 		{
 			$(".edit-list").addClass("active");
-			$("#checklist-items").find(".add").fadeIn();
-			$("#checklist-items").find(".handle").fadeIn();
+			$("#checklist-items").find(".add").animate({opacity: 1}, 200).css('display', 'block');
+			$("#checklist-items").find(".handle").animate({opacity: 1}, 200).css('display', 'block');
 			
 		}	
 		else
 		{
 			$(".edit-list").removeClass("active");
-			$("#checklist-items").find(".add").fadeOut();
-			$("#checklist-items").find(".handle").fadeOut();
+			$("#checklist-items").find(".add").animate({opacity: 0}, 200, function() {
+				$(this).css('display', 'none');
+			});
+			$("#checklist-items").find(".handle").animate({opacity: 0}, 200, function() {
+				$(this).css('display', 'none');
+			});
 		}
 	};
 	
@@ -95,13 +101,15 @@ function ThemeHandler() {
 		if(Checklist.productEditMode)
 		{
 			$(".edit-check").addClass("active");
-			$("#dashboard-planes").find(".handle").fadeIn();
+			$("#dashboard-planes").find(".handle").animate({opacity: 1}, 200).css('display', 'block');
 			
 		}	
 		else
 		{
 			$(".edit-check").removeClass("active");
-			$("#dashboard-planes").find(".handle").fadeOut();
+			$("#dashboard-planes").find(".handle").animate({opacity: 0}, 200, function() {
+				$(this).css('display', 'none');
+			});
 		}
 	};
 	
@@ -111,9 +119,10 @@ function ThemeHandler() {
 			var deleteButton = element.find(".delete");
 			var holder = element.find(".holder");
 			
-			deleteButton.fadeOut(function() {
+			deleteButton.animate({opacity: 0}, 200, function() {
+				$(this).css('display', 'none');
 				var parent = $(this).parent();
-				holder.animate({"margin-left": "5px"}, 500);
+				holder.animate({"left": "5px"}, 200);
 			});
 		});
 	};
@@ -128,6 +137,8 @@ function ThemeHandler() {
 				Navigation.currentChecklistSection = parseInt(item.attr("data-index"));
 				Navigation.updateChecklist(Navigation.currentChecklistCategory);
 				
+				$(".checklist").scrollTop(0);
+				
 				var indexItem = listHandler.getByIndex(parseInt(item.attr("data-index")));
 				$("#area").html(indexItem.name);
 			});
@@ -135,11 +146,15 @@ function ThemeHandler() {
 	};
 	
 	this.addEmergencySectionHandlers = function() {
-		$("#emergency-items").children().tap(function(event) {
-			var index = parseInt($(this).attr("data-index"));
-			Navigation.currentChecklistCategory = "emergency";
-			Navigation.currentChecklistSection = index;
-			Navigation.autoGo($(this));
+		$("#emergency-items").find('li').each(function() {
+			if($(this).attr('data-link')) {
+				$(this).tap(function(event) {
+					var index = parseInt($(this).attr("data-index"));
+					Navigation.currentChecklistCategory = "emergency";
+					Navigation.currentChecklistSection = index;
+					Navigation.autoGo($(this));
+				});
+			}
 		});
 	};
 	
@@ -173,7 +188,7 @@ function ThemeHandler() {
 						$("#tailnumber").val(item.tailNumber);
 						$("#tailnumber").blur();
 						
-						Navigation.go("edittail");
+						Navigation.updateEditTailArea();
 					}
 				}
 			}
@@ -218,8 +233,9 @@ function ThemeHandler() {
 			var parent = $(this).parent();
 			var holder = parent.find(".holder");
 			
-			$(this).fadeOut(function() {
-				holder.animate({"margin-left":"5px"}, 500, function() {
+			$(this).animate({opacity: 0}, 200, function() {
+				$(this).css('display', 'none');
+				holder.animate({"left":"5px"}, 200, function() {
 					var removedId = parent.attr("data-id");
 					var item = MyProducts.getProduct(Checklist.checklists, removedId);
 					
@@ -241,8 +257,8 @@ function ThemeHandler() {
 					var deleteButton = $(this).find(".delete");
 					var holder = $(this).find(".holder");
 					
-					holder.animate({"margin-left": "75px"}, 500, function() {
-						deleteButton.fadeIn();
+					holder.animate({"left": "75px"}, 200, function(e) {
+						deleteButton.animate({opacity: 1}, 200).css('display', 'block');
 					});
 			
 					event.stopPropagation();
@@ -274,8 +290,8 @@ function ThemeHandler() {
 					var deleteButton = $(this).find(".delete");
 					var holder = $(this).find(".holder");
 					
-					holder.animate({"margin-left": "75px"}, 500, function() {
-						deleteButton.fadeIn();
+					holder.animate({"left": "75px"}, 200, function(e) {
+						deleteButton.animate({opacity: 1}, 200).css('display', 'block');
 					});
 			
 					event.stopPropagation();
@@ -300,10 +316,8 @@ function ThemeHandler() {
 				
 				$("#check").val($(this).find(".check").html());
 				$("#response").val($(this).find(".response").html());
-				$("#check").blur();
-				$("#response").blur();
 				
-				Navigation.go("editadd");
+				Navigation.updateEditAddArea();
 			}
 		});
 		
@@ -317,7 +331,7 @@ function ThemeHandler() {
 			$("#check").val("");
 			$("#response").val("");
 			
-			Navigation.go("editadd");
+			Navigation.updateEditAddArea();
 		});
 		
 		$("#checklist-items").find(".handle").punch();
@@ -327,8 +341,9 @@ function ThemeHandler() {
 			var parent = $(this).parent();
 			var holder = parent.find(".holder");
 			
-			$(this).fadeOut(function() {
-				holder.animate({"margin-left":"5px"}, 500, function() {
+			$(this).animate({opacity: 0}, 200, function() {
+				$(this).css('display', 'none');
+				holder.animate({"left":"5px"}, 200, function() {
 					var removedId = parent.attr("data-id");
 					var item = MyProducts.getProduct(Navigation.checklist[Navigation.currentChecklistSection].items, removedId);
 					var items = _.without(Navigation.checklist[Navigation.currentChecklistSection].items, item);
