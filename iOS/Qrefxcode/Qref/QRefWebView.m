@@ -23,9 +23,9 @@
         
         self->webView = [[UIWebView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
         self->webView.delegate = self;
-        [self setView:self->webView];
+        //[self setView:self->webView];
         
-        //[self setView:self->imageView];
+        [self setView:self->imageView];
         
         self->preferences = [NSUserDefaults standardUserDefaults];
         self->purchaseManager = [[QrefInAppPurchaseManager alloc] init];
@@ -419,7 +419,7 @@
 }
 
 - (void) onload {
-    //[self setView:self->webView];
+    [self setView:self->webView];
     
     NSString *nightTimeModeTime = [self->preferences stringForKey:@"NightTimeModeTime"];
     NSString *nightTimeModeTimeOff = [self->preferences stringForKey:@"NightTimeModeTimeOff"];
@@ -454,7 +454,7 @@
     
     if(token != nil)
     {
-        [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"token = '%@';", token]];
+        [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"AppObserver.set('token', '%@');", token]];
     }
     
     [self loadChecklist:user checklists:checklistData uid:UID];

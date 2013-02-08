@@ -90,7 +90,7 @@
 	  
 	  function triggerHandler(event) {
 		if(TapHandler)
-			TapHandler.call($element, event);
+			TapHandler.call($element[0], event);
 	  }
 	  
 	  function getDuration() {

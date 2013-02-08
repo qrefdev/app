@@ -1,7 +1,7 @@
 function Signin() {
 	var signin = { "mode":"rpc", "userName": $("#email").val(), "password": $("#password").val() };
 	
-	loader.show();
+	AppObserver.set('loading', true);
 	
     window.location.href = "qref://clearCache";
     
@@ -13,16 +13,26 @@ function Signin() {
 		success: function(data) {
 			var response = data;
 			
-			loader.hide();
+			AppObserver.set('loading', false);
 			
 			if(response.success == true)
 			{
-				token = response.returnValue;
-				Authentication.verify();
-                $(".currentLogin .user").html($("#email").val());
-				window.location.href = "qref://setToken=" + token + "&setUser=" + $("#email").val();
+				AppObserver.set('token', response.returnValue);
+				AppObserver.set('email', $("#email").val());
+
+				window.location.href = "qref://setToken=" + response.returnValue + "&setUser=" + $("#email").val();
+				
                 setTimeout(function() {
-                      Navigation.go("dashboard");
+					AppObserver.set('loading', true);
+					AppObserver.getChecklists(function(success, items) {
+						if(success) {
+							DashboardDataSource.data(items);
+							DashboardObserver.set('dataSource', DashboardDataSource);
+						}
+						
+						AppObserver.set('loading', false);
+					});
+					Navigation.go("dashboard");
                 }, 200);
 			}
 			else
@@ -32,7 +42,7 @@ function Signin() {
 			}	
 		},
 		error: function() {
-			loader.hide();
+			AppObserver.set('loading', hide);
 			var dialog = new Dialog("#infobox", "Cannot connect to server");
 			dialog.show();
 		}
@@ -40,7 +50,7 @@ function Signin() {
 }
 
 function changePassword() {
-	var changingRequest = { "mode":"rpc", "oldPassword":$("#oldPassword").val(), "newPassword":$("#newPassword").val(), "token": token };
+	var changingRequest = { "mode":"rpc", "oldPassword":$("#oldPassword").val(), "newPassword":$("#newPassword").val(), "token": AppObserver.token };
 	
 	if($("#newPassword").val() != $("#newPasswordConfirm").val()) 
 	{
@@ -49,7 +59,7 @@ function changePassword() {
 	}
 	else
 	{
-		loader.show();
+		AppObserver.set('loading', true);
 		
 		window.location.href = "qref://clearCache";
 		
@@ -61,15 +71,17 @@ function changePassword() {
 			success: function(data) {
 				var response = data;
 				
-				loader.hide();
+				AppObserver.set('loading', false);
 				
 				if(response.success == true)
 				{
 					var dialog = new Dialog("#infobox", "Password changed successfully");
 					dialog.show();
+					
 					$("#oldPassword").val("");
 					$("#newPassword").val("");
 					$("#newPasswordConfirm").val("");
+					
 					Navigation.go("dashboard");		
 				}
 				else
@@ -79,7 +91,7 @@ function changePassword() {
 				}
 			},
 			error: function() {
-				loader.hide();
+				AppObserver.set('loading', false);
 				var dialog = new Dialog("#infobox", "Cannot connect to server");
 				dialog.show();
 			}
@@ -90,7 +102,7 @@ function changePassword() {
 function passwordRecovery() {
 	var recovery = { "mode":"rpc", "userName": $("#recoveryEmail").val() };
 	
-	loader.show();
+	AppObserver.set('loading', true);
 	
 	window.location.href = "qref://clearCache";
 	
@@ -102,13 +114,14 @@ function passwordRecovery() {
 		success: function(data) {
 			var response = data;
 			
-			loader.hide();
+			AppObserver.set('loading', false);
 			
 			if(response.success == true)
 			{
 				var dialog = new Dialog("#infobox", "An email has been sent with instruction on how to finish the recovery process.");
+				
 				$("#recoveryEmail").val("");
-				$("#recoveryEmail").focus().blur();
+				
 				dialog.show();		
 			}
 			else
@@ -118,7 +131,8 @@ function passwordRecovery() {
 			}
 		},
 		error: function() {
-			loader.hide();
+			AppObserver.set('loading', false);
+			
 			var dialog = new Dialog("#infobox", "Cannot connect to server");
 			dialog.show();
 		}

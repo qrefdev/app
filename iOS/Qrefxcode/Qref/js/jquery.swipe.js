@@ -164,19 +164,19 @@
 	  function triggerHandler(event) {
 			if(direction == LEFT)
 			{
-				if(SwipeLeftHandler) SwipeLeftHandler.call($element, event, duration);
+				if(SwipeLeftHandler) SwipeLeftHandler.call($element[0], event, duration);
 			}
 			else if(direction == RIGHT)
 			{
-				if(SwipeRightHandler) SwipeRightHandler.call($element, event, duration);
+				if(SwipeRightHandler) SwipeRightHandler.call($element[0], event, duration);
 			}
 			else if(direction == DOWN)
 			{
-				if(SwipeDownHandler) SwipeDownHandler.call($element, event, duration);
+				if(SwipeDownHandler) SwipeDownHandler.call($element[0], event, duration);
 			}
 			else if(direction == UP)
 			{
-				if(SwipeUpHandler) SwipeUpHandler.call($element, event, duration);
+				if(SwipeUpHandler) SwipeUpHandler.call($element[0], event, duration);
 			}
 	  }
 	  

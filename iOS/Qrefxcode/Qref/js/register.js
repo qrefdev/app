@@ -1,20 +1,24 @@
 function Register() {
 	var register = { "mode":"rpc", "userName": $("#emailRegister").val(), "password": $("#passwordRegister").val() }
 	
-	loader.show();
+	AppObserver.set('loading', true);
 	
 	if($("#passwordRegister").val() == "")
 	{
+		AppObserver.set('loading', false);
+		
 		var dialogbox = new Dialog("#infobox", "Please fill out all fields");
 		dialogbox.show();
-		loader.hide();
+		
 		return;
 	}
 	else if($("#passwordRegister").val() != $("#confirmPassword").val())
 	{
+		AppObserver.set('loading', false);
+		
 		var dialogbox = new Dialog("#infobox", "Password and Confirm Password do not match");
 		dialogbox.show();
-		loader.hide();
+
 		return; 
 	}
     
@@ -27,12 +31,11 @@ function Register() {
 		success: function(data) {
 			var response = data;
 			
-			loader.hide();
+			AppObserver.set('loading', false);
 			
 			if(response.success == true)
 			{
 				var dialog = new Dialog("#infobox", "Registration Successful!", function() {
-				
 					Navigation.go("signin");
 				});
 				
@@ -53,7 +56,8 @@ function Register() {
 			}	
 		},
 		error: function() {
-			loader.hide();
+			AppObserver.set('loading', false);
+			
 			var dialog = new Dialog("#infobox", "Cannot connect to server");
 			dialog.show();
 		}

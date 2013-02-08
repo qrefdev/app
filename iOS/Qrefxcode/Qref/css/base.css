@@ -73,6 +73,7 @@ html, body {
 	margin: 0;
 	padding: 0;
 	z-index: 100;
+    display: none;
 }
 
 
@@ -118,7 +119,7 @@ html, body {
 }
 
 .nav ul .item-25 {
-	width: 24.99%;
+	width: 24.80%;
 	margin: 0;
 	padding: 0;
 }
@@ -199,6 +200,7 @@ html, body {
 
 .nav ul .item-25 div .icon img {
 	width: 50%;
+	max-width: 48px;
 }
 
 .nav ul .item-33 div .icon {
@@ -335,7 +337,7 @@ html, body {
 	width: 50%;
 	z-index: 10;
 	cursor: pointer;
-	height: 32px;
+	height: auto;
 	text-align: center;
 	text-overflow: ellipsis;
 }
@@ -673,7 +675,7 @@ html, body {
 	position: absolute;
 	right: 0px;
 	width: 40px;
-	top: 5px;
+	top: 10px;
 	display: none;
 }
 
@@ -689,8 +691,34 @@ html, body {
 .checklist .vertical li .add {
 	position: absolute;
 	right: 60px;
-	display: none;
 	top: 32%;
+	display: none;
+}
+
+.checklist .nextSection {
+	float: left;
+	position: relative;
+	width: 100%;
+	display: none;
+}
+
+.checklist .nextSection .icon {
+	float: right;
+	position: relative;
+	font-size: 26px;
+}
+
+.checklist .previousSection {
+	float: left;
+	position: relative;
+	width: 100%;
+	display: none;
+}
+
+.checklist .previousSection .icon {
+	float: left;
+	position: relative;
+	font-size: 26px;
 }
 
 /** Checklist Sections Menu **/
@@ -823,6 +851,7 @@ form label {
 	top: 0px;
 	height: 100%;
 	overflow: auto;
+	list-style-type: none;
 }
 
 .emergencies .icon {
@@ -860,6 +889,7 @@ form label {
 	width: 100%;
 	margin: 0px;
 	padding: 0px;
+	list-style-type: none;
 }
 
 .emergencies ul li ul li {

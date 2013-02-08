@@ -525,6 +525,47 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a5aaae', end
 	background: #f8f8f8;
 }
 
+.theme-dark .checklist .nextSection, .theme-dark .checklist .previousSection {
+	background: -moz-linear-gradient(top,  rgba(0,0,0,0) 58%, rgba(0,0,0,0.2) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(58%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.2))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 58%,rgba(0,0,0,0.2) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  rgba(0,0,0,0) 58%,rgba(0,0,0,0.2) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  rgba(0,0,0,0) 58%,rgba(0,0,0,0.2) 100%); /* IE10+ */
+background: linear-gradient(to bottom,  rgba(0,0,0,0) 58%,rgba(0,0,0,0.2) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#33000000',GradientType=0 ); /* IE6-9 */
+}
+
+.theme-dark .checklist .nextSection p {
+	float: left;
+	position: relative;
+	width: 80%;
+	margin-left: 5%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding: 10px;
+	border: 3px solid #6b737e;
+	color: #6b737e;
+	border-radius: 5px;
+	font-size: 26px;
+	-webkit-border-radius: 5px;
+}
+
+.theme-dark .checklist .previousSection p {
+	float: left;
+	position: relative;
+	width: 80%;
+	margin-left: 5%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding: 10px;
+	border: 3px solid #6b737e;
+	color: #6b737e;
+	border-radius: 5px;
+	font-size: 26px;
+	text-align: right;
+	-webkit-border-radius: 5px;
+}
+
 /** Loader, Info, and Forms **/
 
 .theme-dark .loader {
