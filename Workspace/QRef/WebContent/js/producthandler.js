@@ -24,7 +24,7 @@ function MyProductsHandler() {
 			success: function(data) {
 				var response = data;
 				
-				if(response.success == true)
+				if(response.success)
 				{
 					self.allProducts =  self.sort(response.records);
 					if(updateCallback)
@@ -53,7 +53,7 @@ function MyProductsHandler() {
 			success: function(data) {
 				var response = data;
 				
-				if(response.success == true)
+				if(response.success)
 				{
 					self.products = self.sort(response.records);
 					if(updateCallback)
@@ -81,14 +81,22 @@ function MyProductsHandler() {
 		{
 			var product = this.allProducts[i];
 			
-			if(product)
+			if(product && product.isPublished && product.aircraftChecklist != null)
 			{
 				userOwnsProduct = (this.getProduct(this.products, product._id)) ? "owns" : "buy";
 				
 				html = Theme.createDownloadItem(product, userOwnsProduct);
                 this.productListing.append(html);
+                
+                var icon = product.productIcon;
+                var id = product._id;
+                
 			}
 		}
+        
+        var imageProcessor = new ImageHandler(this.allProducts, "productListing", true);
+        imageProcessor.init();
+        imageProcessor.processImages();
     
 		Theme.addDownloadItemHandlers();
 	};
@@ -97,20 +105,28 @@ function MyProductsHandler() {
 		var html = "";
 		this.listing.html("");
 		
-		for(var i = 0; i < Checklist.checklists.length; i++)
+		if(Checklist.checklists)
 		{
-			var product = Checklist.checklists[i];
-		
-			if(product)
+			for(var i = 0; i < Checklist.checklists.length; i++)
 			{
-				if(!product.isDeleted)
-                {
-					html = Theme.createDashboardItem(product);
-                    this.listing.append(html);
-                }
+				var product = Checklist.checklists[i];
+			
+				if(product)
+				{
+					if(!product.isDeleted)
+					{
+						html = Theme.createDashboardItem(product);
+						this.listing.append(html);
+                    
+					}
+				}
 			}
+            
+            var imageProcessor = new ImageHandler(Checklist.checklists, "checklistListing", true);
+            imageProcessor.init();
+            imageProcessor.processImages();
 		}
-		
+        
 		Theme.addDashboardItemHandlers();
 	};
 	
@@ -180,21 +196,56 @@ function ProductDetails() {
 	//Do whatever necessary to start the purchase
 	this.details.find(".buynow").tap(function(e) {
         loader.show();
+        //window.location.href = "qref://purchase=" + MyProducts.product.appleProductIdentifier;
 	});
 	
 	this.load = function(product, ownsProduct) {
-		this.details.find(".productImage").html('<img src="' + product.coverImage + '" />');
+		this.details.find(".productImage").html('<img src="images/notFound.jpg" />');
 		this.details.find(".productModel").html(product.manufacturer.name + " " + product.model.name);
 		this.details.find(".modelDescription").html(product.model.description);
 		this.details.find(".manufacturerDescription").html(product.manufacturer.description);
 		
+		var price = product.suggestedRetailPrice + "";
+		
+		if(price)
+		{
+			if(price.indexOf(".") > -1)
+			{
+				var decimal = price.split(".");
+				var decimalText = "";
+				
+				if(decimal[1].length < 2)
+					decimalText = decimal[1] + "0";
+				else
+					decimalText = decimal[1];
+					
+				price = "$" + decimal[0] + "." + decimalText;
+			}
+			else
+			{
+				price = "$" + price + ".00";
+			}
+		}
+		else
+		{
+			price = "N/A";
+		}
+			
+		
 		if(!ownsProduct)
-			this.details.find(".buynow").html(product.suggestedRetailPrice);
+			this.details.find(".buynow").html(price);
 		else
 			this.details.find(".buynow").html("INSTALL");
 			
 		this.details.find(".productSerialNumbers").html(product.serialNumber);
 		this.details.find(".productModelYear").html(product.model.modelYear);
 		this.details.find(".description").html(product.description);
+        
+        var icon = product.coverImage;
+        var id = product._id;
+        
+        var imageProcessor = new ImageHandler([product], "productDetails", false);
+        imageProcessor.init();
+        imageProcessor.processImages();
 	};
 }

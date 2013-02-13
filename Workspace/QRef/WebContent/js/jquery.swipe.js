@@ -50,20 +50,20 @@
       
       $element = $(element);
       
-      if(typeof TouchEvent == 'undefined' || typeof Touch == "undefined")
-      {
-      	$element.mouseup(touchEnd);
-      	$element.mousedown(touchStart);
-      }
-      else
-      {
+      //if(typeof TouchEvent == 'undefined' || typeof Touch == "undefined")
+      //{
+      	//$element.mouseup(touchEnd);
+      	//$element.mousedown(touchStart);
+      //}
+      //else
+      //{
       	  $element[0].addEventListener("touchend", touchEnd, false);
 		  $element[0].addEventListener("touchstart", touchStart, false);
 		  $element[0].addEventListener("touchmove", touchMove, true);
-  	  }
+  	  //}
 	  
 	  /** Prevent the dragstart on the element **/
-	  $element.bind("dragstart", function(e) { e.preventDefault(); });
+	  //$element.bind("dragstart", function(e) { e.preventDefault(); });
 	  
 	  this.updateOptions = function(options) {
 		  if(options.threshold) swipeThreshold = options.threshold;
@@ -164,19 +164,19 @@
 	  function triggerHandler(event) {
 			if(direction == LEFT)
 			{
-				if(SwipeLeftHandler) SwipeLeftHandler.call($element, event, duration);
+				if(SwipeLeftHandler) SwipeLeftHandler.call($element[0], event, duration);
 			}
 			else if(direction == RIGHT)
 			{
-				if(SwipeRightHandler) SwipeRightHandler.call($element, event, duration);
+				if(SwipeRightHandler) SwipeRightHandler.call($element[0], event, duration);
 			}
 			else if(direction == DOWN)
 			{
-				if(SwipeDownHandler) SwipeDownHandler.call($element, event, duration);
+				if(SwipeDownHandler) SwipeDownHandler.call($element[0], event, duration);
 			}
 			else if(direction == UP)
 			{
-				if(SwipeUpHandler) SwipeUpHandler.call($element, event, duration);
+				if(SwipeUpHandler) SwipeUpHandler.call($element[0], event, duration);
 			}
 	  }
 	  

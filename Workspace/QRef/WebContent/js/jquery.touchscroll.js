@@ -39,34 +39,7 @@
 				plugin.enableScroll();
 			}
     	});
-    },
-    
-    enableReverseScroll : function() {
-    	return this.each(function(index, item) {
-    		var $this = $(item);
-
-			//Check we havent already initialised the plugin
-			var plugin = $this.data("jquery.touchscroll");
-			
-			if (plugin) {
-				plugin.enableReverseScroll();
-			}
-    	});
-    },
-    
-    disableReverseScroll : function() {
-    	return this.each(function(index, item) {
-    		var $this = $(item);
-
-			//Check we havent already initialised the plugin
-			var plugin = $this.data("jquery.touchscroll");
-			
-			if (plugin) {
-				plugin.disableReverseScroll();
-			}
-    	});
     }
-    
   };
   
   function TouchScroll(element, options) {
@@ -80,13 +53,12 @@
 	  var startTime = 0, endTime = 0;
 	
 	  var disableScroll = false;
-	  var reverseScroll = false;
 	
-	  var threshold = 200;
+	  var threshold = 250;
 	  var direction = "vertical"
-	  var previousDistance = {x: 0, y:0};
 	  var deltaDirection = {x: 0, y: 0};
 	  var startPosition = {x: 0, y: 0};
+	  var previousPosition = {x: 0, y: 0};
 	  var endPosition = {x: 0, y: 0};
 	  var touched = false;
 	  
@@ -97,9 +69,7 @@
       if(options.onAfterScroll) afterScrollHandler = options.onAfterScroll;
       
       $element = $(element);
-      $container = $($element.find(".container")[0]);
-      
-      var hasContainer = ($container.length > 0) ? true : false; 
+       
       var $window = $(window);
       
       if(typeof TouchEvent == 'undefined' || typeof Touch == "undefined")
@@ -128,7 +98,6 @@
   
   	   /** Prevent the dragstart on the element **/
 	  $element.bind("dragstart", function(e) { e.preventDefault(); });
-  	  $container.bind("dragstart", function(e) { e.preventDefault(); });
   
   	  this.disableScroll = function() {
   	  	disableScroll = true;
@@ -136,14 +105,6 @@
   	  
   	  this.enableScroll = function() {
   	  	disableScroll = false;
-  	  };
-  
-  	  this.enableReverseScroll = function() {
-  	  	reverseScroll = true;
-  	  };
-  	  
-  	  this.disableReverseScroll = function() {
-  	  	reverseScroll = false;
   	  };
   
 	  function touchStart(event) {
@@ -159,11 +120,9 @@
 	  		}
 	  		
 			startTime = endTime = Date.now();
-			startPosition.x = endPosition.x = clientX;
-			startPosition.y = endPosition.y = clientY;
-			
-			previousDistance.x = 0;
-			previousDistance.y = 0;
+			startPosition.x = endPosition.x = previousPosition.x = clientX;
+			startPosition.y = endPosition.y = previousPosition.y = clientY;
+
 			touched = true;
 	  }
 	  
@@ -171,14 +130,14 @@
 	  		var clientX = event.pageX;
 	  		var clientY = event.pageY;
 	  
+	  		event.preventDefault();
+	  
 	  		if(event.touches)
 	  		{
 				first = event.touches[0]
 				
 				clientX = first.pageX;
 				clientY = first.pageY;
-				
-				event.preventDefault();
 	  		}
 	  
 			endTime = Date.now();
@@ -191,61 +150,44 @@
 			if(beforeScrollHandler)
 				beforeScrollHandler.call($element, event);
 			
-			if(touched && duration > threshold && hasContainer && !disableScroll) {
-				scroll(event);	
+			if(touched && duration > threshold && !disableScroll) {
+				scroll();	
 			}
 	  }
 	  
 	  function touchEnd(event) {
 			endTime = Date.now();
 			
-			
 			var duration = getDuration();
 			calculateDirection();
 			touched = false;
 			
-			if(duration > threshold && hasContainer && !disableScroll) {
+			if(duration > threshold && !disableScroll) {
 				scroll();
 			}
 	  }
 	  
-	  function scroll(event) {
+	  function scroll() {
 	  		if(touched)
 	  		{
 	  			if(direction == "vertical")
 	  			{
-	  				if(reverseScroll)
-	  				{
-	  					reverseScrollVertical(event);
-					}
-					else
-					{
-	  					scrollVertical(event);
-	  				}
+	  				scrollVertical();
 	  			}
 	  			else
 	  			{
-	  				if(reverseScroll)
-	  				{
-	  					reverseScrollHorizontal(event);
-					}
-					else
-					{
-	  					scrollHorizontal(event);
-	  				}
+	  				scrollHorizontal();
 	  			}
 	  		}
 	  		else
 	  		{
 	  			if(direction == "vertical")
 	  			{
-	  				if(!reverseScroll)
-	  					scrollVerticalAuto();
+	  				scrollVerticalAuto();
 	  			}
 	  			else
 	  			{
-	  				if(!reverseScroll)
-	  					scrollHorizontalAuto();
+	  				scrollHorizontalAuto();
 	  			}
 	  				
 	  			if(afterScrollHandler)
@@ -253,287 +195,138 @@
 	  		}
 	  }
 	  
-	  function scrollVertical(event) {
-			var distance = getDistance();
-			var offscreen = $container.height() - $element.height();
-			var offset = $container.position().top;
-			
-			var extraScroll = Math.abs(distance.y - previousDistance.y);
-			previousDistance = distance;
-			
-			if(deltaDirection.y < 0)
-			{
-				if(offscreen > 0)
-				{
-					if(offset > -offscreen)
-					{
-						event.stopPropagation();
-						offset = offset - extraScroll;
-						if(offset < -offscreen) offset = -offscreen;
-						
-						$container.css({top: offset + "px"});
-					}
-					else
-					{
-						$container.css({top: -offscreen + "px"});
-						if(bottomReachedHandler)
-							bottomReachedHandler.call($element);
-					}	
-				}
-			}
-			else if(deltaDirection.y > 0)
-			{
-				if(offscreen > 0)
-				{
-					if(offset < 0)
-					{
-						event.stopPropagation();
-						offset = offset + extraScroll;
-						
-						if(offset > 0) offset = 0;
-						$container.css({top: offset + "px"});
-					}
-					else
-					{
-						$container.css({top: "0px"});
-					}	
-				}
-			}
-	  }
-	  
-	  function reverseScrollVertical(event) {
-			var distance = getDistance();
-			var offscreen = $container.height() - $element.height();
-			var offset = $container.position().top;
-			
-			var extraScroll = Math.abs(distance.y - previousDistance.y);
-			previousDistance = distance;
-			
-			if(deltaDirection.y > 0)
-			{
-				if(offscreen > 0)
-				{
-					if(offset > -offscreen)
-					{
-						event.stopPropagation();
-						offset = offset - extraScroll;
-						if(offset < -offscreen) offset = -offscreen;
-						
-						$container.css({top: offset + "px"});
-					}
-					else
-					{
-						$container.css({top: -offscreen + "px"});
-						if(bottomReachedHandler)
-							bottomReachedHandler.call($element);
-					}	
-				}
-			}
-			else if(deltaDirection.y < 0)
-			{
-				if(offscreen > 0)
-				{
-					if(offset < 0)
-					{
-						event.stopPropagation();
-						offset = offset + extraScroll;
-						
-						if(offset > 0) offset = 0;
-						$container.css({top: offset + "px"});
-					}
-					else
-					{
-						$container.css({top: "0px"});
-					}	
-				}
-			}
-	  }
-	  
-	  function scrollHorizontal(event) {
-	  		var distance = getDistance();
-			var offscreen = $container.width() - $element.width();
-			var offset = $container.position().left;
-			
-			var extraScroll = Math.abs(distance.x - previousDistance.x);
-			previousDistance = distance;
-			
-			if(deltaDirection.x < 0)
-			{
-				if(offscreen > 0)
-				{
-					if(offset > -offscreen)
-					{
-						event.stopPropagation();
-						offset = offset - extraScroll;
-						if(offset < -offscreen) offset = -offscreen;
-						
-						$container.css({left: offset + "px"});
-					}
-					else
-					{
-						$container.css({left: -offscreen + "px"});
-						if(bottomReachedHandler)
-							bottomReachedHandler.call($element);
-					}	
-				}
-			}
-			else if(deltaDirection.x > 0)
-			{
-				if(offscreen > 0)
-				{
-					if(offset < 0)
-					{
-						event.stopPropagation();
-						offset = offset + extraScroll;
-						
-						if(offset > 0) offset = 0;
-						$container.css({left: offset + "px"});
-					}
-					else
-					{
-						$container.css({left: "0px"});
-					}	
-				}
-			}
-	  }
-	  
-	  function reverseScrollHorizontal(event) {
-	  		var distance = getDistance();
-			var offscreen = $container.width() - $element.width();
-			var offset = $container.position().left;
-			
-			var extraScroll = Math.abs(distance.x - previousDistance.x);
-			previousDistance = distance;
-			
-			if(deltaDirection.x > 0)
-			{
-				if(offscreen > 0)
-				{
-					if(offset > -offscreen)
-					{
-						event.stopPropagation();
-						offset = offset - extraScroll;
-						if(offset < -offscreen) offset = -offscreen;
-						
-						$container.css({left: offset + "px"});
-					}
-					else
-					{
-						$container.css({left: -offscreen + "px"});
-						if(bottomReachedHandler)
-							bottomReachedHandler.call($element);
-					}	
-				}
-			}
-			else if(deltaDirection.x < 0)
-			{
-				if(offscreen > 0)
-				{
-					if(offset < 0)
-					{
-						event.stopPropagation();
-						offset = offset + extraScroll;
-						
-						if(offset > 0) offset = 0;
-						$container.css({left: offset + "px"});
-					}
-					else
-					{
-						$container.css({left: "0px"});
-					}	
-				}
-			}
-	  }
-	  
-	  
-	  function scrollVerticalAuto() {
-			var distance = getDistance();
+	  function scrollVertical() {
 			var duration = getDuration();
-			var extraScroll = (distance.y * duration + ((0.5 * (duration * duration)) / 2)) / 1000;
 			
-			var offscreen = $container.height() - $element.height();
-			var offset = $container.position().top;
+			var velocity = deltaDirection.y / (duration / 1000);
+			var momentum = 0.001 * velocity;
+			
+			var deltaY = (endPosition.y - previousPosition.y) + momentum;
+			
+			var scrollHeight = $element[0].scrollHeight;
+			var scrollTop = $element.scrollTop();
 			
 	  		if(deltaDirection.y < 0)
 			{
-				if(offscreen > 0)
+				if(scrollTop - deltaY < scrollHeight)
 				{
-					if(offset > -offscreen)
-					{
-						offset = offset - extraScroll;
-						if(offset < -offscreen) offset = -offscreen;
-						
-						$container.animate({top: offset + "px"});
-					}
-					else
-					{
-						$container.css({top: -offscreen + "px"});
-						if(bottomReachedHandler)
-							bottomReachedHandler.call($element);
-					}	
+					$element.scrollTop(scrollTop - deltaY);
+				}
+				else {
+					$element.scrollTop(scrollHeight);
 				}
 			}
 			else if(deltaDirection.y > 0)
 			{
-				if(offscreen > 0)
+				if(scrollTop - deltaY > 0) {
+					$element.scrollTop(scrollTop - deltaY);
+				}
+				else {
+					$element.scrollTop(0);
+				}
+			}
+			
+			previousPosition.y = endPosition.y;
+	  }
+	  
+	   function scrollVerticalAuto() {
+			var duration = getDuration();
+			
+			var velocity = deltaDirection.y / (duration / 1000);
+			var momentum = 0.05 * velocity;
+			
+			var deltaY = (endPosition.y - previousPosition.y) + momentum;;
+			
+			var scrollHeight = $element[0].scrollHeight;
+			var scrollTop = $element.scrollTop();
+			
+	  		if(deltaDirection.y < 0)
+			{
+				if(scrollTop - deltaY < scrollHeight)
 				{
-					if(offset < 0)
-					{
-						offset = offset + extraScroll;
-						
-						if(offset > 0) offset = 0;
-						$container.animate({top: offset + "px"});
-					}
-					else
-					{
-						$container.css({top: "0px"});
-					}	
+					$element.animate({scrollTop: scrollTop - deltaY}, 100);
+				}
+				else {
+					$element.animate({scrollTop: scrollHeight}, 100);
+				}
+			}
+			else if(deltaDirection.y > 0)
+			{
+				if(scrollTop - deltaY > 0) {
+					$element.animate({scrollTop: scrollTop - deltaY}, 100);
+				}
+				else {
+					$element.animate({scrollTop: 0}, 100);
 				}
 			}
 	  }
 	  
-	  function scrollHorizontalAuto() {
-			var distance = getDistance();
+	  function scrollHorizontal() {
 			var duration = getDuration();
-			var extraScroll = (distance.x * duration + ((0.5 * (duration * duration)) / 2)) / 1000;
 			
-			var offscreen = $container.width() - $element.width();
-			var offset = $container.position().left;
+			var velocity = deltaDirection.x / (duration / 1000);
+			var momentum = 0.05 * velocity;
+			
+			var deltaX = (endPosition.x - previousPosition.x) + momentum;
+			
+			var scrollWidth = $element[0].scrollWidth;
+			var scrollLeft = $element.scrollLeft();
 			
 	  		if(deltaDirection.x < 0)
 			{
-				if(offscreen > 0)
+				if(scrollLeft - deltaX < scrollWidth)
 				{
-					if(offset > -offscreen)
-					{
-						offset = offset - extraScroll;
-						if(offset < -offscreen) offset = -offscreen;
-						
-						$container.animate({left: offset + "px"});
-					}
-					else
-					{
-						$container.css({left: -offscreen + "px"});
-						if(bottomReachedHandler)
-							bottomReachedHandler.call($element);
-					}	
+					$element.scrollLeft(scrollLeft - deltaX);
+				}
+				else
+				{
+					$element.scrollLeft(scrollWidth);
 				}
 			}
 			else if(deltaDirection.x > 0)
 			{
-				if(offscreen > 0)
+				if(scrollLeft - deltaX > 0) {
+					$element.scrollLeft(scrollTop - deltaX);
+				}
+				else
 				{
-					if(offset < 0)
-					{
-						offset = offset + extraScroll;
-						
-						if(offset > 0) offset = 0;
-						$container.animate({left: offset + "px"});
-					}
-					else
-					{
-						$container.css({left: "0px"});
-					}	
+					$element.scrollLeft(0);
+				}
+			}
+			
+			previousPosition.x = endPosition.x;
+	  }
+	  
+	  function scrollHorizontalAuto() {
+	  		var duration = getDuration();
+			
+			var velocity = deltaDirection.x / (duration / 1000);
+			var momentum = 0.5 * velocity;
+			
+			var deltaX = (endPosition.x - previousPosition.x) + momentum;
+			
+			var scrollWidth = $element[0].scrollWidth;
+			var scrollLeft = $element.scrollLeft();
+			
+	  		if(deltaDirection.x < 0)
+			{
+				if(scrollLeft - deltaX < scrollWidth)
+				{
+					$element.animate({scrollLeft: scrollLeft - deltaX}, 200);
+				}
+				else
+				{
+					$element.animate({scrollLeft: scrollWidth}, 200);
+				}
+			}
+			else if(deltaDirection.x > 0)
+			{
+				if(scrollLeft - deltaX > 0) {
+					$element.animate({scrollLeft: scrollTop - deltaX}, 200);
+				}
+				else
+				{
+					$element.animate({scrollLeft: 0}, 200);
 				}
 			}
 	  }

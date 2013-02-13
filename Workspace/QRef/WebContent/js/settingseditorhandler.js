@@ -8,7 +8,7 @@ function SettingsEditorHandler() {
 	};
 	
 	this.save = function() {
-		this.getNightTimeOff();
+		/*this.getNightTimeOff();
 		this.getNightTimeOn();
 		
 		
@@ -22,11 +22,14 @@ function SettingsEditorHandler() {
 		else
 			AutoSwitch = true;
 			
+		window.location.href = "qref://daytheme=" + DayTheme +"&nighttheme=" + NightTheme +"&autotheme=" + AutoSwitch + "&nighttimemodetime=" + NightTimeModeTime + "&nighttimemodetimeoff=" + NightTimeModeTimeOff;	
+		*/
 		Navigation.go("dashboard");
 	};
 	
 	
 	this.updateSettingsView = function() {
+        /*
 		$("#dayTheme").children().each(function() {
 			var ele = $(this);
 			
@@ -63,6 +66,7 @@ function SettingsEditorHandler() {
 			$($("#autoThemeMode").children()[1]).removeAttr("selected");
 			$($("#autoThemeMode").children()[0]).attr("selected", "selected");
 		}
+        */
 	};
 	
 	this.getNightTimeOn = function() {

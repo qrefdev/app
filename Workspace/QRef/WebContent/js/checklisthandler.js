@@ -135,7 +135,7 @@ function CheckListHandler() {
 			
 			items.push(item);
 			
-			items = this.sortItems(items);
+			item = this.sortItems(items);
 		}
 		
 		if(callback)
@@ -243,11 +243,15 @@ function TailNumberEditorHandler() {
 			if(item)
 			{
 				item.tailNumber = $("#tailnumber").val();
+				this.editingItem.find('.tailNumber').html($("#tailnumber").val());
 			}
 			
+			$("#edittail").animate({left: '-100%'}, 250, function(e) {
+					$("#edittail").hide();
+					Sync.syncToPhone();
+			});
+			
 			this.editingItem = undefined;
-			Navigation.back();
-			Sync.syncToPhone();
 		}
 	}
 }
@@ -273,8 +277,11 @@ function ChecklistEditorHandler() {
 			Checklist.add(Navigation.checklist[Navigation.currentChecklistSection].items, newItem, function(items) {
 				self.editingItem = undefined;
 				Navigation.checklist[Navigation.currentChecklistSection].items = items;
-				Navigation.back();
-				Sync.syncToPhone();
+				
+				$("#editadd").animate({left: '-100%'}, 250, function(e) {
+					$("#editadd").hide();
+					Sync.syncToPhone();
+				});
 			});
 		}
 	};
@@ -293,8 +300,11 @@ function ChecklistEditorHandler() {
 			}
 			
 			this.editingItem = undefined;
-			Navigation.back();
-			Sync.syncToPhone();
+			
+			$("#editadd").animate({left: '-100%'}, 250, function(e) {
+					$("#editadd").hide();
+					Sync.syncToPhone();
+			});
 		}
 	};
 }
