@@ -41,7 +41,7 @@ var TAG_BODY_CHART = "@Body CHART";
 var TAG_NOTE = "@Note";
 var TAG_TOC = "@TOC 1";
 var TAG_TOC_SECONDARY = "@TOC";
-var BULLET = "�";
+var BULLET = '\u2022';
 var TAG_EMPTY="@:";
 
 var HTML_TAG_OPN_UL = "<ul>";
@@ -216,22 +216,46 @@ function WriteToJSON(rawdata)
 				{
 					if(splitlines.length > 1)
 					{
+						if(Section_N.Items.length >= 1){
+							try{
+								Section_N.Items[Section_N.Items.length - 1].Response = "See the next " + splitlines.length + " items.";
+							}
+							catch(err){
+								Item_N = new Item("","","","See the next " + splitlines.length + " items.");
+								Section_N.Items.push(Item_N);
+							}
+						}
+						
 						Item_N = new Item("","","","");
-						Item_N.Response = HTML_TAG_OPN_UL;
+						//Item_N.Response = HTML_TAG_OPN_UL;
+						Item_N.Response = "";
 						for(var j = 0; j < splitlines.length; j++)
 						{
-							var bulletitem = splitlines[j];
-							Item_N.Response = Item_N.Response + HTML_TAG_OPN_LI + bulletitem.replace(BULLET,"") + HTML_TAG_CLS_LI;
+							Item_N = new Item(Section_N.Items[Section_N.Items.length - 1].Index,Section_N.Items[Section_N.Items.length - 1].Check, splitlines[j], Section_N.Items[Section_N.Items.length - 1].Note);
+							Section_N.Items.push(Item_N);
+							//var bulletitem = splitlines[j];
+							//Item_N.Response = Item_N.Response + HTML_TAG_OPN_LI + bulletitem.replace(BULLET,"") + HTML_TAG_CLS_LI;
 						}
-						Item_N.Response = Item_N.Response + HTML_TAG_CLS_UL;
+						//Item_N.Response = Item_N.Response + HTML_TAG_CLS_UL;
 					}
 					else
 					{
-						Item_N = new Item("","","","");
-						Item_N.Response =  HTML_TAG_OPN_UL + HTML_TAG_OPN_LI + splitlines[0] + HTML_TAG_CLS_LI + HTML_TAG_CLS_UL;
+						if(Section_N.Items.length >= 1){
+							try{
+								Section_N.Items[Section_N.Items.length - 1].Response = "See the next item.";
+							}
+							catch(err){
+								Item_N = new Item("","","","See the next " + splitlines.length + " items.");
+								Section_N.Items.push(Item_N);
+							}
+						}
+						
+						Item_N = new Item(Section_N.Items[Section_N.Items.length - 1].Index,Section_N.Items[Section_N.Items.length - 1].Check, splitlines[j] ,Section_N.Items[Section_N.Items.length - 1].Note);
+						Section_N.Items.push(Item_N);
+						//Item_N.Response =  HTML_TAG_OPN_UL + HTML_TAG_OPN_LI + splitlines[0] + HTML_TAG_CLS_LI + HTML_TAG_CLS_UL;
 					}
 					
-					Section_N.Items.push(Item_N);
+					//Section_N.Items.push(Item_N);
 					
 					continue;
 				}
@@ -385,25 +409,55 @@ function WriteToJSON(rawdata)
 		if (Tag.contains(TAG_NOTE))
 		{
 			var splitlines = CreateList(CurrentValue);
-			
-			Item_N = new Item("","","","");
-			
-			Item_N.Note = CurrentValue;
-			
-			Section_N.Items.push(Item_N);
+			var nextData = LookAhead(qd.Tag,i);
+			if(nextData != undefined && nextData.contains(TAG_BODY_INDENT))
+			{
+				// We have a note Item
+				var NextValue = qd.Value[i + 1];
+				var nextSplitLines = CreateList(NextValue);
+				
+				if(nextSplitLines.length > 1){ //We have Multiple Notes
+					Item_N = new Item("",CurrentValue,"See the next " + nextSplitLines.length + " items.","");
+				}
+				else if (nextSplitLines.length == 1){ // We have 1 note
+					Item_N = new Item("",CurrentValue,"See the next item.","");
+				}
+				else{ // We don't have notes, or it is at the bottom of the page.
+					Item_N = new Item("",CurrentValue,"","");
+				}
+				Section_N.Items.push(Item_N);
+				
+				for(var j = 0; j < nextSplitLines.length; j++){
+					Item_N = new Item(Section_N.Items[Section_N.Items.length - 1].Index,Section_N.Items[Section_N.Items.length - 1].Check, nextSplitLines[j], Section_N.Items[Section_N.Items.length - 1].Note);
+					Section_N.Items.push(Item_N);
+				}
+				i++;
+			}
+			else{
+				// We have reached the bottom of the page
+				Item_N = new Item("",CurrentValue,"","");
+				Section_N.Items.push(Item_N);
+			}
 			continue;
 		}
 	}
 	
+	Section_N.Id = qd.Tag.length;
+	Qref_N.Sections.push(Section_N);
+	
 	postingChecklist = true;
+	//return CreateJSON(rawdata);
 	return CreateJSON();
 	
 	
 }
+//function CreateJSON(rawData)
 function CreateJSON()
 {
 	
 	var chkList = new ChecklistDev();
+	//chkList.raw = rawData;
+	
 	
 	for(var i = 0; i < Qref_N.Sections.length; i++)
 	{
@@ -450,7 +504,7 @@ function CreateJSON()
 	TAG_NOTE = "@Note";
 	TAG_TOC = "@TOC 1";
 	TAG_TOC_SECONDARY = "@TOC";
-	BULLET = "�";
+	BULLET = '\u2022';
 	TAG_EMPTY="@:";
 
 	HTML_TAG_OPN_UL = "<ul>";
@@ -479,6 +533,7 @@ function CreateJSON()
 	
 function ChecklistDev()
 {
+	//this.raw = "";
 	this.manufacturer = "";
 	this.model= "";
 	this.serialNumber="000-00-001";
