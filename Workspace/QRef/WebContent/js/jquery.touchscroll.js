@@ -72,7 +72,7 @@
        
       var $window = $(window);
       
-      if(typeof TouchEvent == 'undefined' || typeof Touch == "undefined")
+     /* if(typeof TouchEvent == 'undefined' || typeof Touch == "undefined")
       {
       	$element.mouseup(touchEnd);
       	$element.mousemove(touchMove);
@@ -83,16 +83,16 @@
   	  	});
   	  }
   	  else
-  	  {
-		  $element[0].addEventListener("touchend", touchEnd, true);
-		  $element[0].addEventListener("touchstart", touchStart, true);
-		  $element[0].addEventListener("touchmove", touchMove, true);
+  	  {*/
+		  $element[0].addEventListener("touchend", touchEnd, false);
+		  $element[0].addEventListener("touchstart", touchStart, false);
+		  $element[0].addEventListener("touchmove", touchMove, false);
 		  
 		 
 		  window.addEventListener("touchend", function(e) {
-				touched = false;
+				touchEnd(e);
 		  }, true);
-  	  }
+  	  //}
 
   	  
   
@@ -199,7 +199,7 @@
 			var duration = getDuration();
 			
 			var velocity = deltaDirection.y / (duration / 1000);
-			var momentum = 0.001 * velocity;
+			var momentum = 0.0025 * velocity;
 			
 			var deltaY = (endPosition.y - previousPosition.y) + momentum;
 			
@@ -233,7 +233,7 @@
 			var duration = getDuration();
 			
 			var velocity = deltaDirection.y / (duration / 1000);
-			var momentum = 0.05 * velocity;
+			var momentum = 0.1 * velocity;
 			
 			var deltaY = (endPosition.y - previousPosition.y) + momentum;;
 			
@@ -265,7 +265,7 @@
 			var duration = getDuration();
 			
 			var velocity = deltaDirection.x / (duration / 1000);
-			var momentum = 0.05 * velocity;
+			var momentum = 0.0025 * velocity;
 			
 			var deltaX = (endPosition.x - previousPosition.x) + momentum;
 			

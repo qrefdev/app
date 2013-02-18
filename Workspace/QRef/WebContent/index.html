@@ -16,6 +16,7 @@
 		<script src="js/jquery.swipe.js"></script>
 		<script src="js/jquery.tap.js"></script>
 		<script src="js/jquery.touchscroll.js"></script>
+		<script src="js/jquery.scrollbar.js"></script>
 		<script src="js/underscore.js"></script>
 		<script src="js/zimoko.core.js"></script>
 		<script src="js/zimoko.culture.js"></script>
@@ -85,6 +86,8 @@
 						</div>
 					</div>
 				</div>
+				<div class="shadow">
+				</div>
 				<nav class="nav dashnav">
 					<ul>
 						<li data-link="e6b" data-bind="tap: navTap" class="item" style="margin-top: 10px; z-index: 5;"><div><i class="icon icon-table"></i><div class="header">Conversions</div></div></li>
@@ -113,7 +116,7 @@
 				<div class="content">
 					<div class="grid checklist scrollable">
 						<div class="container">
-							<div class="previousSection" data-bind="visible: (function() { if(list == 'preflight') return section > 0; else return true;})()"><p data-bind="tap: previousSectionTap"><i class="icon icon-arrow-left"></i> Previous Section</p></div>
+							<div class="previousSection" style="margin-top: 10px;" data-bind="visible: (function() { if(list == 'preflight') return section > 0; else return true;})()"><p data-bind="tap: previousSectionTap"><i class="icon icon-arrow-left"></i> Previous Section</p></div>
 							<ul id="checklist-items" class="vertical" data-bind="foreach: items">
 								<li data-bind="attr: {'data-id': _id}, tap: parent.itemTap, swipeRight: parent.itemSwipeRight">
 									<div class="icon"><i></i></div>
@@ -129,12 +132,14 @@
 							<div class="nextSection" data-bind="visible: (function() {if(list == 'emergencies' && checklist) return section < (checklist.emergencies.length - 1); else return true;})()"><p data-bind="tap: nextSectionTap">Next Section <i class="icon icon-arrow-right"></i></p></div>
 						</div>
 					</div>
-				</div>
-				<div class="grid check-sections flyover" style="bottom: 70px;" data-bind="fadeVisible: showSections">
-					<div class="container inside scrollable">
-						<ul id="check-sections-items" class="vertical" data-bind="foreach: sections">
-							<li data-bind="tap: parent.sectionTap, attr: {'class': (function() { if(index == parent.section) return 'active'; else return ''; })()}"><p data-bind="html: name"></p></li>
-						</ul>
+					<div class="shadow">
+					</div>
+					<div class="grid check-sections flyover" style="bottom: 70px;" data-bind="fadeVisible: showSections">
+						<div class="container inside scrollable">
+							<ul id="check-sections-items" class="vertical" data-bind="foreach: sections">
+								<li data-bind="tap: parent.sectionTap, attr: {'class': (function() { if(index == parent.section) return 'active'; else return ''; })()}"><p data-bind="html: name"></p></li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -154,7 +159,7 @@
 						<p><i class="icon icon-th-list"></i></p>
 					</div>
 				</div>
-				<div class="content" style="bottom: 0px;">
+				<div class="content">
 					<div class="grid emergencies scrollable">
 						<div class="container">
 							<ul id="emergency-items" class="full" data-bind="foreach: emergencies">
@@ -253,18 +258,17 @@
 					<div class="row">
 						<div class="bottomConversion" data-bind="html: bottomConversion">KTS</div><input id="convertBottom" data-bind="value: bottomConversionValue, keyup: conversionBottomKeyDown" class="textbox" type="text" value="0" />
 					</div>
-				</div>
-				<div class="grid available-conversions flyover" data-bind="fadeVisible: showConversions">
-					<div class="container inside scrollable">
-						<ul id="conversion-items" class="vertical">
-							<li data-bind="tap: conversionTap" class="active" data-multiplier="0.868976242" data-inverse="1.150779448" data-top="MPH" data-bottom="KTS" data-value="0"><p>MPH <> KTS</p></li>
-							<li data-bind="tap: conversionTap" data-multiplier="0.3048" data-inverse="3.280839895" data-top="FT" data-bottom="M" data-value="1"><p>FT <> M</p></li>
-							<li data-bind="tap: conversionTap" data-multiplier="1.15077945" data-inverse="0.86897624" data-top="NM" data-bottom="SM" data-value="2"><p>NM <>  SM</p></li>
-							<li data-bind="tap: conversionTap" data-multiplier="1.852" data-inverse="0.539956803" data-top="NM" data-bottom="KM" data-value="3"><p>NM <> KM</p></li>
-							<li data-bind="tap: conversionTap" data-multiplier="3.78541" data-inverse="0.264172177" data-top="GAL" data-bottom="LIT" data-value="4"><p>GAL <> LIT</p></li>
-							<li data-bind="tap: conversionTap" data-multiplier="0.453592" data-inverse="2.20462442" data-top="LB" data-bottom="KG" data-value="5"><p>LB <> KG</p></li>
-							<li data-bind="tap: conversionTap" data-top="HH:MM:SS" data-bottom="HH.HHH" data-value="6"><p>HH:MM <> HH.HHH</p></li>
-						</ul>
+					<div class="grid available-conversions flyover" data-bind="fadeVisible: showConversions">
+						<div class="container inside scrollable">
+							<ul id="conversion-items" class="vertical">
+								<li data-bind="tap: conversionTap" class="active" data-multiplier="0.868976242" data-inverse="1.150779448" data-top="MPH" data-bottom="KTS" data-value="0"><p>MPH <> KTS</p></li>
+								<li data-bind="tap: conversionTap" data-multiplier="0.3048" data-inverse="3.280839895" data-top="FT" data-bottom="M" data-value="1"><p>FT <> M</p></li>
+								<li data-bind="tap: conversionTap" data-multiplier="1.15077945" data-inverse="0.86897624" data-top="NM" data-bottom="SM" data-value="2"><p>NM <>  SM</p></li>
+								<li data-bind="tap: conversionTap" data-multiplier="1.852" data-inverse="0.539956803" data-top="NM" data-bottom="KM" data-value="3"><p>NM <> KM</p></li>
+								<li data-bind="tap: conversionTap" data-multiplier="3.78541" data-inverse="0.264172177" data-top="GAL" data-bottom="LIT" data-value="4"><p>GAL <> LIT</p></li>
+								<li data-bind="tap: conversionTap" data-multiplier="0.453592" data-inverse="2.20462442" data-top="LB" data-bottom="KG" data-value="5"><p>LB <> KG</p></li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -560,7 +564,7 @@
 		</div>
 		
 <!-- Checklist Bottom Navigation -->
-		<div id="checklist-nav" class="theme-dark" data-bind="visible: navHash == '#checklist'">
+		<div id="checklist-nav" class="theme-dark" data-bind="visible: (function(){ return (navHash == '#checklist' || navHash == '#emergencies');})()">
 			<nav class="nav checklistnav">
 				<ul>
 					<li data-link="preflight" data-bind="tap: checklistNavTap" class="item-25"><div><div class="icon"><img src="images/tab-preflight@2x.png" /></div><div class="subheader-only">Preflight</div></div></li>

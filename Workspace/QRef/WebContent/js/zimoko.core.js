@@ -81,55 +81,60 @@ var zimoko = new (function() {})();
 		parentElement.find('[data-role="calendar"]').zimokoCalendar();
 	};
 	
+	//601 - Fixed issue where animation end was not being called.
 	zimoko.ui.Animation = function(element, animation, callback) {
 		this.element = element;
 		this.animation = animation;
 		this.callback = callback;
 		this.animating = false;
+		this.listener = undefined;
+		this.classes = undefined;
 		
 		this.start = function() {
-			if(!this.animating && this.element.length > 0) {
+			var self = this;
+			if(!this.animating && this.element.length > 0 && this.element.css('display') != 'none') {
 				this.animating = true;
-				this.element.data('animationClassBefore', element.attr('class'));
+				
+				if(this.classes == undefined)
+					this.classes = this.element.attr('class');
+				
 				this.element.addClass('animated');
 				this.element.addClass(this.animation);
-				var raw = this.element[0];
 				
-				raw.addEventListener('animationend', this.end.bind(this), true);
-				raw.addEventListener('webkitAnimationEnd', this.end.bind(this), true);
-				raw.addEventListener('MSAnimationEnd', this.end.bind(this), true);
-				raw.addEventListener('oAnimationEnd', this.end.bind(this), true);
+				if(this.listener == undefined) {
+					this.listener = function(e) {
+						self.end(e);
+					};
+				}
+				
+				this.element.bind('animationend', this.listener);
+				this.element.bind('webkitAnimationEnd', this.listener);
+				this.element.bind('MSAnimationEnd', this.listener);
+				this.element.bind('oAnimationEnd', this.listener);
 			}
 		};
 		
-		this.end = function(e) {
-			var raw = this.element[0];
-			var elem = this.element;
+		this.end = function(e) {			
+			this.element.unbind('animationend');
+			this.element.unbind('webkitAnimationEnd');
+			this.element.unbind('MSAnimationEnd');
+			this.element.unbind('oAnimationEnd');
 			
-			e.stopPropagation();
-			e.preventDefault();
-			
-			raw.removeEventListener('animationend', this.end);
-			raw.removeEventListener('webkitAnimationEnd', this.end)
-			raw.removeEventListener('MSAnimationEnd', this.end)
-			raw.removeEventListener('oAnimationEnd', this.end);
-		
-			elem.attr('class', elem.data('animationClassBefore'));
-			elem.data('animationClassBefore', undefined);
+			this.element.attr('class', '');
+			this.element.attr('class', this.classes);
 			
 			if(this.callback) {
 				this.callback.call(this, e);
 				this.callback = undefined;
+				this.animating = false;
 			}
-			
-			this.animating = false;
 		};
 	};
 	
 	zimoko.ui.animate = function(element, animation, callback) {
 		var anim = new zimoko.ui.Animation(element,animation,callback);
 		anim.start();
-	}
+	};
 	
 	/** Base UI Widget class **/
 	zimoko.ui.Widget = zimoko.Class.extend(function() {

@@ -30,7 +30,7 @@
 	  var startTime = 0, endTime = 0;
 	
 	  var duration = 0;
-	  var threshold = 220;
+	  var threshold = 120;
 	  
 	  var TapHandler = undefined;	
   		
@@ -51,7 +51,6 @@
   	  
 	  function touchStart(event) {
 			startTime = endTime = Date.now();
-			$element.addClass('active');
 			duration = 0;
 	  }
 	  
@@ -67,8 +66,6 @@
 			endTime = Date.now();
 			
 			duration = getDuration();
-			
-			$element.removeClass('active');
 			
 			if(duration < threshold) {
 				triggerHandler(event);
@@ -89,8 +86,15 @@
 	  }
 	  
 	  function triggerHandler(event) {
-		if(TapHandler)
+		if(TapHandler) {
+			if(!$element.hasClass('active')) {
+				$element.addClass('active');
+				setTimeout(function() {
+					$element.removeClass('active');
+				}, 100);
+			}
 			TapHandler.call($element[0], event);
+		}
 	  }
 	  
 	  function getDuration() {

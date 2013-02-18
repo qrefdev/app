@@ -639,6 +639,7 @@
 		this.data = function(objects) {
 			if(objects) {
 				this._sources = [];
+				this.preventRead = true;
 				addObjects.call(this,objects);
 				_apply.call(this);
 			}

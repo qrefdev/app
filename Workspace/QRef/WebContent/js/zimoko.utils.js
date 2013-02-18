@@ -140,12 +140,12 @@
 			values.push(object[keys[i]]);
 		}
 	
-		try {
-			this.value = new Function(keys,'return ' + property.value + ';').apply(object, values);
-		} catch (e) {
-			this.value = '';
-		}
-		
+         try {
+            this.value = new Function(keys,'return ' + property.value + ';').apply(object, values);
+         } catch (e) {
+            this.value = '';
+         }
+ 
 		this.get = function() {
 			if(typeof(this.value) == 'function') {
 				return this.value.call(this.owner);

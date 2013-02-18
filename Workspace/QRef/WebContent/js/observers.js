@@ -10,7 +10,10 @@ var EditAddObserver = new zimoko.Observable({
 	backTap: function(element, e, data) {
 		e.stopPropagation();
 		e.preventDefault();
-		Navigation.back();
+		
+		setTimeout(function() {
+			Navigation.back();
+		}, 100);
 		
 		setTimeout(function() {
 			Sync.webSync(ChecklistObserver.checklist, true);
@@ -59,7 +62,10 @@ var EditTailObserver = new zimoko.Observable({
 	backTap: function(element, e, data) {
 		e.stopPropagation();
 		e.preventDefault();
-		Navigation.back();
+		
+		setTimeout(function() {
+			Navigation.back();
+		}, 100);
 
 		setTimeout(function() {
 			Sync.webSync(item, true);
@@ -90,7 +96,7 @@ var EmergenciesObserver = new zimoko.Observable({
 		Navigation.back();
 	},
 	onDataSourceRead: function(event) {
-		var items = EmergenciesObserver.emergencies;
+		/*var items = EmergenciesObserver.emergencies;
 		
 		var wrap = $('<li><ul></ul></li>');
 		var element = undefined;
@@ -116,7 +122,7 @@ var EmergenciesObserver = new zimoko.Observable({
 				parentElement.append(element);
 				offset = 0;
 			}
-		}
+		}*/
 	}
 });
 
@@ -339,27 +345,29 @@ var MenuObserver = new zimoko.Observable({
 		ChecklistObserver.set('checklist', undefined);
 		DashboardObserver.set('dataSource', undefined);
 		Navigation.go('#dashboard');
+		MenuObserver.close();
 	},
 	syncNavTap: function(element, e, data) {
 		e.stopPropagation();
 		e.preventDefault();
 		Sync.sync();
+		MenuObserver.close();
 	},
 	open: function() {
 		if(!$('.menu').hasClass('slided')) {
 			$('.menu').show();
-			$('.front .dashcontent').animate({left: '-245px'});
-			$('.page').animate({left:'-245px'});
-			$('.checklistnav').animate({left:'-245px'});
-			$('.menu').animate({right:'-5px'}).addClass('slided');
+			$('.front .dashcontent').animate({left: '-245px'} ,100);
+			$('.page').animate({left:'-245px'}, 100);
+			$('.checklistnav').animate({left:'-245px'}, 100);
+			$('.menu').animate({right:'-5px'}, 100).addClass('slided');
 		}
 	},
 	close: function() {
 		if($('.menu').hasClass('slided')) {
-			$('.page').animate({left:'0px'});
-			$('.front .dashcontent').animate({left: '0px'});
-			$('.checklistnav').animate({left:'0px'});
-			$('.menu').animate({right:'-300px'}, function(e) {
+			$('.page').animate({left:'0px'}, 100);
+			$('.front .dashcontent').animate({left: '0px'}, 100);
+			$('.checklistnav').animate({left:'0px'}, 100);
+			$('.menu').animate({right:'-300px'}, 100, function(e) {
 				$('.menu').hide();
 			}).removeClass('slided');
 		}
@@ -663,20 +671,25 @@ var AppObserver = new zimoko.Observable({
 			$(this).closest('form').submit();
 		});
 		
-		/*$(".scrollable").touchScroll({
-			direction: "vertical",
-			threshold: 25,
-			onBeforeScroll: function(e) {
-				if(AppObserver.isSorting)
-				{
-					$(this).touchScroll("disableScroll");
+		if(/ipad|android|iphone|blackberry/.test(navigator.userAgent.toLowerCase())) {
+			$(".scrollable").touchScroll({
+				direction: "vertical",
+				threshold: 25,
+				onBeforeScroll: function(e) {
+					if(AppObserver.isSorting)
+					{
+						$(this).touchScroll("disableScroll");
+					}
+					else
+					{
+						$(this).touchScroll("enableScroll");
+					}
 				}
-				else
-				{
-					$(this).touchScroll("enableScroll");
-				}
-			}
-		});*/
+			});
+		
+
+			$(".scrollable").scrollbar();
+		}
 		
 		$( "#checklist-items" ).sortable({
 			handle: ".handle",
@@ -764,6 +777,24 @@ var AppObserver = new zimoko.Observable({
 		
 		$(document).bind('navigatedTo', function(e, data) {
 			self.set('navHash', data.area);
+			
+			//601 - Remove editing mode on specific navigations
+			if(data.area == '#checklist' && data.previous == '#editadd') {
+				//Do nothing
+			}
+			else if(data.area == '#editadd' && data.previous == '#checklist') {
+				//Do nothing
+			}
+			else if(data.area == '#dashboard' && data.previous == '#edittail') {
+				//Do nothing
+			}
+			else if(data.area == '#edittail' && data.previous == '#dashboard') {
+				//Do nothing
+			}
+			else {
+				ChecklistObserver.set('editing', false);
+				DashboardObserver.set('editing', false);
+			}
 		});
 		
 		/*$('#checklist .checklist').scroll(function(e) {
@@ -1096,6 +1127,7 @@ var ChecklistObserver = new zimoko.Observable({
 	previousSectionTap: function(element, e, data) {
 		e.stopPropagation();
 		e.preventDefault();
+		ChecklistObserver.set('showSections', false);
 		
 		if(ChecklistObserver.section - 1 >= 0) {
 			ChecklistObserver.set('section', ChecklistObserver.section - 1);
@@ -1114,6 +1146,7 @@ var ChecklistObserver = new zimoko.Observable({
 	nextSectionTap: function(element, e, data) {
 		e.stopPropagation();
 		e.preventDefault();
+		ChecklistObserver.set('showSections', false);
 	
 		if(ChecklistObserver.section + 1 < ChecklistObserver.checklist[ChecklistObserver.list].length) {
 			ChecklistObserver.set('section', ChecklistObserver.section + 1);
@@ -1147,6 +1180,7 @@ var ChecklistObserver = new zimoko.Observable({
 	editTap: function(element, e, data) {
 		e.stopPropagation();
 		e.preventDefault();
+		ChecklistObserver.set('showSections', false);
 		ChecklistObserver.set('editing', !ChecklistObserver.editing);
 	},
 	menuTap: function(element, e, data) {
@@ -1252,7 +1286,13 @@ var ChecklistObserver = new zimoko.Observable({
 	backTap: function(element, e, data) {
 		e.stopPropagation();
 		e.preventDefault();
-		Navigation.back();
+		ChecklistObserver.set('showSections', false);
+		if(ChecklistObserver.list != "emergencies") {
+			Navigation.go("dashboard");
+		}
+		else {
+			Navigation.go("emergencies");
+		}
 	}
 });
 
