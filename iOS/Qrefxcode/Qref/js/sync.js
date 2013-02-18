@@ -1,3 +1,4 @@
+//601 - Fixed refresh issue when auto syncing or syncing when in a checklist
 function SyncProcessor() {
     this.timer = undefined;
     this.syncing = false;
@@ -45,7 +46,7 @@ function SyncProcessor() {
 								}
 								else
 								{
-									//self.sendChecklistToServer(currentItem);
+									self.sendChecklistToServer(currentItem);
 								}
 							}
 							else
@@ -56,9 +57,20 @@ function SyncProcessor() {
 							}
 						}
 						
+                        //601 - Refresh fix
+						var checklistSection = ChecklistObserver.section;
+						var checklistList = ChecklistObserver.list;
+						var checklist = ChecklistObserver.checklist;
+						
 						DashboardObserver.dataSource.refresh();
 						DashboardObserver.dataSource.read();
-                    }, 100);
+						
+						setTimeout(function() {
+							ChecklistObserver.set('checklist', checklist);
+							ChecklistObserver.set('list', checklistList);
+							ChecklistObserver.set('section', checklistSection);
+						}, 500);
+                    }, 200);
 				}
 			});
         
@@ -115,9 +127,20 @@ function SyncProcessor() {
 							}
 						}
 						
+                        //601 - Refresh Fix
+						var checklistSection = ChecklistObserver.section;
+						var checklistList = ChecklistObserver.list;
+						var checklist = ChecklistObserver.checklist;
+						
 						DashboardObserver.dataSource.refresh();
 						DashboardObserver.dataSource.read();
-                    }, 100);
+						
+						setTimeout(function() {
+							ChecklistObserver.set('checklist', checklist);
+							ChecklistObserver.set('list', checklistList);
+							ChecklistObserver.set('section', checklistSection);
+						}, 500);
+                    }, 200);
 				}
 			});
 			self.syncToPhone();
@@ -129,7 +152,8 @@ function SyncProcessor() {
 		if(checklists != undefined && !self.syncing)
 		{
             self.syncing = true;
-            var stringifiedJson = window.btoa(escape(encodeURIComponent(JSON.stringify(checklists))));
+            var temp = JSON.stringify(checklists);
+            var stringifiedJson = window.btoa(escape(encodeURIComponent(temp)));
             
             self.syncToPhoneStart(stringifiedJson);
 		}
@@ -147,17 +171,17 @@ function SyncProcessor() {
     this.syncToPhoneSend = function(data, i) {
     	var self = this;
         var buffer = '';
-        var bufferChunks = Math.ceil(data.length / 8024);
+        var bufferChunks = Math.ceil(data.length / 6024);
         
-            if(data.length - 1 >= 8024)
+            if(data.length - 1 >= 6024)
             {
-                if((i + 1) * 8024 < data.length - 1)
+                if((i + 1) * 6024 < data.length - 1)
                 {
-                    buffer = data.substring(i * 8024, ((i + 1) * 8024))
+                    buffer = data.substring(i * 6024, ((i + 1) * 6024))
                 }
-                else if(i * 8024 < data.length - 1)
+                else if(i * 6024 < data.length - 1)
                 {
-                    buffer = data.substring(i * 8024, data.length);
+                    buffer = data.substring(i * 6024, data.length);
                 }
             }
             else

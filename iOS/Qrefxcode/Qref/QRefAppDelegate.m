@@ -24,12 +24,11 @@
     self.webView = [[QRefWebView alloc] init];
     
     // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
+    self.window.backgroundColor = [UIColor blackColor];
     [self.window makeKeyAndVisible];
     
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:self.webView];
     [self.navigationController setNavigationBarHidden:true];
-    
     [self.window setRootViewController:self.navigationController];
     
     NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"phoneView" ofType:@"html"]];

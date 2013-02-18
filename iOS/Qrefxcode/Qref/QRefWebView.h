@@ -29,7 +29,7 @@
 - (void) failedTransaction:(SKPaymentTransaction *)transaction;
 - (void) productRequest:(SKProduct *)product canPurchase:(BOOL)canPurchase;
 - (void) canceledTransaction;
-- (void) loadChecklist: (NSString *) user checklists: (NSData *) checklistData uid: (NSString *) UID;
+- (void) loadChecklist;
 - (void) hasImageInCache: (NSString *) imageJSON;
 - (void) refreshToken: (NSTimer *) timer;
 

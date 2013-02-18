@@ -566,6 +566,17 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', e
 	-webkit-border-radius: 5px;
 }
 
+.theme-dark .shadow {
+	background: -moz-linear-gradient(top,  rgba(0,0,0,0) 58%, rgba(0,0,0,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(58%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 58%,rgba(0,0,0,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  rgba(0,0,0,0) 58%,rgba(0,0,0,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  rgba(0,0,0,0) 58%,rgba(0,0,0,1) 100%); /* IE10+ */
+background: linear-gradient(to bottom,  rgba(0,0,0,0) 58%,rgba(0,0,0,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#FF000000',GradientType=0 ); /* IE6-9 */
+ 
+}
+
 /** Loader, Info, and Forms **/
 
 .theme-dark .loader {
@@ -867,11 +878,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#11467c', end
 .theme-dark .emergencies {
 	color:#d6dbdf;
 }
-.theme-dark .emergencies ul .active {
-	background: transparent;
-}
-
-.theme-dark .emergencies ul li ul .active {
+.theme-dark .emergencies ul li .active {
 	background: #11467c; /* Old browsers */
 	background: -moz-linear-gradient(top,  #11467c 0%, #001b36 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#11467c), color-stop(100%,#001b36)); /* Chrome,Safari4+ */

@@ -2004,30 +2004,42 @@
 					}
 				}
 			}
-		},
+		}, //601 - Modified to use CSS3 animations
 		'fadeVisible': {
 			init: function(element, value) {
 				var val = value.get();
 				
 				if(val) {
-					element.fadeIn(200);
+					element.css({'opacity': 0, 'display': 'block'});
+                    zimoko.ui.animate(element, 'fadeIn', function(e) {
+                    	element.css({'opacity': 1});
+                    });
 				}
 				else {
-					element.fadeOut(200);
+                    zimoko.ui.animate(element, 'fadeOut', function(e) {
+                        element.hide();
+                    });
 				}
 			},
 			update: function(element, value) {
 				var val = value.get();
 				
 				if(val) {
-					element.fadeIn(200);
+                    element.css({'opacity': 0, 'display': 'block'});
+                    zimoko.ui.animate(element, 'fadeIn', function(e) {
+                    	element.css({'opacity': 1});
+                    });
 				}
 				else {
-					element.fadeOut(200);
+                    zimoko.ui.animate(element, 'fadeOut', function(e) {
+                        element.hide();
+                    });
 				}
 			},
 			remove: function(element, value) {
-				element.fadeOut(200);
+				zimoko.ui.animate(element, 'fadeOut', function(e) {
+                    element.hide();
+                });
 			}
 		},
 		'visible': {

@@ -18,11 +18,28 @@
         
         self->server = @"http://my.qref.com/";
         
-        self->startUpImage = [UIImage imageNamed:@"Default@2x.png"];
+        CGRect bounds = [[UIScreen mainScreen] bounds];
+        CGFloat screenScale = [[UIScreen mainScreen] scale];
+        
+        if(screenScale > 1) {
+            if(bounds.size.width * screenScale > 1000 || bounds.size.height * screenScale > 1000) {
+                self->startUpImage = [UIImage imageNamed:@"Default-568h@2x.png"];
+            }
+            else {
+                self->startUpImage = [UIImage imageNamed:@"Default@2x.png"];
+            }
+        }
+        else {
+            self->startUpImage = [UIImage imageNamed:@"Default.png"];
+        }
+        
         self->imageView = [[UIImageView alloc] initWithImage:self->startUpImage];
+        [self->imageView setContentMode:UIViewContentModeScaleAspectFill];
         
         self->webView = [[UIWebView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
         self->webView.delegate = self;
+        
+        [self->webView setBackgroundColor:[UIColor clearColor]];
         //[self setView:self->webView];
         
         [self setView:self->imageView];
@@ -30,9 +47,23 @@
         self->preferences = [NSUserDefaults standardUserDefaults];
         self->purchaseManager = [[QrefInAppPurchaseManager alloc] init];
         [self->purchaseManager setDelegate:self];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShown:) name:UIKeyboardDidShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHidden:) name:UIKeyboardDidHideNotification object:nil];
     }
-    return self;
+   return self;
 }
+
+- (void) keyboardShown: (NSNotification *) notif {
+    CGSize keyboardSize = [[[notif userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat: @"keyboardShown(%.2f, %.2f);", keyboardSize.height, self->webView.frame.size.height]];
+}
+
+- (void) keyboardHidden: (NSNotification *) notif {
+    [self->webView stringByEvaluatingJavaScriptFromString:@"keyboardHidden();"];
+}
+
 
 - (void)viewDidLoad
 {
@@ -50,6 +81,9 @@
     self->webView = nil;
     self->preferences = nil;
     self->purchaseManager = nil;
+    self->startUpImage = nil;
+    self->imageView = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -219,9 +253,7 @@
             }
         }
         
-        
-        if(somethingChanged)
-            [self->preferences synchronize];
+        [self->preferences synchronize];
         
         return NO;
     }
@@ -362,7 +394,12 @@
     }
 }
 
-- (void) loadChecklist: (NSString *) user checklists:(NSData *) checklistData uid:(NSString *) UID {
+- (void) loadChecklist  {
+    NSUserDefaults * preference = [NSUserDefaults standardUserDefaults];
+    NSString *user = [preference stringForKey:@"User"];
+    NSString *UID = [preference stringForKey:@"UID"];
+    NSData *checklistData = [preference dataForKey:@"Checklists"];
+    
     if(user != nil && checklistData != nil && UID != nil)
     {
         NSString *combinedUserUID = [user stringByAppendingString: UID];
@@ -378,35 +415,40 @@
         
         if([decryptedChecklistData length] > 0)
         {
-            [self->webView stringByEvaluatingJavaScriptFromString:@"BeginChecklistPackets();"];
             
-            if([decryptedChecklistData length] > 8024)
+            if([decryptedChecklistData length] > 6024)
             {
-                int totalChunks = ceil([decryptedChecklistData length] / 8024);
+                int totalChunks = ceil([decryptedChecklistData length] / 6024);
             
                 for(int i = 0; i <= totalChunks; i++)
                 {
-                    if((i + 1) * 8024 < [decryptedChecklistData length])
+                    if((i + 1) * 6024 < [decryptedChecklistData length])
                     {
                         NSRange range;
-                        range.location = i * 8024;
-                        range.length = 8024;
+                        range.location = i * 6024;
+                        range.length = 6024;
                         NSString *chunk = [decryptedChecklistData substringWithRange:range];
                 
-                        [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"LoadChecklistPacket('%@');", chunk]];
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"LoadChecklistPacket('%@');", chunk]];
+                        });
+                       // [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"LoadChecklistPacket('%@');", chunk]];
                     }
-                    else if(i * 8024 < [decryptedChecklistData length])
+                    else if(i * 6024 < [decryptedChecklistData length])
                     {
-                        int current = i * 8024;
+                        int current = i * 6024;
                         int leftOver = [decryptedChecklistData length] - current;
                     
                         NSRange range;
-                        range.location = i * 8024;
+                        range.location = i * 6024;
                         range.length = leftOver;
                     
                         NSString *chunk = [decryptedChecklistData substringWithRange:range];
                     
-                        [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"LoadChecklistPacket('%@');", chunk]];
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"LoadChecklistPacket('%@');", chunk]];
+                        });
+                        //[self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"LoadChecklistPacket('%@');", chunk]];
                     }
                 }
             }
@@ -416,10 +458,17 @@
             }
         }
     }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self->webView stringByEvaluatingJavaScriptFromString:@"DataLoaded();"];
+        CGRect bounds = [[UIScreen mainScreen] bounds];
+        [self setView:self->webView];
+        [self->webView setFrame: CGRectMake(0, 18, bounds.size.width, bounds.size.height - 18)];
+        [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    });
 }
 
 - (void) onload {
-    [self setView:self->webView];
     
     NSString *nightTimeModeTime = [self->preferences stringForKey:@"NightTimeModeTime"];
     NSString *nightTimeModeTimeOff = [self->preferences stringForKey:@"NightTimeModeTimeOff"];
@@ -429,7 +478,6 @@
     NSString *user = [self->preferences stringForKey:@"User"];
     NSString *token = [self->preferences stringForKey:@"Token"];
     NSString *UID = [self->preferences stringForKey:@"UID"];
-    NSData *checklistData = [self->preferences dataForKey:@"Checklists"];
     
     NSString * jsCallBack = @"window.getSelection().removeAllRanges();";
     [self->webView stringByEvaluatingJavaScriptFromString:jsCallBack];
@@ -457,7 +505,9 @@
         [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"AppObserver.set('token', '%@');", token]];
     }
     
-    [self loadChecklist:user checklists:checklistData uid:UID];
+    NSThread  * thread = [[NSThread alloc] initWithTarget:self selector:@selector(loadChecklist) object:nil];
+    
+    [thread start];
     
     if(nightTimeModeTime != nil)
     {
@@ -483,8 +533,6 @@
     {
         [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"AutoSwitch = '%@';", autoSwitch]];
     }
-    
-    [self->webView stringByEvaluatingJavaScriptFromString:@"DataLoaded();"];
     
     self->refreshTimer = [NSTimer scheduledTimerWithTimeInterval:600.0 target:self selector:@selector(refreshToken:) userInfo:nil  repeats:YES];
 }

@@ -11,7 +11,6 @@ var DayTheme = "theme-light";
 //Initialize
 var checklists = undefined;
 var Navigation = undefined;
-var cachePack = "";
 
 //var SettingsEditor = new SettingsEditorHandler();
 var Sync = new SyncProcessor();
@@ -39,13 +38,21 @@ $(window).load(function() {
     //DataLoaded();
 });
 
+function keyboardShown(keyboardHeight, viewHeight) {
+	$(".flyover").css({bottom: (keyboardHeight + 8) + "px"});
+}
 
+function keyboardHidden() {
+	$(".flyover").css({bottom: "8px"});
+}
+
+//601 - Moved cache pack to AppObserver
 function BeginChecklistPackets() {
-    cachePack = "";
+    AppObserver.cachePack = "";
 }
 
 function LoadChecklistPacket(data) {
-    cachePack = cachePack + data;
+    AppObserver.cachePack = AppObserver.cachePack + data;
 }
 
 function PushImage(data) {

@@ -23,6 +23,64 @@ function PurchaseCanceled() {
     AppObserver.set('loading', false);
 }
 
+function Install(productId) {
+	var tailNumberIdentifier = 'N' + Math.round(Math.random() * 10000);
+    
+    $.ajax({
+        type: 'post',
+        data: 'mode=rpc&token=' + AppObserver.token + '&product=' + ProductDetailsObserver.product._id + '&tailNumber=' + tailNumberIdentifier,
+        dataType: 'json',
+        url: host + 'services/rpc/aircraft/product/authorize/install',
+        success: function(data) {
+           if(data.success)
+           {  
+				AppObserver.getUncachedChecklists(function(success) {
+					AppObserver.set('loading', false);
+					
+					if(success) {
+						var dialog = new Dialog('#infobox', 'A new check list has been created with the random tail number: ' + tailNumberIdentifier, function() {
+							Navigation.go('dashboard');
+						});
+					
+						dialog.show();
+					}
+					else {
+						var dialog = new Dialog('#infobox', 'Failed to load the new checklist from server! Please use the Sync option to try again at a later time!', function() {
+							Navigation.go('dashboard');
+						});
+						
+						dialog.show();
+					}
+				});
+           }
+           else
+           {
+                if(data.message.code)
+                {
+                    if(data.message.code == 11000)
+                    {
+                        Install(productId);
+                    }
+                }
+                else
+                {
+					AppObserver.set('loading', false);
+					
+					var dialog = new Dialog('#infobox', 'Internal Error. Failed to create a new copy of the checklist for your account.');
+					dialog.show();
+                }
+           }
+           
+        },
+        error: function() {
+        	AppObserver.set('loading', false);
+           
+           	var dialog = new Dialog('#infobox', 'Could not connect to server. Please try again when an internet connection is available.');
+           	dialog.show();
+        }
+    });
+}
+
 function SendReceipt(receiptData)
 {
     var tailNumberIdentifier = 'N' + Math.round(Math.random() * 10000);
