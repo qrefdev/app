@@ -81,52 +81,58 @@ var zimoko = new (function() {})();
 		parentElement.find('[data-role="calendar"]').zimokoCalendar();
 	};
 	
-	//601 - Fixed issue where animation end was not being called.
+	//Fixed issue where animation end was not being called.
 	zimoko.ui.Animation = function(element, animation, callback) {
 		this.element = element;
 		this.animation = animation;
 		this.callback = callback;
-		this.animating = false;
+		//this.animating = false;
 		this.listener = undefined;
-		this.classes = undefined;
+		//this.classes = undefined;
 		
 		this.start = function() {
 			var self = this;
-			if(!this.animating && this.element.length > 0 && this.element.css('display') != 'none') {
-				this.animating = true;
-				
-				if(this.classes == undefined)
-					this.classes = this.element.attr('class');
+			if(this.element.length > 0 && this.element.css('display') != 'none') {
+	
+				if(!this.element.data('classBeforeAnimation'))
+					this.element.data('classBeforeAnimation', this.element.attr('class'));
 				
 				this.element.addClass('animated');
 				this.element.addClass(this.animation);
 				
-				if(this.listener == undefined) {
-					this.listener = function(e) {
-						self.end(e);
-					};
-				}
-				
+				this.listener = function(e) {
+					self.end($(this),e);
+				};
+					
 				this.element.bind('animationend', this.listener);
 				this.element.bind('webkitAnimationEnd', this.listener);
 				this.element.bind('MSAnimationEnd', this.listener);
 				this.element.bind('oAnimationEnd', this.listener);
+					/*
+					this.element.get(0).addEventListener('animationend', this.listener, false);
+					this.element.get(0).addEventListener('webkitAnimationEnd', this.listener, false);
+					this.element.get(0).addEventListener('MSAnimationEnd', this.listener, false);
+					this.element.get(0).addEventListener('oAnimationEnd', this.listener, false);*/
 			}
 		};
 		
-		this.end = function(e) {			
-			this.element.unbind('animationend');
-			this.element.unbind('webkitAnimationEnd');
-			this.element.unbind('MSAnimationEnd');
-			this.element.unbind('oAnimationEnd');
+		this.end = function(ele, e) {	
+			this.element.unbind('animationend', this.listener);
+			this.element.unbind('webkitAnimationEnd', this.listener);
+			this.element.unbind('MSAnimationEnd', this.listener);
+			this.element.unbind('oAnimationEnd', this.listener);
+			
+			/*
+			this.element.get(0).removeEventListener('animationend', this.listener, false);
+			this.element.get(0).removeEventListener('webkitAnimationEnd', this.listener, false);
+			this.element.get(0).removeEventListener('MSAnimationEnd', this.listener, false);
+			this.element.get(0).removeEventListener('oAnimationEnd', this.listener, false);*/
 			
 			this.element.attr('class', '');
-			this.element.attr('class', this.classes);
+			this.element.attr('class', this.element.data('classBeforeAnimation'));
 			
 			if(this.callback) {
 				this.callback.call(this, e);
-				this.callback = undefined;
-				this.animating = false;
 			}
 		};
 	};
