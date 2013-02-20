@@ -446,16 +446,19 @@ function WriteToJSON(rawdata)
 	Qref_N.Sections.push(Section_N);
 	
 	postingChecklist = true;
+	//DEBUG ENVIRONMENT
 	//return CreateJSON(rawdata);
 	return CreateJSON();
 	
 	
 }
+//DEBUG ENVIRONMENT
 //function CreateJSON(rawData)
 function CreateJSON()
 {
 	
 	var chkList = new ChecklistDev();
+	//DEBUG ENVIRONMENT
 	//chkList.raw = rawData;
 	
 	
@@ -533,6 +536,7 @@ function CreateJSON()
 	
 function ChecklistDev()
 {
+	//DEBUG ENVIRONMENT
 	//this.raw = "";
 	this.manufacturer = "";
 	this.model= "";
