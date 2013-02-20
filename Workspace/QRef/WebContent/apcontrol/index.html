@@ -781,9 +781,10 @@
 									Emergency
 								</div>
 								<div class="buttons">
-									<div class="buttonPM_cont">
+									<div class="buttonPM_cont" style="width:350px;">
 										<button class="button2" id="AddToSection_4" onclick="AddNewCheckListItem(this)"><i class="icon icon-plus-sign" id="centerbutton"></i></button>
 										<button class="button2" id="RemoveFromSection_4" onclick="RemoveFromList(this)"><i class="icon icon-minus-sign" id="centerbutton"></i></button>
+										<button class="button2" id="AddEmergencySection" onclick="AddEmergencySection()">Add Emergency Section</button>
 									</div>
 								</div>
 							</div>
@@ -792,7 +793,7 @@
 							<div class="box">
 									<div class="selectboxdiv">
 										<div id="Section1_Select" class="Select-Container">
-											<ul id="s1" class="selectable">
+											<ul id="s1" class="selectable QrefSortable">
 											</ul>
 										</div>
 									</div>
@@ -800,7 +801,7 @@
 								<div class="box">
 									<div class="selectboxdiv">
 										<div id="Section2_Select" class="Select-Container">
-											<ul id="s2" class="selectable">
+											<ul id="s2" class="selectable QrefSortable">
 											</ul>
 										</div>
 									</div>
@@ -808,7 +809,7 @@
 								<div class="box">
 									<div class="selectboxdiv">
 										<div id="Section3_Select" class="Select-Container">
-											<ul id="s3" class="selectable">
+											<ul id="s3" class="selectable QrefSortable">
 											</ul>
 										</div>
 									</div>
@@ -816,7 +817,7 @@
 								<div class="box">
 									<div class="selectboxdiv">
 										<div id="Section4_Select" class="Select-Container">
-											<ul id="s4" class="selectable">
+											<ul id="s4" class="selectable QrefSortable">
 											</ul>
 										</div>
 									</div>
@@ -1089,6 +1090,13 @@
 			</div>
 			<div id="modalDisplay"></div>
 			<div id="modalPopUp"></div>
+			<div id="EmergencyCategoryTemplate" style="display:none;">
+				<div style="width:100%;background-color:#26292B; border: 1px solid #666;">
+					<button class="button2 RemoveEmergencySection"><i class="icon icon-remove-sign"></i></button>
+					<ul class="selectable QrefSortable" style="min-height: 50px; max-height: 300px; width:100%; overflow-y:scroll;overflow-x:hidden;">
+					</ul>
+				</div>
+			</div>
 		</div>	
 	</body>
 </html>

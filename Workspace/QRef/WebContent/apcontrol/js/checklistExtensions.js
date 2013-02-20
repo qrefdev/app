@@ -467,9 +467,47 @@ function AddOptions(list, category, target) {
 		for(var i = 0; i < list.emergencies.length; i++)
 		{
 			var item = list.emergencies[i];
+			if(item.section != undefined){
+				for(var j = 0; j < item.section[j].length; j++){
+					AddEmergencyCategory(item.section[j]);
+				}
+			}
+			
 			SetItemOptions(item, i, target);
 		}
 		break;
+	}
+}
+
+function AddEmergencyCategory(section, index){
+	var subSectionScroller = $('#EmergencyCategoryTemplate').html();
+	
+	$(subSectionScroller).find('ul').attr('id',section.name);
+	
+	$('#s4')[0].appendChild(subSectionScroller);
+	
+	for(var i = 0; i < section.items.length; i++){
+		var item = section.items[i];
+		var option = document.createElement("li");
+		
+		var $option = $(option);
+		
+		$option.data("Category","Preflight");
+		$option.data("SectionIndex", index);
+		$option.data("Section", item.name);
+		$option.data("Index", item.items[i].index);
+		$option.data("Check", item.items[i].check);
+		$option.data("Response", item.items[i].response);
+		$option.data("Value", i);
+		$option.addClass("ui-widget-content");
+		
+		option.innerHTML = SetCheckListItemHTML(item.name,item.items[i].check,item.items[i].response);
+		
+		$('#' + section.name )[0].appendChild($option);
+		
+		$option.tap(function(event) {
+			AddMultiSelect($(this));
+		});
 	}
 }
 
@@ -497,6 +535,30 @@ function SetItemOptions(item, index, target)
 		$option.tap(function(event) {
 			AddMultiSelect($(this));
 		});
+	}
+}
+
+function AddEmergencySection(){
+
+	var result = show_prompt("Please enter an emergency section name");
+	if(result != ""){
+	
+		if($('#'+result).length > 0){
+			var dialog = new Dialog("#infobox2","Section already exists.");
+			dialog.show();
+		}
+		else{
+			var newDiv = document.createElement('div');
+			$(newDiv).attr('style','width:100%;');
+			var subSectionScroller = $(newDiv).html($('#EmergencyCategoryTemplate div').html());
+			
+			$(newDiv).find('ul').attr('id',result);
+			
+			var 
+			$('.RemoveEmergencySection').
+			
+			$('#s4').parent().append($(newDiv));
+		}
 	}
 }
 
