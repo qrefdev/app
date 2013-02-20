@@ -134,7 +134,7 @@
 					</div>
 					<div class="shadow">
 					</div>
-					<div class="grid check-sections flyover" style="bottom: 70px;" data-bind="fadeVisible: showSections">
+					<div class="grid check-sections flyover" data-bind="fadeVisible: showSections">
 						<div class="container inside scrollable">
 							<ul id="check-sections-items" class="vertical" data-bind="foreach: sections">
 								<li data-bind="tap: parent.sectionTap, attr: {'class': (function() { if(index == parent.section) return 'active'; else return ''; })()}"><p data-bind="html: name"></p></li>
@@ -253,10 +253,10 @@
 				<div class="content e6b" style="bottom: 0px;">
 					<div class="utcTime"><p class="utcCurrent"></p> <i class="icon icon-time"></i></div>
 					<div class="row" style="margin-top: 40px;">
-						<div class="topConversion" data-bind="html: topConversion">MPH</div><input id="convertTop" type="text" class="textbox" data-bind="value: topConversionValue, keyup: conversionTopKeyDown" style="" value="0" />
+						<div class="topConversion" data-bind="html: topConversion">MPH</div><input id="convertTop" type="text" class="textbox" data-bind="value: topConversionValue, keyup: conversionTopKeyDown" style="width: 86%;" value="0" />
 					</div>
 					<div class="row">
-						<div class="bottomConversion" data-bind="html: bottomConversion">KTS</div><input id="convertBottom" data-bind="value: bottomConversionValue, keyup: conversionBottomKeyDown" class="textbox" type="text" value="0" />
+						<div class="bottomConversion" data-bind="html: bottomConversion">KTS</div><input id="convertBottom" data-bind="value: bottomConversionValue, keyup: conversionBottomKeyDown" class="textbox" type="text" style="width: 86%;" value="0" />
 					</div>
 					<div class="grid available-conversions flyover" data-bind="fadeVisible: showConversions">
 						<div class="container inside scrollable">

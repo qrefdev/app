@@ -1052,7 +1052,7 @@ form label {
 	left: 4px;
 	bottom: 8px;
 	right: 0px;
-	width: 97%;
+	width: 99%;
     display: none;
 	background: #aaadb3; /* Old browsers */
 background: -moz-linear-gradient(top,  #aaadb3 0%, #0a162e 4%); /* FF3.6+ */
@@ -1103,8 +1103,9 @@ z-index: 999999;
     border-radius: 8px;
 -webkit-border-radius: 8px;
 	position: absolute;
-	overflow: auto;
-	width: 97%;
+	overflow-y: auto;
+	overflow-x: hidden;
+	width: 99%;
 	top: 5px;
 	left: 5px;
 	right: 5px;
@@ -1123,7 +1124,7 @@ z-index: 999999;
 
 .flyover ul li {
 	float: left;
-	width: 100%;
+	width: 97%;
 	margin: 0px;
 	padding: 0px;
 	border-bottom: 1px solid #242424;
