@@ -365,6 +365,22 @@ function NavigationHandler() {
 		});
 	};
 	
+	this.updateManufactorersEditorArea = function() {
+		manufacturersEditor.get();
+		manufacturersEditor.load();
+		
+		self.hideOtherPages("manufacturersEditor");
+		$("#manufacturersEditor").show();
+	};
+	
+	this.updateModelsEditorArea = function() {
+		modelsEditor.get();
+		modelsEditor.load();
+		
+		self.hideOtherPages("modelsEditor");
+		$("#modelsEditor").show();
+	};
+	
 	this.initLocations = function() {
 		this.simpleNavigation.add("dashboard", self.updateDashboardArea);
 		this.simpleNavigation.add("download", self.updateDownloadArea);
@@ -384,6 +400,8 @@ function NavigationHandler() {
 		this.simpleNavigation.add("productEditor", self.productEditorArea);
 		this.simpleNavigation.add("changePassword", self.updateChangePasswordArea);
 		this.simpleNavigation.add("passwordRecovery", self.updatePasswordRecoveryArea);
+		this.simpleNavigation.add("manufacturersEditor", self.updateManufactorersEditorArea);
+		this.simpleNavigation.add("modelsEditor", self.updateModelsEditorArea);
 	};
 	
 	this.init = function() {

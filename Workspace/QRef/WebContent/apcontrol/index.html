@@ -34,8 +34,10 @@
 		<script src="js/extension.js"></script>
 		<script src="js/sortableInitializer.js"></script>
 		<script src="js/checklistExtensions.js"></script>
-		<script src="js/checklistparser.js"></script>
+		<script src="js/quarkparser.js"></script>
 		<script src="js/checklistPostRequest.js"></script>
+		<script src="js/modelsEditor.js"></script>
+		<script src="js/manufacturersEditor.js"></script>
 		<script src="js/productEditor.js"></script>
 	</head> 
 	<body> 
@@ -490,6 +492,8 @@
 					<li data-link="register" id="register-menu" style="display: none;"><p><i class="icon icon-pencil"></i> Register</p></li>
 					<li data-link="parser" id="parser-menu" style="display: none;"><p><i class="icon icon-cog"></i> Checklist Editor</p></li>
 					<li data-link="productEditor" id="product-editor-menu" style="display: none;"><p><i class="icon icon-cog"></i> Product Editor</p></li>
+					<li data-link="modelsEditor" id="model-editor-menu" style="display: none;"><p><i class="icon icon-cog"></i> Models Editor</p></li>
+					<li data-link="manufacturersEditor" id="manufacturer-editor-menu" style="display: none;"><p><i class="icon icon-cog"></i> Manufacturers Editor</p></li>
 					<li id="refresh-server-menu" onclick="Authentication.refreshServer();" style="display: none;"><p>Restart Server</p></li>
 				</ul>
 			</div>
@@ -536,6 +540,55 @@
 		</div>
 		
 <!-- Begin Administration Section -->
+<!-- Models Editor -->
+	<article id="modelsEditor" class="theme-dark page" style="display: none;">
+		<section class="page">
+			<div class="dashbar">
+				<div class="item" style="background: url('images/logo.png') 50% 50% no-repeat; background-size: 100% 100%; width: 150px; height: 60px;">
+				</div>
+				<div class="item-right topmenu">
+					<p><i class="icon icon-th-list"></i></p>
+				</div>
+				<div id="checkInBtn" class="item-right topmenu" onclick="modelsEditor.save();">
+					<p>Check In</p>
+				</div>
+			</div>
+			<div class="dashcontent">
+				<div class="grid dashboard-planes-selector scrollable">
+					<div class="container">
+						<ul id="models" class="vertical">
+							
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+	</article>
+
+<!-- Manufacturer Editor -->
+	<article id="manufacturersEditor" class="theme-dark page" style="display: none;">
+		<section class="page">
+			<div class="dashbar">
+				<div class="item" style="background: url('images/logo.png') 50% 50% no-repeat; background-size: 100% 100%; width: 150px; height: 60px;">
+				</div>
+				<div class="item-right topmenu">
+					<p><i class="icon icon-th-list"></i></p>
+				</div>
+				<div id="checkInBtn" class="item-right topmenu" onclick="manufacturersEditor.save();">
+					<p>Check In</p>
+				</div>
+			</div>
+			<div class="dashcontent">
+				<div class="grid dashboard-planes-selector scrollable">
+					<div class="container">
+						<ul id="manufacturers" class="vertical">
+							
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+	</article>
 
 <!-- Product Editor -->
 		<article id="producteditor" class="theme-dark page" style="display: none;">
@@ -784,7 +837,7 @@
 									<div class="buttonPM_cont" style="width:350px;">
 										<button class="button2" id="AddToSection_4" onclick="AddNewCheckListItem(this)"><i class="icon icon-plus-sign" id="centerbutton"></i></button>
 										<button class="button2" id="RemoveFromSection_4" onclick="RemoveFromList(this)"><i class="icon icon-minus-sign" id="centerbutton"></i></button>
-										<button class="button2" id="AddEmergencySection" onclick="AddEmergencySection()">Add Emergency Section</button>
+										<button class="button2" id="AddEmergencySection" onclick="AddNewEmergencyCategory()">Add Emergency Category</button>
 									</div>
 								</div>
 							</div>
@@ -817,8 +870,8 @@
 								<div class="box">
 									<div class="selectboxdiv">
 										<div id="Section4_Select" class="Select-Container">
-											<ul id="s4" class="selectable QrefSortable">
-											</ul>
+											<div id="s4" class="selectable QrefSortable">
+											</div>
 										</div>
 									</div>
 								</div>
@@ -1092,8 +1145,9 @@
 			<div id="modalPopUp"></div>
 			<div id="EmergencyCategoryTemplate" style="display:none;">
 				<div style="width:100%;background-color:#26292B; border: 1px solid #666;">
-					<button class="button2 RemoveEmergencySection"><i class="icon icon-remove-sign"></i></button>
-					<ul class="selectable QrefSortable" style="min-height: 50px; max-height: 300px; width:100%; overflow-y:scroll;overflow-x:hidden;">
+					<div class="categoryName" style="float: left; position: relative; text-align: left; padding: 5px; color: #f1f1f1;"></div>
+					<button class="button2 RemoveEmergencySection" style="position: absolute; right: 0px; top: 0px;"><i class="icon icon-remove-sign"></i></button>
+					<ul class="selectable QrefSortable" style="min-height: 100px; width:100%; overflow-x:hidden;">
 					</ul>
 				</div>
 			</div>

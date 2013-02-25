@@ -433,7 +433,7 @@ function OK_PictureUpload()
 function CancelPicture()
 {
 	ShowMainOverlay(true);
-	slectedPicture ="";
+	selectedPicture ="";
 	$('#previewPic').attr('src',"#");
 	$('picProgress').css({"display":"none"});
 }
@@ -467,49 +467,174 @@ function AddOptions(list, category, target) {
 		for(var i = 0; i < list.emergencies.length; i++)
 		{
 			var item = list.emergencies[i];
-			if(item.section != undefined){
+			AddEmergencyCategory(item);
+			
+			/*if(item.section != undefined){
 				for(var j = 0; j < item.section[j].length; j++){
 					AddEmergencyCategory(item.section[j]);
 				}
 			}
 			
-			SetItemOptions(item, i, target);
+			SetItemOptions(item, i, target);*/
 		}
 		break;
 	}
 }
 
-function AddEmergencyCategory(section, index){
+/**
+*
+* Emeregency Area Functions
+*
+**/
+function removeEmergencyCategory(element) {
+	$removed = element.detach();
+	
+	if($('#s4').children().length > 0) {
+		$firstUl = $('#s4 ul').first();
+		$removedLis = $removed.find('ul').children();
+		$firstUl.append($removedLis);
+	}
+	else {
+		var category = createNewCategoryFromPrevious('Emergencies', $removed.find('ul').children());
+		AddEmergencyCategory(category);
+	}
+}
+
+function AddEmergencyCategory(section){
 	var subSectionScroller = $('#EmergencyCategoryTemplate').html();
 	
-	$(subSectionScroller).find('ul').attr('id',section.name);
+	$subSection = $(subSectionScroller);
+	$subSection.find('.categoryName').html(section.name);
+	$subSection.find('ul').attr('data-id',section.name);
 	
-	$('#s4')[0].appendChild(subSectionScroller);
+	$('#s4').append($subSection);
+	
+	$ulSubSection = $('#s4 ul[data-id="' + section.name + '"]');
+	$buttonSubSection = $ulSubSection.prev();
+	
+	$buttonSubSection.tap(function(e) {
+		removeEmergencyCategory($(this).parent());
+	});
+	
+	initSortable($ulSubSection);
 	
 	for(var i = 0; i < section.items.length; i++){
 		var item = section.items[i];
-		var option = document.createElement("li");
 		
-		var $option = $(option);
-		
-		$option.data("Category","Preflight");
-		$option.data("SectionIndex", index);
-		$option.data("Section", item.name);
-		$option.data("Index", item.items[i].index);
-		$option.data("Check", item.items[i].check);
-		$option.data("Response", item.items[i].response);
-		$option.data("Value", i);
-		$option.addClass("ui-widget-content");
-		
-		option.innerHTML = SetCheckListItemHTML(item.name,item.items[i].check,item.items[i].response);
-		
-		$('#' + section.name )[0].appendChild($option);
-		
-		$option.tap(function(event) {
-			AddMultiSelect($(this));
-		});
+		if(item.sectionType) {
+			for(var j = 0; j < item.items.length; j++) {
+				var option = document.createElement("li");
+				var $option = $(option);
+				
+				$option.data("SectionIndex", i);
+				$option.data("Section", item.name);
+				$option.data("Index", item.items[j].index);
+				$option.data("Check", item.items[j].check);
+				$option.data("Response", item.items[j].response);
+				$option.data("Value", i);
+				$option.addClass("ui-widget-content");
+				
+				option.innerHTML = SetCheckListItemHTML(item.name,item.items[j].check,item.items[j].response);
+				
+				$option.tap(function(event) {
+					AddMultiSelect($(this));
+				});
+				
+				$ulSubSection.append($option);
+			}
+		}
 	}
 }
+
+
+function AddNewEmergencyCategory() {
+	var newitem = show_prompt("Please Enter a new Category");
+	if(newitem == "")
+	{
+		return;
+	}
+	else
+	{
+		$uls = $('#s4 ul');
+		
+		for(var i = 0; i < $uls.length; i++) {
+			$ul = $($uls.get(i));
+			
+			if($ul.attr('id') == newitem) {
+				alert("Cannot add category, as one already exists with that name");
+				return;
+			}
+		}
+		
+		var category = new ChecklistSection();
+		category.name = newitem;
+		category.index = $('#s4 ul').length;
+		
+		AddEmergencyCategory(category);
+	}
+}
+
+function CheckIn_CycleEmergencies(datalist, uls) {
+	for(var i = 0; i < uls.length; i++) {
+		var $ul = $(uls.get(i));
+		
+		if($ul.children().length > 0) {
+			var category = createNewCategoryFromPrevious($ui.attr('data-id'), $ul.children());
+			datalist.push(category);
+		}
+	}
+}
+
+function createNewCategoryFromPrevious(name, lis) {
+	var newCategory = new ChecklistSection();
+	newCategory.name = name;
+	newCategory.index = $('#s4 ul').length;
+	
+	var currentSection = undefined;
+	var previousSection = "";
+	
+	var uniqueSectionCount = 0;
+	
+	for(var i = 0; i < lis.length; i++) {
+		$li = $(lis.get(i));
+		
+		var SectionIndex = $li.data("SectionIndex");
+		var Section = $li.data("Section");
+		var Index = i;
+		var Check = $li.data("Check");
+		var Response = $li.data("Response");
+		var Value = $li.data("Value");
+		
+		var item = new ChecklistItem();
+		item.check = Check;
+		item.response = Response;
+		item.index = Index;
+		
+		if(previousSection != Section) {
+			if(currentSection != undefined) 
+				newCategory.items.push(currentSection);
+			
+			currentSection = new ChecklistSection();
+			currentSection.name = Section;
+			currentSection.index = uniqueSectionCount;
+			
+			uniqueSectionCount++;
+		}
+		
+		currentSection.items.push(item);
+	}
+	
+	//Push the last section if not undefined
+	if(currentSection != undefined)
+		newCategory.items.push(currentSection);
+		
+	return newCategory;
+}
+/**
+*
+* End Emergency Area Functions
+*
+*/
 
 function SetItemOptions(item, index, target)
 {
@@ -519,7 +644,6 @@ function SetItemOptions(item, index, target)
 		
 		var $option = $(option);
 		
-		$option.data("Category","Preflight");
 		$option.data("SectionIndex", index);
 		$option.data("Section", item.name);
 		$option.data("Index", item.items[j].index);
@@ -535,30 +659,6 @@ function SetItemOptions(item, index, target)
 		$option.tap(function(event) {
 			AddMultiSelect($(this));
 		});
-	}
-}
-
-function AddEmergencySection(){
-
-	var result = show_prompt("Please enter an emergency section name");
-	if(result != ""){
-	
-		if($('#'+result).length > 0){
-			var dialog = new Dialog("#infobox2","Section already exists.");
-			dialog.show();
-		}
-		else{
-			var newDiv = document.createElement('div');
-			$(newDiv).attr('style','width:100%;');
-			var subSectionScroller = $(newDiv).html($('#EmergencyCategoryTemplate div').html());
-			
-			$(newDiv).find('ul').attr('id',result);
-			
-			var 
-			$('.RemoveEmergencySection').
-			
-			$('#s4').parent().append($(newDiv));
-		}
 	}
 }
 
@@ -655,9 +755,13 @@ function PopulateCategoryList(checklist)
 	
 	for(var i = 0; i < checklist.emergencies.length; i++)
 	{
-		if(SectionList.indexOf(checklist.emergencies[i].name) == -1)
-		{
-			SectionList.push(checklist.emergencies[i].name);
+		var item = checklist.emergencies[i];
+		
+		for(var j = 0; j < item.items.length; j++) {
+			if(SectionList.indexOf(item.items[j].name) == -1)
+			{
+				SectionList.push(item.items[j].name);
+			}	
 		}
 	}
 	
@@ -746,7 +850,7 @@ function CheckIn()
 		var preflight = document.getElementById('s1');
 		var takeoff = document.getElementById('s2');
 		var landing = document.getElementById('s3');
-		var emergencies = document.getElementById('s4');
+		var emergencies = $('#s4 ul');
 		
 		
 		
@@ -758,7 +862,7 @@ function CheckIn()
 		CheckIn_Cycle(g_checklist.preflight, preflight);
 		CheckIn_Cycle(g_checklist.takeoff , takeoff);
 		CheckIn_Cycle(g_checklist.landing, landing);
-		CheckIn_Cycle(g_checklist.emergencies, emergencies);
+		CheckIn_CycleEmergencies(g_checklist.emergencies, emergencies);
 		
 		PostEditedCheckListData(token, g_checklist, function()
 		{
@@ -790,7 +894,6 @@ function CheckIn_Cycle(datalist, ul)
 		var Index = $(option).data("Index");
 		var Check = $(option).data("Check");
 		var Response = $(option).data("Response");
-		var category = $(option).data("Category");
 		var value = $(option).data("Value");
 		
 		var newItem = new ChecklistItem();
@@ -830,6 +933,16 @@ function CheckIn_Cycle(datalist, ul)
 		*/
 	}
 	ClearList($(ul));
+}
+
+function ClearChecklistsImportInto() {
+	ClearList($('#s1'));
+	ClearList($('#s2'));
+	ClearList($('#s3'));
+	ClearList($('#s4'));
+	HaveMadeChanges = true;
+	
+	LoadObjects(g_checklist);
 }
 
 function ClearCheckLists()
@@ -984,45 +1097,58 @@ function AcceptNewCheckListItem()
 	{
 		case "s1":
 		{
-			$newitem.data("Category","Preflight");
-			$newitem.data("Value",($("#s1").children.length + 1));
+			$newitem.data("Value",($("#s1").children().length + 1));
 			break;
 		}
 		case"s2":
 		{
-			$newitem.data("Category","TakeOff");
-			$newitem.data("Value",($("#s2").children.length + 1));
+			$newitem.data("Value",($("#s2").children().length + 1));
 			break;
 		}
 		case "s3":
 		{
-			$newitem.data("Category","Landing");
-			$newitem.data("Value",($("#s3").children.length + 1));
+			$newitem.data("Value",($("#s3").children().length + 1));
 			break;
 		}
 		case "s4":
 		{
-			$newitem.data("Category","Emergency");
-			$newitem.data("Value",($("#s4").children.length + 1));
+			$newitem.data("Value",0);
 			break;
 		}
 	}
 	
-	$newitem.data("SectionIndex",undefined);
-	$newitem.data("SectionIndex",undefined);
-	$newitem.data("Index", 0);
-	$newitem.data("Check",check);
-	$newitem.data("Response",response);
-	var currentSection = $('#Section_AddNew').val();
-	$newitem.data("Section",currentSection);
-	
+	if(AddNewItem_SectionList.id != 's4') {
+		$newitem.data("SectionIndex",undefined);
+		$newitem.data("Index", $(AddNewItem_SectionList).children().length + 1);
+		$newitem.data("Check",check);
+		$newitem.data("Response",response);
+		var currentSection = $('#Section_AddNew').val();
+		$newitem.data("Section",currentSection);
 		
-	$newitem.addClass("ui-widget-content");
-	AddNewItem_SectionList.appendChild($newitem.get(0));
-	
-	$newitem.tap(function(event) {
-		AddMultiSelect($(this));
-	});
+			
+		$newitem.addClass("ui-widget-content");
+		AddNewItem_SectionList.appendChild($newitem.get(0));
+		
+		$newitem.tap(function(event) {
+			AddMultiSelect($(this));
+		});
+	}
+	else {
+		$newitem.data("SectionIndex",0);
+		$newitem.data("Index", $('#s4 ul').first().childrent().length + 1);
+		$newitem.data("Check",check);
+		$newitem.data("Response",response);
+		var currentSection = $('#Section_AddNew').val();
+		$newitem.data("Section",currentSection);
+		
+			
+		$newitem.addClass("ui-widget-content");
+		$('#s4 ul').first().append($newitem);
+		
+		$newitem.tap(function(event) {
+			AddMultiSelect($(this));
+		});
+	}
 	
 	CloseAddNewItemForm();
 }
@@ -1260,9 +1386,13 @@ function UploadFiles()
 					var contents = e.target.result;
 					FileContents = contents;
 					
+					var parser = new QuarkParser(contents);
+					
 					loader.show();
 					
-					var results = WriteToJSON(FileContents);
+					parser.parse();
+					
+					var results = parser.getJson();
 					
 					loader.hide();
 					

@@ -30,7 +30,7 @@
 	  var startTime = 0, endTime = 0;
 	
 	  var duration = 0;
-	  var threshold = 220;
+	  var threshold = 120;
 	  
 	  var TapHandler = undefined;	
   		
@@ -38,20 +38,19 @@
       
       $element = $(element);
       
-     // if(typeof TouchEvent == 'undefined' || typeof Touch == "undefined")
-      //{
+      if(typeof TouchEvent == 'undefined' || typeof Touch == "undefined")
+      {
       	$element.mouseup(touchEnd);
       	$element.mousedown(touchStart);
-      //}
-     /*( else
+      }
+      else
       {
       	$element.bind("touchstart", touchStart);
       	$element.bind("touchend", touchEnd);
-  	  }*/
+  	  }
   	  
 	  function touchStart(event) {
 			startTime = endTime = Date.now();
-			
 			duration = 0;
 	  }
 	  
@@ -87,8 +86,15 @@
 	  }
 	  
 	  function triggerHandler(event) {
-		if(TapHandler)
-			TapHandler.call($element, event);
+		if(TapHandler) {
+			if(!$element.hasClass('active')) {
+				$element.addClass('active');
+				setTimeout(function() {
+					$element.removeClass('active');
+				}, 100);
+			}
+			TapHandler.call($element[0], event);
+		}
 	  }
 	  
 	  function getDuration() {

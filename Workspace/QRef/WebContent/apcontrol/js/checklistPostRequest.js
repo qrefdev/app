@@ -8,8 +8,14 @@ var selectedVersion = 0;
 
 function GetandPost(checklistdata, logintoken)
 {
-	g_checklist = checklistdata;
-	showMFGOverlay(logintoken);
+	if(g_checklist) {
+		g_checklist = checklistdata;
+		postingChecklist = false;
+		ClearChecklistsImportInto();
+	} else {
+		g_checklist = checklistdata;
+		showMFGOverlay(logintoken);
+	}
 }
 
 function PostEditedCheckListData(logintoken, editedchecklist, callback)

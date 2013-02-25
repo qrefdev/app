@@ -3,7 +3,8 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<title>Qref Test</title>
-	<script src="https://dl.dropbox.com/u/17025312/checklistparser.js" type="text/javascript"></script>
+	<!--<script src="js/checklistparser.js" type="text/javascript"></script>-->
+	<script src="js/quarkparser.js" type="text/javascript"></script>
 	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 </head>
 <body>
@@ -33,6 +34,18 @@
 		<div style="width:30%; height:800px; margin:5px; float:left; background-color:#f0f0f0; overflow:auto;">
 			Sections
 			<div id="sections">
+				<p>Preflight:</p>
+				<div id="preflight">
+				</div>
+				<p>Takeoff:</p>
+				<div id="takeoff">
+				</div>
+				<p>Landing:</p>
+				<div id="landing">
+				</div>
+				<p>Emergencies:</p>
+				<div id="emergencies">
+				</div>
 			</div>
 		</div>
 	</div>
@@ -50,27 +63,70 @@
 				{
 					return function(e){
 						var contents = e.target.result;
-						FileContents = contents;
+									
+						var parser = new QuarkParser(contents);
+						parser.parse();
 						
-						var results = WriteToJSON(FileContents);
+						var results = parser.getJson();
 						
 						if(results != undefined && results != null) {
 						
-							$('#raw').html(results.raw);
+							$('#raw').html(parser.lines.join('<br>'));
 							results.raw = "";
 							$('#results').html(JSON.stringify(results));
 							
+							
+							
 							for(var i = 0; i < results.preflight.length; i++){
-								var html = $('#sections').html();
-								$('#sections').html( html + '<div style="width:100%; background-color:lightGrey;" onclick="displayThis(this);"><p>' + results.preflight[i].name + "<br /></p>");
-								html = $('#sections').html();
+								var html = $('#preflight').html();
+								$('#preflight').html( html + '<div style="width:100%; background-color:lightGrey;" onclick="displayThis(this);"><p>' + results.preflight[i].name + "<br /></p>");
+								html = $('#preflight').html();
 								html += '<div style="width:100%;"><ul style="list-style-type:none; display:none;"><li>';
 								for(var j = 0; j < results.preflight[i].items.length; j++){
 									var item = results.preflight[i].items[j];
 									html += '<div style="width:100%;">' + '<div style="background-color:#E4E4E4;">Index: ' + item.index + '</div><br />Check: ' + item.check + '<br />Response: ' + item.response + '<br />Note: ' + item.note + '</li><li>';
  								}
 								html += "</li></ul></div></div></div>";
-								$('#sections').html(html);
+								$('#preflight').html(html);
+							}
+							for(var i = 0; i < results.takeoff.length; i++){
+								var html = $('#takeoff').html();
+								$('#takeoff').html( html + '<div style="width:100%; background-color:lightGrey;" onclick="displayThis(this);"><p>' + results.takeoff[i].name + "<br /></p>");
+								html = $('#takeoff').html();
+								html += '<div style="width:100%;"><ul style="list-style-type:none; display:none;"><li>';
+								for(var j = 0; j < results.takeoff[i].items.length; j++){
+									var item = results.takeoff[i].items[j];
+									html += '<div style="width:100%;">' + '<div style="background-color:#E4E4E4;">Index: ' + item.index + '</div><br />Check: ' + item.check + '<br />Response: ' + item.response + '<br />Note: ' + item.note + '</li><li>';
+ 								}
+								html += "</li></ul></div></div></div>";
+								$('#takeoff').html(html);
+							}
+							for(var i = 0; i < results.landing.length; i++){
+								var html = $('#landing').html();
+								$('#landing').html( html + '<div style="width:100%; background-color:lightGrey;" onclick="displayThis(this);"><p>' + results.landing[i].name + "<br /></p>");
+								html = $('#landing').html();
+								html += '<div style="width:100%;"><ul style="list-style-type:none; display:none;"><li>';
+								for(var j = 0; j < results.landing[i].items.length; j++){
+									var item = results.landing[i].items[j];
+									html += '<div style="width:100%;">' + '<div style="background-color:#E4E4E4;">Index: ' + item.index + '</div><br />Check: ' + item.check + '<br />Response: ' + item.response + '<br />Note: ' + item.note + '</li><li>';
+ 								}
+								html += "</li></ul></div></div></div>";
+								$('#landing').html(html);
+							}
+							for(var i = 0; i < results.emergencies[0].items.length; i++){
+							
+								var section = results.emergencies[0].items[i];
+								
+								var html = $('#emergencies').html();
+								$('#emergencies').html( html + '<div style="width:100%; background-color:lightGrey;" onclick="displayThis(this);"><p>' + section.name + "<br /></p>");
+								html = $('#emergencies').html();
+								html += '<div style="width:100%;"><ul style="list-style-type:none; display:none;"><li>';
+								for(var j = 0; j < section.items.length; j++){
+									var item = section.items[j];
+									html += '<div style="width:100%;">' + '<div style="background-color:#E4E4E4;">Index: ' + item.index + '</div><br />Check: ' + item.check + '<br />Response: ' + item.response + '<br />Note: ' + item.note + '</li><li>';
+ 								}
+								html += "</li></ul></div></div></div>";
+								$('#emergencies').html(html);
 							}
 						}
 					};

@@ -1,6 +1,7 @@
 var shifted = false;
 var alted = false;
 var firstSelectedIndex = -1;
+var globalMouseMoveListener = undefined;
 
 $(window).load(function() {
 
@@ -129,67 +130,200 @@ function index(parent, item)
 	return 0;
 }
 
+function ScrollDown(element, list) {
+	var listParent = list.parent().parent().parent();
+	var elementTop = element.offset().top;
+	var listTop = listParent.offset().top;
+	var elementHeight = element.height();
+	var listHeight = listParent.height();
+	
+	if(elementTop + elementHeight >= listTop + listHeight - elementHeight) {
+		listParent.scrollTop(listParent.scrollTop() + 15);
+		
+		setTimeout(function() {
+			ScrollDown(element, list);
+		}, 100);			
+	}
+}
+
+function ScrollUp(element, list) {
+	var listParent = list.parent().parent().parent();
+	var elementTop = element.offset().top;
+	var listTop = listParent.offset().top;
+	var elementHeight = element.height();
+	var listHeight = listParent.height();
+	
+	if(elementTop - elementHeight <= listTop + elementHeight) {
+		listParent.scrollTop(listParent.scrollTop() - 15);
+		
+		setTimeout(function() {
+			ScrollUp(element, list);
+		}, 100);			
+	}
+}
+
+function MouseListener(element, list) {
+	var listParent = list.parent().parent().parent();
+	var elementTop = element.offset().top;
+	var listTop = listParent.offset().top;
+	var elementHeight = element.height();
+	var listHeight = listParent.height();
+	
+	if(elementTop + elementHeight >= listTop + listHeight - elementHeight) {
+		ScrollDown(element, list);
+	}
+	else if(elementTop - elementHeight <= listTop + elementHeight) {
+		ScrollUp(element, list);
+	}
+}
+
+function initSortable(list) {
+	list.sortable({
+		start: function(event, info) {
+				var $this = $(this);
+				globalMouseMoveListener = function(e) {
+					MouseListener(info.item, $this);
+				};
+				
+				$(window).bind("mousemove", globalMouseMoveListener);
+				//$(".dashboard-planes-selector").touchScroll("disableScroll");
+				info.item.siblings(".ui-selected").not(".ui-sortable-placeholder").clone().css({opacity: 0.5}).appendTo(info.item);
+	
+			},
+		stop: function(event, info) {
+			//$(".dashboard-planes-selector").touchScroll("enableScroll");
+			if(!info.sender) {
+				$(this).find(".ui-selected").each(function(index, item) {
+						if(item != info.item[0]) 
+							info.item.after($(item));
+				});
+			}
+			
+			if(globalMouseMoveListener) {
+				$(window).unbind("mousemove", globalMouseMoveListener);
+				globalMouseMoveListener = undefined;
+			}
+		},
+		beforeStop: function(e, info) {
+			info.item.find(".ui-selected").remove();
+		},
+		receive: function(e, info) {
+			info.item.after(info.sender.find('.ui-selected'));
+			$(this).find('.ui-selected').removeClass('ui-selected');
+			HaveMadeChanges = true;
+			CalculateItemInputVisibility();
+		},
+		scroll: true,
+		connectWith:"ul"
+	});
+}
+
 //Set Sortables, Stop Propagation
 $(window).load(function() {
 	
-	$("ul").bind("sortreceive", function(sortevent, ui)
+	/*$("ul").bind("sortreceive", function(sortevent, ui)
 	{
 		HaveMadeChanges = true;
 		$('li.ui-selected').appendTo($(this));
 		$('li.ui-selected').toggleClass("ui-selected");
 		
 		CalculateItemInputVisibility();
-	});
+	});*/
 	
 	$("#s1").sortable(
 	{
-	start: function(event, ui) {
-			event.stopPropagation();
-			//$(".dashboard-planes-selector").touchScroll("disableScroll");
+		start: function(event, info) {
+				//$(".dashboard-planes-selector").touchScroll("disableScroll");
+				info.item.siblings(".ui-selected").not(".ui-sortable-placeholder").clone().css({opacity: 0.5}).appendTo(info.item);
+	
+			},
+		stop: function(event, info) {
+			//$(".dashboard-planes-selector").touchScroll("enableScroll");
+			if(!info.sender) {
+				$(this).find(".ui-selected").each(function(index, item) {
+						if(item != info.item[0]) 
+							info.item.after($(item));
+				});
+			}
+			
+			if(globalMouseMoveListener) {
+				$(window).unbind("mousemove", globalMouseMoveListener);
+				globalMouseMoveListener = undefined;
+			}
 		},
-	stop: function(event, ui) {
-		event.stopPropagation();
-		//$(".dashboard-planes-selector").touchScroll("enableScroll");
-	},
+		beforeStop: function(e, info) {
+			info.item.find(".ui-selected").remove();
+		},
+		receive: function(e, info) {
+			info.item.after(info.sender.find('.ui-selected'));
+			$(this).find('.ui-selected').removeClass('ui-selected');
+			HaveMadeChanges = true;
+				CalculateItemInputVisibility();
+		},
 		scroll: true,
 		connectWith:"ul"
 	});
 	$("#s2").sortable(
 	{
-	start: function(event, ui) {
-			event.stopPropagation();
-			//$(".dashboard-planes-selector").touchScroll("disableScroll");
+		start: function(event, info) {
+				//$(".dashboard-planes-selector").touchScroll("disableScroll");
+				info.item.siblings(".ui-selected").not(".ui-sortable-placeholder").clone().css({opacity: 0.5}).appendTo(info.item);
+			},
+		stop: function(event, info) {
+			//$(".dashboard-planes-selector").touchScroll("enableScroll");
+			if(!info.sender) {
+				$(this).find(".ui-selected").each(function(index, item) {
+						if(item != info.item[0]) 
+							info.item.after($(item));
+				});
+			}
+			
+			if(globalMouseMoveListener) {
+				$(window).unbind("mousemove", globalMouseMoveListener);
+				globalMouseMoveListener = undefined;
+			}
 		},
-	stop: function(event, ui) {
-		event.stopPropagation();
-		//$(".dashboard-planes-selector").touchScroll("enableScroll");
-	},
+		beforeStop: function(e, info) {
+			info.item.find(".ui-selected").remove();
+		},
+		receive: function(e, info) {
+			info.item.after(info.sender.find('.ui-selected'));
+			$(this).find('.ui-selected').removeClass('ui-selected');
+			HaveMadeChanges = true;
+			CalculateItemInputVisibility();
+		},
 		scroll: true,
 		connectWith:"ul"
 	});
 	$("#s3").sortable(
 	{
-	start: function(event, ui) {
-			event.stopPropagation();
-			//$(".dashboard-planes-selector").touchScroll("disableScroll");
+		start: function(event, info) {
+				//$(".dashboard-planes-selector").touchScroll("disableScroll");
+				info.item.siblings(".ui-selected").not(".ui-sortable-placeholder").clone().css({opacity: 0.5}).appendTo(info.item);
+			},
+		stop: function(event, info) {
+			//$(".dashboard-planes-selector").touchScroll("enableScroll");
+			if(!info.sender) {
+				$(this).find(".ui-selected").each(function(index, item) {
+						if(item != info.item[0]) 
+							info.item.after($(item));
+				});
+			}
+			
+			if(globalMouseMoveListener) {
+				$(window).unbind("mousemove", globalMouseMoveListener);
+				globalMouseMoveListener = undefined;
+			}
 		},
-	stop: function(event, ui) {
-		event.stopPropagation();
-		//$(".dashboard-planes-selector").touchScroll("enableScroll");
-	},
-		scroll: true,
-		connectWith:"ul"
-	});
-	$("#s4").sortable(
-	{
-	start: function(event, ui) {
-			event.stopPropagation();
-			//$(".dashboard-planes-selector").touchScroll("disableScroll");
+		beforeStop: function(e, info) {
+			info.item.find(".ui-selected").remove();
 		},
-	stop: function(event, ui) {
-		event.stopPropagation();
-		//$(".dashboard-planes-selector").touchScroll("enableScroll");
-	},
+		receive: function(e, info) {
+			info.item.after(info.sender.find('.ui-selected'));
+			$(this).find('.ui-selected').removeClass('ui-selected');
+			HaveMadeChanges = true;
+			CalculateItemInputVisibility();
+		},
 		scroll: true,
 		connectWith:"ul"
 	});

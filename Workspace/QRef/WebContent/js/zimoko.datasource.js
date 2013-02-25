@@ -277,7 +277,7 @@
 				$.ajax({
 					url: self.readUrl,
 					type: 'GET',
-					data: options.data,
+					data: JSON.stringify(options),
 					dataType: self.schema.type,
 					success: function(data) {
 						options.success(data);

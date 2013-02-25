@@ -110,12 +110,16 @@ function AuthenticationHandler() {
 					$("#parser-menu").show();
 					$("#product-editor-menu").show();
 					$("#refresh-server-menu").show();
+					$("#manufacturer-editor-menu").show();
+					$("#model-editor-menu").show();
 				}
 				else
 				{
 					$("#parser-menu").hide();
 					$("#product-editor-menu").hide();
 					$("#refresh-server-menu").hide();
+					$("#manufacturer-editor-menu").hide();
+					$("#model-editor-menu").hide();
 				}
 			});
 		

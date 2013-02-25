@@ -12,6 +12,9 @@
 				plugin = new Swipe(item, options);
 				$this.data("jquery.swipe", plugin);
 			}
+			else if(plugin && options) {
+				plugin.updateOptions(options);
+			}
     	});
     }
   };
@@ -35,7 +38,7 @@
 	
 	  var duration = 0;
 	  var direction = -1;
-	  var swipeThreshold = 20;
+	  var swipeThreshold = 10;
 	  var durationThreshold = 1000;
 	  
 	  if(options.threshold) swipeThreshold = options.threshold;
@@ -47,29 +50,38 @@
       
       $element = $(element);
       
-      if(typeof TouchEvent == 'undefined' || typeof Touch == "undefined")
-      {
-      	$element.mouseup(touchEnd);
-      	$element.mousedown(touchStart);
-      }
-      else
-      {
-      	  $element[0].addEventListener("touchend", touchEnd, true);
-		  $element[0].addEventListener("touchstart", touchStart, true);
+      //if(typeof TouchEvent == 'undefined' || typeof Touch == "undefined")
+      //{
+      	//$element.mouseup(touchEnd);
+      	//$element.mousedown(touchStart);
+      //}
+      //else
+      //{
+      	  $element[0].addEventListener("touchend", touchEnd, false);
+		  $element[0].addEventListener("touchstart", touchStart, false);
 		  $element[0].addEventListener("touchmove", touchMove, true);
-  	  }
+  	  //}
 	  
 	  /** Prevent the dragstart on the element **/
 	  //$element.bind("dragstart", function(e) { e.preventDefault(); });
+	  
+	  this.updateOptions = function(options) {
+		  if(options.threshold) swipeThreshold = options.threshold;
+		  if(options.durationThreshold) durationThreshold = options.durationThreshold;
+		  if(options.swipeLeft) SwipeLeftHandler = options.swipeLeft;
+		  if(options.swipeRight) SwipeRightHandler = options.swipeRight;
+		  if(options.swipeDown) SwipeDownHandler = options.swipeDown;
+		  if(options.swipeUp) SwipeUpHandler = options.swipeUp;
+	  };
 	  
 	  function touchStart(event) {
 	  		var clientX = event.pageX;
 	  		var clientY = event.pageY;
 	  		
-	  		if(event.touches)
+	  		if(event.targetedTouches)
 	  		{
-				first = event.touches[0]
-				
+                first = event.targetedTouches[0];
+	
 				clientX = first.pageX;
 				clientY = first.pageY;
 	  		}
@@ -87,11 +99,11 @@
 	  function touchMove(event) {
 	  		var clientX = event.pageX;
 	  		var clientY = event.pageY;
-	  
-	  		if(event.changedTouches)
+	
+	  		if(event.targetedTouches)
 	  		{
-				first = event.changedTouches[0]
-				
+                first = event.targetedTouches[0];
+	
 				clientX = first.pageX;
 				clientY = first.pageY;
 	  		}
@@ -107,20 +119,25 @@
 	  		
 	  		direction = getDirection();
 			duration = getDuration();
-			
-			if(duration < durationThreshold && direction != -1)
-				event.preventDefault();
-				
+	
+            if(direction == UP && SwipeUpHandler)
+                event.preventDefault();
+            else if(direction == DOWN && SwipeDownHandler)
+                event.preventDefault();
+            else if(direction == LEFT && SwipeLeftHandler)
+                event.preventDefault();
+            else if(direction == RIGHT && SwipeRightHandler)
+                event.preventDefault();
 	  }
-	  
+	
 	  function touchEnd(event) {
 	  		var clientX = event.pageX;
 	  		var clientY = event.pageY;
 	  
 	  		if(event.changedTouches)
 	  		{
-				first = event.changedTouches[0]
-				
+                first = event.changedTouches[0];
+	
 				clientX = first.pageX;
 				clientY = first.pageY;
 	  		}
@@ -137,7 +154,7 @@
 			direction = getDirection();
 			duration = getDuration();
 			
-			if(duration < durationThreshold && direction != -1) {
+			if(direction != -1) {
 				triggerHandler(event);
 			}
 			
@@ -147,19 +164,19 @@
 	  function triggerHandler(event) {
 			if(direction == LEFT)
 			{
-				if(SwipeLeftHandler) SwipeLeftHandler.call($element, event, duration);
+				if(SwipeLeftHandler) SwipeLeftHandler.call($element[0], event, duration);
 			}
 			else if(direction == RIGHT)
 			{
-				if(SwipeRightHandler) SwipeRightHandler.call($element, event, duration);
+				if(SwipeRightHandler) SwipeRightHandler.call($element[0], event, duration);
 			}
 			else if(direction == DOWN)
 			{
-				if(SwipeDownHandler) SwipeDownHandler.call($element, event, duration);
+				if(SwipeDownHandler) SwipeDownHandler.call($element[0], event, duration);
 			}
 			else if(direction == UP)
 			{
-				if(SwipeUpHandler) SwipeUpHandler.call($element, event, duration);
+				if(SwipeUpHandler) SwipeUpHandler.call($element[0], event, duration);
 			}
 	  }
 	  
