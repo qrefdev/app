@@ -354,7 +354,7 @@ border-top: 1px solid #2b2f32;
 
 .theme-dark .dashboard-planes-selector .heading, .theme-dark .downloads .heading {
 	color: #d6dbdf;
-	font-size: 18px;
+	font-size: 22px;
 	font-family: MyriadBold, Myriad;
 	text-overflow: ellipsis;
 }

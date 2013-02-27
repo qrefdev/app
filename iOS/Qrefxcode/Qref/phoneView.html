@@ -60,7 +60,7 @@
 									<div class="plane-icon"></div>
 									<div class="holder">
 										<div class="heading" data-bind="html: manufacturer.name + ' ' + model.name"></div>
-										<div class="subheading" data-bind="html: model.description, visible: model.description"></div>
+										<div class="subheading" data-bind="html: model.description, visible: model.description" style="margin-top: 0px"></div>
 										<div class="subheading">
 											<span data-bind="html: tailNumber, visible: tailNumber" class="tailNumber"></span> 
 											<span data-bind="html: model.modelYear, visible: model.modelYear"></span>
@@ -126,15 +126,15 @@
 								<li data-bind="attr: {'data-id': _id}, tap: parent.itemTap, swipeRight: parent.itemSwipeRight">
 									<div class="icon"><i></i></div>
 									<div class="holder">
-										<div class="check" data-bind="html: check"></div>
-										<div class="response" data-bind="html: response"></div>
+										<div class="check" data-bind="visible: (check != ''), html: check"></div>
+										<div class="response" data-bind="visible: (response != ''), html: response"></div>
 									</div>
 									<div class="delete" data-bind="tap: parent.deleteTap">delete</div>
 									<div class="add" data-bind="tap: parent.addTap, fadeVisible: parent.editing"><i class="icon-plus"></i></div>
 									<div class="handle" data-bind="fadeVisible: parent.editing"><div class="item"></div><div class="item"></div><div class="item"></div>
 								</li>
 							</ul>
-							<div class="nextSection" data-bind="visible: (function() {if(list == 'emergencies' && checklist) return section < (checklist.emergencies.length - 1); else return true;})()"><p data-bind="tap: nextSectionTap">Next Section <i class="icon icon-arrow-right"></i></p></div>
+							<div class="nextSection" data-bind="visible: (function() {if(list == 'emergencies' && checklist) { if(category < checklist.emergencies.length - 1) { return true; } else { return (category == checklist.emergencies.length - 1 && section < checklist.emergencies[category].items.length - 1) }} else {return true;}})()"><p data-bind="tap: nextSectionTap">Next Section <i class="icon icon-arrow-right"></i></p></div>
 						</div>
 					</div>
 					<div class="shadow">
@@ -175,12 +175,14 @@
 							</ul>
 						</div>
 					</div>
+					<div class="shadow">
+					</div>
 				</div>
 			</div>
 		</article>
 		
 <!-- Product Download Listing -->
-		<article id="downloads" data-bind="swipeLeft: backTap" data-page-show="slideInLeft" data-page-hide="slideOutLeft" class="theme-dark page">
+		<article id="downloads" data-bind="swipeRight: backTap" data-page-show="slideInLeft" data-page-hide="slideOutLeft" class="theme-dark page">
 			<div class="wrap">
 				<div class="topbar">
 					<div class="item-large back" data-bind="tap: backTap">
@@ -242,7 +244,7 @@
 
 
 <!-- E6B Conversions -->
-		<article id="e6b" data-bind="swipeLeft: backTap" data-page-show="slideInLeft" data-page-hide="slideOutLeft" class="theme-dark page">
+		<article id="e6b" data-bind="swipeRight: backTap" data-page-show="slideInLeft" data-page-hide="slideOutLeft" class="theme-dark page">
 			<div class="wrap">
 				<div class="topbar">
 					<div class="item-large back" data-bind="tap: backTap">
@@ -395,7 +397,7 @@
 		</article>
 		
 <!-- Edit Checklist / Add Checklist Item Screen -->
-		<article id="editadd" data-bind="swipeLeft: backTap" data-page-show="slideInLeft" data-page-hide="slideOutLeft" class="theme-dark page">
+		<article id="editadd" data-bind="swipeRight: backTap" data-page-show="slideInLeft" data-page-hide="slideOutLeft" class="theme-dark page">
 			<div class="wrap">
 				<div class="topbar">
 					<div class="item-large back" data-bind="tap: backTap">
@@ -422,7 +424,7 @@
 		</article>
 		
 <!-- Edit Tail Number Screen -->
-		<article id="edittail" data-bind="swipeLeft: backTap" data-page-show="slideInLeft" data-page-hide="slideOutLeft" style="display: none;" class="theme-dark page">
+		<article id="edittail" data-bind="swipeRight: backTap" data-page-show="slideInLeft" data-page-hide="slideOutLeft" style="display: none;" class="theme-dark page">
 			<div class="wrap">
 				<div class="topbar">
 					<div class="item-large back" data-bind="tap: backTap">
@@ -446,7 +448,7 @@
 		</article>
 		
 <!-- Sign in Screen -->
-		<article id="signin" data-bind="swipeLeft: backTap" data-page-show="slideInLeft" data-page-hide="slideOutLeft" class="theme-dark page">
+		<article id="signin" data-bind="swipeRight: backTap" data-page-show="slideInLeft" data-page-hide="slideOutLeft" class="theme-dark page">
 			<div class="wrap">
 				<div class="topbar">
 					<div class="item-large back" data-bind="tap: backTap">
@@ -556,15 +558,18 @@
 		<div id="menu" class="theme-dark">
 			<div class="menu">
                 <div class="currentLogin"><i class="icon icon-user"></i><div class="user" data-bind="html: email"></div></div>
+				<div class="version">version: <span data-bind="text: version"></span></div>
 				<ul>
 					<!--<li data-link="settings"><i class="icon icon-cog"></i><p>Settings</p></li>-->
 					<li data-link="dashboard" data-bind="tap: menuNavTap"><i class="icon icon-dashboard"></i><p>Dashboard</p></li>
 					<li data-link="changePassword" data-bind="tap: menuNavTap, visible: token" id="changepassword-menu"><i class="icon icon-lock"></i><p>Change Password</p></li>
-					<li data-bind="tap: signOutNavTap, visible: token" id="signout-menu"><i class="icon icon-signout"></i><p>Sign out</p></li>
 					<li data-link="signin" data-bind="tap: menuNavTap, visible: !token" id="signin-menu"><i class="icon icon-signin" ></i><p>Sign in</p></li>
 					<li data-link="register" data-bind="tap: menuNavTap, visible: !token" id="register-menu"><i class="icon icon-pencil"></i><p>Register</p></li>
 					<li data-link="e6b" data-bind="tap: menuNavTap"><i class="icon icon-table"></i><p>Conversions</p></li>
+					<li data-bind="tap: requestModelTap, visible: token"><i class="icon icon-envelope-alt"></i><p>Request a Model</p></li>
+					<li data-bind="tap: orderPrintedTap, visible: token"><i class="icon icon-print"></i><p>Order Printed Version</p></li>
 					<li data-bind="tap: syncNavTap, visible: token" id="sync-menu"><i class="icon icon-repeat"></i><p>Sync</p></li>
+					<li data-bind="tap: signOutNavTap, visible: token" id="signout-menu"><i class="icon icon-signout"></i><p>Sign out</p></li>
 				</ul>
 			</div>
 		</div>

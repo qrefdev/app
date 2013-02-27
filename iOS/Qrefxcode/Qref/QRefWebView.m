@@ -118,6 +118,7 @@
     NSString *url = [[request URL] absoluteString];
     
     static NSString *urlPrefix = @"qref://";
+    static NSString *filePrefix = @"file://";
     
     if ([url hasPrefix:urlPrefix]) {
         NSString *paramsString = [url substringFromIndex:[urlPrefix length]];
@@ -255,6 +256,10 @@
         
         [self->preferences synchronize];
         
+        return NO;
+    }
+    else if(![url hasPrefix:filePrefix]) {
+        [[UIApplication sharedApplication] openURL:[request URL]];
         return NO;
     }
     else {
@@ -533,6 +538,8 @@
     {
         [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"AutoSwitch = '%@';", autoSwitch]];
     }
+    
+    [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"MenuObserver.set('version', '%@');", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]]];
     
     self->refreshTimer = [NSTimer scheduledTimerWithTimeInterval:600.0 target:self selector:@selector(refreshToken:) userInfo:nil  repeats:YES];
 }

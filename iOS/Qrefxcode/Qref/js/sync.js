@@ -56,20 +56,8 @@ function SyncProcessor() {
 								DashboardObserver.dataSource.add(items[i]);
 							}
 						}
-						
-                        //601 - Refresh fix
-						var checklistSection = ChecklistObserver.section;
-						var checklistList = ChecklistObserver.list;
-						var checklist = ChecklistObserver.checklist;
-						
 						DashboardObserver.dataSource.refresh();
 						DashboardObserver.dataSource.read();
-						
-						setTimeout(function() {
-							ChecklistObserver.set('checklist', checklist);
-							ChecklistObserver.set('list', checklistList);
-							ChecklistObserver.set('section', checklistSection);
-						}, 500);
                     }, 200);
 				}
 			});
@@ -126,20 +114,8 @@ function SyncProcessor() {
 								DashboardObserver.dataSource.add(items[i]);
 							}
 						}
-						
-                        //601 - Refresh Fix
-						var checklistSection = ChecklistObserver.section;
-						var checklistList = ChecklistObserver.list;
-						var checklist = ChecklistObserver.checklist;
-						
 						DashboardObserver.dataSource.refresh();
 						DashboardObserver.dataSource.read();
-						
-						setTimeout(function() {
-							ChecklistObserver.set('checklist', checklist);
-							ChecklistObserver.set('list', checklistList);
-							ChecklistObserver.set('section', checklistSection);
-						}, 500);
                     }, 200);
 				}
 			});
