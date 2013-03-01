@@ -5,7 +5,7 @@ function SyncProcessor() {
     
 	this.init = function() {
 		var self = this;
-		this.timer = new Timer(300000, function() {
+		this.timer = new Timer(30000, function() {
 			self.timerSync();
 		});
 		

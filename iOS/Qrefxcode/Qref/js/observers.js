@@ -541,7 +541,7 @@ var AppObserver = new zimoko.Observable({
 		if(AppObserver.token) {
 			if((self.cachePack == "" || self.cachePack == undefined) && checklists == undefined)
 			{
-				$("#data-temp").append("Loading from web for some ungodly reason! CachePack: " + self.cachePack);
+				//$("#data-temp").append("Loading from web for some ungodly reason! CachePack: " + self.cachePack);
 				$.ajax({
 					type: "get",
 					dataType: "json",
@@ -559,8 +559,8 @@ var AppObserver = new zimoko.Observable({
 								item.lastPosition = undefined;
 							}
 							
-							var temp = JSON.stringify(checklists);
-							$("#data-temp2").html(temp);
+							//var temp = JSON.stringify(checklists);
+							//$("#data-temp2").html(temp);
 							
 							callback.call(self, true, checklists);
 						}
