@@ -290,13 +290,14 @@
         if(![undefinedCheck isEqualToString:@"undefined"])
         {
             NSString *file = [array objectAtIndex:0];
+            NSString *fileType = [array objectAtIndex:2];
             NSArray *fileSegments = [file componentsSeparatedByString:@"/"];
             file = [fileSegments lastObject];
             NSString *resourcePath = [[NSBundle mainBundle] resourcePath];
             NSString *resourceFilePath = [resourcePath stringByAppendingString:[NSString stringWithFormat:@"/%@", [array objectAtIndex:0]]];
             NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
             NSFileManager *manager = [NSFileManager defaultManager];
-            NSString *cachedFilePath = [cachePath stringByAppendingString:[NSString stringWithFormat:@"/qref/%@", file]];
+            NSString *cachedFilePath = [cachePath stringByAppendingString:[NSString stringWithFormat:@"/qref/%@", [fileType stringByAppendingString: file]]];
             NSURL *url = [NSURL fileURLWithPath:cachedFilePath];
         
             if([manager fileExistsAtPath:resourceFilePath])

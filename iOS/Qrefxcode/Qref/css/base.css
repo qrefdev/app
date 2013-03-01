@@ -542,13 +542,24 @@ html, body {
 	height: 100%;
 }
 
-.dashboard-planes-selector .plane-icon, .downloads .plane-icon {
+.dashboard-planes-selector .plane-icon {
 	position: absolute;
 	right: 0px;
 	bottom: 0px;
 	top: 20px;
 	padding: 0;
 	margin: 0;
+	z-index: 0;
+	width: 125px;
+}
+
+.downloads .plane-icon {
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+	top: 5px;
+	padding: 0px;
+	margin: 0px;
 	z-index: 0;
 	width: 125px;
 }
@@ -887,7 +898,7 @@ form label {
 }
 
 .emergencies .icon img {
-	width: 35%;
+	width: 45%;
 }
 
 .emergencies .section-name {
@@ -913,6 +924,8 @@ form label {
 	margin: 0px;
 	padding: 10px;
 	height: 64px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 	overflow hidden;
 }
 
