@@ -599,25 +599,28 @@ html, body {
 	margin-left: 12px;
 }
 
-.dashboard-planes-selector .header, .downloads .header {
+.dashboard-planes-selector .heading, .downloads .header {
 	width: auto;
 	position: relative;
-	margin-left: 10px;
-	margin-top: 10px;
+	padding: 0px;
+	margin-left: 0px;
+	margin-top: 5px;
+	margin-bottom: 0px;
+	margin-right: 0px;
 }
 
 .dashboard-planes-selector .subheading, .downloads .subheading {
 	width: auto;
 	position: relative;
 	margin-left: 0px;
-	margin-top: 12px;
+	margin-top: 3px;
 }
 
 .dashboard-planes-selector .vertical li ul {
 	width: auto;
 	padding: 0;
 	position: relative;
-	margin-top: 5px;
+	margin-top: 10px;
 	margin-bottom: 10px;
 	list-style-type: none;
 	background: none;

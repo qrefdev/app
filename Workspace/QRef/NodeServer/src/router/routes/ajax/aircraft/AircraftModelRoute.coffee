@@ -77,7 +77,7 @@ class AircraftModelRoute extends AjaxRoute
 		)
 		
 	getModel: (id, callback) =>
-		db = QrefDatabase.instance()
+		db = QRefDatabase.instance()
 		
 		db.AircraftModel.findOne({ _id: id}, (err, model) => 
 			if err?

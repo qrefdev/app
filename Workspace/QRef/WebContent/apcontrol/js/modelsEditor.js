@@ -3,7 +3,7 @@ var modelsEditor = new ModelsEditor();
 function ModelsEditor() {
 	this.models = [];
 	
-	this.get = function() {
+	this.get = function(callback) {
 		var self = this;
 		loader.show();
 		$.ajax
@@ -22,15 +22,18 @@ function ModelsEditor() {
 					var items = new SortableArray(response.records);
 					items = items.sortBy(['name']);
 					self.models = items.toArray();
+					callback();
 				}
 				else
 				{
 					loader.hide();
+					callback();
 				}	
 			},
 			error: function() 
 			{
 				loader.hide();
+				callback();
 			}
 		})
 	};
@@ -48,10 +51,10 @@ function ModelsEditor() {
 	};
 	
 	this.generateModelHtml = function(model) {
-		var html =  '<li data-id="' + model._id + '"><div class="holder">' +
-						'Name: <input type="text" class="name" style="width: 50%" value="' + model.name + '" /><br>' +
-						'Years: <input type="text" class="year" style="width: 50%" value="' + model.modelYear + '"/><br>' +
-						'Description:<br><textarea class="description" style="width: 95%">' + model.description'</textarea>' +
+		var html =  '<li data-id="' + model._id + '"><div class="holder" style="width: 95%;">' +
+						'Name: <input type="text" class="name" style="width: 50%;" value="' + model.name + '" /><br>' +
+						'Years: <input type="text" class="year" style="width: 50%;" value="' + model.modelYear + '"/><br>' +
+						'Description:<br><textarea class="description" style="width: 100%;">' + model.description + '</textarea>' +
 					'</div></li>';
 					
 		return html;
@@ -74,8 +77,9 @@ function ModelsEditor() {
 			$.ajax({
 				type: 'post',
 				contentType:"application/json; charset=utf-8",
+				data: JSON.stringify(data),
 				dataType: "json",
-				url: host + 'services/ajax/aircraft/model',
+				url: host + 'services/ajax/aircraft/model?token=' + token,
 				success: function(data) {
 					return data;
 				},

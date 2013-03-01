@@ -76,7 +76,7 @@ class AircraftManufacturerRoute extends AjaxRoute
 		)
 		
 	getManufacturer: (id, callback) =>
-		db = QrefDatabase.instance()
+		db = QRefDatabase.instance()
 		
 		db.AircraftManufacturer.findOne({ _id: id}, (err, manufacturer) => 
 			if err?

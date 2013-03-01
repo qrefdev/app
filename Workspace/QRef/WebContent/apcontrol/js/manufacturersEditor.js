@@ -3,7 +3,7 @@ var manufacturersEditor = new ManufacturersEditor();
 function ManufacturersEditor() {
 	this.manufacturers = [];
 	
-	this.get = function() {
+	this.get = function(callback) {
 		var self = this;
 		loader.show();
 		$.ajax
@@ -22,15 +22,18 @@ function ManufacturersEditor() {
 					var items = new SortableArray(response.records);
 					items = items.sortBy(['name']);
 					self.manufacturers = items.toArray();
+					callback();
 				}
 				else
 				{
 					loader.hide();
+					callback();
 				}	
 			},
 			error: function() 
 			{
 				loader.hide();
+				callback();
 			}
 		})
 	};
@@ -48,9 +51,9 @@ function ManufacturersEditor() {
 	};
 	
 	this.generateManufacturerHtml = function(manufacturer) {
-		var html =  '<li data-id="' + manufacturer._id + '"><div class="holder">' +
-						'Name: <input type="text" class="name" style="width: 50%" value="' + manufacturer.name + '" /><br>' +
-						'Description:<br><textarea class="description" style="width: 95%">' + manufacturer.description'</textarea>' +
+		var html =  '<li data-id="' + manufacturer._id + '"><div class="holder" style="width: 95%;">' +
+						'Name: <input type="text" class="name" style="width: 50%;" value="' + manufacturer.name + '" /><br>' +
+						'Description:<br><textarea class="description" style="width: 100%;">' + manufacturer.description + '</textarea>' +
 					'</div></li>';
 					
 		return html;
@@ -73,7 +76,8 @@ function ManufacturersEditor() {
 				type: 'post',
 				contentType:"application/json; charset=utf-8",
 				dataType: "json",
-				url: host + 'services/ajax/aircraft/manufacturer',
+				data: JSON.stringify(data),
+				url: host + 'services/ajax/aircraft/manufacturer?token=' + token,
 				success: function(data) {
 					
 				},

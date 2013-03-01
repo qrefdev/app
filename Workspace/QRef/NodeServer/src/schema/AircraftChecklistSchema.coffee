@@ -2,6 +2,7 @@ mongoose = require('mongoose')
 Schema = mongoose.Schema
 ObjectId = Schema.ObjectId
 AircraftChecklistSectionSchema = require('./AircraftChecklistSectionSchema')
+AircraftChecklistCategorySchema = require('./AircraftChecklistCategorySchema');
 
 ###
 Schema representing a manufacturer/model specific checklist. 
@@ -88,7 +89,7 @@ class AircraftChecklistSchemaInternal
 	@property [Array<AircraftChecklistSectionSchemaInternal>] (Optional) The array of emergency sections.
 	###
 	emergencies:
-		type: [AircraftChecklistSectionSchema]
+		type: [AircraftChecklistCategorySchema]
 		required: false
 	###
 	@property [Boolean] (Required) A true/false value indicating whether this record has been deleted. Required for soft-delete support.

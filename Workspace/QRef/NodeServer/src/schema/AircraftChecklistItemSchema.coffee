@@ -28,13 +28,13 @@ class AircraftChecklistItemSchemaInternal
 	###
 	check: 
 		type: String
-		required: true
+		required: false
 	###
 	@property [String] (Required) the item's response value
 	### 
 	response:
 		type: String
-		required: true
+		required: false
 
 AircraftChecklistItemSchema = new Schema(new AircraftChecklistItemSchemaInternal())
 module.exports = AircraftChecklistItemSchema

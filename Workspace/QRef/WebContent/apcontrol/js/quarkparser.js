@@ -16,6 +16,7 @@ var TAG_EMERGENCIES = 'EMERGENCIES';
 var BULLET = '\u2022';
 var LINE_SEPARATOR = '\r';
 var LINE_SEPARATOR2 = '\n';
+var TAG_EXCLUDE = 'EXCLUDE FROM TOC';
 
 /** String Extensions **/
 if (typeof String.prototype.startsWith != 'function') 
@@ -243,6 +244,8 @@ function QuarkParser(contents) {
 	
 	this.parse = function() {
 		var currentSectionHeader = "";
+		var parentHeader = "";
+		var parentTag = undefined;
 		var section = undefined;
 		var item = undefined;
 		
@@ -269,7 +272,7 @@ function QuarkParser(contents) {
 			var line = this.lines[this.position];
 			var tag = getLineTag(line);
 			
-			if(line.toLowerCase().contains('cruise')) {
+			if(line.toLowerCase().contains('engine failure after takeoff')) {
 				console.log("Found cruise");
 			}
 			
@@ -287,10 +290,21 @@ function QuarkParser(contents) {
 					inIndent = false;
 					inBody = true;
 					
-					var newSection = this.parseHeader();
+					var newSection = this.parseHeader(parentHeader).trim();
 					
-					if(newSection) {
+					var tempLine = this.lines[this.position];
+					var tempTag = getLineTag(tempLine);
+					
+					if(tempTag && tempTag.name.contains(TAG_HEADER))
+						tag = tempTag;
+					
+					if(newSection && newSection != '' && newSection != ' ') {
 						newSection = newSection.capitalize();
+						
+						if(!tag.name.contains(TAG_HEADER3) && !tag.name.contains(TAG_HEADER4) && !tag.name.contains(TAG_HEADER5)) {
+							parentHeader = newSection;
+						}
+						
 						if(currentSectionHeader != newSection) {
 							currentSectionHeader = newSection;
 							
@@ -1122,7 +1136,7 @@ function QuarkParser(contents) {
 	}
 	
 	function correctMalformedLine(line) {
-		if(line.toLowerCase().contains("missed approach")) {
+		if(line.toLowerCase().contains("electrical")) {
 			console.log("Found flap");
 		}
 		
@@ -1363,7 +1377,293 @@ function QuarkParser(contents) {
 			
 			return correctMalformedLine(temp2) + '\n' + correctMalformedLine(temp);
 		}
-		else if(line.startsWith(TAG_HEADER) && line.contains(TAG_TOC + ":")) {
+		else if(line.startsWith(TAG_HEADER2 + ':') && line.contains(TAG_HEADER2 + ' ' + TAG_EMERGENCIES)) {
+			var index = indexOfHeaderTag(line);
+			
+			if(index > -1) {
+				var temp = line.substring(index, line.length);
+				var temp2 = line.substring(0, index - 1);
+				
+				return correctMalformedLine(temp2) + '\n' + correctMalformedLine(temp);
+			}
+			
+			index = indexOfAlternateHeaderTag(line);
+			
+			if(index > -1) {
+				var temp = line.substring(index, line.length);
+				var temp2 = line.substring(0, index - 1);
+				
+				return correctMalformedLine(temp2) + '\n' + correctMalformedLine(temp);
+			}
+		}
+		else if(line.startsWith(TAG_HEADER3 + ':') && line.contains(TAG_HEADER2 + ' ' + TAG_EMERGENCIES)) {
+			var index = indexOfHeaderTag(line);
+			
+			if(index > -1) {
+				var temp = line.substring(index, line.length);
+				var temp2 = line.substring(0, index - 1);
+				
+				return correctMalformedLine(temp2) + '\n' + correctMalformedLine(temp);
+			}
+			
+			index = indexOfAlternateHeaderTag(line);
+			
+			if(index > -1) {
+				var temp = line.substring(index, line.length);
+				var temp2 = line.substring(0, index - 1);
+				
+				return correctMalformedLine(temp2) + '\n' + correctMalformedLine(temp);
+			}
+		}
+		
+		else if(line.startsWith(TAG_HEADER4 + ':') && line.contains(TAG_HEADER2 + ' ' + TAG_EMERGENCIES)) {
+			var index = indexOfHeaderTag(line);
+			
+			if(index > -1) {
+				var temp = line.substring(index, line.length);
+				var temp2 = line.substring(0, index - 1);
+				
+				return correctMalformedLine(temp2) + '\n' + correctMalformedLine(temp);
+			}
+			
+			index = indexOfAlternateHeaderTag(line);
+			
+			if(index > -1) {
+				var temp = line.substring(index, line.length);
+				var temp2 = line.substring(0, index - 1);
+				
+				return correctMalformedLine(temp2) + '\n' + correctMalformedLine(temp);
+			}
+		}
+		else if(line.startsWith(TAG_HEADER5 + ':') && line.contains(TAG_HEADER2 + ' ' + TAG_EMERGENCIES)) {
+			var index = indexOfHeaderTag(line);
+			
+			if(index > -1) {
+				var temp = line.substring(index, line.length);
+				var temp2 = line.substring(0, index - 1);
+				
+				return correctMalformedLine(temp2) + '\n' + correctMalformedLine(temp);
+			}
+			
+			index = indexOfAlternateHeaderTag(line);
+			
+			if(index > -1) {
+				var temp = line.substring(index, line.length);
+				var temp2 = line.substring(0, index - 1);
+				
+				return correctMalformedLine(temp2) + '\n' + correctMalformedLine(temp);
+			}
+		}
+		else if(line.startsWith(TAG_HEADER2 + ' ' + TAG_EXCLUDE + ':') && line.contains(TAG_HEADER2 + ' ' + TAG_EMERGENCIES)) {
+			var index = indexOfHeaderTag(line);
+			
+			if(index > -1) {
+				var temp = line.substring(index, line.length);
+				var temp2 = line.substring(0, index - 1);
+				
+				return correctMalformedLine(temp2) + '\n' + correctMalformedLine(temp);
+			}
+			
+			index = indexOfAlternateHeaderTag(line);
+			
+			if(index > -1) {
+				var temp = line.substring(index, line.length);
+				var temp2 = line.substring(0, index - 1);
+				
+				return correctMalformedLine(temp2) + '\n' + correctMalformedLine(temp);
+			}
+		}
+		else if(line.startsWith(TAG_HEADER3 + ' ' + TAG_EXCLUDE + ':') && line.contains(TAG_HEADER2 + ' ' + TAG_EMERGENCIES)) {
+			var index = indexOfHeaderTag(line);
+			
+			if(index > -1) {
+				var temp = line.substring(index, line.length);
+				var temp2 = line.substring(0, index - 1);
+				
+				return correctMalformedLine(temp2) + '\n' + correctMalformedLine(temp);
+			}
+			
+			index = indexOfAlternateHeaderTag(line);
+			
+			if(index > -1) {
+				var temp = line.substring(index, line.length);
+				var temp2 = line.substring(0, index - 1);
+				
+				return correctMalformedLine(temp2) + '\n' + correctMalformedLine(temp);
+			}
+		}
+		else if(line.startsWith(TAG_HEADER4 + ' ' + TAG_EXCLUDE + ':') && line.contains(TAG_HEADER2 + ' ' + TAG_EMERGENCIES)) {
+			var index = indexOfHeaderTag(line);
+			
+			if(index > -1) {
+				var temp = line.substring(index, line.length);
+				var temp2 = line.substring(0, index - 1);
+				
+				return correctMalformedLine(temp2) + '\n' + correctMalformedLine(temp);
+			}
+			
+			index = indexOfAlternateHeaderTag(line);
+			
+			if(index > -1) {
+				var temp = line.substring(index, line.length);
+				var temp2 = line.substring(0, index - 1);
+				
+				return correctMalformedLine(temp2) + '\n' + correctMalformedLine(temp);
+			}
+		}
+		else if(line.startsWith(TAG_HEADER5 + ' ' + TAG_EXCLUDE + ':') && line.contains(TAG_HEADER2 + ' ' + TAG_EMERGENCIES)) {
+			var index = indexOfHeaderTag(line);
+			
+			if(index > -1) {
+				var temp = line.substring(index, line.length);
+				var temp2 = line.substring(0, index - 1);
+				
+				return correctMalformedLine(temp2) + '\n' + correctMalformedLine(temp);
+			}
+			
+			index = indexOfAlternateHeaderTag(line);
+			
+			if(index > -1) {
+				var temp = line.substring(index, line.length);
+				var temp2 = line.substring(0, index - 1);
+				
+				return correctMalformedLine(temp2) + '\n' + correctMalformedLine(temp);
+			}
+		}
+		else if(line.startsWith(TAG_HEADER2 + ' ' + TAG_EXCLUDE + ':') && line.contains(TAG_HEADER2)) {
+			var index = indexOfHeaderTag(line);
+			
+			if(index > -1) {
+				var temp = line.substring(index, line.length);
+				var temp2 = line.substring(0, index - 1);
+				
+				return correctMalformedLine(temp2) + '\n' + correctMalformedLine(temp);
+			}
+			
+			index = indexOfAlternateHeaderTag(line);
+			
+			if(index > -1) {
+				var temp = line.substring(index, line.length);
+				var temp2 = line.substring(0, index - 1);
+				
+				return correctMalformedLine(temp2) + '\n' + correctMalformedLine(temp);
+			}
+		}
+		else if(line.startsWith(TAG_HEADER2 + ' ' + TAG_EXCLUDE + ':') && line.contains(TAG_HEADER3)) {
+			var index = indexOfHeaderTag(line);
+			
+			if(index > -1) {
+				var temp = line.substring(index, line.length);
+				var temp2 = line.substring(0, index - 1);
+				
+				return correctMalformedLine(temp2) + '\n' + correctMalformedLine(temp);
+			}
+			
+			index = indexOfAlternateHeaderTag(line);
+			
+			if(index > -1) {
+				var temp = line.substring(index, line.length);
+				var temp2 = line.substring(0, index - 1);
+				
+				return correctMalformedLine(temp2) + '\n' + correctMalformedLine(temp);
+			}
+		}
+		else if(line.startsWith(TAG_HEADER2 + ' ' + TAG_EXCLUDE + ':') && line.contains(TAG_HEADER4)) {
+			var index = indexOfHeaderTag(line);
+			
+			if(index > -1) {
+				var temp = line.substring(index, line.length);
+				var temp2 = line.substring(0, index - 1);
+				
+				return correctMalformedLine(temp2) + '\n' + correctMalformedLine(temp);
+			}
+			
+			index = indexOfAlternateHeaderTag(line);
+			
+			if(index > -1) {
+				var temp = line.substring(index, line.length);
+				var temp2 = line.substring(0, index - 1);
+				
+				return correctMalformedLine(temp2) + '\n' + correctMalformedLine(temp);
+			}
+		}
+		else if(line.startsWith(TAG_HEADER2 + ' ' + TAG_EXCLUDE + ':') && line.contains(TAG_HEADER5)) {
+			var index = indexOfHeaderTag(line);
+			
+			if(index > -1) {
+				var temp = line.substring(index, line.length);
+				var temp2 = line.substring(0, index - 1);
+				
+				return correctMalformedLine(temp2) + '\n' + correctMalformedLine(temp);
+			}
+			
+			index = indexOfAlternateHeaderTag(line);
+			
+			if(index > -1) {
+				var temp = line.substring(index, line.length);
+				var temp2 = line.substring(0, index - 1);
+				
+				return correctMalformedLine(temp2) + '\n' + correctMalformedLine(temp);
+			}
+		}
+		else if(line.startsWith(TAG_HEADER3 + ' ' + TAG_EXCLUDE + ':') && line.contains(TAG_HEADER2)) {
+			var index = indexOfHeaderTag(line);
+			
+			if(index > -1) {
+				var temp = line.substring(index, line.length);
+				var temp2 = line.substring(0, index - 1);
+				
+				return correctMalformedLine(temp2) + '\n' + correctMalformedLine(temp);
+			}
+			
+			index = indexOfAlternateHeaderTag(line);
+			
+			if(index > -1) {
+				var temp = line.substring(index, line.length);
+				var temp2 = line.substring(0, index - 1);
+				
+				return correctMalformedLine(temp2) + '\n' + correctMalformedLine(temp);
+			}
+		}
+		else if(line.startsWith(TAG_HEADER4 + ' ' + TAG_EXCLUDE + ':') && line.contains(TAG_HEADER2)) {
+			var index = indexOfHeaderTag(line);
+			
+			if(index > -1) {
+				var temp = line.substring(index, line.length);
+				var temp2 = line.substring(0, index - 1);
+				
+				return correctMalformedLine(temp2) + '\n' + correctMalformedLine(temp);
+			}
+			
+			index = indexOfAlternateHeaderTag(line);
+			
+			if(index > -1) {
+				var temp = line.substring(index, line.length);
+				var temp2 = line.substring(0, index - 1);
+				
+				return correctMalformedLine(temp2) + '\n' + correctMalformedLine(temp);
+			}
+		}
+		else if(line.startsWith(TAG_HEADER5 + ' ' + TAG_EXCLUDE + ':') && line.contains(TAG_HEADER2)) {
+			var index = indexOfHeaderTag(line);
+			
+			if(index > -1) {
+				var temp = line.substring(index, line.length);
+				var temp2 = line.substring(0, index - 1);
+				
+				return correctMalformedLine(temp2) + '\n' + correctMalformedLine(temp);
+			}
+			
+			index = indexOfAlternateHeaderTag(line);
+			
+			if(index > -1) {
+				var temp = line.substring(index, line.length);
+				var temp2 = line.substring(0, index - 1);
+				
+				return correctMalformedLine(temp2) + '\n' + correctMalformedLine(temp);
+			}
+		}
+		else if(line.startsWith(TAG_HEADER) && line.contains(TAG_TOC)) {
 			var temp = line.substring(line.indexOf(TAG_TOC), line.length);
 			var temp2 = line.substring(0, line.indexOf(TAG_TOC) - 1);
 			
@@ -1733,8 +2033,12 @@ function QuarkParser(contents) {
 		return line.split('\t');
 	}
 	
-	this.parseHeader = function() {
+	this.parseHeader = function(parent) {
 		var line = this.lines[this.position];
+		
+		if(line.toLowerCase().contains('takeoff - short field')) {
+			console.log('Found engine flight');
+		}
 		
 		while(line.startsWith(LINE_SEPARATOR2) || line == '') {
 			this.position++;
@@ -1745,7 +2049,11 @@ function QuarkParser(contents) {
 		
 		//It's a header!
 		if(tag != undefined && tag.type == 0 && tag.name.contains(TAG_HEADER)) {
-			newSection = getLineData(line).trim();
+			newSection = getLineData(line).trim().replace('\t', '');
+			
+			if((tag.name.contains(TAG_HEADER3) || tag.name.contains(TAG_HEADER4) || tag.name.contains(TAG_HEADER5)) && newSection) {
+				newSection = parent + ' - ' + newSection;
+			}
 		}
 		else if(tag != undefined && tag.type == 0 && !tag.name.contains(TAG_HEADER)) {
 			//Oops we aren't in Kansas anymore!
@@ -1759,9 +2067,21 @@ function QuarkParser(contents) {
 		var preview = this.lines[this.position + 1];
 		var previewTag = getLineTag(preview);
 		
-		if(previewTag != undefined && previewTag.type == 0 && previewTag.name.contains(TAG_HEADER)) {
+		if(previewTag != undefined && previewTag.type == 0 && previewTag.name.contains(TAG_HEADER) && !previewTag.name.contains(TAG_HEADER3) && !previewTag.name.contains(TAG_HEADER4) && !previewTag.name.contains(TAG_HEADER5)) {
 			this.position++;
-			newSection = newSection + ' ' + this.parseHeader();
+			newSection = newSection + ' ' + this.parseHeader(parent);
+		}
+		else if(previewTag == undefined) {
+			this.position++;
+			var firstTextElement = charactersUntilWhiteSpace(preview);
+			
+			if(/^\d+$/.test(firstTextElement)) {
+				this.position--;
+				return newSection;
+			}
+			else {
+				newSection = newSection + ' ' + this.parseHeader(parent);
+			}
 		}
 		
 		if(newSection) {
@@ -1769,7 +2089,7 @@ function QuarkParser(contents) {
 		}
 		else {
 			this.position++;
-			return this.parseHeader();
+			return this.parseHeader(parent);
 		}
 	};
 }

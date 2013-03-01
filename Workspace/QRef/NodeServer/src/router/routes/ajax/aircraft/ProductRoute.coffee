@@ -138,7 +138,13 @@ class ProductRoute extends AjaxRoute
 				
 				if req.body?.aircraftChecklist?
 					obj.aircraftChecklist = req.body.aircraftChecklist
+				
+				if req.body?.manufacturer?
+					obj.manufacturer = req.body.manufacturer
 					
+				if req.body?.model?
+					obj.model = req.body.model
+				
 				if req.body?.coverImage?
 					obj.coverImage = req.body.coverImage
 					

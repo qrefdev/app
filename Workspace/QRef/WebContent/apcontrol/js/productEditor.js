@@ -1509,7 +1509,7 @@ function checkIn() {
 			
 			var postData = {"mode":"ajax", "token":token,"name":product.name, "description":product.description,
 				"isPublished":product.isPublished,"appleProductIdentifier":product.appleProductId ,"androidProductIdentifier":product.androidProductId ,
-				"isAppleEnabled":product.isAppleEnabled ,"isAndroidEnabled":product.isAndroidEnabled ,"suggestedRetailPrice":parseInt(product.suggestedRetailPrice) ,
+				"isAppleEnabled":product.isAppleEnabled ,"isAndroidEnabled":product.isAndroidEnabled ,"suggestedRetailPrice":parseFloat(product.suggestedRetailPrice) ,
 				"productCategory":product.productCategory ,"productType":product.productType ,
 				"isSampleProduct":product.isSampleProduct ,"serialNumber":product.serialNumber ,"manufacturer":product.manufacturer._id ,"model":product.model._id };
 			
@@ -1517,10 +1517,10 @@ function checkIn() {
 				postData.aircraftChecklist = product.checklist;
 			}
 			
-			if(product.coverImage != "")
+			if(product.coverImage != "" && product.coverImage != null && product.coverImage != undefined)
 				postData.coverImage = product.coverImage;
 			
-			if(product.productIcon != "")
+			if(product.productIcon != "" && product.productIcon != null && product.coverImage != undefined)
 			{
 				postData.productIcon = product.productIcon;
 				if(product.hasNewIcon || product.checklistHasChanged){
@@ -1580,9 +1580,9 @@ function checkIn() {
 		
 		var request = { "mode":"ajax", "token":token, "name":product.name, "description":product.description,
 		"isPublished":product.isPublished,"appleProductIdentifier":product.appleProductId ,"androidProductIdentifier":product.androidProductId ,
-		"isAppleEnabled":product.isAppleEnabled ,"isAndroidEnabled":product.isAndroidEnabled ,"suggestedRetailPrice":parseInt(product.suggestedRetailPrice) ,
+		"isAppleEnabled":product.isAppleEnabled ,"isAndroidEnabled":product.isAndroidEnabled ,"suggestedRetailPrice":parseFloat(product.suggestedRetailPrice) ,
 		"productCategory":product.productCategory ,"productType":product.productType ,"isSampleProduct":product.isSampleProduct ,
-		"serialNumber":product.serialNumber ,"manufacturer":product.manufacturer ,"model":product.model };
+		"serialNumber":product.serialNumber ,"manufacturer":product.manufacturer._id ,"model":product.model._id };
 		
 		if(	product.checklist != "" && 
 			product.checklist != "0" && 
@@ -1592,10 +1592,10 @@ function checkIn() {
 			request.aircraftChecklist = product.checklist;
 		}
 		
-		if(product.coverImage != "")
+		if(product.coverImage != "" && product.coverImage != null && product.coverImage != undefined)
 			request.coverImage = product.coverImage;
 			
-		if(product.productIcon != "")
+		if(product.productIcon != "" && product.productIcon != null && product.coverImage != undefined)
 		{
 			request.productIcon = product.productIcon;
 			if(product.hasNewIcon || product.checklistHasChanged){

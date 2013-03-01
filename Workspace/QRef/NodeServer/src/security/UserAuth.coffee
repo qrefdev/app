@@ -364,41 +364,41 @@ class UserAuth
 	isInRole: (token, roleName, callback) ->
 		db = QRefDatabase.instance()
 		db.AuthToken.where('token')
-				.equals(token)
-				.populate('user')
-				.findOne((err, tk) -> 
+			.equals(token)
+			.populate('user')
+			.findOne((err, tk) -> 
+				
+				if err?
+					callback(err, false);
+					return
 					
-					if err?
-						callback(err, false);
-						return
+				if not tk?
+					callback(null, false);	
+					return
+				
+				db.Role.where('roleName')
+					.equals(roleName)
+					.findOne((err, role) ->
+						if err?
+							callback(err, false)
+							return
 						
-					if not tk?
-						callback(null, false);	
-						return
-					
-					db.Role.where('roleName')
-						.equals(roleName)
-						.findOne((err, role) ->
-							if err?
-								callback(err, false)
-								return
-							
-							if not role?
-								callback(null, false)
-								return
-							
-							bFound = false
-							
-							async.forEach(tk.user.roles, 
-								(item, cb) ->
-									if item.toString() == role._id.toString()
-										bFound = true
-									cb(null)
-								, (err) ->
-									callback(null, bFound)
-							)
+						if not role?
+							callback(null, false)
+							return
+						
+						bFound = false
+						
+						async.forEach(tk.user.roles, 
+							(item, cb) ->
+								if item.toString() == role._id.toString()
+									bFound = true
+								cb(null)
+							, (err) ->
+								callback(null, bFound)
 						)
 				)
+			)
 	###
 	Determines if the currently authenticated user is in any of the listed roles.
 	@param token [String] A hexadecimal string representing a secure token.
@@ -425,29 +425,29 @@ class UserAuth
 				arrQueryEntries.push({ roleName: r }) for r in roles
 				
 				db.Role.find({ "$or": arrQueryEntries })
-						.exec((err, arrRoles) ->
-							if err?
-								callback(err, false)
-								return
-							
-							if arrRoles.length == 0
-								callback(null, false)
-								return
-							
-							bFound = false
-							dctRoleKeys = new Dictionary()
-							
-							dctRoleKeys.set(r._id.toString(), r.roleName) for r in arrRoles
-							
-							
-							async.forEach(tk.user.roles, 
-								(item, cb) ->
-									if dctRoleKeys.containsKey(item.toString())
-										bFound = true
-									cb(null)
-								, (err) ->
-									callback(err, bFound)
-							)
+					.exec((err, arrRoles) ->
+						if err?
+							callback(err, false)
+							return
+						
+						if arrRoles.length == 0
+							callback(null, false)
+							return
+						
+						bFound = false
+						dctRoleKeys = new Dictionary()
+						
+						dctRoleKeys.set(r._id.toString(), r.roleName) for r in arrRoles
+						
+						
+						async.forEach(tk.user.roles, 
+							(item, cb) ->
+								if dctRoleKeys.containsKey(item.toString())
+									bFound = true
+								cb(null)
+							, (err) ->
+								callback(err, bFound)
 						)
-			)
+				)
+		)
 module.exports = new UserAuth()

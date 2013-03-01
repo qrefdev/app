@@ -9,7 +9,10 @@ var selectedVersion = 0;
 function GetandPost(checklistdata, logintoken)
 {
 	if(g_checklist) {
-		g_checklist = checklistdata;
+		g_checklist.preflight = checklistdata.preflight;
+		g_checklist.takeoff = checklistdata.takeoff;
+		g_checklist.landing = checklistdata.landing;
+		g_checklist.emergencies = checklistdata.emergencies;
 		postingChecklist = false;
 		ClearChecklistsImportInto();
 	} else {

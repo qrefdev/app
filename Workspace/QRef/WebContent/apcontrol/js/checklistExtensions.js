@@ -579,10 +579,60 @@ function CheckIn_CycleEmergencies(datalist, uls) {
 		var $ul = $(uls.get(i));
 		
 		if($ul.children().length > 0) {
-			var category = createNewCategoryFromPrevious($ui.attr('data-id'), $ul.children());
+			var category = createCategoryFromList(i,$ul.attr('data-id'), $ul.children());
 			datalist.push(category);
 		}
 	}
+	
+	$("#s4").html('');
+}
+
+function createCategoryFromList(index, name, lis) {
+	var newCategory = new ChecklistSection();
+	newCategory.name = name;
+	newCategory.index = index;
+	
+	var currentSection = undefined;
+	var previousSection = "";
+	
+	var uniqueSectionCount = 0;
+	
+	for(var i = 0; i < lis.length; i++) {
+		$li = $(lis.get(i));
+		
+		var SectionIndex = $li.data("SectionIndex");
+		var Section = $li.data("Section");
+		var Index = i;
+		var Check = $li.data("Check");
+		var Response = $li.data("Response");
+		var Value = $li.data("Value");
+		
+		var item = new ChecklistItem();
+		item.check = Check;
+		item.response = Response;
+		item.index = Index;
+		
+		if(previousSection != Section) {
+			if(currentSection != undefined) 
+				newCategory.items.push(currentSection);
+			
+			currentSection = new ChecklistSection();
+			currentSection.name = Section;
+			currentSection.index = uniqueSectionCount;
+			
+			previousSection = Section;
+			
+			uniqueSectionCount++;
+		}
+		
+		currentSection.items.push(item);
+	}
+	
+	//Push the last section if not undefined
+	if(currentSection != undefined)
+		newCategory.items.push(currentSection);
+		
+	return newCategory;
 }
 
 function createNewCategoryFromPrevious(name, lis) {
@@ -617,6 +667,8 @@ function createNewCategoryFromPrevious(name, lis) {
 			currentSection = new ChecklistSection();
 			currentSection.name = Section;
 			currentSection.index = uniqueSectionCount;
+			
+			previousSection = Section;
 			
 			uniqueSectionCount++;
 		}

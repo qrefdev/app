@@ -25,8 +25,15 @@ var EditAddObserver = new zimoko.Observable({
 			var index = EditAddObserver.index;
 			var list = ChecklistObserver.list;
 			var section = ChecklistObserver.section;
+			var category = ChecklistObserver.category;
 			
-			var sectionItems = ChecklistObserver.checklist[list][section].items;
+			var sectionItems = []
+			
+			//Emergency Category Changes
+			if(list != 'emergencies')
+				sectionItems = ChecklistObserver.checklist[list][section].items;
+			else
+				sectionItems = ChecklistObserver.checklist[list][category].items[section].items;
 			
 			EditAddObserver.item.set('index', index + 1);
 			
@@ -81,7 +88,7 @@ var EmergenciesObserver = new zimoko.Observable({
 	itemTap: function(element, e, data) {
 		e.stopPropagation();
 		e.preventDefault();
-		ChecklistObserver.set('section', data.index);
+		ChecklistObserver.set('category', data.index);
 		ChecklistObserver.set('list', 'emergencies');
 		Navigation.go('checklist');
 	},
@@ -395,6 +402,7 @@ var AppObserver = new zimoko.Observable({
 		var ele = $(element);
 		
 		ChecklistObserver.set('showSections', false);
+		ChecklistObserver.set('editing', false);
 		setTimeout(function() {
 			if(ele.attr('data-link') == 'emergencies') {
 				Navigation.go('#emergencies');
@@ -654,8 +662,21 @@ var AppObserver = new zimoko.Observable({
 		
 		resetPassword();
 		
-		if(token)
+		if(token) {
 			this.set('token', token);
+			
+			$.ajax({
+				type: 'post',
+				dataType: 'json',
+				data: 'token=' + token + '&mode=rpc',
+				url: host + 'services/rpc/auth/userEmail?token',
+				success: function(data) {
+					if(data.success) {
+						AppObserver.set('email', data.returnValue);
+					}
+				}
+			})
+		}
 		
 		$(window).swipe({
 			swipeRight: function(event, duration) {
@@ -798,15 +819,11 @@ var AppObserver = new zimoko.Observable({
 			}
 		});
 		
-		/*$('#checklist .checklist').scroll(function(e) {
+		$('#checklist .checklist').scroll(function(e) {
 			if(ChecklistObserver.checklist) {
 				ChecklistObserver.checklist.lastPosition.scroll = $('#checklist .checklist').scrollTop();
-				$('#tempScroll').html(ChecklistObserver.checklist.lastPosition.scroll);
-				setTimeout(function() {
-					Sync.syncToPhone();
-				}, 10000);
 			}
-		});*/
+		});
 	} 
 });
 
@@ -906,12 +923,16 @@ var DashboardObserver = new zimoko.Observable({
 					ChecklistObserver.set('list', lp.list);
 				
 					setTimeout(function() {
+							ChecklistObserver.set('category', lp.category);
+					}, 10);
+						
+					setTimeout(function() {
 						ChecklistObserver.set('section', lp.section);
 					
 						setTimeout(function() {
 							$('#checklist .checklist').scrollTop(lp.scroll);
 						}, 10);
-					}, 10);
+					}, 20);
 				}
 				else {
 					ChecklistObserver.set('section', 0);
@@ -1031,8 +1052,6 @@ var DashboardObserver = new zimoko.Observable({
 			}
 		}
 		
-		ChecklistObserver.set('checklist', undefined);
-		
 		/*var imageProcessor = new ImageProcessor(this.items.toArray(), "checklistListing", true);
 		imageProcessor.init();
 		imageProcessor.processImages();*/
@@ -1046,6 +1065,7 @@ var ChecklistObserver = new zimoko.Observable({
 	sections: new zimoko.ObservableCollection(),
 	checklist: undefined,
 	section: 0,
+	category: 0,
 	sectionName: '',
 	list: 'preflight',
 	editing: false,
@@ -1057,8 +1077,8 @@ var ChecklistObserver = new zimoko.Observable({
 			if(this.checklist != undefined) {	
 				this.set('list', 'preflight');
 				this.set('section', 0);
+				this.set('category', 0);
 				
-				this.set('sectionName', this.checklist[this.list][this.section].name);
 				this.itemsDataSource.preventRead = true;
 				this.sectionsDataSource.preventRead = true;
 				this.itemsDataSource.sort(new zimoko.Sort(['index'], 'asc'));
@@ -1083,26 +1103,42 @@ var ChecklistObserver = new zimoko.Observable({
 				$('#checklist-nav li[data-link="' + this.list +'"]').addClass('active');
 				
 				$('#checklist .checklist').scrollTop(0);
-				this.checklist.set('lastPosition', {section: this.section, list: this.list, scroll: 0});
+				this.checklist.set('lastPosition', {section: this.section, category: this.category, list: this.list, scroll: 0});
 			}
 			else {
 				this.set('list', 'preflight');
 				this.set('section', 0);
+				this.set('category', 0);
 				this.itemsDataSource.data([]);
 				this.sectionsDataSource.data([]);
 			}
 		}
-		else if(property == 'list' || property == 'section') {
+		else if(property == 'list' || property == 'section' || property == 'category') {
 			
-			if(property == 'list') this.section = 0;
+			if(property == 'list')  {
+				this.section = 0;
+				this.category = 0;
+			}
 			
-			this.itemsDataSource.data(this.checklist[this.list][this.section].items);
-			this.sectionsDataSource.data(this.checklist[this.list]);
-			this.checklist.set('lastPosition', {section: this.section, list: this.list, scroll: 0});
+			if(property == 'category') {
+				this.section = 0;
+			}
+			
+			if(this.list == 'emergencies') {
+				console.log("Category Index: " + this.category);
+				this.itemsDataSource.data(this.checklist[this.list][this.category].items[this.section].items);
+				this.sectionsDataSource.data(this.checklist[this.list][this.category].items);
+				this.set('sectionName', this.checklist[this.list][this.category].items[this.section].name);
+			}
+			else {
+				this.itemsDataSource.data(this.checklist[this.list][this.section].items);
+				this.sectionsDataSource.data(this.checklist[this.list]);
+				this.set('sectionName', this.checklist[this.list][this.section].name);
+			}
+			
+			this.checklist.set('lastPosition', {section: this.section, category: this.category, list: this.list, scroll: 0});
 			
 			$('#checklist .checklist').scrollTop(0);
-			
-			this.set('sectionName', this.checklist[this.list][this.section].name);
 			
 			$('#checklist-nav li').removeClass('active');
 			$('#checklist-nav li[data-link="' + this.list +'"]').addClass('active');
@@ -1130,14 +1166,25 @@ var ChecklistObserver = new zimoko.Observable({
 			ChecklistObserver.set('section', ChecklistObserver.section - 1);
 		}
 		else {
-			if(ChecklistObserver.list == 'emergencies')
-				ChecklistObserver.list = 'landing';
+			if(ChecklistObserver.list == 'emergencies') {
+				if(ChecklistObserver.category - 1 >= 0) {
+					ChecklistObserver.set('category', ChecklistObserver.category - 1);
+				}
+				else {
+					ChecklistObserver.list = 'landing';
+				}
+			}
 			else if(ChecklistObserver.list == 'landing')
 				ChecklistObserver.list = 'takeoff';
 			else if(ChecklistObserver.list == 'takeoff')
 				ChecklistObserver.list = 'preflight';
 			
-			ChecklistObserver.set('section', ChecklistObserver.checklist[ChecklistObserver.list].length - 1);
+			if(ChecklistObserver.list == 'emergencies') {
+				ChecklistObserver.set('section', ChecklistObserver.checklist[ChecklistObserver.list][ChecklistObserver.category].items.length - 1);
+			}
+			else {
+				ChecklistObserver.set('section', ChecklistObserver.checklist[ChecklistObserver.list].length - 1);
+			}
 		}
 	},
 	nextSectionTap: function(element, e, data) {
@@ -1145,7 +1192,10 @@ var ChecklistObserver = new zimoko.Observable({
 		e.preventDefault();
 		ChecklistObserver.set('showSections', false);
 	
-		if(ChecklistObserver.section + 1 < ChecklistObserver.checklist[ChecklistObserver.list].length) {
+		if(ChecklistObserver.list == 'emergencies' && ChecklistObserver.section + 1 < ChecklistObserver.checklist[ChecklistObserver.list][ChecklistObserver.category].items.length) {
+			ChecklistObserver.set('section', ChecklistObserver.section + 1);
+		}
+		else if(ChecklistObserver.list != 'emergencies' && ChecklistObserver.section + 1 < ChecklistObserver.checklist[ChecklistObserver.list].length) {
 			ChecklistObserver.set('section', ChecklistObserver.section + 1);
 		}
 		else {			
@@ -1155,10 +1205,16 @@ var ChecklistObserver = new zimoko.Observable({
 				ChecklistObserver.set('list', 'landing');
 			else if(ChecklistObserver.list == 'landing')
 				ChecklistObserver.set('list', 'emergencies');
+			else if(ChecklistObserver.list == 'emergencies') {
+				if(ChecklistObserver.category + 1 < ChecklistObserver.checklist[ChecklistObserver.list].length) 
+					ChecklistObserver.set('category', ChecklistObserver.category + 1);
+			}
 				
 			setTimeout(function() {
 				ChecklistObserver.set('section', 0);
 			}, 5);
+			
+			ChecklistObserver.set('showSections', false);
 		}
 	},
 	onDataSourceRead: function(event) {
@@ -1225,12 +1281,20 @@ var ChecklistObserver = new zimoko.Observable({
 				if(success) {
 					ele.fadeOut(200, function() {
 						ele.prev().animate({'left':'0px'}, 200, function(e) {
-							var index = ChecklistObserver.checklist[ChecklistObserver.list][ChecklistObserver.section].items.indexOf(data._original);
+							var index = -1;
+							
+							if(ChecklistObserver.list != 'emergencies')
+								index = ChecklistObserver.checklist[ChecklistObserver.list][ChecklistObserver.section].items.indexOf(data._original);
+							else
+								index = ChecklistObserver.checklist[ChecklistObserver.list][ChecklistObserver.category].items[ChecklistObserver.section].items.indexOf(data._original);
 						
 							ChecklistObserver.itemsDataSource.remove(data);
 							
 							if(index > -1) {
-								ChecklistObserver.checklist[ChecklistObserver.list][ChecklistObserver.section].items.removeAt(index);
+								if(ChecklistObserver.list != 'emergencies')
+									ChecklistObserver.checklist[ChecklistObserver.list][ChecklistObserver.section].items.removeAt(index);
+								else
+									ChecklistObserver.checklist[ChecklistObserver.list][ChecklistObserver.category].items[ChecklistObserver.section].items.removeAt(index);
 							}
 							
 							ChecklistObserver.itemsDataSource.refresh();
@@ -1290,372 +1354,3 @@ var ChecklistObserver = new zimoko.Observable({
 });
 
 ChecklistObserver.subscribe(ChecklistObserver);
-
-/*function ThemeHandler() {
-	this.previousTheme = "theme-dark";
-	var self = this;
-	
-	this.apply = function(themeClass) {
-		$("." + this.previousTheme).removeClass(this.previousTheme).addClass(themeClass);
-		this.previousTheme = themeClass;
-	};
-	
-	this.createDashboardItem = function(product) {
-        
-		var html = '<li data-index="' + product.index + '" data-id="' + product._id + '"><div class="plane-icon"></div><div class="holder"><div class="heading">' + product.manufacturer.name +
-                        " " + product.model.name + '</div>';
-                        
-        if(product.model.description)
-        	html += '<div class="subheading">' + product.model.description + '</div>';
-        
-        html += '<div class="subheading">';
-        	
-        if(product.tailNumber)
-        	html += '<span class="tailNumber">' + product.tailNumber + '</span> ';
-		else
-			html += '<span class="tailNumber"></span> ';
-		
-		if(product.model.modelYear)
-			html += '<span class="modelYear">' + product.model.modelYear + '</span>';
-	
-		html += '</div>';
-		
-		html += '<ul><li class="product-subarea" data-link="preflight">Preflight</li><li class="product-subarea" data-link="takeoff">Takeoff</li>' +
-				'<li class="product-subarea" data-link="landing">Landing</li><li class="product-subarea" data-link="emergency">Emergencies</li>';
-		
-		if(ChecklistLast.containsKey(product._id))
-			html += '<li class="product-subarea" data-link="last">Last</li>';		
-				
-			html +=	'</ul></div>' +
-				'<div class="delete">delete</div>' +
-				'<div class="handle"><div class="item"></div><div class="item"></div><div class="item"></div></div>' +
-				'</li>';
-						
-		return html;
-	};*/
-	
-	/*this.createDownloadItem = function(product, userOwnsProduct) {
-		var html = '<li data-id="' + product._id + '" class="' + userOwnsProduct + '"><div class="plane-icon"></div><div class="holder"><div class="heading">' + product.manufacturer.name +
-				" " + product.model.name + '</div>';
-		if(product.model.description)
-			html += '<div class="subheading">' + product.model.description + '</div>';
-			html +=	'<div class="subheading">' + product.model.modelYear + '</div>' +
-				'<div class="subheading">' + product.serialNumber + '</div>' +
-				'</div></li>'
-				
-		return html;
-	};
-	
-	this.createChecklistItem = function(item) {
-		var html = '<li data-id="' + item._id + '" data-index="' + item.index + '">' +
-					'<div class="icon"><i class="' + item.icon + '"></i></div>' +
-					'<div class="holder">' +
-						'<div class="check">' + item.check + '</div>' +
-						'<div class="response">' + item.response + '</div>' +
-					'</div>' +
-					'<div class="delete">delete</div>' +
-					'<div class="add"><i class="icon-plus"></i></div>' +
-					'<div class="handle"><div class="item"></div><div class="item"></div><div class="item"></div>' +
-					'</li>';
-					
-		return html;
-	};
-	
-	this.createEmergencySectionItem = function(item) {
-		var html = '<li data-link="checklist" data-index="' + item.index + '">' +
-						'<div class="icon"><img src="images/' + item.name + '.png" /></div>' +
-						'<div class="section-name">' + item.name + '</div>' +
-					'</li>';
-					
-		return html;
-	};
-	
-	this.updateChecklistEditMode = function() {
-		if(Checklist.editMode)
-		{
-			$(".edit-list").addClass("active");
-			$("#checklist-items").find(".add").animate({opacity: 1}, 200).css('display', 'block');
-			$("#checklist-items").find(".handle").animate({opacity: 1}, 200).css('display', 'block');
-			
-		}	
-		else
-		{
-			$(".edit-list").removeClass("active");
-			$("#checklist-items").find(".add").animate({opacity: 0}, 200, function() {
-				$(this).css('display', 'none');
-			});
-			$("#checklist-items").find(".handle").animate({opacity: 0}, 200, function() {
-				$(this).css('display', 'none');
-			});
-		}
-	};
-	
-	this.updateDashboardEditMode = function() {
-		if(Checklist.productEditMode)
-		{
-			$(".edit-check").addClass("active");
-			$("#dashboard-planes").find(".handle").animate({opacity: 1}, 200).css('display', 'block');
-			
-		}	
-		else
-		{
-			$(".edit-check").removeClass("active");
-			$("#dashboard-planes").find(".handle").animate({opacity: 0}, 200, function() {
-				$(this).css('display', 'none');
-			});
-		}
-	};
-	
-	this.clearDeleteStatus = function(items) {
-		items.each(function(index, e) {
-			var element = $(e);
-			var deleteButton = element.find(".delete");
-			var holder = element.find(".holder");
-			
-			deleteButton.animate({opacity: 0}, 200, function() {
-				$(this).css('display', 'none');
-				var parent = $(this).parent();
-				holder.animate({"left": "5px"}, 200);
-			});
-		});
-	};
-	
-	this.addSectionHandlers = function(listHandler) {
-		$("#check-sections-items").children().tap(function(e) {
-			e.stopPropagation();
-			
-			var item = $(this);
-			
-			$(".check-sections").fadeOut(function() {
-				Navigation.currentChecklistSection = parseInt(item.attr("data-index"));
-				Navigation.updateChecklist(Navigation.currentChecklistCategory);
-				
-				$(".checklist").scrollTop(0);
-				
-				var indexItem = listHandler.getByIndex(parseInt(item.attr("data-index")));
-				$("#area").html(indexItem.name);
-			});
-		});
-	};
-	
-	this.addEmergencySectionHandlers = function() {
-		$("#emergency-items").find('li').each(function() {
-			if($(this).attr('data-link')) {
-				$(this).tap(function(event) {
-					var index = parseInt($(this).attr("data-index"));
-					Navigation.currentChecklistCategory = "emergency";
-					Navigation.currentChecklistSection = index;
-					Navigation.autoGo($(this));
-				});
-			}
-		});
-	};
-	
-	this.addDashboardItemHandlers = function() {
-		Theme.updateDashboardEditMode();
-		MyProducts.listing.children().tap(function(e) {
-			e.stopPropagation();
-			
-			if($(this).find(".delete").css("display") != "none")
-			{
-				self.clearDeleteStatus($("#dashboard-planes").children());
-			}
-			else
-			{
-				if(!Checklist.productEditMode) {
-					var id = $(this).attr("data-id");
-					
-					Navigation.loadChecklist(id);
-					Navigation.go("checklist");
-				}
-				else
-				{
-					var itemToEdit = $(this);
-					
-					var item = MyProducts.getProduct(Checklist.checklists, itemToEdit.attr("data-id"));
-					
-					if(item)
-					{
-						TailNumberEditor.editingItem = itemToEdit;
-						
-						$("#tailnumber").val(item.tailNumber);
-						$("#tailnumber").blur();
-						
-						Navigation.updateEditTailArea();
-					}
-				}
-			}
-		});
-		
-		var subItems = MyProducts.listing.find(".product-subarea");
-		
-		subItems.tap(function(e) {
-			if(!Checklist.productEditMode) {
-				e.stopPropagation();
-                     e.preventDefault();
-				var parent = $(this).parent().parent().parent();
-				var dataid = parent.attr("data-id");
-				var datalink = $(this).attr("data-link");
-				
-				if(datalink == 'last') {
-					var lp = ChecklistLast.get(dataid);
-				}
-				
-				Navigation.loadChecklist(dataid);
-				
-				if(datalink == 'last')
-					ChecklistLast.set(dataid, lp);
-				
-				Navigation.updateChecklist(datalink);
-				
-				if(datalink == "emergency")
-				{
-					Navigation.go("emergency");
-				}
-				else
-				{
-					Navigation.go("checklist");
-				}
-			}
-		});
-		
-		MyProducts.listing.find(".handle").punch();
-		
-		MyProducts.listing.find(".delete").tap(function(e) {
-			e.stopPropagation();
-			var parent = $(this).parent();
-			var holder = parent.find(".holder");
-			
-			$(this).animate({opacity: 0}, 200, function() {
-				$(this).css('display', 'none');
-				holder.animate({"left":"5px"}, 200, function() {
-					var removedId = parent.attr("data-id");
-					var item = MyProducts.getProduct(Checklist.checklists, removedId);
-					
-					if(item)
-					{
-						item.isDeleted = true;
-						parent.remove();
-						
-						Sync.syncToPhone();
-					}
-				});
-			});
-		});
-		
-		MyProducts.listing.children().swipe({
-			swipeRight: function(event, duration) {
-				if(Checklist.productEditMode)
-				{
-					var deleteButton = $(this).find(".delete");
-					var holder = $(this).find(".holder");
-					
-					holder.animate({"left": "75px"}, 200, function(e) {
-						deleteButton.animate({opacity: 1}, 200).css('display', 'block');
-					});
-			
-					event.stopPropagation();
-				}
-			},
-			threshold: 10,
-			durationThreshold: 265
-		});
-	};
-	
-	this.addDownloadItemHandlers = function() {
-		MyProducts.productListing.children().tap(function(e) {
-			MyProducts.product = MyProducts.getProduct(MyProducts.allProducts, $(this).attr("data-id"));
-			
-			if(MyProducts.product)
-			{
-				MyProducts.selectProductDetails();
-				Navigation.go("download-details");
-			}
-		});
-	};
-	
-	this.addChecklistItemHandlers = function() {
-		this.updateChecklistEditMode();
-		$("#checklist-items").children().swipe({
-			swipeRight: function(event, duration) {
-				if(Checklist.editMode)
-				{
-					var deleteButton = $(this).find(".delete");
-					var holder = $(this).find(".holder");
-					
-					holder.animate({"left": "75px"}, 200, function(e) {
-						deleteButton.animate({opacity: 1}, 200).css('display', 'block');
-					});
-			
-					event.stopPropagation();
-				}
-			},
-			threshold: 40,
-			durationThreshold: 265
-		});
-		
-		
-		$("#checklist-items").children().tap(function(e) {
-			e.stopPropagation();
-			
-			if($(this).find(".delete").css("display") != "none")
-			{
-				self.clearDeleteStatus($("#checklist-items").children());
-			}
-			else if(Checklist.editMode)
-			{
-				ChecklistEditor.editing = true;
-				ChecklistEditor.editingItem = $(this);
-				
-				$("#check").val($(this).find(".check").html());
-				$("#response").val($(this).find(".response").html());
-				
-				Navigation.updateEditAddArea();
-			}
-		});
-		
-		$("#checklist-items").find(".add").tap(function(e) {
-			e.stopPropagation();
-			
-			var parent = $(this).parent();
-			ChecklistEditor.editing = false;
-			ChecklistEditor.editingItem = parent;
-			
-			$("#check").val("");
-			$("#response").val("");
-			
-			Navigation.updateEditAddArea();
-		});
-		
-		$("#checklist-items").find(".handle").punch();
-		
-		$("#checklist-items").find(".delete").tap(function(e) {
-			e.stopPropagation();
-			var parent = $(this).parent();
-			var holder = parent.find(".holder");
-			
-			$(this).animate({opacity: 0}, 200, function() {
-				$(this).css('display', 'none');
-				holder.animate({"left":"5px"}, 200, function() {
-					var removedId = parent.attr("data-id");
-					var item = MyProducts.getProduct(Navigation.checklist[Navigation.currentChecklistSection].items, removedId);
-					var items = _.without(Navigation.checklist[Navigation.currentChecklistSection].items, item);
-						parent.remove();
-						Navigation.checklist[Navigation.currentChecklistSection].items = items;
-				});
-			});
-		});
-	};
-}*/
-
-/*function Loader(id) {
-	this.element = $(id);
-	
-	this.show = function() {
-		this.element.show();
-	};
-	
-	this.hide = function() {
-		this.element.hide();
-	};
-}*/
