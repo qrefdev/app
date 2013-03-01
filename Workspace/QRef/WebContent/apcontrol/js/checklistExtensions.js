@@ -722,7 +722,12 @@ function SetCheckListItemHTML(Section, Check, Response)
 function LoadObjects(records)
 {
 	$('#SaveAs').show();
-	$("#ChecklistName").html(selectedmfg.name + " " + selectedmodel.name + " (Version: " + g_checklist.version + ")");
+	
+	var mfgName = ((selectedmfg !== undefined && selectedmfg !== null && selectedmfg.name !== undefined && selectedmfg.name !== null) ? selectedmfg.name : "");
+	var modelName = ((selectedmodel !== undefined && selectedmodel !== null && selectedmodel.name !== undefined && selectedmodel.name !== null) ? selectedmodel.name : "");
+	var version = ((g_checklist !== undefined && g_checklist !== null && g_checklist.version !== undefined && g_checklist.version !== null) ? g_checklist.version : "");
+	
+	$("#ChecklistName").html(mfgName + " " + modelName + " (Version: " + version + ")");
 	
 	var preflight = document.getElementById('s1');
 	var takeOffCruise = document.getElementById('s2');
@@ -735,7 +740,7 @@ function LoadObjects(records)
 	{
 		for(var i = 0; i < records.length; i++)
 		{
-			if(records[i].version == g_checklist.version)
+			if(records[i].version == version)
 				RecordToLoad = records[i];
 		}
 		
@@ -1425,7 +1430,7 @@ function UploadFiles()
 {
 	$('#SaveAs').hide();
 	var file = $("#fileinput")[0].files
-	
+	postingChecklist = true;
 	if(file.length == 1)
 	{
 		for (var i=0, f; f=file[i]; i++) 
