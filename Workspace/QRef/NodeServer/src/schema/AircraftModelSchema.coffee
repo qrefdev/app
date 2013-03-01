@@ -41,5 +41,5 @@ class AircraftModelSchemaInternal
 		required: true
 
 AircraftModelSchema = new Schema(new AircraftModelSchemaInternal())
-AircraftModelSchema.index({ name: 1, modelYear: 1}, { unique: true })
+AircraftModelSchema.index({ name: 1, modelYear: 1})
 module.exports = AircraftModelSchema
