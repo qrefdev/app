@@ -75,7 +75,7 @@ var EditTailObserver = new zimoko.Observable({
 		}, 100);
 
 		setTimeout(function() {
-			Sync.webSync(item, true);
+			Sync.webSync(EditTailObserver.item, true);
 		}, 1000);
 	}
 });
