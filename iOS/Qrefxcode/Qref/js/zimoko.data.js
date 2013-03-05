@@ -378,6 +378,14 @@
 			this.listeners = [];
 		};
 		
+		this.batchSet = function(object) {
+			if(typeof(object) == 'object') {
+				for(var name in object) {
+					this.set(name, object[name]);
+				}
+			}
+		};
+		
 		this.set = function(property, data) {
 			if(this[property] != data) {
 				this[property] = data;

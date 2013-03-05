@@ -2,10 +2,11 @@
 function SyncProcessor() {
     this.timer = undefined;
     this.syncing = false;
+    this.index = 0;
     
 	this.init = function() {
 		var self = this;
-		this.timer = new Timer(30000, function() {
+		this.timer = new Timer(200000, function() {
 			self.timerSync();
 		});
 		
@@ -22,6 +23,9 @@ function SyncProcessor() {
 				{
                     window.location.href = 'qref://clearCache';
                     setTimeout(function() {
+						var view = DashboardObserver.dataSource.view().toArray();
+                    	var newItems = [];
+                    	
 						for(var i = 0; i < items.length; i++)
 						{
 							var currentItem = _.find(checklists, function(item) {
@@ -33,7 +37,8 @@ function SyncProcessor() {
 							{
 								if(items[i].version > currentItem.version)
 								{
-									currentItem.manufacturer = items[i].manufacturer;
+									//606 - Fix for screen refreshing on dashboard during sync
+									/*currentItem.manufacturer = items[i].manufacturer;
 									currentItem.model = items[i].model;
 									currentItem.tailNumber = items[i].tailNumber;
 									currentItem.version = items[i].version;
@@ -42,7 +47,16 @@ function SyncProcessor() {
 									currentItem.landing = items[i].landing;
 									currentItem.emergencies = items[i].emergencies;
 									currentItem.isDeleted = items[i].isDeleted;
-									currentItem.index = items[i].index;
+									currentItem.index = items[i].index;*/
+									
+									var observable = _.find(view, function(item) {
+										if(item._id == currentItem._id)
+											return true;
+										else
+											return false;
+									});
+									
+									observable.batchSet(items[i]);
 								}
 								else
 								{
@@ -54,15 +68,21 @@ function SyncProcessor() {
 								items[i].lastPosition = undefined;
 								checklists.push(items[i]);
 								DashboardObserver.dataSource.add(items[i]);
+								newItems.push(items[i]);
 							}
 						}
-						DashboardObserver.dataSource.refresh();
-						DashboardObserver.dataSource.read();
-                    }, 200);
+						
+						setTimeout(function() {
+							if(newItems.length > 0) {
+								DashboardObserver.punch();
+								DashboardObserver.getImages(newItems);
+							}
+						}, 20);
+                               
+                        self.syncToPhone();
+                    }, 20);
 				}
 			});
-        
-			self.syncToPhone();
 		}
 	};
 	
@@ -78,20 +98,22 @@ function SyncProcessor() {
 				{
                     window.location.href = 'qref://clearCache';
                     setTimeout(function() {
+						var view = DashboardObserver.dataSource.view().toArray();
+                    	var newItems = [];
+                    	
 						for(var i = 0; i < items.length; i++)
 						{
 							var currentItem = _.find(checklists, function(item) {
 								if(item._id == items[i]._id)
 									return true;
-								else
-									return false;
 							});
 						
-							if(currentItem != undefined)
+							if(currentItem)
 							{
 								if(items[i].version > currentItem.version)
 								{
-									currentItem.manufacturer = items[i].manufacturer;
+									//606 - Fix for screen refreshing on dashboard during sync
+									/*currentItem.manufacturer = items[i].manufacturer;
 									currentItem.model = items[i].model;
 									currentItem.tailNumber = items[i].tailNumber;
 									currentItem.version = items[i].version;
@@ -100,7 +122,16 @@ function SyncProcessor() {
 									currentItem.landing = items[i].landing;
 									currentItem.emergencies = items[i].emergencies;
 									currentItem.isDeleted = items[i].isDeleted;
-									currentItem.index = items[i].index;
+									currentItem.index = items[i].index;*/
+									
+									var observable = _.find(view, function(item) {
+										if(item._id == currentItem._id)
+											return true;
+										else
+											return false;
+									});
+									
+									observable.batchSet(items[i]);
 								}
 								else
 								{
@@ -112,14 +143,21 @@ function SyncProcessor() {
 								items[i].lastPosition = undefined;
 								checklists.push(items[i]);
 								DashboardObserver.dataSource.add(items[i]);
+								newItems.push(items[i]);
 							}
 						}
-						DashboardObserver.dataSource.refresh();
-						DashboardObserver.dataSource.read();
-                    }, 200);
+						
+						setTimeout(function() {
+							if(newItems.length > 0) {
+								DashboardObserver.punch();
+								DashboardObserver.getImages(newItems);
+							}
+						}, 20);
+                               
+                        self.syncToPhone();
+                    }, 20);
 				}
 			});
-			self.syncToPhone();
 		}
 	};
 	
@@ -128,13 +166,44 @@ function SyncProcessor() {
 		if(checklists != undefined && !self.syncing)
 		{
             self.syncing = true;
-            var temp = JSON.stringify(checklists);
-            var stringifiedJson = window.btoa(escape(encodeURIComponent(temp)));
+            //var temp = JSON.stringify(checklists);
+            //var stringifiedJson = window.btoa(escape(encodeURIComponent(temp)));
+            //var stringifiedJson = window.btoa(checklists);
             
-            self.syncToPhoneStart(stringifiedJson);
+            //self.syncToPhoneStart(stringifiedJson);
+            
+            setTimeout(function() {
+                self.index = 0;
+                self.nextChecklist();
+            }, 20);
 		}
 	};
-	
+    
+    // 606 - New method of syncing for lower memory usage!
+    this.nextChecklist = function() {
+        var self = this;
+        if(this.index <  checklists.length) {
+            var stringifiedJson = JSON.stringify(checklists[this.index]);
+            var filename = checklists[this.index]._id + '.qrf';
+            var encoded = btoa(escape(encodeURIComponent(stringifiedJson)));
+            var data = filename + '-FN-' + encoded;
+            
+            window.location.href = 'qref://sc=' + data;
+            
+            this.index++;
+            
+            setTimeout(function() {
+                self.nextChecklist();
+            }, 20);
+        }
+        else {
+            self.syncing = false;
+            AppObserver.set('syncing', false);
+        }
+    };
+    
+    /// Old Code - No Longer Used
+    /*
     this.syncToPhoneStart = function(data) {
     	var self = this;
         window.location.href = 'qref://checklistsBegin';
@@ -204,7 +273,7 @@ function SyncProcessor() {
         window.location.href = 'qref://checklistsEnd';
         self.syncing = false;
         AppObserver.set('syncing', false);
-    };
+    };*/
     
 	this.sendChecklistToServer = function(item) {
 		var request = {

@@ -366,8 +366,8 @@ var MenuObserver = new zimoko.Observable({
 		e.preventDefault();
 		AppObserver.set('token', undefined);
 		AppObserver.set('email', '');
-		window.location.href = "qref://clearToken&clearUser";
-		AppObserver.set('cachePack', '');
+		window.location.href = "qref://clearToken&clearUser&clearChecklistCache";
+		AppObserver.set('cachePack', undefined);
 		checklists = undefined;
 		ChecklistObserver.set('checklist', undefined);
 		DashboardObserver.set('dataSource', undefined);
@@ -411,7 +411,7 @@ var MenuObserver = new zimoko.Observable({
 
 var AppObserver = new zimoko.Observable({
 	email: '',
-	cachePack: "",
+	cachePack: undefined,
 	token: undefined,
 	loading: false,
 	syncing: false,
@@ -521,8 +521,12 @@ var AppObserver = new zimoko.Observable({
 							}
 						}
 						
-						DashboardObserver.dataSource.refresh();
-						DashboardObserver.dataSource.read();
+						setTimeout(function() {
+							if(items.length > 0) {
+								DashboardObserver.punch();
+								DashboardObserver.getImages(items);
+							}
+						}, 20);
 						callback(true);
 					}
 					else {
@@ -575,13 +579,14 @@ var AppObserver = new zimoko.Observable({
 					}
 				});
 			}
-			else if(self.cachePack != "" && checklists == undefined)
+			else if(self.cachePack != undefined && checklists == undefined)
 			{
 				try {
                     //601 - Fixed issue with callback not being properly issued
-					var temp = decodeURIComponent(unescape(self.cachePack));
-					checklists = JSON.parse(temp);
-					
+					//var temp = decodeURIComponent(unescape(self.cachePack));
+					//checklists = JSON.parse(temp);
+                    checklists = self.cachePack;
+                                        
 					for(var i = 0; i < checklists.length; i++) {
 						var item = checklists[i];
 						
@@ -592,7 +597,7 @@ var AppObserver = new zimoko.Observable({
 					callback.call(self, true, checklists);
 				} catch (e) {
 					checklists = undefined;
-					self.cachePack = "";
+					self.cachePack = undefined;
 					self.getChecklists(callback);	
 				}
 			}
@@ -1051,7 +1056,12 @@ var DashboardObserver = new zimoko.Observable({
 			}
 		}
 	},
-	onDataSourceRead: function(event) {
+	getImages: function(items) {
+		var imageProcessor = new ImageProcessor(items, "checklistListing", true);
+		imageProcessor.init();
+		imageProcessor.processImages();
+	},
+	punch: function() {
 		var items = this.dataSource.view();
 				
 		for(var i = 0; i < items.length; i++) {
@@ -1065,6 +1075,11 @@ var DashboardObserver = new zimoko.Observable({
 				}
 			}
 		}
+	},
+	onDataSourceRead: function(event) {
+		var items = this.dataSource.view();
+		
+		this.punch();
 		
 		var imageProcessor = new ImageProcessor(this.items.toArray(), "checklistListing", true);
 		imageProcessor.init();

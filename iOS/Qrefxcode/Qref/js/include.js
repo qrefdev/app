@@ -51,6 +51,22 @@ function BeginChecklistPackets() {
     AppObserver.cachePack = "";
 }
 
+function AppendChecklist(data) {
+    if(data) {
+        if(AppObserver.cachePack == undefined)
+            AppObserver.cachePack = [];
+        
+        try {
+            var decoded = decodeURIComponent(unescape(atob(data)));
+            var checklist = JSON.parse(decoded);
+        
+            AppObserver.cachePack.push(checklist);
+        } catch (e) {
+            
+        }
+    }
+}
+
 function LoadChecklistPacket(data) {
     AppObserver.cachePack = AppObserver.cachePack + data;
 }
@@ -140,7 +156,7 @@ function DataLoaded() {
 			changePassword();
 		}
 	});
-	AppObserver.set('loading', false);
+	//AppObserver.set('loading', false);
 	AppObserver.load();
 	Navigation.go("dashboard");
 	Sync.init();

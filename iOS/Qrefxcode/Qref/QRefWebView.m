@@ -152,6 +152,15 @@
                         [self hasImageInCache: value];
                     }
                 }
+                //Save Checklist
+                else if([key isEqualToString:@"sc"]) {
+                    if(value != nil) {
+                        [self saveChecklist:value];
+                    }
+                }
+                else if([key isEqualToString:@"clearChecklistCache"]) {
+                    [self clearChecklists];
+                }
                 else if([key isEqualToString:@"checklistsBegin"])
                 {
                     self->incomingData = nil;
@@ -400,7 +409,140 @@
     }
 }
 
-- (void) loadChecklist  {
+- (void) saveChecklist:(NSString *) checklist {
+    NSString *UID = [self->preferences stringForKey:@"UID"];
+    NSString *user = [self->preferences stringForKey:@"User"];
+    
+    NSArray * items = [checklist componentsSeparatedByString:@"-FN-"];
+    
+    if(items.count == 2) {
+        NSString *file = [items objectAtIndex:0];
+        NSString *content = [items objectAtIndex:1];
+        
+        if(UID != nil && user != nil && content != nil)
+        {
+            NSString *combinedUserUID = [user stringByAppendingString:UID];
+            NSData *encryptedData = nil;
+            
+            NSData *decoded = [content dataUsingEncoding:NSASCIIStringEncoding];
+            
+            NSString *dataToEncrypt = [[NSString alloc] initWithBytes:[decoded bytes] length:[decoded length] encoding:NSASCIIStringEncoding];
+            
+            @try {
+                encryptedData = [DESCrypt crypt:dataToEncrypt password:combinedUserUID];
+            }
+            @catch (NSException *exception) {
+                encryptedData = [dataToEncrypt dataUsingEncoding:NSASCIIStringEncoding];
+            }
+            
+            NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+            NSFileManager *manager = [NSFileManager defaultManager];
+            NSString *cachedFilePath = [cachePath stringByAppendingString:[NSString stringWithFormat:@"/qref/%@", file]];
+            
+            if([manager fileExistsAtPath:[cachePath stringByAppendingString:@"/qref"]] == NO)
+            {
+                NSError *__autoreleasing * directoryError;
+                if(![manager createDirectoryAtPath:[cachePath stringByAppendingString:@"/qref"] withIntermediateDirectories:NO attributes:nil error:directoryError])
+                {
+                    NSLog(@"Error creating directory %@", [cachePath stringByAppendingString:@"/qref"]);
+                }
+                
+            }
+            
+            BOOL ok = [manager createFileAtPath:cachedFilePath contents:nil attributes:nil];
+            
+            if(ok) {
+                NSFileHandle* myFileHandle = [NSFileHandle fileHandleForWritingAtPath:cachedFilePath];
+                [myFileHandle writeData:encryptedData];
+                [myFileHandle closeFile];
+            }
+        }
+    }
+}
+
+- (void) findCachedChecklists {
+    NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    NSFileManager *manager = [NSFileManager defaultManager];
+    NSMutableArray * cached = [NSMutableArray array];
+    
+    if([manager fileExistsAtPath:[cachePath stringByAppendingString:@"/qref"]] == YES) {
+        NSArray * contents = [manager contentsOfDirectoryAtPath:[cachePath stringByAppendingString:@"/qref"] error:nil];
+        
+        for(int i = 0; i < contents.count; i++) {
+            NSString *filename = [contents objectAtIndex:i];
+            
+            if([filename hasSuffix:@".qrf"]) {
+                [cached addObject:filename];
+            }
+        }
+        
+        for(int i = 0; i < cached.count; i++) {
+            NSData * contents = [manager contentsAtPath:[cachePath stringByAppendingString:[NSString stringWithFormat:@"/qref/%@", [cached objectAtIndex:i]]]];
+            
+            [self loadChecklist:contents];
+            [NSThread sleepForTimeInterval:0.02f];
+        }
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self->webView stringByEvaluatingJavaScriptFromString:@"DataLoaded();"];
+        CGRect bounds = [[UIScreen mainScreen] bounds];
+        [self setView:self->webView];
+        [self->webView setFrame: CGRectMake(0, 18, bounds.size.width, bounds.size.height - 18)];
+        [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    });
+}
+
+- (void) clearChecklists {
+    NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    NSFileManager *manager = [NSFileManager defaultManager];
+    NSMutableArray * cached = [NSMutableArray array];
+    
+    if([manager fileExistsAtPath:[cachePath stringByAppendingString:@"/qref"]] == YES) {
+        NSArray * contents = [manager contentsOfDirectoryAtPath:[cachePath stringByAppendingString:@"/qref"] error:nil];
+        
+        for(int i = 0; i < contents.count; i++) {
+            NSString *filename = [contents objectAtIndex:i];
+            
+            if([filename hasSuffix:@".qrf"]) {
+                [cached addObject:filename];
+            }
+        }
+        
+        for(int i = 0; i < cached.count; i++) {
+            [manager removeItemAtPath:[cachePath stringByAppendingString:[NSString stringWithFormat:@"/qref/%@", [cached objectAtIndex:i]]] error:nil];
+        }
+    }
+}
+
+- (void) loadChecklist: (NSData *) data {
+    NSUserDefaults * preference = [NSUserDefaults standardUserDefaults];
+    NSString *user = [preference stringForKey:@"User"];
+    NSString *UID = [preference stringForKey:@"UID"];
+    
+    if(user != nil && data != nil && UID != nil)
+    {
+        NSString *combinedUserUID = [user stringByAppendingString: UID];
+        
+        NSString *decryptedChecklistData = nil;
+        
+        @try {
+            decryptedChecklistData = [DESCrypt decrypt:data password:combinedUserUID];
+        }
+        @catch (NSException *exception) {
+            decryptedChecklistData = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+        }
+        
+        if([decryptedChecklistData length] > 0)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"AppendChecklist('%@');", decryptedChecklistData]];
+            });
+        }
+    }
+}
+
+- (void) loadChecklist {
     NSUserDefaults * preference = [NSUserDefaults standardUserDefaults];
     NSString *user = [preference stringForKey:@"User"];
     NSString *UID = [preference stringForKey:@"UID"];
@@ -511,7 +653,7 @@
         [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"AppObserver.set('token', '%@');", token]];
     }
     
-    NSThread  * thread = [[NSThread alloc] initWithTarget:self selector:@selector(loadChecklist) object:nil];
+    NSThread  * thread = [[NSThread alloc] initWithTarget:self selector:@selector(findCachedChecklists) object:nil];
     
     [thread start];
     

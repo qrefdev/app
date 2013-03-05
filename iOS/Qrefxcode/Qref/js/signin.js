@@ -13,8 +13,6 @@ function Signin() {
 		success: function(data) {
 			var response = data;
 			
-			AppObserver.set('loading', false);
-			
 			if(response.success == true)
 			{
 				AppObserver.set('token', response.returnValue);
@@ -22,8 +20,8 @@ function Signin() {
 
 				window.location.href = "qref://setToken=" + response.returnValue + "&setUser=" + $("#email").val();
 				
+				AppObserver.set('loading', true);
                 setTimeout(function() {
-					AppObserver.set('loading', true);
 					AppObserver.getChecklists(function(success, items) {
 						if(success) {
 							DashboardDataSource.data(items);
@@ -32,17 +30,18 @@ function Signin() {
 						
 						AppObserver.set('loading', false);
 					});
-					Navigation.go("dashboard");
                 }, 200);
+                Navigation.go("dashboard");
 			}
 			else
 			{
+				AppObserver.set('loading', false);
 				var dialog = new Dialog("#infobox", "Invalid email or password");
 				dialog.show();
 			}	
 		},
 		error: function() {
-			AppObserver.set('loading', hide);
+			AppObserver.set('loading', false);
 			var dialog = new Dialog("#infobox", "Cannot connect to server");
 			dialog.show();
 		}
