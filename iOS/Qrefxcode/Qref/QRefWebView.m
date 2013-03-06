@@ -435,7 +435,7 @@
                 encryptedData = [dataToEncrypt dataUsingEncoding:NSASCIIStringEncoding];
             }
             
-            NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+            NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
             NSFileManager *manager = [NSFileManager defaultManager];
             NSString *cachedFilePath = [cachePath stringByAppendingString:[NSString stringWithFormat:@"/qref/%@", file]];
             
@@ -461,7 +461,7 @@
 }
 
 - (void) findCachedChecklists {
-    NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     NSFileManager *manager = [NSFileManager defaultManager];
     NSMutableArray * cached = [NSMutableArray array];
     
