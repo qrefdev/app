@@ -50,11 +50,14 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.purchases = new ArrayList<QrefProduct>();
+        this.pendingPurchases = new ArrayList<String>();
         this.webView = (WebView)findViewById(R.id.webView);
         
         this.splash = (ImageView)findViewById(R.id.splash);
         
         this.webView.getSettings().setJavaScriptEnabled(true);
+        this.webView.getSettings().setAppCacheEnabled(false);
+        this.webView.getSettings().setCacheMode(2);
         this.webView.getSettings().setSaveFormData(false);
         this.webView.getSettings().setSavePassword(false);
         
@@ -92,8 +95,6 @@ public class MainActivity extends Activity {
         	};
         	
         	this.bindService(new Intent("com.android.vending.billing.InAppBillingService.BIND"), this.serviceConnection, Context.BIND_AUTO_CREATE);
-        
-        	this.getPreviousPurchases();
         } catch (Exception e) {
         	
         }
@@ -103,7 +104,7 @@ public class MainActivity extends Activity {
     	this.splash.setVisibility(View.GONE);
     }
     
-    private void getPreviousPurchases() {
+    public void getPreviousPurchases() {
     	try {
     		Bundle items = this.billingService.getPurchases(3, this.getPackageName(), "inapp", null);
     	
@@ -111,7 +112,7 @@ public class MainActivity extends Activity {
     		
     		if(response == 0) {
     			ArrayList<String> purchaseDatas = items.getStringArrayList("INAPP_PURCHASE_DATA_LIST");
-    			ArrayList<String> signatures = items.getStringArrayList("INAPP_DATA_SIGNATURE");
+    			ArrayList<String> signatures = items.getStringArrayList("INAPP_DATA_SIGNATURE_LIST");
     			String continuationToken = items.getString("INAPP_CONTINUATION_TOKEN");
     			
     			for(int i = 0; i < purchaseDatas.size(); i++) {
@@ -122,6 +123,12 @@ public class MainActivity extends Activity {
 	    				product.signature = signatures.get(i);
 	    				product.sku = product.purchaseData.getString("productId");
 	    				
+	    				JSONObject receipt = new JSONObject();
+    					receipt.put("signature", product.signature);
+    					receipt.put("purchaseData", purchaseDatas.get(i));
+    					
+    					product.receipt = receipt;
+    					
 	    				if(!this.purchases.contains(product))
 	    					this.purchases.add(product);
     				} catch (Exception ex) {
@@ -164,39 +171,44 @@ public class MainActivity extends Activity {
 	    				product.sku = sku;
 	    				product.signature = signature;
 	    				product.purchaseData = jo;
-	    				product.purchaseData.put("signature", signature);
 	    				
+	    				JSONObject receipt = new JSONObject();
+    					receipt.put("signature", product.signature);
+    					receipt.put("purchaseData", purchaseData);
+	    				
+    					product.receipt = receipt;
+    					
 	    				String pendingId = product.purchaseData.getString("developerPayload");
 	    				
 	    				if(this.pendingPurchases.contains(pendingId)) {
 	    					this.purchases.add(product);
 	    					
-	    					String encodedReceiptData = Base64.encode(product.purchaseData.toString().getBytes());
+	    					String encodedReceiptData = Base64.encode(receipt.toString().getBytes());
 	    					
-	    					this.webView.loadData("SendReceipt('" + encodedReceiptData + "');", "text/javascript", "UTF8");
+	    					this.webView.loadUrl("javascript:SendReceipt('" + encodedReceiptData + "');");
 	    				
 	    					this.pendingPurchases.remove(pendingId);
 	    				}
 	    				else {
-	    					this.webView.loadData("PurchaseFailed();", "text/javascript", "UTF8");
+	    					this.webView.loadUrl("javascript:PurchaseFailed();");
 	    				}
 	    			}
 	    			catch (Exception e) {
-	    				this.webView.loadData("PurchaseFailed();", "text/javascript", "UTF8");
+	    				this.webView.loadUrl("javascript:PurchaseFailed();");
 	    			}
     			}
     			else if(responseCode == 1) {
-    				this.webView.loadData("PurchaseCanceled();", "text/javascript", "UTF8");
+    				this.webView.loadUrl("javascript:PurchaseCanceled();");
     			}
     			else if(responseCode == 3 || responseCode == 5 || responseCode == 6 || responseCode == 7) {
-    				this.webView.loadData("PurchaseFailed();", "text/javascript", "UTF8");
+    				this.webView.loadUrl("javascript:PurchaseFailed();");
     			}
     			else if(responseCode == 4) {
-    				this.webView.loadData("InvalidProduct();", "text/javascript", "UTF8");
+    				this.webView.loadUrl("javascript:InvalidProduct();");
     			}
     		}
     		else if(resultCode == RESULT_CANCELED) {
-    			this.webView.loadData("PurchaseCanceled();", "text/javascript", "UTF8");
+    			this.webView.loadUrl("javascript:PurchaseCanceled();");
     		}
     	}
     }
@@ -220,24 +232,24 @@ public class MainActivity extends Activity {
     		
     		if(product != null) {
     			try {
-	    			JSONObject response = new JSONObject(product.purchaseData.toString());
-	    			response.put("signature", product.signature);
-	    			
-	    			this.webView.loadData("SendReceipt('" + Base64.encode(response.toString().getBytes()) + "');", "text/javascript", "UTF8");
+    				String encodedReceiptData = Base64.encode(product.receipt.toString().getBytes());
+					
+					this.webView.loadUrl("javascript:SendReceipt('" + encodedReceiptData + "');");
 	    			
 	    			return true;
     			} catch (Exception e) {
-    				this.webView.loadData("PurchaseFailed();", "text/javascript", "UTF8");
+    				this.webView.loadUrl("javascript:PurchaseFailed();");
     				
     				return false;
     			}
     		}
     		else {
-    			this.webView.loadData("PurchaseFailed();", "text/javascript", "UTF8");
+    			this.webView.loadUrl("javascript:PurchaseFailed();");
     			
     			return false;
     		}
     	}
+    	
     	try {
     		Bundle buyIntentBundle = this.billingService.getBuyIntent(3, this.getPackageName(), productId, "inapp", this.getNewPendingId());
     	
@@ -246,7 +258,7 @@ public class MainActivity extends Activity {
     		this.startIntentSenderForResult(pendingBuy.getIntentSender(), 3459, new Intent(), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0));
     		
     	}  catch (Exception e) {
-    		this.webView.loadData("PurchaseFailed();", "text/javascript", "UTF8");
+    		this.webView.loadUrl("javascript:PurchaseFailed();");
     		return false;
     	}
     	

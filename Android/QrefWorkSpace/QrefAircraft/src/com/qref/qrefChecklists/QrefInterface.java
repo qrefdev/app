@@ -242,8 +242,16 @@ public class QrefInterface {
 	}
 	
 	@JavascriptInterface
-	public void purchase(String id) {
-		this.app.purchase(id);
+	public void purchase(final String id) {
+		
+		Thread thread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				QrefInterface.this.app.purchase(id);
+			}
+		});
+		
+		thread.start();
 	}
 	
 	@JavascriptInterface
@@ -357,6 +365,7 @@ public class QrefInterface {
 		this.handler.post(new Runnable() {
 			@Override
 			public void run() {
+				QrefInterface.this.app.getPreviousPurchases();
 				QrefInterface.this.app.hideSplash();
 			}
 		});

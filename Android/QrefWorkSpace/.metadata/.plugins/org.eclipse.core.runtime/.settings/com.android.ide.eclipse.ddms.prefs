@@ -17,6 +17,7 @@ logcat.view.colsize.TID=46
 logcat.view.colsize.Tag=101
 logcat.view.colsize.Text=545
 logcat.view.colsize.Time=140
+logcat.view.filters.list=name\: 'Qref', tag\: '', text\: '', pid\: '', app\: 'com.qref.qrefChecklists', level\: 'debug', 
 threadPanel.Col0=25
 threadPanel.Col1=39
 threadPanel.Col2=63

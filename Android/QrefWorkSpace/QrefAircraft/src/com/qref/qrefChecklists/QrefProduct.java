@@ -6,6 +6,7 @@ public class QrefProduct {
 	public String sku;
 	public JSONObject purchaseData;
 	public String signature;
+	public JSONObject receipt;
 	
 	@Override
 	public boolean equals(Object obj) {

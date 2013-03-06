@@ -75,11 +75,11 @@ function SyncProcessor() {
 								DashboardObserver.getImages(newItems);
 							}
 						}, 20);
-                    }, 100);
+						
+						self.syncToPhone();
+                    }, 20);
 				}
 			});
-        
-			self.syncToPhone();
 		}
 	};
 	
@@ -149,10 +149,11 @@ function SyncProcessor() {
 								DashboardObserver.getImages(newItems);
 							}
 						}, 20);
-                    }, 100);
+						
+						self.syncToPhone();
+                    }, 20);
 				}
 			});
-			self.syncToPhone();
 		}
 	};
 	
