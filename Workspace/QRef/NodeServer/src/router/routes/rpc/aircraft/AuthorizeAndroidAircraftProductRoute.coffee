@@ -29,6 +29,8 @@ class AuthorizeAndroidAircraftProductRoute extends RpcRoute
 			res.json(resp, 200)
 			return
 		
+		console.log('AuthorizeAndroidAircraftProductRoute::post() - Begin Execution')
+		
 		token = req.param('token')
 		productId = req.body.product
 		db = QRefDatabase.instance()
@@ -41,28 +43,37 @@ class AuthorizeAndroidAircraftProductRoute extends RpcRoute
 		
 		UserAuth.validateToken(token, (err, isTokenValid) =>
 			if err? or not isTokenValid == true
+				console.log('AuthorizeAndroidAircraftProductRoute::post() - Bogus Token')
 				resp = new RpcResponse(null)
 				resp.failure('Not Authorized', 403)
 				res.json(resp, 200)
 				return
-				
+			
+			console.log('AuthorizeAndroidAircraftProductRoute::post() - Valid Token')
+		
 			UserAuth.userFromToken(token, (err, user) => 
 				if err? or not user?
+					console.log('AuthorizeAndroidAircraftProductRoute::post() - Invalid User')
 					resp = new RpcResponse(null)
 					resp.failure('Not Authorized', 403)
 					res.json(resp, 200)
 					return
+				
+				console.log('AuthorizeAndroidAircraftProductRoute::post() - Loaded User')
+		
 					
 				db.Product.findOne({ _id: productId })
 						.populate('aircraftChecklist')
 						.exec((err, product) =>
 					if err?
+						console.log('AuthorizeAndroidAircraftProductRoute::post() - Product Error')
 						resp = new RpcResponse(null)
 						resp.failure('Internal Error', 500)
 						res.json(resp, 200)
 						return
 					
 					if not product?
+						console.log('AuthorizeAndroidAircraftProductRoute::post() - Product Not Found')
 						resp = new RpcResponse(null)
 						resp.failure('Product Not Found', 404)
 						res.json(resp, 200)
@@ -77,31 +88,47 @@ class AuthorizeAndroidAircraftProductRoute extends RpcRoute
 					attempt.save((err) => 
 						
 						if err?
+							console.log('AuthorizeAndroidAircraftProductRoute::post() - Save Attempt Error')
 							resp = new RpcResponse(null)
 							resp.failure('Internal Error', 500)
 							res.json(resp, 200)
 							return
 						
+						console.log('AuthorizeAndroidAircraftProductRoute::post() - Calling Validate Receipt')
+						
 						@.validateReceipt(user, receiptData, (err, receipt) =>
 							if err?
+								console.log('AuthorizeAndroidAircraftProductRoute::post() - validateReceipt() - Error')
 								resp = new RpcResponse(null)
 								resp.failure('Internal Error', 500)
 								res.json(resp, 200)
 								return
 								
 							if not receipt?
+								console.log('AuthorizeAndroidAircraftProductRoute::post() - Bogus Receipt')
 								resp = new RpcResponse(null)
 								resp.failure('Internal Error', 500)
 								res.json(resp, 200)
 								return
 							
 							attempt.androidReceipt = receipt
-								
-							if receipt.status == 0 and receipt.productId == product.androidProductIdentifier
+							
+							purchaseData = JSON.parse(receipt.purchaseData)
+							
+							
+							console.log("Receipt Status: " + receipt.status)
+							console.log("Receipt Product: " + purchaseData.productId)
+							console.log("Product Identifier: " + product.androidProductIdentifier)
+							
+							purchaseData = JSON.parse(receipt.purchaseData)
+							
+							if receipt.status == 0 and purchaseData.productId == product.androidProductIdentifier
 								attempt.isReceiptValid = true
+								console.log('AuthorizeAndroidAircraftProductRoute::post() - Valid Receipt')
 								
 								attempt.save((err) =>
 									if err?
+										console.log('AuthorizeAndroidAircraftProductRoute::post() - Final Save Attempt Error')
 										resp.failure('Internal Error', 500)
 										res.json(resp, 200)
 										return
@@ -112,6 +139,7 @@ class AuthorizeAndroidAircraftProductRoute extends RpcRoute
 									
 									uProduct.save((err) => 
 										if err? and not err.code == 11000
+											console.log('AuthorizeAndroidAircraftProductRoute::post() - uProduct Save Error')
 											resp = new RpcResponse(null)
 											resp.failure('Internal Error', 500)
 											res.json(resp, 200)
@@ -119,6 +147,7 @@ class AuthorizeAndroidAircraftProductRoute extends RpcRoute
 											
 										@.cloneChecklist(product.aircraftChecklist, user, tailNumber, (err, checklistId) =>
 											if err?
+												console.log('AuthorizeAndroidAircraftProductRoute::post() - Clone Checklist Error')
 												resp = new RpcResponse(null)
 												resp.failure('Internal Error', 500)
 												res.json(resp, 200)
@@ -129,6 +158,7 @@ class AuthorizeAndroidAircraftProductRoute extends RpcRoute
 											
 											attempt.save((err) =>
 												if err?
+													console.log('AuthorizeAndroidAircraftProductRoute::post() - Attempt Save Bogey')
 													resp = new RpcResponse(null)
 													resp.failure('Internal Error', 500)
 													res.json(resp, 200)
@@ -144,9 +174,10 @@ class AuthorizeAndroidAircraftProductRoute extends RpcRoute
 								)
 							else
 								attempt.isReceiptValid = false
-								
+								console.log('AuthorizeAndroidAircraftProductRoute::post() - Invalid Receipt')
 								attempt.save((err) =>
 									if err?
+										console.log('AuthorizeAndroidAircraftProductRoute::post() - Attempt Save Bogey')
 										resp = new RpcResponse(null)
 										resp.failure('Internal Error', 500)
 										res.json(resp, 200)
@@ -198,31 +229,46 @@ class AuthorizeAndroidAircraftProductRoute extends RpcRoute
 		)
 	
 	validateReceipt: (user, receiptData, callback) =>
-		receipt = JSON.parse((new Buffer(receiptData, 'base64')).toString())
+		console.log('AuthorizeAndroidAircraftProductRoute::validateReceipt() - Before Receipt Parse')
+		receipt = JSON.parse(new Buffer(receiptData, 'base64').toString())
+		console.log('AuthorizeAndroidAircraftProductRoute::validateReceipt() - After Receipt Parse')
 		
 		signature = receipt.signature;
 		
 		db = QRefDatabase.instance()
 		
-		db.AircraftProductAuthorizationAttempt.find({ user: user_id}, (err, attempts) => 
+		db.AircraftProductAuthorizationAttempt.find({ user: user._id }, (err, attempts) => 
 			if err?
+				console.log('AuthorizeAndroidAircraftProductRoute::validateReceipt() - Finder Bogey')
 				callback(err, null)
 				return
-				
+			
+			console.log('AuthorizeAndroidAircraftProductRoute::validateReceipt() - Attempt Looping')
+			
+			purchaseData = JSON.parse(receipt.purchaseData)
+			
 			if attempts? and attempts.length > 0
+				console.log('AuthorizeAndroidAircraftProductRoute::validateReceipt() - Attempt Looping')
 				for attempt in attempts 
 					if attempt.androidReceipt?
-						if attempt.androidReceipt.orderId == receipt.orderId
+						if attempt.androidReceipt.orderId == purchaseData.orderId
 							receipt.status = 0
 							callback(null, receipt)
 							return
 			
+			console.log('AuthorizeAndroidAircraftProductRoute::validateReceipt() - After Looping')
+			
 			fs.readFile('androidPublicKey.pem', 'utf8', (err, data) => 
 				if err?
+					console.log('AuthorizeAndroidAircraftProductRoute::validateReceipt() - FS Bogey')
 					callback(err, null)
 					return
 					
-				verifier = crypto.createVerify('RSA')
+				verifier = crypto.createVerify('sha1')
+				
+				console.log('AuthorizeAndroidAircraftProductRoute::validateReceipt() - Receipt Data: ' + JSON.stringify(receipt.purchaseData))
+				
+				verifier.update(new Buffer(receipt.purchaseData, 'ascii'))
 				
 				if verifier.verify(data, signature, 'base64')
 					receipt.status = 0
