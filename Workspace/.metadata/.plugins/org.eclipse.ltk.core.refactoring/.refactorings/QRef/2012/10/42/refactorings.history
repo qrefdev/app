@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;QRef/WebContent/images/products&apos; to &apos;product&apos;" description="Rename resource &apos;products&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="WebContent/images/products" name="product" stamp="1350321937192" updateReferences="true"/>
-</session>

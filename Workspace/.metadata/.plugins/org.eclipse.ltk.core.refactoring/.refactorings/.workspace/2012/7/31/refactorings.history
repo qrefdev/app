@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Delete 5 resources" deleteContents="false" description="Delete 5 resources" element1="/QRef/NodeServer/lib/db" element2="/QRef/NodeServer/lib/router" element3="/QRef/NodeServer/lib/schema" element4="/QRef/NodeServer/lib/security" element5="/QRef/NodeServer/lib/serialization" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="5" stamp="1343689345478"/>
-</session>

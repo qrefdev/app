@@ -126,33 +126,33 @@ if (cluster.isMaster) {
 	  httpApp.use(express.errorHandler());
 	});
 
-        httpsApp.configure(function(){
-          httpsApp.use(express.bodyParser({ keepExtensions: true }));
-          httpsApp.use(express.methodOverride());
-          httpsApp.use(express.compress());
-          httpsApp.use(express.static('../WebContent'));
-          httpsApp.use(allowCrossDomain);
-          httpsApp.use(express.cookieParser());
-        });
+	httpsApp.configure(function(){
+	  httpsApp.use(express.bodyParser({ keepExtensions: true }));
+	  httpsApp.use(express.methodOverride());
+	  httpsApp.use(express.compress());
+	  httpsApp.use(express.static('../WebContent'));
+	  httpsApp.use(allowCrossDomain);
+	  httpsApp.use(express.cookieParser());
+	});
 
-        httpsApp.configure('development', function(){
-          httpsApp.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-        });
+	httpsApp.configure('development', function(){
+	  httpsApp.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+	});
 
-        httpsApp.configure('production', function(){
-          httpsApp.use(express.errorHandler());
-        });
+	httpsApp.configure('production', function(){
+	  httpsApp.use(express.errorHandler());
+	});
 
 	
-	var rtr = new Router(httpApp);
-	var httpsRtr = new Router(httpsApp);
+	var rtr = new Router(httpsApp);
+	//var httpsRtr = new Router(httpsApp);
 
 
 	rtr.load();
 	rtr.setup();
 
-	httpsRtr.load();
-	httpsRtr.setup();	
+	//httpsRtr.load();
+	//httpsRtr.setup();	
 	
 	httpApp.get('/api/node/recycle', function(req, res) {
 	

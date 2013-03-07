@@ -1,6 +1,0 @@
-INDEX VERSION 1.122+C:\SourceControl\QRef\trunk\Workspace\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-657177286.index
-2601720897.index
-417250536.index
-1336103096.index
-2072863491.index
