@@ -33,6 +33,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.webkit.SslErrorHandler;
+import android.net.http.SslError;
 import android.widget.ImageView;
 
 public class MainActivity extends Activity {
@@ -66,6 +69,13 @@ public class MainActivity extends Activity {
         this.webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
         this.webView.setWebChromeClient(new ChromeClient());
         this.webView.addJavascriptInterface(new QrefInterface(this, PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext()), this.getApplicationContext(), this.webView, mhandler), "QrefInterface");
+        
+        this.webView.setWebViewClient(new WebViewClient() {
+        	@Override
+        	public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+        		handler.proceed();
+        	}
+        });
         
         try {
         	InputStream input = getAssets().open("phoneView.html");

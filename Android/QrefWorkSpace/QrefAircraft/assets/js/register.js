@@ -22,42 +22,49 @@ function Register() {
 		return; 
 	}
 	
-	$.ajax({
-		type: "post",
-		data: register,
-		url: host + "services/rpc/auth/registerAccount",
-		success: function(data) {
-			var response = data;
+	if(QrefInterface.isConnected()) {
+		$.ajax({
+			type: "post",
+			data: register,
+			url: host + "services/rpc/auth/registerAccount",
+			success: function(data) {
+				var response = data;
 			
-			AppObserver.set('loading', false);
+				AppObserver.set('loading', false);
 			
-			if(response.success == true)
-			{
-				var dialog = new Dialog("#infobox", "Registration Successful!", function() {
-					Navigation.go("signin");
-				});
-				
-				dialog.show();
-			}
-			else
-			{
-				if(response.returnValue == 2)
+				if(response.success == true)
 				{
-					var dialog = new Dialog("#infobox", "An account already exists with the provided email.");
+					var dialog = new Dialog("#infobox", "Registration Successful!", function() {
+						Navigation.go("signin");
+					});
+				
 					dialog.show();
 				}
 				else
 				{
-					var dialog = new Dialog("#infobox", "Server Error. Please try again.");
-					dialog.show();
-				}
-			}	
-		},
-		error: function() {
-			AppObserver.set('loading', false);
+					if(response.returnValue == 2)
+					{
+						var dialog = new Dialog("#infobox", "An account already exists with the provided email.");
+						dialog.show();
+					}
+					else
+					{
+						var dialog = new Dialog("#infobox", "Server Error. Please try again.");
+						dialog.show();
+					}
+				}	
+			},
+			error: function() {
+				AppObserver.set('loading', false);
 			
-			var dialog = new Dialog("#infobox", "Cannot connect to server");
-			dialog.show();
-		}
-	});
+				var dialog = new Dialog("#infobox", "Cannot connect to server");
+				dialog.show();
+			}
+		});
+	}
+	else {
+		AppObserver.set('loading', false);
+        var dialog = new Dialog("#infobox", "No Internet Connection Available");
+        dialog.show();
+	}
 }

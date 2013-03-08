@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="29" version="2.0">
+<workbench progressCount="21" version="2.0">
 <workbenchAdvisor/>
 <window height="1119" maximized="true" width="1978" x="1458" y="-240">
 <fastViewData fastViewLocation="1024"/>
@@ -18,7 +18,7 @@
 <coolItem id="org.eclipse.search.searchActionSet" itemType="typeToolBarContribution" x="62" y="22"/>
 <coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="98" y="22"/>
 <coolItem id="org.eclipse.wst.xml.ui.perspective.NewFileToolBar" itemType="typeToolBarContribution" x="-1" y="-1"/>
-<coolItem id="org.eclipse.wst.xml.ui.design.DesignToolBar" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="org.eclipse.wst.xml.ui.design.DesignToolBar" itemType="typeToolBarContribution" x="54" y="22"/>
 <coolItem id="org.eclipse.debug.ui.launch.toolbar" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="org.eclipse.debug.ui.main.toolbar" itemType="typeToolBarContribution" x="32" y="22"/>
 <coolItem id="group.nav" itemType="typeGroupMarker"/>
@@ -47,6 +47,7 @@
 <part id="6"/>
 <part id="7"/>
 <part id="8"/>
+<part id="9"/>
 </presentation>
 </folder>
 </info>
@@ -55,13 +56,13 @@
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/QrefAircraft/assets/phoneView.html"/>
 <editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2032" selectionTopPixel="0"/>
 </editor>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="QrefInterface.java" partName="QrefInterface.java" path="/Users/aaronklick/Documents/QrefWorkSpace/QrefAircraft/src/com/qref/qrefChecklists/QrefInterface.java" title="QrefInterface.java" tooltip="QrefAircraft/src/com/qref/qrefChecklists/QrefInterface.java" workbook="DefaultEditorWorkbook">
+<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="QrefInterface.java" partName="QrefInterface.java" path="/Users/aaronklick/Documents/QrefWorkSpace/QrefAircraft/src/com/qref/qrefChecklists/QrefInterface.java" title="QrefInterface.java" tooltip="QrefAircraft/src/com/qref/qrefChecklists/QrefInterface.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/QrefAircraft/src/com/qref/qrefChecklists/QrefInterface.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="8755" selectionTopPixel="4665"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="8242" selectionTopPixel="4253"/>
 </editor>
-<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MainActivity.java" partName="MainActivity.java" path="/Users/aaronklick/Documents/QrefWorkSpace/QrefAircraft/src/com/qref/qrefChecklists/MainActivity.java" title="MainActivity.java" tooltip="QrefAircraft/src/com/qref/qrefChecklists/MainActivity.java" workbook="DefaultEditorWorkbook">
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MainActivity.java" partName="MainActivity.java" path="/Users/aaronklick/Documents/QrefWorkSpace/QrefAircraft/src/com/qref/qrefChecklists/MainActivity.java" title="MainActivity.java" tooltip="QrefAircraft/src/com/qref/qrefChecklists/MainActivity.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/QrefAircraft/src/com/qref/qrefChecklists/MainActivity.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="4916" selectionTopPixel="892"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1722" selectionTopPixel="2383"/>
 </editor>
 <editor id="com.android.ide.eclipse.editors.manifest.ManifestEditor" name="AndroidManifest.xml" partName="QrefAircraft Manifest" path="/Users/aaronklick/Documents/QrefWorkSpace/QrefAircraft/AndroidManifest.xml" title="QrefAircraft Manifest" tooltip="QrefAircraft/AndroidManifest.xml" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/QrefAircraft/AndroidManifest.xml"/>
@@ -71,7 +72,7 @@
 </editor>
 <editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ChromeClient.java" partName="ChromeClient.java" path="/Users/aaronklick/Documents/QrefWorkSpace/QrefAircraft/src/com/qref/qrefChecklists/ChromeClient.java" title="ChromeClient.java" tooltip="QrefAircraft/src/com/qref/qrefChecklists/ChromeClient.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/QrefAircraft/src/com/qref/qrefChecklists/ChromeClient.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="0"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="370" selectionTopPixel="0"/>
 </editor>
 <editor id="org.eclipse.jdt.ui.ClassFileEditor" name="ContextWrapper.class" partName="ContextWrapper.class" title="ContextWrapper.class" tooltip="android.content.ContextWrapper" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" org.eclipse.jdt.ui.ClassFileIdentifier="=QrefAircraft/\/Users\/aaronklick\/Downloads\/adt-bundle-mac-x86_64\/sdk\/platforms\/android-17\/android.jar&lt;android.content(ContextWrapper.class"/>
@@ -84,6 +85,10 @@
 <editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="QrefProduct.java" partName="QrefProduct.java" path="/Users/aaronklick/Documents/QrefWorkSpace/QrefAircraft/src/com/qref/qrefChecklists/QrefProduct.java" title="QrefProduct.java" tooltip="QrefAircraft/src/com/qref/qrefChecklists/QrefProduct.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/QrefAircraft/src/com/qref/qrefChecklists/QrefProduct.java"/>
 <editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="196" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AppStatus.java" partName="AppStatus.java" path="/Users/aaronklick/Documents/QrefWorkSpace/QrefAircraft/src/com/qref/qrefChecklists/AppStatus.java" title="AppStatus.java" tooltip="QrefAircraft/src/com/qref/qrefChecklists/AppStatus.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/QrefAircraft/src/com/qref/qrefChecklists/AppStatus.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="163" selectionTopPixel="0"/>
 </editor>
 </editors>
 <views>
@@ -118,7 +123,7 @@
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
 <expanded>
-<category IMemento.internal.id="Warnings (17 items)"/>
+<category IMemento.internal.id="Warnings (21 items)"/>
 </expanded>
 <columnWidths org.eclipse.ui.ide.locationField="90" org.eclipse.ui.ide.markerType="90" org.eclipse.ui.ide.pathField="120" org.eclipse.ui.ide.resourceField="90" org.eclipse.ui.ide.severityAndDescriptionField="300"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
@@ -347,7 +352,7 @@
 </info>
 <info part="org.eclipse.ui.editorss" ratio="0.25" ratioLeft="254" ratioRight="762" relationship="2" relative="left"/>
 <info folder="true" part="bottom" ratio="0.7810651" ratioLeft="1056" ratioRight="296" relationship="4" relative="org.eclipse.ui.editorss">
-<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
+<folder activePageID="com.android.ide.eclipse.ddms.views.LogCatView" appearance="2" expanded="2">
 <page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
 <page content="org.eclipse.jdt.ui.JavadocView" label="Javadoc"/>
 <page content="org.eclipse.jdt.ui.SourceView" label="Declaration"/>
@@ -433,29 +438,20 @@
 <view id="org.eclipse.ui.views.ContentOutline"/>
 <view id="com.android.ide.eclipse.ddms.views.LogCatView"/>
 <fastViewBars/>
-<layout>
-<mainWindow>
-<info folder="true" part="org.eclipse.debug.internal.ui.NavigatorFolderView">
-<folder activePageID="org.eclipse.debug.ui.DebugView" appearance="2" expanded="2">
-<page content="org.eclipse.debug.ui.DebugView" label="Debug"/>
+<layout>&#x0A;<mainWindow>&#x0A;<info folder="true" part="org.eclipse.debug.internal.ui.NavigatorFolderView">&#x0A;<folder activePageID="org.eclipse.debug.ui.DebugView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.debug.ui.DebugView" label="Debug"/>
 <page content="org.eclipse.ui.views.ResourceNavigator" label="LabelNotFound"/>
 <page content="org.eclipse.jdt.ui.PackageExplorer" label="LabelNotFound"/>
 <page content="org.eclipse.jdt.ui.TypeHierarchy" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="stickyFolderRight" ratio="0.75" ratioLeft="894" ratioRight="298" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
-<folder appearance="2" expanded="2">
-<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
+<info folder="true" part="stickyFolderRight" ratio="0.75" ratioLeft="894" ratioRight="298" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">&#x0A;<folder appearance="2" expanded="2">&#x0A;<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
 <page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="LabelNotFound"/>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.debug.internal.ui.ConsoleFolderView" ratio="0.7498155" ratioLeft="1016" ratioRight="339" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
-<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
-<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
+<info folder="true" part="org.eclipse.debug.internal.ui.ConsoleFolderView" ratio="0.7498155" ratioLeft="1016" ratioRight="339" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">&#x0A;<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
 <page content="org.eclipse.ui.views.TaskList" label="Tasks"/>
 <page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
 <page content="org.eclipse.cdt.debug.ui.executablesView" label="Executables"/>
@@ -463,44 +459,34 @@
 <page content="org.eclipse.ui.views.PropertySheet" label="LabelNotFound"/>
 <page content="org.eclipse.jdt.debug.ui.DisplayView" label="LabelNotFound"/>
 <page content="org.eclipse.search.SearchResultView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
 <part id="1"/>
 <part id="2"/>
 <part id="3"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@25b21518" ratio="0.5" ratioLeft="596" ratioRight="596" relationship="2" relative="org.eclipse.debug.internal.ui.ConsoleFolderView">
-<folder activePageID="com.android.ide.eclipse.ddms.views.LogCatView" appearance="2" expanded="2">
-<page content="com.android.ide.eclipse.ddms.views.LogCatView" label="LogCat"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@25b21518" ratio="0.5" ratioLeft="596" ratioRight="596" relationship="2" relative="org.eclipse.debug.internal.ui.ConsoleFolderView">&#x0A;<folder activePageID="com.android.ide.eclipse.ddms.views.LogCatView" appearance="2" expanded="2">&#x0A;<page content="com.android.ide.eclipse.ddms.views.LogCatView" label="LogCat"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
 </presentation>
 </folder>
 </info>
 <info part="org.eclipse.ui.editorss" ratio="0.44980314" ratioLeft="457" ratioRight="559" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView"/>
-<info folder="true" part="org.eclipse.debug.internal.ui.OutlineFolderView" ratio="0.75" ratioLeft="894" ratioRight="298" relationship="2" relative="org.eclipse.ui.editorss">
-<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">
-<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
+<info folder="true" part="org.eclipse.debug.internal.ui.OutlineFolderView" ratio="0.75" ratioLeft="894" ratioRight="298" relationship="2" relative="org.eclipse.ui.editorss">&#x0A;<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
 <page content="org.eclipse.ant.ui.views.AntView" label="LabelNotFound"/>
 <page content="org.eclipse.cdt.dsf.gdb.ui.tracecontrol.view" label="LabelNotFound"/>
 <page content="org.eclipse.cdt.dsf.debug.ui.disassembly.view" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.debug.internal.ui.ToolsFolderView" ratio="0.5" ratioLeft="596" ratioRight="596" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
-<folder activePageID="org.eclipse.debug.ui.VariableView" appearance="2" expanded="2">
-<page content="org.eclipse.debug.ui.VariableView" label="Variables"/>
+<info folder="true" part="org.eclipse.debug.internal.ui.ToolsFolderView" ratio="0.5" ratioLeft="596" ratioRight="596" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">&#x0A;<folder activePageID="org.eclipse.debug.ui.VariableView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.debug.ui.VariableView" label="Variables"/>
 <page content="org.eclipse.debug.ui.BreakpointView" label="Breakpoints"/>
 <page content="org.eclipse.debug.ui.ExpressionView" label="LabelNotFound"/>
 <page content="org.eclipse.debug.ui.RegisterView" label="LabelNotFound"/>
 <page content="org.eclipse.cdt.debug.ui.SignalsView" label="LabelNotFound"/>
 <page content="org.eclipse.debug.ui.ModuleView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
 <part id="1"/>
 </presentation>
 </folder>
@@ -516,43 +502,12 @@
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/QrefAircraft/src/com/qref/qrefChecklists/QrefInterface.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/AndroidPublicKeyGenerator/src/Generator.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/QrefAircraft/src/com/qref/qrefChecklists/QrefProduct.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/QrefAircraft/src/com/qref/qrefChecklists/QrefInterface.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.manifest.ManifestEditor" path="/QrefAircraft/AndroidManifest.xml"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/QrefAircraft/src/com/qref/qrefChecklists/AppStatus.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/QrefAircraft/src/com/qref/qrefChecklists/MainActivity.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/QrefAircraft/src/com/qref/qrefChecklists/ChromeClient.java"/>
 </editors>
-<item historyLabel="MainActivity.java" index="0">
-<position info="not_deleted" x="4106" y="0"/>
-</item>
-<item historyLabel="MainActivity.java" index="0">
-<position info="not_deleted" x="3828" y="0"/>
-</item>
-<item historyLabel="MainActivity.java" index="0">
-<position info="not_deleted" x="3930" y="0"/>
-</item>
-<item historyLabel="MainActivity.java" index="0">
-<position info="not_deleted" x="3989" y="0"/>
-</item>
-<item historyLabel="MainActivity.java" index="0">
-<position info="not_deleted" x="4015" y="0"/>
-</item>
-<item historyLabel="MainActivity.java" index="0">
-<position info="not_deleted" x="4110" y="0"/>
-</item>
-<item historyLabel="MainActivity.java" index="0">
-<position info="not_deleted" x="4203" y="0"/>
-</item>
-<item historyLabel="MainActivity.java" index="0">
-<position info="not_deleted" x="4290" y="0"/>
-</item>
-<item historyLabel="MainActivity.java" index="0">
-<position info="not_deleted" x="4345" y="0"/>
-</item>
-<item historyLabel="MainActivity.java" index="0">
-<position info="not_deleted" x="4417" y="0"/>
-</item>
-<item historyLabel="MainActivity.java" index="0">
-<position info="not_deleted" x="4487" y="0"/>
-</item>
-<item historyLabel="MainActivity.java" index="0">
-<position info="not_deleted" x="4535" y="0"/>
-</item>
 <item historyLabel="MainActivity.java" index="0">
 <position info="not_deleted" x="4831" y="0"/>
 </item>
@@ -661,8 +616,45 @@
 <item historyLabel="MainActivity.java" index="0">
 <position info="not_deleted" x="6230" y="0"/>
 </item>
-<item active="true" historyLabel="MainActivity.java" index="0">
+<item historyLabel="MainActivity.java" index="0">
 <position info="not_deleted" x="2050" y="0"/>
+</item>
+<item historyLabel="QrefInterface.java" index="4">
+<position info="not_deleted" x="8756" y="0"/>
+</item>
+<item historyLabel="QrefAircraft Manifest" index="5"/>
+<item historyLabel="AppStatus.java" index="6">
+<position info="not_deleted" x="163" y="0"/>
+</item>
+<item historyLabel="QrefInterface.java" index="4">
+<position info="not_deleted" x="1729" y="0"/>
+</item>
+<item historyLabel="QrefInterface.java" index="4">
+<position info="not_deleted" x="1618" y="0"/>
+</item>
+<item historyLabel="QrefInterface.java" index="4">
+<position info="not_deleted" x="1726" y="0"/>
+</item>
+<item historyLabel="MainActivity.java" index="7">
+<position info="not_deleted" x="1914" y="0"/>
+</item>
+<item historyLabel="QrefInterface.java" index="4">
+<position info="not_deleted" x="1903" y="0"/>
+</item>
+<item historyLabel="MainActivity.java" index="7">
+<position info="not_deleted" x="1914" y="0"/>
+</item>
+<item historyLabel="ChromeClient.java" index="8">
+<position info="not_deleted" x="370" y="0"/>
+</item>
+<item historyLabel="MainActivity.java" index="7">
+<position info="not_deleted" x="1914" y="0"/>
+</item>
+<item historyLabel="MainActivity.java" index="7">
+<position info="not_deleted" x="1722" y="0"/>
+</item>
+<item active="true" historyLabel="QrefInterface.java" index="4">
+<position info="not_deleted" x="1903" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -682,6 +674,27 @@
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="signin.js" tooltip="QrefAircraft/assets/js/signin.js">
+<persistable path="/QrefAircraft/assets/js/signin.js"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="include.js" tooltip="QrefAircraft/assets/js/include.js">
+<persistable path="/QrefAircraft/assets/js/include.js"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="observers.js" tooltip="QrefAircraft/assets/js/observers.js">
+<persistable path="/QrefAircraft/assets/js/observers.js"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="sync.js" tooltip="QrefAircraft/assets/js/sync.js">
+<persistable path="/QrefAircraft/assets/js/sync.js"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="register.js" tooltip="QrefAircraft/assets/js/register.js">
+<persistable path="/QrefAircraft/assets/js/register.js"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="dialog.js" tooltip="QrefAircraft/assets/js/dialog.js">
+<persistable path="/QrefAircraft/assets/js/dialog.js"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AppStatus.java" tooltip="QrefAircraft/src/com/qref/qrefChecklists/AppStatus.java">
+<persistable path="/QrefAircraft/src/com/qref/qrefChecklists/AppStatus.java"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="InAppPurchase.js" tooltip="QrefAircraft/assets/js/InAppPurchase.js">
 <persistable path="/QrefAircraft/assets/js/InAppPurchase.js"/>
 </file>
@@ -694,9 +707,6 @@
 <file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="ContextWrapper.class" tooltip="android.content.ContextWrapper">
 <persistable org.eclipse.jdt.ui.ClassFileIdentifier="=QrefAircraft/\/Users\/aaronklick\/Downloads\/adt-bundle-mac-x86_64\/sdk\/platforms\/android-17\/android.jar&lt;android.content(ContextWrapper.class"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="sync.js" tooltip="QrefAircraft/assets/js/sync.js">
-<persistable path="/QrefAircraft/assets/js/sync.js"/>
-</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="jquery.tap.js" tooltip="QrefAircraft/assets/js/jquery.tap.js">
 <persistable path="/QrefAircraft/assets/js/jquery.tap.js"/>
 </file>
@@ -708,21 +718,6 @@
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="zimoko.datasource.js" tooltip="QrefAircraft/assets/js/zimoko.datasource.js">
 <persistable path="/QrefAircraft/assets/js/zimoko.datasource.js"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="observers.js" tooltip="QrefAircraft/assets/js/observers.js">
-<persistable path="/QrefAircraft/assets/js/observers.js"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="include.js" tooltip="QrefAircraft/assets/js/include.js">
-<persistable path="/QrefAircraft/assets/js/include.js"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="Default@2x.png" tooltip="QrefAircraft/res/drawable-hdpi/Default@2x.png">
-<persistable path="/QrefAircraft/res/drawable-hdpi/Default@2x.png"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.CommonXmlEditor" name="activity_main.xml" tooltip="QrefAircraft/res/layout/activity_main.xml">
-<persistable path="/QrefAircraft/res/layout/activity_main.xml"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="signin.js" tooltip="QrefAircraft/assets/js/signin.js">
-<persistable path="/QrefAircraft/assets/js/signin.js"/>
 </file>
 </mruList>
 </workbench>

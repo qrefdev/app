@@ -40,7 +40,7 @@ public class QrefInterface {
 	protected ArrayList<File> checklists;
 	protected int position;
 	
-	public static String HOST = "http://my.qref.com/"; 
+	public static String HOST = "https://my.qref.com/"; 
 	
 	public QrefInterface(MainActivity app, SharedPreferences prefs, Context context, WebView view, Handler threader) {
 		this.preferences = prefs;
@@ -55,6 +55,13 @@ public class QrefInterface {
 		return UUID.randomUUID().toString();
 	}
 	
+	
+	@JavascriptInterface
+	public boolean isConnected() {
+		AppStatus instance = AppStatus.getInstance(this.context);
+		
+		return instance.isOnline(this.context);
+	}
 	
 	@JavascriptInterface 
 	public void log(String data) {
