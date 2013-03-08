@@ -33,6 +33,8 @@
 		46B2667815C054B1002E9931 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46B2665D15C054B1002E9931 /* CoreData.framework */; };
 		46B2668015C054B1002E9931 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 46B2667E15C054B1002E9931 /* InfoPlist.strings */; };
 		46B2668315C054B1002E9931 /* QrefTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B2668215C054B1002E9931 /* QrefTests.m */; };
+		46CA88A616E9153E00A0E36D /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CA88A516E9153E00A0E36D /* Reachability.m */; };
+		46CA88A816E9157900A0E36D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46CA88A716E9157900A0E36D /* SystemConfiguration.framework */; };
 		46D0A5581607D1BA0007247D /* QRefWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D0A5571607D1BA0007247D /* QRefWebView.m */; };
 		46E188F716B6F3FF0014D937 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 46E188F616B6F3FF0014D937 /* Icon@2x.png */; };
 		46E188FA16B6F4020014D937 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 46E188F916B6F4020014D937 /* Icon.png */; };
@@ -83,6 +85,9 @@
 		46B2667F15C054B1002E9931 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		46B2668115C054B1002E9931 /* QrefTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QrefTests.h; sourceTree = "<group>"; };
 		46B2668215C054B1002E9931 /* QrefTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QrefTests.m; sourceTree = "<group>"; };
+		46CA88A416E9153E00A0E36D /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		46CA88A516E9153E00A0E36D /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		46CA88A716E9157900A0E36D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		46D0A5561607D1BA0007247D /* QRefWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRefWebView.h; sourceTree = "<group>"; };
 		46D0A5571607D1BA0007247D /* QRefWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRefWebView.m; sourceTree = "<group>"; };
 		46E188F616B6F3FF0014D937 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
@@ -94,6 +99,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46CA88A816E9157900A0E36D /* SystemConfiguration.framework in Frameworks */,
 				469F6F9D160A87EE00279439 /* Security.framework in Frameworks */,
 				469F6F8A160A506200279439 /* StoreKit.framework in Frameworks */,
 				46B2665815C054B1002E9931 /* UIKit.framework in Frameworks */,
@@ -120,6 +126,7 @@
 		46B2664815C054B0002E9931 = {
 			isa = PBXGroup;
 			children = (
+				46CA88A716E9157900A0E36D /* SystemConfiguration.framework */,
 				46E188F916B6F4020014D937 /* Icon.png */,
 				46E188F616B6F3FF0014D937 /* Icon@2x.png */,
 				4645BBC01688B7BC00DB971E /* Default@2x.png */,
@@ -158,6 +165,8 @@
 		46B2665F15C054B1002E9931 /* Qref */ = {
 			isa = PBXGroup;
 			children = (
+				46CA88A416E9153E00A0E36D /* Reachability.h */,
+				46CA88A516E9153E00A0E36D /* Reachability.m */,
 				46B266B415C05BD0002E9931 /* Resources */,
 				46B2666815C054B1002E9931 /* QRefAppDelegate.h */,
 				46B2666915C054B1002E9931 /* QRefAppDelegate.m */,
@@ -347,6 +356,7 @@
 				469F6F85160A212700279439 /* QrefInAppPurchaseManager.m in Sources */,
 				469F6F8D160A593F00279439 /* DESCrypt.m in Sources */,
 				4671DFB91610FDB40078873D /* QSStrings.m in Sources */,
+				46CA88A616E9153E00A0E36D /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

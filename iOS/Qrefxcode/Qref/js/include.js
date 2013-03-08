@@ -1,4 +1,4 @@
-var host = "http://my.qref.com/";
+var host = "https://my.qref.com/";
 
 //Default Theme Settings 
 var NightTimeModeTime = "00:00";
@@ -7,7 +7,7 @@ var AutoSwitch = false;
 var NightMode = false;
 var NightTheme = "theme-dark";
 var DayTheme = "theme-light";
-
+var reachability = true;
 //Initialize
 var checklists = undefined;
 var Navigation = undefined;

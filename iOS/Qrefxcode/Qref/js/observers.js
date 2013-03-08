@@ -800,18 +800,25 @@ var AppObserver = new zimoko.Observable({
 		
 		this.set('loading', true);
 		
-		this.getAllProducts(function(success, items) {
-			this.set('storeHasItems', success);
-		});
+        if(reachability) {
+            this.getAllProducts(function(success, items) {
+                this.set('storeHasItems', success);
+            });
+        }
 		
-		this.getChecklists(function(success, items) {
-			if(success) {
-				DashboardDataSource.data(items);
-				DashboardObserver.set('dataSource', DashboardDataSource);
-			}
+        if(reachability) {
+            this.getChecklists(function(success, items) {
+                if(success) {
+                    DashboardDataSource.data(items);
+                    DashboardObserver.set('dataSource', DashboardDataSource);
+                }
 			
-			self.set('loading', false);
-		});
+                self.set('loading', false);
+            });
+        }
+        else {
+            self.set('loading', false);
+        }
 		
 		var utcTimer = new Timer(1000, function() {
 			var now = new Date();
@@ -892,25 +899,32 @@ var DashboardObserver = new zimoko.Observable({
 		if(ele.attr('data-link') == 'downloads') {
 			AppObserver.set('loading', true);
 			
-			AppObserver.getAllProducts(function(success, items) {
-				AppObserver.set('storeHasItems', success);
+            if(reachability) {
+				AppObserver.getAllProducts(function(success, items) {
+					AppObserver.set('storeHasItems', success);
 				
-				if(success) {
-					AppObserver.set('loading', false);
-					Navigation.go('#' + ele.attr('data-link'));
-				}
-				else {
-					AppObserver.set('loading', false);
-					if(AppObserver.token) {
-						var dialog = new Dialog('#infobox', 'Cannot connect to the Qref Store, or there are no items currently available');
-						dialog.show();
+					if(success) {
+						AppObserver.set('loading', false);
+						Navigation.go('#' + ele.attr('data-link'));
 					}
 					else {
-						var dialog = new Dialog('#infobox', 'You must be signed in to access the store');
-						dialog.show();
+						AppObserver.set('loading', false);
+						if(AppObserver.token) {
+							var dialog = new Dialog('#infobox', 'Cannot connect to the Qref Store, or there are no items currently available');
+							dialog.show();
+						}
+						else {
+							var dialog = new Dialog('#infobox', 'You must be signed in to access the store');
+							dialog.show();
+						}
 					}
-				}
-			});
+				});
+            }
+            else {
+            	AppObserver.set('loading', false);
+            	var dialog = new Dialog('#infobox', 'No Internet Connection Available');
+				dialog.show();
+            }
 		}
 		else {
 			Navigation.go('#' + ele.attr('data-link'));

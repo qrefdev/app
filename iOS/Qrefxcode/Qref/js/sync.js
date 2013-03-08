@@ -6,7 +6,7 @@ function SyncProcessor() {
     
 	this.init = function() {
 		var self = this;
-		this.timer = new Timer(200000, function() {
+		this.timer = new Timer(300000, function() {
 			self.timerSync();
 		});
 		
@@ -18,71 +18,78 @@ function SyncProcessor() {
 		
 		if(checklists != undefined && AppObserver.token != '' && AppObserver.token != undefined)
 		{
-			self.getChecklistsFromServer(function(items) {
-				if(items)
-				{
-                    window.location.href = 'qref://clearCache';
-                    setTimeout(function() {
-						var view = DashboardObserver.dataSource.view().toArray();
-                    	var newItems = [];
-                    	
-						for(var i = 0; i < items.length; i++)
-						{
-							var currentItem = _.find(checklists, function(item) {
-								if(item._id == items[i]._id)
-									return true;
-							});
-						
-							if(currentItem)
-							{
-								if(items[i].version > currentItem.version)
-								{
-									//606 - Fix for screen refreshing on dashboard during sync
-									/*currentItem.manufacturer = items[i].manufacturer;
-									currentItem.model = items[i].model;
-									currentItem.tailNumber = items[i].tailNumber;
-									currentItem.version = items[i].version;
-									currentItem.preflight = items[i].preflight;
-									currentItem.takeoff = items[i].takeoff;
-									currentItem.landing = items[i].landing;
-									currentItem.emergencies = items[i].emergencies;
-									currentItem.isDeleted = items[i].isDeleted;
-									currentItem.index = items[i].index;*/
-									
-									var observable = _.find(view, function(item) {
-										if(item._id == currentItem._id)
-											return true;
-										else
-											return false;
-									});
-									
-									observable.batchSet(items[i]);
-								}
-								else
-								{
-									self.sendChecklistToServer(currentItem);
-								}
-							}
-							else
-							{
-								items[i].lastPosition = undefined;
-								checklists.push(items[i]);
-								DashboardObserver.dataSource.add(items[i]);
-								newItems.push(items[i]);
-							}
-						}
-						
-						setTimeout(function() {
-							if(newItems.length > 0) {
-								DashboardObserver.punch();
-								DashboardObserver.getImages(newItems);
-							}
-						}, 20);
-                               
-                        self.syncToPhone();
-                    }, 20);
-				}
-			});
+            if(reachability) {
+                self.getChecklistsFromServer(function(items) {
+                    if(items)
+                    {
+                        window.location.href = 'qref://clearCache';
+                        setTimeout(function() {
+                            var view = DashboardObserver.dataSource.view().toArray();
+                            var newItems = [];
+                            
+                            for(var i = 0; i < items.length; i++)
+                            {
+                                var currentItem = _.find(checklists, function(item) {
+                                    if(item._id == items[i]._id)
+                                        return true;
+                                });
+                            
+                                if(currentItem)
+                                {
+                                    if(items[i].version > currentItem.version)
+                                    {
+                                        //606 - Fix for screen refreshing on dashboard during sync
+                                        /*currentItem.manufacturer = items[i].manufacturer;
+                                        currentItem.model = items[i].model;
+                                        currentItem.tailNumber = items[i].tailNumber;
+                                        currentItem.version = items[i].version;
+                                        currentItem.preflight = items[i].preflight;
+                                        currentItem.takeoff = items[i].takeoff;
+                                        currentItem.landing = items[i].landing;
+                                        currentItem.emergencies = items[i].emergencies;
+                                        currentItem.isDeleted = items[i].isDeleted;
+                                        currentItem.index = items[i].index;*/
+                                        
+                                        var observable = _.find(view, function(item) {
+                                            if(item._id == currentItem._id)
+                                                return true;
+                                            else
+                                                return false;
+                                        });
+                                        
+                                        observable.batchSet(items[i]);
+                                    }
+                                    else
+                                    {
+                                        self.sendChecklistToServer(currentItem);
+                                    }
+                                }
+                                else
+                                {
+                                    items[i].lastPosition = undefined;
+                                    checklists.push(items[i]);
+                                    DashboardObserver.dataSource.add(items[i]);
+                                    newItems.push(items[i]);
+                                }
+                            }
+                            
+                            setTimeout(function() {
+                                if(newItems.length > 0) {
+                                    DashboardObserver.punch();
+                                    DashboardObserver.getImages(newItems);
+                                }
+                            }, 20);
+                                   
+                            self.syncToPhone();
+                        }, 20);
+                    }
+                });
+            }
+            else {
+                setTimeout(function() {
+                    self.syncToPhone();
+                }, 20);
+            }
 		}
 	};
 	
@@ -93,71 +100,78 @@ function SyncProcessor() {
 		
 		if(checklists != undefined && AppObserver.token != '' && AppObserver.token != undefined)
 		{
-			self.getChecklistsFromServer(function(items) {
-				if(items)
-				{
-                    window.location.href = 'qref://clearCache';
-                    setTimeout(function() {
-						var view = DashboardObserver.dataSource.view().toArray();
-                    	var newItems = [];
-                    	
-						for(var i = 0; i < items.length; i++)
-						{
-							var currentItem = _.find(checklists, function(item) {
-								if(item._id == items[i]._id)
-									return true;
-							});
-						
-							if(currentItem)
-							{
-								if(items[i].version > currentItem.version)
-								{
-									//606 - Fix for screen refreshing on dashboard during sync
-									/*currentItem.manufacturer = items[i].manufacturer;
-									currentItem.model = items[i].model;
-									currentItem.tailNumber = items[i].tailNumber;
-									currentItem.version = items[i].version;
-									currentItem.preflight = items[i].preflight;
-									currentItem.takeoff = items[i].takeoff;
-									currentItem.landing = items[i].landing;
-									currentItem.emergencies = items[i].emergencies;
-									currentItem.isDeleted = items[i].isDeleted;
-									currentItem.index = items[i].index;*/
-									
-									var observable = _.find(view, function(item) {
-										if(item._id == currentItem._id)
-											return true;
-										else
-											return false;
-									});
-									
-									observable.batchSet(items[i]);
-								}
-								else
-								{
-									self.sendChecklistToServer(currentItem);
-								}
-							}
-							else
-							{
-								items[i].lastPosition = undefined;
-								checklists.push(items[i]);
-								DashboardObserver.dataSource.add(items[i]);
-								newItems.push(items[i]);
-							}
-						}
-						
-						setTimeout(function() {
-							if(newItems.length > 0) {
-								DashboardObserver.punch();
-								DashboardObserver.getImages(newItems);
-							}
-						}, 20);
-                               
-                        self.syncToPhone();
-                    }, 20);
-				}
-			});
+            if(reachability) {
+                self.getChecklistsFromServer(function(items) {
+                    if(items)
+                    {
+                        window.location.href = 'qref://clearCache';
+                        setTimeout(function() {
+                            var view = DashboardObserver.dataSource.view().toArray();
+                            var newItems = [];
+                            
+                            for(var i = 0; i < items.length; i++)
+                            {
+                                var currentItem = _.find(checklists, function(item) {
+                                    if(item._id == items[i]._id)
+                                        return true;
+                                });
+                            
+                                if(currentItem)
+                                {
+                                    if(items[i].version > currentItem.version)
+                                    {
+                                        //606 - Fix for screen refreshing on dashboard during sync
+                                        /*currentItem.manufacturer = items[i].manufacturer;
+                                        currentItem.model = items[i].model;
+                                        currentItem.tailNumber = items[i].tailNumber;
+                                        currentItem.version = items[i].version;
+                                        currentItem.preflight = items[i].preflight;
+                                        currentItem.takeoff = items[i].takeoff;
+                                        currentItem.landing = items[i].landing;
+                                        currentItem.emergencies = items[i].emergencies;
+                                        currentItem.isDeleted = items[i].isDeleted;
+                                        currentItem.index = items[i].index;*/
+                                        
+                                        var observable = _.find(view, function(item) {
+                                            if(item._id == currentItem._id)
+                                                return true;
+                                            else
+                                                return false;
+                                        });
+                                        
+                                        observable.batchSet(items[i]);
+                                    }
+                                    else
+                                    {
+                                        self.sendChecklistToServer(currentItem);
+                                    }
+                                }
+                                else
+                                {
+                                    items[i].lastPosition = undefined;
+                                    checklists.push(items[i]);
+                                    DashboardObserver.dataSource.add(items[i]);
+                                    newItems.push(items[i]);
+                                }
+                            }
+                            
+                            setTimeout(function() {
+                                if(newItems.length > 0) {
+                                    DashboardObserver.punch();
+                                    DashboardObserver.getImages(newItems);
+                                }
+                            }, 20);
+                                   
+                            self.syncToPhone();
+                        }, 20);
+                    }
+                });
+            }
+            else {
+                setTimeout(function() {
+                    self.syncToPhone();
+                }, 20);
+            }
 		}
 	};
 	

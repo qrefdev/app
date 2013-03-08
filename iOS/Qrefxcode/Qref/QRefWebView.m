@@ -16,7 +16,7 @@
     if (self) {
         // Custom initialization
         
-        self->server = @"http://my.qref.com/";
+        self->server = @"https://my.qref.com/";
         
         CGRect bounds = [[UIScreen mainScreen] bounds];
         CGFloat screenScale = [[UIScreen mainScreen] scale];
@@ -50,8 +50,27 @@
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShown:) name:UIKeyboardDidShowNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHidden:) name:UIKeyboardDidHideNotification object:nil];
+        
+        self->reach = [Reachability reachabilityWithHostname:@"my.qref.com"];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(reachabilityChanged:)
+                                                     name:kReachabilityChangedNotification
+                                                   object:nil];
+        [self->reach startNotifier];
     }
    return self;
+}
+
+- (void) reachabilityChanged:(NSNotification *) notif {
+    Reachability * rch = [notif object];
+    
+    if([rch isReachable]) {
+        [self->webView stringByEvaluatingJavaScriptFromString:@"reachability = true;"];
+    }
+    else {
+        [self->webView stringByEvaluatingJavaScriptFromString:@"reachability = false;"];
+    }
 }
 
 - (void) keyboardShown: (NSNotification *) notif {
@@ -83,6 +102,8 @@
     self->purchaseManager = nil;
     self->startUpImage = nil;
     self->imageView = nil;
+    [self->reach stopNotifier];
+    self->reach = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -281,6 +302,7 @@
     {
         NSString * base64Receipt = [QSStrings  encodeBase64WithData:transaction.transactionReceipt];
         [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat: @"SendReceipt('%@');", base64Receipt]];
+        base64Receipt = nil;
     }
 }
 
@@ -307,7 +329,7 @@
             NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
             NSFileManager *manager = [NSFileManager defaultManager];
             NSString *cachedFilePath = [cachePath stringByAppendingString:[NSString stringWithFormat:@"/qref/%@", [fileType stringByAppendingString: file]]];
-            NSURL *url = [NSURL fileURLWithPath:cachedFilePath];
+            //NSURL *url = [NSURL fileURLWithPath:cachedFilePath];
         
             if([manager fileExistsAtPath:resourceFilePath])
             {
@@ -318,6 +340,7 @@
                 NSString *imageInfo = cachedFilePath;
                 imageInfo = [NSString stringWithFormat:@"%@;%@;%@",imageInfo,[array objectAtIndex:1],[array objectAtIndex:2]];
                 [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"PushImage('%@');", imageInfo]];
+                imageInfo = nil;
             }
             else
             {
@@ -329,7 +352,7 @@
                 if(imageData.length > 0)
                 {
                     @try {
-                        UIImage *image = [UIImage imageWithData:imageData];
+                        //UIImage *image = [UIImage imageWithData:imageData];
                         
                         if([manager fileExistsAtPath:[cachePath stringByAppendingString:@"/qref"]] == NO)
                         {
@@ -349,12 +372,15 @@
                             NSFileHandle* myFileHandle = [NSFileHandle fileHandleForWritingAtPath:cachedFilePath];
                             [myFileHandle writeData:imageData];
                             [myFileHandle closeFile];
+                            myFileHandle = nil;
                         }
                     
                         NSString *imageInfo = cachedFilePath;
                         imageInfo = [NSString stringWithFormat:@"%@;%@;%@",imageInfo,[array objectAtIndex:1],[array objectAtIndex:2]];
                     
                         [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"PushImage('%@');", imageInfo]];
+                        
+                        imageInfo = nil;
                     }
                     @catch (NSException *exception) {
                     
@@ -363,8 +389,25 @@
                     
                     }
                 }
+                
+                imageData = nil;
+                serverUrl = nil;
+                serv = nil;
             }
+            
+            cachedFilePath = nil;
+            manager = nil;
+            resourceFilePath = nil;
+            resourcePath = nil;
+            cachePath = nil;
+            file = nil;
+            fileSegments = nil;
+            fileType = nil;
+            
         }
+    
+    undefinedCheck = nil;
+    array = nil;
 }
 
 - (void) productRequest:(SKProduct *)product canPurchase:(BOOL)canPurchase {
@@ -385,7 +428,7 @@
     }
 }
 
-- (void) saveChecklists: (NSString *) checklists {
+/*- (void) saveChecklists: (NSString *) checklists {
     NSString *UID = [self->preferences stringForKey:@"UID"];
     NSString *user = [self->preferences stringForKey:@"User"];
     
@@ -408,6 +451,7 @@
         [self->preferences setValue:encryptedData forKey:@"Checklists"];
     }
 }
+*/
 
 - (void) saveChecklist:(NSString *) checklist {
     NSString *UID = [self->preferences stringForKey:@"UID"];
@@ -455,9 +499,25 @@
                 NSFileHandle* myFileHandle = [NSFileHandle fileHandleForWritingAtPath:cachedFilePath];
                 [myFileHandle writeData:encryptedData];
                 [myFileHandle closeFile];
+                myFileHandle = nil;
             }
+            
+            cachePath = nil;
+            manager = nil;
+            cachedFilePath = nil;
+            decoded = nil;
+            dataToEncrypt = nil;
+            encryptedData = nil;
+            combinedUserUID = nil;
         }
+        
+        file = nil;
+        content = nil;
     }
+    
+    items = nil;
+    user = nil;
+    UID = nil;
 }
 
 - (void) findCachedChecklists {
@@ -480,16 +540,26 @@
             NSData * contents = [manager contentsAtPath:[cachePath stringByAppendingString:[NSString stringWithFormat:@"/qref/%@", [cached objectAtIndex:i]]]];
             
             [self loadChecklist:contents];
-            [NSThread sleepForTimeInterval:0.02f];
+            contents = nil;
         }
     }
+    
+    cachePath = nil;
+    manager = nil;
+    cached = nil;
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self->webView stringByEvaluatingJavaScriptFromString:@"DataLoaded();"];
         CGRect bounds = [[UIScreen mainScreen] bounds];
+        
         [self setView:self->webView];
         [self->webView setFrame: CGRectMake(0, 18, bounds.size.width, bounds.size.height - 18)];
         [[UIApplication sharedApplication] setStatusBarHidden:NO];
+        
+        [self->imageView removeFromSuperview];
+        self->imageView = nil;
+        
+        self->startUpImage = nil;
     });
 }
 
@@ -513,6 +583,10 @@
             [manager removeItemAtPath:[cachePath stringByAppendingString:[NSString stringWithFormat:@"/qref/%@", [cached objectAtIndex:i]]] error:nil];
         }
     }
+    
+    cachePath = nil;
+    manager = nil;
+    cached = nil;
 }
 
 - (void) loadChecklist: (NSData *) data {
@@ -541,7 +615,7 @@
         }
     }
 }
-
+/*
 - (void) loadChecklist {
     NSUserDefaults * preference = [NSUserDefaults standardUserDefaults];
     NSString *user = [preference stringForKey:@"User"];
@@ -614,7 +688,7 @@
         [self->webView setFrame: CGRectMake(0, 18, bounds.size.width, bounds.size.height - 18)];
         [[UIApplication sharedApplication] setStatusBarHidden:NO];
     });
-}
+}*/
 
 - (void) onload {
     

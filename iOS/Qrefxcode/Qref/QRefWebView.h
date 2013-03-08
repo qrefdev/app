@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Reachability.h"
 #import "QrefInAppPurchaseManager.h"
 #import "DESCrypt.h"
 
@@ -19,6 +20,7 @@
     NSTimer *refreshTimer;
     UIImage *startUpImage;
     UIImageView *imageView;
+    Reachability * reach;
 }
 
 - (void) gotoURL: (NSURLRequest *) url;
