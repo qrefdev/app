@@ -68,9 +68,16 @@ if (cluster.isMaster) {
 	
 	var QRefDatabase = require('./lib/db/QRefDatabase');
 
+	/*
 	var secureOptions = {
                 key: fs.readFileSync('/storage/ssl/my.qref.com.key'),
-                cert: fs.readFileSync('/storage/ssl/my.qref.com.crt')
+                cert: fs.readFileSync('/storage/ssl/my.qref.com.crt'),
+				ca: fs.readFileSync('/storage/ssl/gd_bundle.crt')
+        };
+	*/
+	var secureOptions = {
+                pfx: fs.readFileSync('/storage/ssl/my.qref.com.pfx'),
+                passphrase: 'password'
         };
 	
 
