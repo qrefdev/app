@@ -196,7 +196,7 @@
                 }
                 else if([key isEqualToString:@"checklistsEnd"])
                 {
-                    [self saveChecklists:self->incomingData];
+                    //[self saveChecklists:self->incomingData];
                     somethingChanged = YES;
                 }
                 else if([key isEqualToString:@"daytheme"])

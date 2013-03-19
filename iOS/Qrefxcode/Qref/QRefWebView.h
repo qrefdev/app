@@ -25,13 +25,13 @@
 
 - (void) gotoURL: (NSURLRequest *) url;
 - (void) onload;
-- (void) saveChecklists: (NSString *) checklists;
+//- (void) saveChecklists: (NSString *) checklists;
 
 - (void) completeTransaction:(SKPaymentTransaction *)transaction;
 - (void) failedTransaction:(SKPaymentTransaction *)transaction;
 - (void) productRequest:(SKProduct *)product canPurchase:(BOOL)canPurchase;
 - (void) canceledTransaction;
-- (void) loadChecklist;
+//- (void) loadChecklist;
 - (void) hasImageInCache: (NSString *) imageJSON;
 - (void) refreshToken: (NSTimer *) timer;
 

@@ -15,7 +15,7 @@ var Navigation = undefined;
 //var SettingsEditor = new SettingsEditorHandler();
 var Sync = new SyncProcessor();
 
-$(window).load(function() {
+$(document).ready(function() {
 	Navigation = new zimoko.Navigation(true, '.page');
 	
 	//Attach Observers!!!

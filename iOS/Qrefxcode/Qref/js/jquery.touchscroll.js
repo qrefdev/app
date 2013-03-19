@@ -214,6 +214,10 @@
 				}
 				else {
 					$element.scrollTop(scrollHeight);
+					
+					if(bottomReachedHandler) {
+						bottomReachedHandler.call($element);
+					}
 				}
 			}
 			else if(deltaDirection.y > 0)
@@ -247,7 +251,11 @@
 					$element.animate({scrollTop: scrollTop - deltaY}, 100);
 				}
 				else {
-					$element.animate({scrollTop: scrollHeight}, 100);
+					$element.animate({scrollTop: scrollHeight}, 100, function() {
+						if(bottomReachedHandler) {
+							bottomReachedHandler.call($element);
+						}
+					});
 				}
 			}
 			else if(deltaDirection.y > 0)
@@ -281,6 +289,10 @@
 				else
 				{
 					$element.scrollLeft(scrollWidth);
+					
+					if(bottomReachedHandler) {
+						bottomReachedHandler.call($element);
+					}
 				}
 			}
 			else if(deltaDirection.x > 0)
@@ -312,21 +324,25 @@
 			{
 				if(scrollLeft - deltaX < scrollWidth)
 				{
-					$element.animate({scrollLeft: scrollLeft - deltaX}, 200);
+					$element.animate({scrollLeft: scrollLeft - deltaX}, 100);
 				}
 				else
 				{
-					$element.animate({scrollLeft: scrollWidth}, 200);
+					$element.animate({scrollLeft: scrollWidth}, 100, function() {
+						if(bottomReachedHandler) {
+							bottomReachedHandler.call($element);
+						}
+					});
 				}
 			}
 			else if(deltaDirection.x > 0)
 			{
 				if(scrollLeft - deltaX > 0) {
-					$element.animate({scrollLeft: scrollTop - deltaX}, 200);
+					$element.animate({scrollLeft: scrollTop - deltaX}, 100);
 				}
 				else
 				{
-					$element.animate({scrollLeft: 0}, 200);
+					$element.animate({scrollLeft: 0}, 100);
 				}
 			}
 	  }

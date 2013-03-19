@@ -382,7 +382,10 @@
 			
 			this.listeners.push({
 				onDataSourceRead: function(event) {
-					addObjects.call(datasource,event.data);
+					if(!datasource.preventRead) {
+						addObjects.call(datasource,event.data,event.append);
+					}
+					
 					datasource.reading = false;
 				},
 				onDataSourceUpdate: function(event) {
@@ -503,50 +506,55 @@
 			}, 10);
 		};
 		
-		var _apply = function() {
-			var filtered = filterSort.call(this);
+		var _apply = function(append) {
+			var filtered = _filter.call(this);
 	
 			var changes = [];
 			var removal = [];
 			
-			for(var i = 0; i < this._data.length; i++) {
-				var item = this._data.elementAt(i);
+			if(!append) {
+				for(var i = 0; i < this._data.length; i++) {
+					var item = this._data.elementAt(i);
 				
-				if(filtered.indexOf(item) == -1)
-					removal.push(item);
-			}
+					if(filtered.indexOf(item) == -1)
+						removal.push(item);
+				}
 			
-			for(var i = 0; i < filtered.length; i++) {
-				var item = filtered[i];
+				for(var i = 0; i < filtered.length; i++) {
+					var item = filtered[i];
 	
-				var oldIndex = this._data.indexOf(item);
+					var oldIndex = this._data.indexOf(item);
 				
-				if(oldIndex > -1 && oldIndex != i) {
-					changes.push({item: item, newIndex: i});
+					if(oldIndex > -1 && oldIndex != i) {
+						changes.push({item: item, newIndex: i});
+					}
+					else if(oldIndex == -1) {
+						changes.push({item: item, newIndex: i});
+					}
 				}
-				else if(oldIndex == -1) {
-					changes.push({item: item, newIndex: i});
+			
+				for(var i = 0; i < changes.length; i++) {
+					var change = changes[i];
+				
+					var index = this._data.indexOf(change.item);
+				
+					if(index > -1) {
+						this._data.removeAt(index);
+						this._data.insertAt(change.item, change.newIndex);
+					}
+					else {
+						this._data.insertAt(change.item, change.newIndex);
+					}
+				}
+			
+				for(var i = 0; i < removal.length; i++) {
+					var item = removal[i];
+				
+					this._data.removeAt(this._data.indexOf(item));
 				}
 			}
-			
-			for(var i = 0; i < changes.length; i++) {
-				var change = changes[i];
-				
-				var index = this._data.indexOf(change.item);
-				
-				if(index > -1) {
-					this._data.removeAt(index);
-					this._data.insertAt(change.item, change.newIndex);
-				}
-				else {
-					this._data.insertAt(change.item, change.newIndex);
-				}
-			}
-			
-			for(var i = 0; i < removal.length; i++) {
-				var item = removal[i];
-				
-				this._data.removeAt(this._data.indexOf(item));
+			else {
+				this._data.push(filtered);
 			}
 			
 			this._lastFilter = filtered;
@@ -563,7 +571,10 @@
 			if(this.listeners.length == 0) {
 				this.listeners.push({
 					onDataSourceRead: function(event) {
-						addObjects.call(datasource,event.data);
+						if(!datasource.preventRead) {
+							addObjects.call(datasource,event.data,event.append);
+						}
+						
 						datasource.reading = false;
 					},
 					onDataSourceUpdate: function(event) {
@@ -601,7 +612,10 @@
 			
 			this.listeners.push({
 				onDataSourceRead: function(event) {
-					addObjects.call(datasource,event.data);
+					if(!datasource.preventRead) {
+						addObjects.call(datasource,event.data,event.append);
+					}
+					
 					datasource.reading = false;
 				},
 				onDataSourceUpdate: function(event) {
@@ -639,6 +653,8 @@
 		this.data = function(objects) {
 			if(objects) {
 				this._sources = [];
+				this._data.clear();
+				this._page = 1;
 				this.preventRead = true;
 				addObjects.call(this,objects);
 				_apply.call(this);
@@ -648,7 +664,7 @@
 			}
 		};
 		
-		function addObjects(objects) {
+		function addObjects(objects,append) {
 			if(objects instanceof Array || objects instanceof zimoko.SortableCollection) {
 				var observableObjects = [];
 				
@@ -671,13 +687,16 @@
 				}
 				
 				this._sources = this._sources.concat(observableObjects);
-			
-				_apply.call(this);
+					
+				_sort.call(this);
+				_apply.call(this,append);
 				_dataSourceChange.call(this,{sender: self, items: observableObjects});
 			}
 			else if(objects instanceof zimoko.Observable) {
 				this._sources.push(objects);
-				_apply.call(this);
+				
+				_sort.call(this);
+				_apply.call(this,append);
 				_dataSourceChange.call(this,{sender: self, items: [item]});
 			}
 			else if(typeof(objects) == 'number' || typeof(objects) == 'string') {
@@ -687,16 +706,22 @@
 				item.set('value', objects);
 				item.set('_original', objects);
 				this._sources.push(item);
-				_apply.call(this);
+				
+				_sort.call(this);
+				_apply.call(this,append);
 				_dataSourceChange.call(this,{sender: self, items: [item]});
 			}
 			else if(typeof(objects) == 'object') {
 				var item = new zimoko.Observable(objects);
 				this._sources.push(item);
 				
-				_apply.call(this);
+				_sort.call(this);
+				_apply.call(this,append);
 				_dataSourceChange.call(this,{sender: self, items: [item]});
 			}
+			
+			if(this.preventRead)
+				this.total = this._sources.length;
 		}
 		
 		function updateObject(original, object) {
@@ -759,7 +784,15 @@
 				return false;
 		}
 		
-		function filterSort() {
+		function _sort() {
+			if(this._sorting && this._sorting instanceof zimoko.Sort && !this.serverSort) {
+				var sortedData = this._sorting.results(this._sources);
+				
+				this._sources = sortedData.toArray();
+			}
+		}
+		
+		function _filter() {
 			var filteredData = [];
 			
 			if(!this.serverPaging) {
@@ -789,14 +822,7 @@
 				filteredData = this._sources;
 			}
 			
-			if(this._sorting && this._sorting instanceof zimoko.Sort && !this.serverSort) {
-				var sortedData = this._sorting.results(filteredData);
-				
-				return sortedData.toArray();
-			}
-			else {
-				return filteredData;
-			}
+			return filteredData;
 		}
 		
 		this.totalPages = function() {
@@ -811,6 +837,7 @@
 					this.read();
 				}
 				else {
+					_sort.call(this);
 					_apply.call(this);
 				}
 			}
@@ -832,6 +859,19 @@
 			}
 			else {
 				return this._page;
+			}
+		};
+		
+		this.pageAndAppend = function(page) {
+			if(page != undefined && zimoko.isNumber(page)) {
+				this._page = parseInt(page);
+				
+				if(this.serverPaging) {
+					this.read(true);
+				}
+				else {
+					_apply.call(this,true);
+				}
 			}
 		};
 		
@@ -860,6 +900,7 @@
 		this.insertAt = function(object, index) {
 			var item = new zimoko.Observable(object);
 			this._sources.splice(index, 0, item);
+			_sort.call(this);
 			_apply.call(this);
 			_dataSourceChange.call(this,{sender: self, items: [item]});
 		};
@@ -886,6 +927,11 @@
 			}
 		};
 		
+		this.clear = function() {
+			this._sources = [];
+			this._data.clear();
+		};
+		
 		this.get = function(index) {
 			if(index < this._sources.length && index >= 0)
 				return this._sources[index];
@@ -893,7 +939,7 @@
 			return undefined;
 		};
 		
-		this.read = function() {
+		this.read = function(append) {
 			var datasource = this;
 		
 			var options = {
@@ -902,7 +948,8 @@
 				page: datasource._page,
 				sorting: JSON.stringify(datasource._sorting),
 				success: function(response) {
-					datasource.total = parseInt(datasource.transport.schema.total(response));
+					if(!datasource.preventRead)
+						datasource.total = parseInt(datasource.transport.schema.total(response));
 					
 					var data = datasource.transport.schema.data(datasource.transport.schema.parse(response));
 					
@@ -914,10 +961,10 @@
 					else {
 						if(!compare(datasource._sources, data) && !datasource.preventRead) {
 							datasource._sources = [];
-							_dataSourceRead.call(datasource,{sender: datasource, data: data});
+							_dataSourceRead.call(datasource,{sender: datasource, data: data, append: append});
 						}
 						else {
-							_dataSourceRead.call(datasource,{sender: datasource, data: []});
+							_dataSourceRead.call(datasource,{sender: datasource, data: [], append: append});
 						}
 					}
 				},

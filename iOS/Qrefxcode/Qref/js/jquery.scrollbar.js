@@ -9,7 +9,7 @@
 				var plugin = $this.data("jquery.scrollbar");
 				
 				if (!plugin) {
-					plugin = new ScrollBar(item);
+					plugin = new ScrollBar(item, options);
 					$this.data("jquery.scrollbar", plugin);
 				}
 			});
@@ -29,7 +29,7 @@
 		}
   };
  
- function ScrollBar(element) {
+ function ScrollBar(element,endReached) {
  	this.element = $(element);
  	this.child = $(this.element.children().get(0));
  	this.scrollTop = 0;
@@ -41,6 +41,7 @@
  	this.offsetTop = 0;
  	this.activity = false;
  	this.hideTimeout = false;
+ 	this.onBottomReached = endReached;
  	
  	this.addEventHandlers = function() {
  		var self = this;
@@ -88,6 +89,12 @@
  			self.calculateScrollBarHeight();
  			self.calculateScrollBarPosition();
  			self.hideScrollBar();
+ 			
+ 			if(self.element.scrollTop() >= self.extra) {
+ 				setTimeout(function() {
+ 					self.onBottomReached.call(self.element);
+ 				}, 1 / 60);
+ 			}
  		});
  	};
  	
