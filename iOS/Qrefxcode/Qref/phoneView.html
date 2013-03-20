@@ -109,7 +109,7 @@
 						<p><i class="icon icon-chevron-left"></i></p>
 					</div>
 					<div class="item-middle sections" style="text-align: center;" data-bind="tap: sectionsTap">
-						<p><span id="area" style="margin-right: 5px;" data-bind="html: sectionName"></span><i class="icon icon-caret-down"></i></p>
+						<div><span id="area" style="margin-right: 2px;" data-bind="html: sectionName"></span></div><i class="icon icon-caret-down"></i>
 					</div>
 					<div class="item edit-list" data-bind="tap: editTap, attr: {'class': (function() { if(editing) return 'item edit-list active'; else return 'item edit-list';})()}">
 						<p><i class="icon icon-pencil"></i></p>
@@ -250,7 +250,7 @@
 						<p><i class="icon icon-chevron-left"></i></p>
 					</div>
 					<div class="item-middle-large conversions" style="text-align: center;" data-bind="tap: conversionsTap">
-						<p><span id="selectedConversion" style="margin-right: 5px;" data-bind="html: conversionSelectedName"></span><i class="icon icon-caret-down"></i></p>
+						<div><span id="selectedConversion" style="margin-right: 5px;" data-bind="html: conversionSelectedName"></span></div><i class="icon icon-caret-down"></i>
 					</div>
 					<div class="item-large topmenu" data-bind="tap: menuTap">
 						<p><i class="icon icon-th-list"></i></p>

@@ -30,7 +30,7 @@
 	  var startTime = 0, endTime = 0;
 	
 	  var duration = 0;
-	  var threshold = 180;
+	  var threshold = 250;
 	  
 	  var moved = false;
 	  

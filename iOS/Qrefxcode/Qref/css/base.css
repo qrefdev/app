@@ -351,6 +351,24 @@ html, body {
 	text-overflow: ellipsis;
 }
 
+.topbar .item-middle-large div {
+    float: left;
+    margin: 8px 0px 8px 0px;
+	max-height: 24px;
+    white-space: nowrap;
+	width: 85%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+    position: relative;
+}
+
+.topbar .item-middle-large i {
+    float: left;
+    position: relative;
+    margin-top: 8px;
+    margin-right: 5px;
+}
+
 .topbar .item-middle p {
 	margin: 8px;
 	white-space: nowrap;
@@ -358,6 +376,24 @@ html, body {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	max-height: 24px;
+}
+
+.topbar .item-middle div {
+    float: left;
+	max-height: 24px;
+    margin: 8px 0px 8px 0px;
+    white-space: nowrap;
+	width: 85%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+    position: relative;
+}
+
+.topbar .item-middle i {
+    float: left;
+    position: relative;
+    margin-right: 5px;
+    margin-top: 8px;
 }
 
 .topbar .item-large {
@@ -642,7 +678,9 @@ html, body {
 	width: auto;
 	font-size: 14px;
 	position: relative;
-	margin-right: 10px;
+    margin: 0px;
+	padding: 10px 5px 10px 5px;
+    z-index: 999;
 }
 
 /** Checklist **/
