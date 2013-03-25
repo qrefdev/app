@@ -66,7 +66,7 @@ function Register() {
     }
     else {
         AppObserver.set('loading', false);
-        var dialog = new Dialog("#infobox", "No Internet Connection Available");
+        var dialog = new Dialog("#infobox", "No Wifi Connection Available");
         dialog.show();
     }
 }

@@ -120,14 +120,22 @@
 	  		direction = getDirection();
 			duration = getDuration();
 	
-            if(direction == UP && SwipeUpHandler)
+            if(direction == UP && SwipeUpHandler) {
                 event.preventDefault();
-            else if(direction == DOWN && SwipeDownHandler)
+            	event.stopPropagation();
+            }
+            else if(direction == DOWN && SwipeDownHandler) {
                 event.preventDefault();
-            else if(direction == LEFT && SwipeLeftHandler)
+            	event.stopPropagation();
+            }
+            else if(direction == LEFT && SwipeLeftHandler) {
                 event.preventDefault();
-            else if(direction == RIGHT && SwipeRightHandler)
+                event.stopPropagation();
+            }
+            else if(direction == RIGHT && SwipeRightHandler) {
                 event.preventDefault();
+            	event.stopPropagation();
+            }
 	  }
 	
 	  function touchEnd(event) {
@@ -164,19 +172,35 @@
 	  function triggerHandler(event) {
 			if(direction == LEFT)
 			{
-				if(SwipeLeftHandler) SwipeLeftHandler.call($element[0], event, duration);
+				if(SwipeLeftHandler) {
+					setTimeout(function() {
+						SwipeLeftHandler.call($element[0], event, duration);
+					}, 1 / 60);
+				}
 			}
 			else if(direction == RIGHT)
 			{
-				if(SwipeRightHandler) SwipeRightHandler.call($element[0], event, duration);
+				if(SwipeRightHandler) {
+					setTimeout(function() {
+						SwipeRightHandler.call($element[0], event, duration);
+					}, 1 / 60);
+				}
 			}
 			else if(direction == DOWN)
 			{
-				if(SwipeDownHandler) SwipeDownHandler.call($element[0], event, duration);
+				if(SwipeDownHandler) {
+					setTimeout(function() {
+						SwipeDownHandler.call($element[0], event, duration);
+					}, 1 / 60);
+				}
 			}
 			else if(direction == UP)
 			{
-				if(SwipeUpHandler) SwipeUpHandler.call($element[0], event, duration);
+				if(SwipeUpHandler) {
+					setTimeout(function() {
+						SwipeUpHandler.call($element[0], event, duration);
+					}, 1 / 60);
+				}
 			}
 	  }
 	  

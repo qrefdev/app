@@ -179,6 +179,24 @@
                         [self saveChecklist:value];
                     }
                 }
+                else if([key isEqualToString:@"hasChecklists"]) {
+                    NSThread  * thread = [[NSThread alloc] initWithTarget:self selector:@selector(signinFindCachedChecklists) object:nil];
+                    
+                    [thread start];
+                }
+                else if([key isEqualToString:@"setLogin"]) {
+                    if(value != nil) {
+                        [self setLogin: value];
+                    }
+                }
+                else if([key isEqualToString:@"localLogin"]) {
+                    if(value != nil) {
+                        [self localLogin: value];
+                    }
+                    else {
+                        [self->webView stringByEvaluatingJavaScriptFromString:@"InvalidSignin();"];
+                    }
+                }
                 else if([key isEqualToString:@"clearChecklistCache"]) {
                     [self clearChecklists];
                 }
@@ -244,7 +262,13 @@
                     if(value != nil)
                     {
                         [self->preferences setValue:value forKey:@"Token"];
-                        somethingChanged = YES;
+                        
+                        NSString * user = [self->preferences stringForKey:@"User"];
+                        
+                        if(user != nil)
+                        {
+                            [SSKeychain setPassword:value forService:@"com.qref.qrefChecklists" account:[user stringByAppendingString:@"-Token"]];
+                        }
                     }
                 }
                 else if([key isEqualToString:@"setUser"])
@@ -465,6 +489,17 @@
         
         if(UID != nil && user != nil && content != nil)
         {
+            NSMutableArray *ids = [NSMutableArray arrayWithArray:[self->preferences arrayForKey:[user stringByAppendingString:@"userChecklistIds"]]];
+            
+            if(ids == nil) {
+                ids = [NSMutableArray array];
+            }
+            
+            if(![ids containsObject:file]) {
+                [ids addObject:file];
+                [self->preferences setValue:ids forKey:[user stringByAppendingString:@"userChecklistIds"]];
+            }
+            
             NSString *combinedUserUID = [user stringByAppendingString:UID];
             NSData *encryptedData = nil;
             
@@ -520,33 +555,82 @@
     UID = nil;
 }
 
+- (void) signinFindCachedChecklists {
+    NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSFileManager *manager = [NSFileManager defaultManager];
+    NSMutableArray * cached = [NSMutableArray array];
+    
+    NSUserDefaults * pref = [NSUserDefaults standardUserDefaults];
+    NSString *user = [pref stringForKey:@"User"];
+    
+    if(user != nil) {
+        NSMutableArray *ids = [NSMutableArray arrayWithArray:[pref arrayForKey:[user stringByAppendingString:@"userChecklistIds"]]];
+        
+        if([manager fileExistsAtPath:[cachePath stringByAppendingString:@"/qref"]] == YES) {
+            NSArray * contents = [manager contentsOfDirectoryAtPath:[cachePath stringByAppendingString:@"/qref"] error:nil];
+            
+            for(int i = 0; i < contents.count; i++) {
+                NSString *filename = [contents objectAtIndex:i];
+                
+                BOOL contains = [ids containsObject:filename];
+                if([filename hasSuffix:@".qrf"] && contains) {
+                    [cached addObject:filename];
+                }
+            }
+            
+            for(int i = 0; i < cached.count; i++) {
+                NSData * contents = [manager contentsAtPath:[cachePath stringByAppendingString:[NSString stringWithFormat:@"/qref/%@", [cached objectAtIndex:i]]]];
+                
+                [self loadChecklist:contents];
+                contents = nil;
+            }
+        }
+        
+        cachePath = nil;
+        manager = nil;
+        cached = nil;
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self->webView stringByEvaluatingJavaScriptFromString:@"signinLoadChecklists();"];
+    });
+}
+
 - (void) findCachedChecklists {
     NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     NSFileManager *manager = [NSFileManager defaultManager];
     NSMutableArray * cached = [NSMutableArray array];
     
-    if([manager fileExistsAtPath:[cachePath stringByAppendingString:@"/qref"]] == YES) {
-        NSArray * contents = [manager contentsOfDirectoryAtPath:[cachePath stringByAppendingString:@"/qref"] error:nil];
+    NSUserDefaults * pref = [NSUserDefaults standardUserDefaults];
+    NSString *user = [pref stringForKey:@"User"];
+    
+    if(user != nil) {
+        NSMutableArray *ids = [NSMutableArray arrayWithArray:[pref arrayForKey:[user stringByAppendingString:@"userChecklistIds"]]];
         
-        for(int i = 0; i < contents.count; i++) {
-            NSString *filename = [contents objectAtIndex:i];
+        if([manager fileExistsAtPath:[cachePath stringByAppendingString:@"/qref"]] == YES) {
+            NSArray * contents = [manager contentsOfDirectoryAtPath:[cachePath stringByAppendingString:@"/qref"] error:nil];
             
-            if([filename hasSuffix:@".qrf"]) {
-                [cached addObject:filename];
+            for(int i = 0; i < contents.count; i++) {
+                NSString *filename = [contents objectAtIndex:i];
+                
+                BOOL contains = [ids containsObject:filename];
+                if([filename hasSuffix:@".qrf"] && contains) {
+                    [cached addObject:filename];
+                }
+            }
+            
+            for(int i = 0; i < cached.count; i++) {
+                NSData * contents = [manager contentsAtPath:[cachePath stringByAppendingString:[NSString stringWithFormat:@"/qref/%@", [cached objectAtIndex:i]]]];
+                
+                [self loadChecklist:contents];
+                contents = nil;
             }
         }
         
-        for(int i = 0; i < cached.count; i++) {
-            NSData * contents = [manager contentsAtPath:[cachePath stringByAppendingString:[NSString stringWithFormat:@"/qref/%@", [cached objectAtIndex:i]]]];
-            
-            [self loadChecklist:contents];
-            contents = nil;
-        }
+        cachePath = nil;
+        manager = nil;
+        cached = nil;
     }
-    
-    cachePath = nil;
-    manager = nil;
-    cached = nil;
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self->webView stringByEvaluatingJavaScriptFromString:@"DataLoaded();"];
@@ -756,6 +840,13 @@
         [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"AutoSwitch = '%@';", autoSwitch]];
     }
     
+    if([self->reach isReachable]) {
+        [self->webView stringByEvaluatingJavaScriptFromString:@"reachability = true;"];
+    }
+    else {
+        [self->webView stringByEvaluatingJavaScriptFromString:@"reachability = false;"];
+    }
+    
     [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"MenuObserver.set('version', '%@');", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]]];
     
     self->refreshTimer = [NSTimer scheduledTimerWithTimeInterval:600.0 target:self selector:@selector(refreshToken:) userInfo:nil  repeats:YES];
@@ -763,6 +854,53 @@
 
 - (void) refreshToken:(NSTimer *)timer {
     [self->webView stringByEvaluatingJavaScriptFromString:@"RefreshToken();"];
+}
+
+//Trys to do a local login
+- (void) localLogin: (NSString *) data {
+    NSArray * details = [data componentsSeparatedByString:@"(QREFUPS)"];
+    NSString * user = [details objectAtIndex:0];
+    NSString * pass = [details objectAtIndex:1];
+    
+    NSString * storedPass = [SSKeychain passwordForService:@"com.qref.qrefChecklists" account:user];
+    
+    if([pass isEqualToString:storedPass]) {
+        NSString * token = [SSKeychain passwordForService:@"com.qref.qrefChecklists" account:[user stringByAppendingString:@"-Token"]];
+        
+        [self->preferences setValue:token forKey:@"Token"];
+        [self->preferences setValue:user forKey:@"User"];
+        
+        
+        //Update the javascript
+        if(user != nil)
+        {
+            [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"UpdateLoginDisplay('%@');", user]];
+        }
+        
+        if(token != nil)
+        {
+            [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"AppObserver.set('token', '%@');", token]];
+        }
+        
+        //Try and get cached checklists
+        NSThread  * thread = [[NSThread alloc] initWithTarget:self selector:@selector(signinFindCachedChecklists) object:nil];
+        
+        [thread start];
+        
+        [self->preferences synchronize];
+    }
+    else {
+        [self->webView stringByEvaluatingJavaScriptFromString:@"InvalidSignin();"];
+    }
+}
+
+//Sets the login info to keychain
+- (void) setLogin: (NSString *) data {
+    NSArray * details = [data componentsSeparatedByString:@"(QREFUPS)"];
+    NSString * user = [details objectAtIndex:0];
+    NSString * pass = [details objectAtIndex:1];
+    
+    [SSKeychain setPassword:pass forService:@"com.qref.qrefChecklists" account:user];
 }
 
 @end

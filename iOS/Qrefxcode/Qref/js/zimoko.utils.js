@@ -143,7 +143,7 @@
          try {
             this.value = new Function(keys,'return ' + property.value + ';').apply(object, values);
          } catch (e) {
-            this.value = '';
+            this.value = undefined;
          }
  
 		this.get = function() {
@@ -162,8 +162,11 @@
 		};
 		
 		this.trigger = function(element, event, data) {
+			var self = this;
 			if(typeof(this.value) == 'function') {
-				this.value.call(this.owner, element, event, data);
+				setTimeout(function() {
+					self.value.call(self.owner, element, event, data);
+				}, 1 / 60);
 			}
 		};
 	};

@@ -10,6 +10,7 @@
 #import "Reachability.h"
 #import "QrefInAppPurchaseManager.h"
 #import "DESCrypt.h"
+#import "SSKeychain.h"
 
 @interface QRefWebView : UIViewController <UIWebViewDelegate, QrefAppPurchaseDelegate> {
     UIWebView *webView;

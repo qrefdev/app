@@ -3,103 +3,42 @@ function SyncProcessor() {
     this.timer = undefined;
     this.syncing = false;
     this.index = 0;
-    
-	this.init = function() {
-		var self = this;
-		this.timer = new Timer(300000, function() {
-			self.timerSync();
-		});
-		
-		this.timer.start();
-	};
+    this.lists = [];
 	
-	this.timerSync = function() {
-		var self = this;
-		
-		if(checklists != undefined && AppObserver.token != '' && AppObserver.token != undefined)
+    this.syncLocal = function() {
+        if(checklists && AppObserver.token != '' && AppObserver.token != undefined) {
+            this.syncToPhone(checklists);
+        }
+    };
+    
+    this.syncOneLocal = function(checklist) {
+    	if(checklist != undefined && AppObserver.token != '' && AppObserver.token != undefined)
 		{
+        	AppObserver.set('saving', true);
+        	this.syncToPhone([checklist]);
+        }
+    };
+    
+    this.syncOneServer = function(checklist) {
+        if(checklist != undefined && AppObserver.token != '' && AppObserver.token != undefined)
+		{	
             if(reachability) {
-                self.getChecklistsFromServer(function(items) {
-                    if(items)
-                    {
-                        window.location.href = 'qref://clearCache';
-                        setTimeout(function() {
-                            var view = DashboardObserver.dataSource.view().toArray();
-                            var newItems = [];
-                            
-                            for(var i = 0; i < items.length; i++)
-                            {
-                                var currentItem = _.find(checklists, function(item) {
-                                    if(item._id == items[i]._id)
-                                        return true;
-                                });
-                            
-                                if(currentItem)
-                                {
-                                    if(items[i].version > currentItem.version)
-                                    {
-                                        //606 - Fix for screen refreshing on dashboard during sync
-                                        /*currentItem.manufacturer = items[i].manufacturer;
-                                        currentItem.model = items[i].model;
-                                        currentItem.tailNumber = items[i].tailNumber;
-                                        currentItem.version = items[i].version;
-                                        currentItem.preflight = items[i].preflight;
-                                        currentItem.takeoff = items[i].takeoff;
-                                        currentItem.landing = items[i].landing;
-                                        currentItem.emergencies = items[i].emergencies;
-                                        currentItem.isDeleted = items[i].isDeleted;
-                                        currentItem.index = items[i].index;*/
-                                        
-                                        var observable = _.find(view, function(item) {
-                                            if(item._id == currentItem._id)
-                                                return true;
-                                            else
-                                                return false;
-                                        });
-                                        
-                                        observable.batchSet(items[i]);
-                                    }
-                                    else
-                                    {
-                                        self.sendChecklistToServer(currentItem);
-                                    }
-                                }
-                                else
-                                {
-                                    items[i].lastPosition = undefined;
-                                    checklists.push(items[i]);
-                                    DashboardObserver.dataSource.add(items[i]);
-                                    newItems.push(items[i]);
-                                }
-                            }
-                            
-                            setTimeout(function() {
-                                if(newItems.length > 0) {
-                                    DashboardObserver.punch();
-                                    DashboardObserver.getImages(newItems);
-                                }
-                            }, 20);
-                                   
-                            self.syncToPhone();
-                        }, 20);
-                    }
-                });
-            }
-            else {
-                setTimeout(function() {
-                    self.syncToPhone();
-                }, 20);
+         		AppObserver.set('syncing', true);
+         		
+         		this.sendChecklistToServer(checklist, function() {
+         			AppObserver.set('syncing', false);
+         		});   
             }
 		}
-	};
-	
+    };
+    
 	this.sync = function() {
 		var self = this;
 		
-		AppObserver.set('syncing', true);
-		
 		if(checklists != undefined && AppObserver.token != '' && AppObserver.token != undefined)
 		{
+			AppObserver.set('syncing', true);
+			
             if(reachability) {
                 self.getChecklistsFromServer(function(items) {
                     if(items)
@@ -162,24 +101,25 @@ function SyncProcessor() {
                                 }
                             }, 20);
                                    
-                            self.syncToPhone();
+                            self.syncToPhone(checklists);
                         }, 20);
                     }
                 });
             }
             else {
                 setTimeout(function() {
-                    self.syncToPhone();
+                    self.syncToPhone(checklists);
                 }, 20);
             }
 		}
 	};
 	
-	this.syncToPhone = function() {
+	this.syncToPhone = function(lists) {
 		var self = this;
-		if(checklists != undefined && !self.syncing)
+		if(lists != undefined && !self.syncing)
 		{
             self.syncing = true;
+            self.lists = lists;
             //var temp = JSON.stringify(checklists);
             //var stringifiedJson = window.btoa(escape(encodeURIComponent(temp)));
             //var stringifiedJson = window.btoa(checklists);
@@ -196,7 +136,7 @@ function SyncProcessor() {
     // 606 - New method of syncing for lower memory usage!
     this.nextChecklist = function() {
         var self = this;
-        if(this.index <  checklists.length) {
+        if(this.index <  self.lists.length) {
             var stringifiedJson = JSON.stringify(checklists[this.index]);
             var filename = checklists[this.index]._id + '.qrf';
             var encoded = btoa(escape(encodeURIComponent(stringifiedJson)));
@@ -212,7 +152,20 @@ function SyncProcessor() {
         }
         else {
             self.syncing = false;
-            AppObserver.set('syncing', false);
+            
+            if(AppObserver.syncing)
+                AppObserver.set('syncing', false);
+            
+            if(AppObserver.saving) {
+                AppObserver.set('saving', false);
+                var saveDialog = new ConfirmationDialog('#savebox', function(doSync) {
+                    if(doSync && self.lists.length > 0) {
+                        Sync.syncOneServer(self.lists[0]);
+                    }
+                });
+                
+                saveDialog.show();
+            }
         }
     };
     
@@ -289,7 +242,7 @@ function SyncProcessor() {
         AppObserver.set('syncing', false);
     };*/
     
-	this.sendChecklistToServer = function(item) {
+	this.sendChecklistToServer = function(item, callback) {
 		var request = {
 			manufacturer: item.manufacturer._id,
 			model: item.model._id,
@@ -317,7 +270,9 @@ function SyncProcessor() {
 			url: urltoPost,
             cache: false,
 			success: function(data) {
-               return data;
+               if(callback) {
+                	callback();
+               }
 			},
             error: function(error) {
                console.log(error);

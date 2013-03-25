@@ -38,6 +38,7 @@
 		46D0A5581607D1BA0007247D /* QRefWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D0A5571607D1BA0007247D /* QRefWebView.m */; };
 		46E188F716B6F3FF0014D937 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 46E188F616B6F3FF0014D937 /* Icon@2x.png */; };
 		46E188FA16B6F4020014D937 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 46E188F916B6F4020014D937 /* Icon.png */; };
+		46E1D6921700DD08003D42C4 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E1D6911700DD08003D42C4 /* SSKeychain.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +93,9 @@
 		46D0A5571607D1BA0007247D /* QRefWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRefWebView.m; sourceTree = "<group>"; };
 		46E188F616B6F3FF0014D937 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		46E188F916B6F4020014D937 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		46E1D6901700DD08003D42C4 /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
+		46E1D6911700DD08003D42C4 /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
+		46E1D6931700E46A003D42C4 /* Qref.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Qref.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +169,9 @@
 		46B2665F15C054B1002E9931 /* Qref */ = {
 			isa = PBXGroup;
 			children = (
+				46E1D6931700E46A003D42C4 /* Qref.entitlements */,
+				46E1D6901700DD08003D42C4 /* SSKeychain.h */,
+				46E1D6911700DD08003D42C4 /* SSKeychain.m */,
 				46CA88A416E9153E00A0E36D /* Reachability.h */,
 				46CA88A516E9153E00A0E36D /* Reachability.m */,
 				46B266B415C05BD0002E9931 /* Resources */,
@@ -357,6 +364,7 @@
 				469F6F8D160A593F00279439 /* DESCrypt.m in Sources */,
 				4671DFB91610FDB40078873D /* QSStrings.m in Sources */,
 				46CA88A616E9153E00A0E36D /* Reachability.m in Sources */,
+				46E1D6921700DD08003D42C4 /* SSKeychain.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -448,6 +456,7 @@
 		46B2668715C054B1002E9931 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Qref/Qref.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Aaron Klick (97YQ95B3S8)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Qref/Qref-Prefix.pch";
@@ -472,6 +481,7 @@
 		46B2668815C054B1002E9931 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Qref/Qref.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Aaron Klick (97YQ95B3S8)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Qref/Qref-Prefix.pch";

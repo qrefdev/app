@@ -147,8 +147,11 @@
 			
 			calculateDirection();
 			
-			if(beforeScrollHandler)
-				beforeScrollHandler.call($element, event);
+			if(beforeScrollHandler) {
+				setTimeout(function() {
+					beforeScrollHandler.call($element, event);
+				}, 1 / 60);
+			}
 			
 			if(touched && duration > threshold && !disableScroll) {
 				scroll();	
@@ -190,8 +193,11 @@
 	  				scrollHorizontalAuto();
 	  			}
 	  				
-	  			if(afterScrollHandler)
-	  				afterScrollHandler.call($element);
+	  			if(afterScrollHandler) {
+	  				setTimeout(function() {
+	  					afterScrollHandler.call($element);
+	  				}, 1 / 60);
+	  			}
 	  		}
 	  }
 	  
@@ -199,7 +205,7 @@
 			var duration = getDuration();
 			
 			var velocity = deltaDirection.y / (duration / 1000);
-			var momentum = 0.0025 * velocity;
+			var momentum = 0.05 * velocity;
 			
 			var deltaY = (endPosition.y - previousPosition.y) + momentum;
 			
@@ -216,7 +222,9 @@
 					$element.scrollTop(scrollHeight);
 					
 					if(bottomReachedHandler) {
-						bottomReachedHandler.call($element);
+						setTimeout(function() {
+							bottomReachedHandler.call($element);
+						}, 1 / 60);
 					}
 				}
 			}
@@ -237,7 +245,7 @@
 			var duration = getDuration();
 			
 			var velocity = deltaDirection.y / (duration / 1000);
-			var momentum = 0.1 * velocity;
+			var momentum = 0.5 * velocity;
 			
 			var deltaY = (endPosition.y - previousPosition.y) + momentum;;
 			
@@ -253,7 +261,9 @@
 				else {
 					$element.animate({scrollTop: scrollHeight}, 100, function() {
 						if(bottomReachedHandler) {
-							bottomReachedHandler.call($element);
+							setTimeout(function() {
+								bottomReachedHandler.call($element);
+							}, 1 / 60);
 						}
 					});
 				}
@@ -273,7 +283,7 @@
 			var duration = getDuration();
 			
 			var velocity = deltaDirection.x / (duration / 1000);
-			var momentum = 0.0025 * velocity;
+			var momentum = 0.05 * velocity;
 			
 			var deltaX = (endPosition.x - previousPosition.x) + momentum;
 			
@@ -291,7 +301,9 @@
 					$element.scrollLeft(scrollWidth);
 					
 					if(bottomReachedHandler) {
-						bottomReachedHandler.call($element);
+						setTimeout(function() {
+							bottomReachedHandler.call($element);
+						}, 1 / 60);
 					}
 				}
 			}
@@ -330,7 +342,9 @@
 				{
 					$element.animate({scrollLeft: scrollWidth}, 100, function() {
 						if(bottomReachedHandler) {
-							bottomReachedHandler.call($element);
+							setTimeout(function() {
+								bottomReachedHandler.call($element);
+							}, 1 / 60);
 						}
 					});
 				}

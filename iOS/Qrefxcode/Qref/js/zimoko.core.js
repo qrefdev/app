@@ -53,6 +53,19 @@ var zimoko = new (function() {})();
 		return Class;
 	};
 	
+	zimoko.AsyncMethod = function(object, method, args) {
+		this.object = object;
+		this.method = method;
+		this.args = args;
+		
+		this.exec = function() {
+			var self = this;
+			setTimeout(function() {
+				self.method.apply(self.object, self.args);
+			}, 1 / 60);
+		};
+	};
+	
 	zimoko.ui = function() { };
 	
 	/** Parse an elements style string into a object **/
@@ -117,6 +130,7 @@ var zimoko = new (function() {})();
 		};
 		
 		this.end = function(ele, e) {	
+			var self = this;
 			this.element.unbind('animationend', this.listener);
 			this.element.unbind('webkitAnimationEnd', this.listener);
 			this.element.unbind('MSAnimationEnd', this.listener);

@@ -67,7 +67,7 @@
 		}
 	}
 	  
-	  function touchEnd(event) {
+	function touchEnd(event) {
 			
 			if(waitingSecondTap)
 			{
@@ -92,8 +92,9 @@
 	  }
 	  
 	  function triggerHandler(event) {
-		if(TapHandler)
-			TapHandler.call($element[0], event);
+			if(TapHandler) {
+                TapHandler.call($element[0], event);
+			}
 	  }
 	  
 	  function getDuration() {

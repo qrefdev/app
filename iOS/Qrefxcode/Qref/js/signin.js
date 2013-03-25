@@ -19,20 +19,16 @@ function Signin() {
                     AppObserver.set('token', response.returnValue);
                     AppObserver.set('email', $("#email").val());
 
-                    window.location.href = "qref://setToken=" + response.returnValue + "&setUser=" + $("#email").val();
-                    
+               window.location.href = "qref://setUser=" + $("#email").val() + "&setToken=" + response.returnValue;
+               
                     AppObserver.set('loading', true);
                     setTimeout(function() {
-                        AppObserver.getChecklists(function(success, items) {
-                            if(success) {
-                                DashboardDataSource.data(items);
-                                DashboardObserver.set('dataSource', DashboardDataSource);
-                            }
-                            
-                            AppObserver.set('loading', false);
-                        });
-                    }, 200);
-                    Navigation.go("dashboard");
+                        window.location.href = "qref://hasChecklists";
+                               
+                       setTimeout(function() {
+                            window.location.href = "qref://setLogin=" + $("#email").val() + "(QREFUPS)" + Whirlpool($("#password").val());
+                       }, 1000);
+                    }, 1000);
                 }
                 else
                 {
@@ -49,10 +45,29 @@ function Signin() {
         });
     }
     else {
-        AppObserver.set('loading', false);
-        var dialog = new Dialog("#infobox", "No Internet Connection Available");
-        dialog.show();
+        window.location.href = "qref://localLogin=" + $("#email").val() + "(QREFUPS)" + Whirlpool($("#password").val());
     }
+}
+
+function InvalidSignin() {
+    AppObserver.set('loading', false);
+    var dialog = new Dialog("#infobox", "Invalid email or password");
+    dialog.show();
+}
+
+function signinLoadChecklists() {
+    $("#email").val("");
+    $("#password").val("");
+    
+    AppObserver.getChecklists(function(success, items) {
+        if(success) {
+            DashboardDataSource.data(items);
+            DashboardObserver.set('dataSource', DashboardDataSource);
+        }
+
+        AppObserver.set('loading', false);
+    });
+    Navigation.go("dashboard");
 }
 
 function changePassword() {
@@ -154,7 +169,7 @@ function passwordRecovery() {
     }
     else {
         AppObserver.set('loading', false);
-        var dialog = new Dialog("#infobox", "No Internet Connection Available");
+        var dialog = new Dialog("#infobox", "No Wifi Connection Available");
         dialog.show();
     }
 }

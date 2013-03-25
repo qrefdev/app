@@ -404,15 +404,16 @@
 		var _propertyChanged = function(property) {
 			var observer = this;
 			
-			setTimeout(function() {
-				for(var i = 0; i < observer.listeners.length; i++)
-				{
+			setTimeout(function() {	
+				for(var i = 0; i < observer.listeners.length; i++) {
 					var listener = observer.listeners[i];
-					
-					if(listener.onPropertyChanged != undefined && typeof(listener.onPropertyChanged) == 'function')
-						listener.onPropertyChanged.call(listener, self, property);
+			
+					if(listener.onPropertyChanged != undefined && typeof(listener.onPropertyChanged) == 'function') {
+						var asyncMethod = new zimoko.AsyncMethod(listener, listener.onPropertyChanged, [observer, property]);
+						asyncMethod.exec();
+					}
 				}
-			}, 10);
+			}, 1 / 60);
 		};
 		
 		//Unbinds the observable from the current html element
@@ -726,13 +727,12 @@
 			var observer = this;
 			
 			setTimeout(function() {
-				for(var i = 0; i < observer.listeners.length; i++)
-				{
+				for(var i = 0; i < observer.listeners.length; i++) {
 					var listener = observer.listeners[i];
 				
-					if(listener.onItemsAdded != undefined && typeof(listener.onItemsAdded) == 'function')
-					{
-						listener.onItemsAdded.call(listener, self, items);
+					if(listener.onItemsAdded != undefined && typeof(listener.onItemsAdded) == 'function') {
+						var asyncMethod = new zimoko.AsyncMethod(listener, listener.onItemsAdded, [observer, items]);
+						asyncMethod.exec();
 					}
 				}
 			}, 1 / 60);
@@ -742,12 +742,12 @@
 			var observer = this;
 			
 			setTimeout(function() {
-				for(var i = 0; i < observer.listeners.length; i++)
-				{
+				for(var i = 0; i < observer.listeners.length; i++) {
 					var listener = observer.listeners[i];
 				
 					if(listener.onItemsRemoved != undefined && typeof(listener.onItemsRemoved) == 'function') {
-						listener.onItemsRemoved.call(listener, self, items);	
+						var asyncMethod = new zimoko.AsyncMethod(listener, listener.onItemsRemoved, [observer, items]);
+						asyncMethod.exec();
 					}
 				}
 			}, 1 / 60);
@@ -791,19 +791,21 @@
 		}
 		
 		this.onPropertyChanged = function(sender, property) {
+			var self = this;
 			for(var i = 0; i < this.properties.length; i++)
 			{
 				var aProperty = this.properties[i];
 				
 				if(aProperty.value.indexOf(property) > -1)
 				{
-					this.render(aProperty, false);
+					self.render(aProperty, false);
 				}
 			}
 		};
 		
 		this.render = function(property, init) {
 			var prop = property;
+			var self = this;
 		
 			if(!(property instanceof zimoko.Property)) {
 				prop = getProperty(property);
@@ -813,44 +815,54 @@
 			
 			if(handler) {
 				if(init) {
-					handler.init.call(this, this.element, new zimoko.ValueAccessor(this.observable, prop));
+					setTimeout(function() {
+						handler.init.call(self, self.element, new zimoko.ValueAccessor(self.observable, prop));
+					}, 1 / 60);
 				}
 				else {
-					handler.update.call(this, this.element, new zimoko.ValueAccessor(this.observable, prop));
+					setTimeout(function() {
+						handler.update.call(self, self.element, new zimoko.ValueAccessor(self.observable, prop));
+					}, 1 / 60);
 				}
 			}
 		};
 		
 		this.detach = function() {
+			var self = this;
 			for(var i = 0; i < this.properties.length; i++) {
 				var property = this.properties[i];
 				
 				var handler = this.handlers[property.key];
 			
 				if(handler) {
-					handler.remove.call(this, this.element, new zimoko.ValueAccessor(this.observable, property));
+					setTimeout(function() {
+						handler.remove.call(self, self.element, new zimoko.ValueAccessor(self.observable, property));
+					}, 1 / 60);
 				}
 			}
 			
 			this.observable.unsubscribe(this);
 			
-			if(this.observable.parent) 
+			if(this.observable.parent) {
 				this.observable.parent.unsubscribe(this);
+			}
 				
-			if(this.observable.root)
+			if(this.observable.root) {
 				this.observable.root.unsubscribe(this);
+			}
 		};
 		
-		this.attach = function() {			
-			this.parse();
-			
-			this.observable.subscribe(this);
-			
-			for(var i = 0; i < this.properties.length; i++)
+		this.attach = function() {
+			var self = this;			
+			self.parse();
+		
+			self.observable.subscribe(this);
+		
+			for(var i = 0; i < self.properties.length; i++)
 			{
-				var aProperty = this.properties[i];
-				
-				this.render(aProperty, true);
+				var aProperty = self.properties[i];
+			
+				self.render(aProperty, true);
 			}
 		};
 		

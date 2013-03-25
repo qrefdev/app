@@ -594,11 +594,49 @@
 				<div class="ball"></div>
 				<div class="ball1"></div>
 			</figure>
+            <div style="width: 100%; color: #ffffff; text-align: center; font-size: 24px; position: absolute; bottom: 25%; left: 0px;">
+                <p>
+                    Loading
+                </p>
+            </div>
 		</div>
         <div class="theme-dark model" data-bind="fadeVisible: syncing">
 			<figure class="loader">
 				<div class="ball"></div>
 				<div class="ball1"></div>
+			</figure>
+            <div style="width: 100%; color: #ffffff; text-align: center; font-size: 24px; position: absolute; bottom: 25%; left: 0px;">
+                <p>
+                    Syncing
+                </p>
+            </div>
+		</div>
+        
+        <div class="theme-dark model" data-bind="fadeVisible: saving">
+			<figure class="loader">
+				<div class="ball"></div>
+				<div class="ball1"></div>
+			</figure>
+            <div style="width: 100%; color: #ffffff; text-align: center; font-size: 24px; position: absolute; bottom: 25%; left: 0px;">
+                <p>
+                    Saving Changes
+                </p>
+            </div>
+		</div>
+        
+        <div class="theme-dark model" id="savebox">
+			<figure class="info" >
+				<figcaption class="data">Saved Changes</figcaption>
+				<button class="okay no" style="width: 90%; margin: 20px auto; -webkit-border-radius: 0px; border-radius: 0px;"><div class="special"><p>OK</p><i class="icon icon-ok"></i></div></button>
+                <button class="okay yes" style="width: 90%; margin: 20px auto; -webkit-border-radius: 0px; border-radius: 0px;"><div class="special"><p>Sync to Web</p><i class="icon icon-ok"></i></div></button>
+			</figure>
+		</div>
+        
+        <div class="theme-dark model" id="signoutbox">
+			<figure class="info" >
+				<figcaption class="data">Sign out?</figcaption>
+				<button class="okay yes" style="width: 90%; margin: 20px auto; -webkit-border-radius: 0px; border-radius: 0px;"><div class="special"><p>Sign out</p><i class="icon icon-ok"></i></div></button>
+                <button class="okay no" style="width: 90%; margin: 20px auto; -webkit-border-radius: 0px; border-radius: 0px;"><div class="special"><p>Cancel</p><i class="icon icon-ok"></i></div></button>
 			</figure>
 		</div>
 		

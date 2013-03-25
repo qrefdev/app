@@ -82,6 +82,7 @@
 	  
 	  function touchEnd(event) {
 			if(!moved) {
+                event.stopPropagation();
 				endTime = Date.now();
 			
 				duration = getDuration();
@@ -111,9 +112,9 @@
 				$element.addClass('active');
 				setTimeout(function() {
 					$element.removeClass('active');
-				}, 100);
+				}, 50);
 			}
-			TapHandler.call($element[0], event);
+            TapHandler.call($element[0], event);
 		}
 	  }
 	  

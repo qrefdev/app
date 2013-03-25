@@ -344,6 +344,7 @@ html, body {
 
 .topbar .item-middle-large p {
 	margin: 8px;
+    margin-top: 12px;
 	max-height: 24px;
     white-space: nowrap;
 	width: 95%;
@@ -365,12 +366,13 @@ html, body {
 .topbar .item-middle-large i {
     float: left;
     position: relative;
-    margin-top: 8px;
+    margin-top: 3px;
     margin-right: 5px;
 }
 
 .topbar .item-middle p {
 	margin: 8px;
+    margin-top: 12px;
 	white-space: nowrap;
 	width: 95%;
 	overflow: hidden;
@@ -393,7 +395,7 @@ html, body {
     float: left;
     position: relative;
     margin-right: 5px;
-    margin-top: 8px;
+    margin-top: 3px;
 }
 
 .topbar .item-large {
@@ -762,6 +764,7 @@ html, body {
 	position: relative;
 	width: 100%;
 	display: none;
+    padding-bottom: 20px;
 }
 
 .checklist .nextSection .icon {
@@ -815,7 +818,7 @@ html, body {
 	bottom: 0px;
 	right: 0px;
 	left: 0px;
-	height:36px;
+	height:30px;
 	z-index: 999;
 	margin: 0px;
 	padding: 0px;
