@@ -53,18 +53,59 @@ var zimoko = new (function() {})();
 		return Class;
 	};
 	
-	zimoko.AsyncMethod = function(object, method, args) {
+	zimoko.Async = function() { };
+	
+	zimoko.Async.method = function(object, method, args) {
 		this.object = object;
 		this.method = method;
 		this.args = args;
 		
 		this.exec = function() {
 			var self = this;
-			setTimeout(function() {
-				self.method.apply(self.object, self.args);
-			}, 1 / 60);
+			
+			if(this.object) {
+				setTimeout(function() {
+					self.method.apply(self.object, self.args);
+				}, 1 / 60);
+			} else {
+				self.method.apply(self, self.args);
+			}
 		};
 	};
+	
+	zimoko.Async.dispatch = function(object, method, args) {
+		var async = new zimoko.Async.method(object, method, args);
+		async.exec();
+	};
+	
+	zimoko.Async.each = function(items, callback) {
+		
+		var asyncEach = function(listItems, cb) {
+			this.list = listItems;
+			this.index = 0;
+			this.cb = cb;
+			
+			this.next = function() {
+				if(this.index < this.list.length) {
+					var item = this.list[this.index];
+					
+					if(typeof(this.cb) == 'function')
+						this.cb.call(item, this.index, item);
+						
+					
+					this.index++;
+					
+					zimoko.Async.dispatch(this, this.next, []);		
+				}
+			};
+			
+			zimoko.Async.dispatch(this, this.next, []);
+		};
+		
+		var process = new asyncEach(items, callback);
+	};
+	
+	zimoko.Async
 	
 	zimoko.ui = function() { };
 	

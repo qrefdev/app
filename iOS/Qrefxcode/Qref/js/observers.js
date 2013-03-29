@@ -67,10 +67,7 @@ var EditTailObserver = new zimoko.Observable({
 	backTap: function(element, e, data) {
 		e.stopPropagation();
 		e.preventDefault();
-		
-		setTimeout(function() {
-			Navigation.back();
-		}, 100);
+		Navigation.back();
 	}
 });
 
@@ -496,12 +493,13 @@ var AppObserver = new zimoko.Observable({
 		}
 		else if(property == 'allProducts') {
 			StoreObserver.dataSource.preventRead = true;
-			StoreObserver.dataSource.data(this.allProducts);
 			StoreObserver.dataSource.sort(new zimoko.Sort(['manufacturer.name', 'model.name'], 'asc'));
 			StoreObserver.dataSource.filter(new zimoko.FilterSet('and', [
 				new zimoko.Filter('==', 'isPublished', true),
 				new zimoko.Filter('==', 'isDeleted', false)
 			]));
+			StoreObserver.dataSource.data(this.allProducts);
+			StoreObserver.dataSource.refresh();
 			StoreObserver.dataSource.read();
 		}
 		else if(property == 'navHash') {
@@ -766,7 +764,7 @@ var AppObserver = new zimoko.Observable({
 				{
 					$(this).touchScroll("enableScroll");
 				}
-			},
+			}
 		});
 		
 		$(".scrollable").scrollbar(function() {
@@ -803,7 +801,7 @@ var AppObserver = new zimoko.Observable({
 			stop: function(event, ui) {
 				AppObserver.isSorting = false;
 				var indices = new Array();
-				$("#checklist-items").children().each(function(index, item) {
+				zimoko.Async.each($("#checklist-items").children(), function(index, item) {
 					var id = $(this).attr("data-id");
 					
 					for(var i = 0; i < ChecklistObserver.items.length; i++) {
@@ -816,6 +814,20 @@ var AppObserver = new zimoko.Observable({
 						}
 					}
 				});
+				/*
+				$("#checklist-items").children().each(function(index, item) {
+					var id = $(this).attr("data-id");
+					
+					for(var i = 0; i < ChecklistObserver.items.length; i++) {
+						var item = ChecklistObserver.items.elementAt(i);
+						
+						if(item._id == id) {
+							ChecklistObserver.set('modified', true);
+							item.set('index', index);
+							break;
+						}
+					}
+				});*/
 			},
 			start: function(event, ui) {
 				AppObserver.isSorting = true;
@@ -830,7 +842,7 @@ var AppObserver = new zimoko.Observable({
 			stop: function(event, ui) {
 				AppObserver.isSorting = false;
 				var indices = new Array();
-				$("#dashboard-planes").children().each(function(index, item) {
+				zimoko.Async.each($("#dashboard-planes").children(), function(index, item) {
 					var id = $(this).attr("data-id");
 					
 					for(var i = 0; i < DashboardObserver.items.length; i++) {
@@ -842,6 +854,10 @@ var AppObserver = new zimoko.Observable({
 						}
 					}
 				});
+				
+				/*$("#dashboard-planes").children().each(function(index, item) {
+					
+				});*/
 			},
 			start: function(event, ui) {
 				AppObserver.isSorting = true;
@@ -851,11 +867,11 @@ var AppObserver = new zimoko.Observable({
 		
 		this.set('loading', true);
 		
-        if(reachability) {
+        /*if(reachability) {
             this.getAllProducts(function(success, items) {
                 this.set('storeHasItems', success);
             });
-        }
+        }*/
 		
         if(reachability) {
             this.getChecklists(function(success, items) {
@@ -992,7 +1008,7 @@ var DashboardObserver = new zimoko.Observable({
             }
             else {
             	AppObserver.set('loading', false);
-            	var dialog = new Dialog('#infobox', 'No Wifi Connection Available');
+            	var dialog = new Dialog('#infobox', 'No  Connection Available');
 				dialog.show();
             }
 		}
@@ -1038,25 +1054,27 @@ var DashboardObserver = new zimoko.Observable({
 			
 			setTimeout(function() {
 				if(lp && datalink == 'last') {
-					ChecklistObserver.set('list', lp.list);
-				
 					setTimeout(function() {
+						ChecklistObserver.set('list', lp.list);
+			
+						setTimeout(function() {
 							ChecklistObserver.set('category', lp.category);
-					}, 10);
 						
-					setTimeout(function() {
-						ChecklistObserver.set('section', lp.section);
-					
-						/*setTimeout(function() {
-							$('#checklist .checklist').scrollTop(lp.scroll);
-						}, 10);*/
-					}, 20);
+							setTimeout(function() {
+								ChecklistObserver.set('section', lp.section);
+				
+								/*setTimeout(function() {
+									$('#checklist .checklist').scrollTop(lp.scroll);
+								}, 10);*/
+							}, 100);
+						}, 100);
+					}, 100);
 				}
 				else {
 					ChecklistObserver.set('section', 0);
 					ChecklistObserver.set('list', datalink);
 				}
-				
+			
 				setTimeout(function() {
 					if(datalink == 'emergencies') {
 						Navigation.go('#emergencies');
@@ -1066,8 +1084,8 @@ var DashboardObserver = new zimoko.Observable({
 						Navigation.go('#checklist');
 						AppObserver.set('loading', false);
 					}
-				}, 250);
-			}, 20);
+				}, 350);
+			}, 100);
 		}
 	},
 	deleteTap: function(element, e, data) {
@@ -1168,7 +1186,7 @@ var DashboardObserver = new zimoko.Observable({
 					}
 				}
 			}
-		}, 100);
+		}, 200);
 	},
 	onDataSourceRead: function(event) {
 		var items = this.dataSource.view();
@@ -1195,6 +1213,8 @@ var ChecklistObserver = new zimoko.Observable({
 	sectionName: '',
 	list: 'preflight',
 	editing: false,
+	nextSectionText: 'Next Section',
+	previousSectionText: 'Previous Section',
 	showSections: false,
 	itemsDataSource: new zimoko.DataSource({pageSize: 10}),
 	sectionsDataSource: new zimoko.DataSource({pageSize: 1000}),
@@ -1219,7 +1239,6 @@ var ChecklistObserver = new zimoko.Observable({
 				
 				this.set('items', this.itemsDataSource.view());
 				this.set('sections', this.sectionsDataSource.view());
-				this.itemsDataSource.read();
 				
 				EmergenciesObserver.dataSource.preventRead = true;
 				EmergenciesObserver.dataSource.sort(new zimoko.Sort(['index'], 'asc'));
@@ -1229,11 +1248,16 @@ var ChecklistObserver = new zimoko.Observable({
 				$('#checklist-nav li').removeClass('active');
 				$('#checklist-nav li[data-link="' + this.list +'"]').addClass('active');
 				
-				setTimeout(function() {
-					$('#checklist .checklist').scrollTop(0);
-				}, 100);
+				this.itemsDataSource.read();
 				
 				this.checklist.set('lastPosition', {section: this.section, list: this.list, scroll: 0});
+				
+				$('#checklist .checklist').scrollTop(0);
+				
+				/*setTimeout(function() {
+					ChecklistObserver.previousSectionTextGenerate();
+					ChecklistObserver.nextSectionTextGenerate();
+				}, 10);*/
 			}
 			else {
 				this.set('list', 'preflight');
@@ -1255,7 +1279,7 @@ var ChecklistObserver = new zimoko.Observable({
 			}
 			
 			if(this.list == 'emergencies') {
-				console.log("Category Index: " + this.category);
+				//console.log("Category Index: " + this.category);
 				this.itemsDataSource.data(this.checklist[this.list][this.category].items[this.section].items);
 				this.sectionsDataSource.data(this.checklist[this.list][this.category].items);
 				this.set('sectionName', this.checklist[this.list][this.category].items[this.section].name);
@@ -1266,14 +1290,19 @@ var ChecklistObserver = new zimoko.Observable({
 				this.set('sectionName', this.checklist[this.list][this.section].name);
 			}
 			
-			this.checklist.set('lastPosition', {section: this.section, category: this.category, list: this.list, scroll: 0});
-			
 			$('#checklist .checklist').scrollTop(0);
 			
 			$('#checklist-nav li').removeClass('active');
 			$('#checklist-nav li[data-link="' + this.list +'"]').addClass('active');
 			
 			this.itemsDataSource.read();
+			
+			this.checklist.set('lastPosition', {section: this.section, category: this.category, list: this.list, scroll: 0});
+			
+			/*setTimeout(function() {
+					ChecklistObserver.previousSectionTextGenerate();
+					ChecklistObserver.nextSectionTextGenerate();
+			}, 10);*/
 		}
 		else if(property == 'editing') {
 			if(!this.editing) {
@@ -1344,10 +1373,72 @@ var ChecklistObserver = new zimoko.Observable({
 			setTimeout(function() {
 				ChecklistObserver.set('section', 0);
 			}, 5);
-		}
-                                              
+		}          
+        
         ChecklistObserver.set('showSections', false);
 	},
+	/*previousSectionTextGenerate: function() {
+		if(ChecklistObserver.list == 'emergencies') {
+			if(ChecklistObserver.section - 1 >= 0) {
+				ChecklistObserver.set('previousSectionText', ChecklistObserver.checklist[ChecklistObserver.list][ChecklistObserver.category].items[ChecklistObserver.section - 1].name);
+			}
+			else if(ChecklistObserver.category - 1 >= 0) {
+				var lastSection = ChecklistObserver.checklist[ChecklistObserver.list][ChecklistObserver.category - 1].items.length - 1;
+				ChecklistObserver.set('previousSectionText', ChecklistObserver.checklist[ChecklistObserver.list][ChecklistObserver.category - 1].items[lastSection].name);
+			}
+			else {
+				var lastSection = ChecklistObserver.checklist['landing'].length - 1;
+				ChecklistObserver.set('previousSectionText', ChecklistObserver.checklist['landing'][lastSection].name);
+			}
+		}
+		else {
+			if(ChecklistObserver.section - 1 >= 0) {
+				ChecklistObserver.set('previousSectionText', ChecklistObserver.checklist[ChecklistObserver.list][ChecklistObserver.section - 1].name);
+			}
+			else {
+				if(ChecklistObserver.list == 'landing') {
+					var lastSection = ChecklistObserver.checklist['takeoff'].length - 1;
+					ChecklistObserver.set('previousSectionText', ChecklistObserver.checklist['takeoff'][lastSection].name);
+				}
+				else if(ChecklistObserver.list == 'takeoff') {
+					var lastSection = ChecklistObserver.checklist['preflight'].length - 1;
+					ChecklistObserver.set('previousSectionText', ChecklistObserver.checklist['preflight'][lastSection].name);
+				}
+				else {
+					ChecklistObserver.set('previousSectionText', 'Previous Section');
+				}
+			}
+		}
+	},
+	nextSectionTextGenerate: function() {
+		if(ChecklistObserver.list == 'emergencies') {
+			if(ChecklistObserver.section + 1 < ChecklistObserver.checklist[ChecklistObserver.list][ChecklistObserver.category].items.length) {
+				ChecklistObserver.set('nextSectionText', ChecklistObserver.checklist[ChecklistObserver.list][ChecklistObserver.category].items[ChecklistObserver.section + 1].name);
+			}
+			else if (ChecklistObserver.category + 1 < ChecklistObserver.checklist[ChecklistObserver.list].length) {
+				ChecklistObserver.set('nextSectionText', ChecklistObserver.checklist[ChecklistObserver.list][ChecklistObserver.category + 1].items[0].name);
+			}
+			else {
+				ChecklistObserver.set('nextSectionText', 'Next Section');
+			}
+		}
+		else {
+			if(ChecklistObserver.section + 1 < ChecklistObserver.checklist[ChecklistObserver.list].length) {
+				ChecklistObserver.set('nextSectionText', ChecklistObserver.checklist[ChecklistObserver.list][ChecklistObserver.section + 1].name);
+			}
+			else {
+				if(ChecklistObserver.list == 'preflight') {
+					ChecklistObserver.set('nextSectionText', ChecklistObserver.checklist['takeoff'][0].name);
+				}
+				else if(ChecklistObserver.list == 'takeoff') {
+					ChecklistObserver.set('nextSectionText', ChecklistObserver.checklist['landing'][0].name);
+				}
+				else if(ChecklistObserver.list == 'landing') {
+					ChecklistObserver.set('nextSectionText', ChecklistObserver.checklist['emergencies'][0].items[0].name);
+				}
+			}
+		}
+	},*/
 	onDataSourceRead: function(event) {
 		var self = this;
 		setTimeout(function() {
@@ -1366,7 +1457,7 @@ var ChecklistObserver = new zimoko.Observable({
 			setTimeout(function() {
 				AppObserver.set('loading', false);
 			}, 10);
-		}, 100);
+		}, 250);
 	},
 	editTap: function(element, e, data) {
 		e.stopPropagation();
@@ -1398,7 +1489,6 @@ var ChecklistObserver = new zimoko.Observable({
 		EditAddObserver.set('adding', true);
 		
 		EditAddObserver.set('index', index);
-		
 		
         ChecklistObserver.set('showSections', false);
             

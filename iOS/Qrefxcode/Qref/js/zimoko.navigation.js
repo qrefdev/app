@@ -1,6 +1,11 @@
 (function() {	
 	zimoko.Navigation = zimoko.Class.extend(function() {	
 		this.init = function(animation, pageClass) {
+			var self = this;
+			
+			this.previous = undefined;
+			this.previousHashes = [];
+			
 			this.pageClass = pageClass;
 			
 			if(this.pageClass.indexOf('.') == -1) this.pageClass = '.' + this.pageClass;
@@ -9,33 +14,46 @@
 			var id = $($(this.pageClass).get(0)).attr("id");
 			
 			this.animation = animation;
-			window.addEventListener('hashchange', this.hashChanged.bind(this), true);
+			this.currentArea = undefined;
 			
-			if(window.location.hash != '')
-				this._go(undefined, window.location.hash);
-			else
-				this.go(id);
+			this.go(id);
 		};
 		
 		this.go = function(area) {
 			if(area && area.indexOf('#') == -1)
 				area = '#' + area;
-				 
-			window.location.hash = area;
+		
+			if(area != this.currentArea) {
+				this.previous = this.currentArea;
+				this.previousHashes.push(this.currentArea);
+				this.currentArea = area;
+			}
+			
+			this.hashChanged({newURL: this.currentArea, oldURL: this.previous});
 		};
 		
 		this.hashChanged = function(e) {
-			if(window.location.hash == '#back') {
+			if(e.newURL == '#back') {
 				this.back();
 			}
 			else {
-				var oldHash = e.oldURL.split('#')[1];
-				var newHash = e.newURL.split('#')[1];
+				var oldHash = undefined;
+				if(e.oldURL) {
+					oldHash = e.oldURL.split('#')[1];
+				}
+				
+				var newHash = undefined;
+				if(e.newURL) {
+					newHash = e.newURL.split('#')[1];
+				}
 				
 				if(oldHash != undefined && newHash != undefined && oldHash != 'back') {
 					this._go(oldHash, newHash);
 				}
 				else if(oldHash == undefined && newHash != undefined) {
+					this._go(undefined, newHash);
+				}
+				else if(oldHash == 'back' && newHash != undefined) {
 					this._go(undefined, newHash);
 				}
 			}
@@ -49,14 +67,12 @@
 			}]);
 		};
 		
-		this.back = function(e) {				
-			if(window.location.hash == '#back') {
-				history.back();
-				history.back();
-			}
-			else {
-				history.back();
-			}
+		this.back = function(e) {
+			if(this.previousHashes.length > 0) {
+				this.previousArea = this.currentArea;
+				this.currentArea = this.previousHashes.pop();
+				this._go(this.previousArea, this.currentArea);
+			}				
 		};
 		
 		this._go = function(oldHash, newHash) {

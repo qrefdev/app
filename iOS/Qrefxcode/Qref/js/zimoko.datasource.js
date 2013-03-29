@@ -430,7 +430,7 @@
 					var listener = datasource.listeners[i];
 					
 					if(listener && typeof(listener.onDataSourceUpdate) == 'function') {
-						var asyncMethod = new zimoko.AsyncMethod(listener, listener.onDataSourceError, [event]);
+						var asyncMethod = new zimoko.Async.method(listener, listener.onDataSourceError, [event]);
 						asyncMethod.exec();
 					}
 				}
@@ -445,7 +445,7 @@
 					var listener = datasource.listeners[i];
 					
 					if(listener && typeof(listener.onDataSourceUpdate) == 'function') {
-						var asyncMethod = new zimoko.AsyncMethod(listener, listener.onDataSourceUpdate, [event]);
+						var asyncMethod = new zimoko.Async.method(listener, listener.onDataSourceUpdate, [event]);
 						asyncMethod.exec();
 					}
 				}
@@ -460,7 +460,7 @@
 					var listener = datasource.listeners[i];
 					
 					if(listener && typeof(listener.onDataSourceCreate) == 'function') {
-						var asyncMethod = new zimoko.AsyncMethod(listener, listener.onDataSourceCreate, [event]);
+						var asyncMethod = new zimoko.Async.method(listener, listener.onDataSourceCreate, [event]);
 						asyncMethod.exec();
 					}
 				} 
@@ -475,7 +475,7 @@
 					var listener = datasource.listeners[i];
 					
 					if(listener && typeof(listener.onDataSourceDelete) == 'function') {
-						var asyncMethod = new zimoko.AsyncMethod(listener, listener.onDataSourceDelete, [event]);
+						var asyncMethod = new zimoko.Async.method(listener, listener.onDataSourceDelete, [event]);
 						asyncMethod.exec();
 					}
 				} 
@@ -490,7 +490,7 @@
 					var listener = datasource.listeners[i];
 					
 					if(listener && typeof(listener.onDataSourceRead) == 'function') {
-						var asyncMethod = new zimoko.AsyncMethod(listener, listener.onDataSourceRead, [event]);
+						var asyncMethod = new zimoko.Async.method(listener, listener.onDataSourceRead, [event]);
 						asyncMethod.exec();
 					}
 				} 
@@ -505,7 +505,7 @@
 					var listener = datasource.listeners[i];
 					
 					if(listener && typeof(listener.onDataSourceChange) == 'function') {
-						var asyncMethod = new zimoko.AsyncMethod(listener, listener.onDataSourceChange, [event]);
+						var asyncMethod = new zimoko.Async.method(listener, listener.onDataSourceChange, [event]);
 						asyncMethod.exec();
 					}
 				}

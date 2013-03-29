@@ -409,7 +409,7 @@
 					var listener = observer.listeners[i];
 			
 					if(listener.onPropertyChanged != undefined && typeof(listener.onPropertyChanged) == 'function') {
-						var asyncMethod = new zimoko.AsyncMethod(listener, listener.onPropertyChanged, [observer, property]);
+						var asyncMethod = new zimoko.Async.method(listener, listener.onPropertyChanged, [observer, property]);
 						asyncMethod.exec();
 					}
 				}
@@ -731,7 +731,7 @@
 					var listener = observer.listeners[i];
 				
 					if(listener.onItemsAdded != undefined && typeof(listener.onItemsAdded) == 'function') {
-						var asyncMethod = new zimoko.AsyncMethod(listener, listener.onItemsAdded, [observer, items]);
+						var asyncMethod = new zimoko.Async.method(listener, listener.onItemsAdded, [observer, items]);
 						asyncMethod.exec();
 					}
 				}
@@ -746,7 +746,7 @@
 					var listener = observer.listeners[i];
 				
 					if(listener.onItemsRemoved != undefined && typeof(listener.onItemsRemoved) == 'function') {
-						var asyncMethod = new zimoko.AsyncMethod(listener, listener.onItemsRemoved, [observer, items]);
+						var asyncMethod = new zimoko.Async.method(listener, listener.onItemsRemoved, [observer, items]);
 						asyncMethod.exec();
 					}
 				}
@@ -1762,58 +1762,101 @@
 					val.parent = parent;
 					var foreachListener = {
 						onItemsAdded: function(sender, items) {
-							setTimeout(function() {
-								for(var i = 0; i < items.length; i++) {
-									var item = items[i].item;
-									var index = items[i].index;
-									var isObservable = (item instanceof zimoko.Observable);
-								
-									var itemTemplate = element.data('zimokoForeachTemplate').clone();
-								
-									if(index >= element.children().length) {
-										element.append(itemTemplate);
-									}
-									else {
-										var $ele = $(element.children().get(index));
-									
-										$ele.before(itemTemplate);
-									}
-								
-									if(isObservable) {
-										item.parent = parent;
-										item.attach(itemTemplate);
-									}
+							zimoko.Async.each(items, function(index, itm) {
+								var item = itm.item;
+								var index = itm.index;
+								var isObservable = (item instanceof zimoko.Observable);
+							
+								var itemTemplate = element.data('zimokoForeachTemplate').clone();
+							
+								if(index >= element.children().length) {
+									element.append(itemTemplate);
 								}
-							}, 1 / 60);
+								else {
+									var $ele = $(element.children().get(index));
+									$ele.before(itemTemplate);
+								}
+							
+								if(isObservable) {
+									item.parent = parent;
+									item.attach(itemTemplate);
+									
+									//item.attach(itemTemplate);
+								}
+							});
+							
+							/*
+							for(var i = 0; i < items.length; i++) {
+								var item = items[i].item;
+								var index = items[i].index;
+								var isObservable = (item instanceof zimoko.Observable);
+							
+								var itemTemplate = element.data('zimokoForeachTemplate').clone();
+							
+								if(index >= element.children().length) {
+									zimoko.AsyncDispatch(element, element.append, [itemTemplate]);
+								}
+								else {
+									var $ele = $(element.children().get(index));
+								
+									zimoko.AsyncDispatch($ele, $ele.before, [itemTemplate]);
+									//$ele.before(itemTemplate);
+								}
+							
+								if(isObservable) {
+									item.parent = parent;
+									zimoko.AsyncDispatch(item, item.attach, [itemTemplate]);
+									
+									//item.attach(itemTemplate);
+								}
+							}*/
 						},
 						onItemsRemoved: function(sender, items) {
 							if(items.length < val.length) {
-								setTimeout(function() {
-									for(var i = 0; i < items.length; i++) {
-										var index = items[i].index;
-										var item = items[i].item;
-								
-										$ele = $(element.children().get(index));
-								
-										if(item && item instanceof zimoko.Observable) item.detach($ele);
-								
-										$ele.remove();
-									}
-								}, 1 / 60);
+								zimoko.Async.each(items, function(index, itm) {
+									var index = itm.index;
+									var item = itm.item;
+							
+									$ele = $(element.children().get(index));
+							
+									if(item && item instanceof zimoko.Observable) 
+										item.detach($ele);
+							
+									zimoko.Async.dispatch($ele, $ele.remove, []);
+								});
+								/*for(var i = 0; i < items.length; i++) {
+									var index = items[i].index;
+									var item = items[i].item;
+							
+									$ele = $(element.children().get(index));
+							
+									if(item && item instanceof zimoko.Observable) 
+										zimoko.AsyncDispatch(item, item.detach, [$ele]);
+							
+									zimoko.AsyncDispatch($ele, $ele.remove, []);
+								}*/
 							}
 							else {
-								element.html('');
+								zimoko.Async.each(items, function(index, itm) {
+									var index = itm.index;
+									var item = itm.item;
+						
+									$ele = $(element.children().get(index));
+						
+									if(item && item instanceof zimoko.Observable) 
+										item.detach($ele);
+								});
+								/*for(var i = 0; i < items.length; i++) {
+									var index = items[i].index;
+									var item = items[i].item;
+						
+									$ele = $(element.children().get(index));
+						
+									if(item && item instanceof zimoko.Observable) 
+										zimoko.Async.dispatch(item, item.detach, [$ele]);
+								}*/
 								
-								setTimeout(function() {
-									for(var i = 0; i < items.length; i++) {
-										var index = items[i].index;
-										var item = items[i].item;
-							
-										$ele = $(element.children().get(index));
-							
-										if(item && item instanceof zimoko.Observable) item.detach($ele);
-									}
-								}, 1 / 60);
+								element.html('');
 							}
 						}
 					};	
@@ -1839,20 +1882,36 @@
 					val.subscribe(foreachListener);
 				}
 				else if(val instanceof Array || val instanceof zimoko.SortableCollection) {
-					setTimeout(function() {
-						for(var i = 0; i < val.length; i++) {
-							var item = val[i];
-							var isObservable = (item instanceof zimoko.Observable);
-							var itemTemplate = element.data('zimokoForeachTemplate').clone();
-						
-							element.append(itemTemplate);
-						
-							if(isObservable) {
-								item.parent = parent;
-								item.attach(itemTemplate);
-							}	
+					zimoko.Async.each(val, function(index, item) {
+						var item = val[i];
+						var isObservable = (item instanceof zimoko.Observable);
+						var itemTemplate = element.data('zimokoForeachTemplate').clone();
+				
+						element.append(itemTemplate);
+				
+						if(isObservable) {
+							item.parent = parent;
+							
+							item.attach(itemTemplate);
+							//item.attach(itemTemplate);
 						}
-					}, 1 / 60);
+					});
+					
+					/*for(var i = 0; i < val.length; i++) {
+						var item = val[i];
+						var isObservable = (item instanceof zimoko.Observable);
+						var itemTemplate = element.data('zimokoForeachTemplate').clone();
+				
+						zimoko.AsyncDispatch(element, element.append, [itemTemplate]);
+						//element.append(itemTemplate);
+				
+						if(isObservable) {
+							item.parent = parent;
+							
+							zimoko.AsyncDispatch(item, item.attach, [itemTemplate]);
+							//item.attach(itemTemplate);
+						}	
+					}*/
 				}
 			},
 			update: function(element, value) {
@@ -1867,30 +1926,28 @@
 						previousValue.unsubscribe(element.data('zimokoForeachListener'));
 						previousValue.parent = undefined;
 					
-						setTimeout(function() {
-							for(var i = 0; i < previousValue.length; i++) {
-								var item = previousValue.elementAt(i);
-								var isObservable = (item instanceof zimoko.Observable);
-							
-								if(isObservable) {
-									$ele = $(element.children().get(i));
-									item.detach($ele);
-								}	
-							}
-						}, 1 / 60);
+						for(var i = 0; i < previousValue.length; i++) {
+							var item = previousValue.elementAt(i);
+							var isObservable = (item instanceof zimoko.Observable);
+						
+							if(isObservable) {
+								$ele = $(element.children().get(i));
+								zimoko.Async.dispatch(item, item.detach, [$ele]);
+								//item.detach($ele);
+							}	
+						}
 					} 
 					else if(previousValue instanceof Array || previousValue instanceof zimoko.SortableCollection) {
-						setTimeout(function() {
-							for(var i = 0; i < previousValue.length; i++) {
-								var item = previousValue[i];
-								var isObservable = (item instanceof zimoko.Observable);
-							
-								if(isObservable) {
-									$ele = $(element.children().get(i));
-									item.detach($ele);
-								}	
-							}
-						}, 1 / 60);
+						for(var i = 0; i < previousValue.length; i++) {
+							var item = previousValue[i];
+							var isObservable = (item instanceof zimoko.Observable);
+						
+							if(isObservable) {
+								$ele = $(element.children().get(i));
+								zimoko.Async.dispatch(item, item.detach, [$ele]);
+								//item.detach($ele);
+							}	
+						}
 					}
 					
 					element.html('');
@@ -1901,99 +1958,173 @@
 						val.parent = parent;
 						var foreachListener = {
 							onItemsAdded: function(sender, items) {
-								setTimeout(function() {
-									for(var i = 0; i < items.length; i++) {
-										var item = items[i].item;
-										var index = items[i].index;
-										var isObservable = (item instanceof zimoko.Observable);
-								
-										var itemTemplate = element.data('zimokoForeachTemplate').clone();
-								
-										if(index >= element.children().length) {
-											element.append(itemTemplate);
-										}
-										else {
-											var $ele = $(element.children().get(index));
-									
-											$ele.before(itemTemplate);
-										}
-								
-										if(isObservable) {
-											item.parent = parent;
-											item.attach(itemTemplate);
-										}
+								zimoko.Async.each(items, function(index, itm) {
+									var item = itm.item;
+									var index = itm.index;
+									var isObservable = (item instanceof zimoko.Observable);
+							
+									var itemTemplate = element.data('zimokoForeachTemplate').clone();
+							
+									if(index >= element.children().length) {
+										element.append(itemTemplate);
 									}
-								}, 1 / 60);
+									else {
+										var $ele = $(element.children().get(index));
+										$ele.before(itemTemplate);
+									}
+							
+									if(isObservable) {
+										item.parent = parent;
+										item.attach(itemTemplate);
+									
+										//item.attach(itemTemplate);
+									}
+								});
+							
+								/*
+								for(var i = 0; i < items.length; i++) {
+									var item = items[i].item;
+									var index = items[i].index;
+									var isObservable = (item instanceof zimoko.Observable);
+							
+									var itemTemplate = element.data('zimokoForeachTemplate').clone();
+							
+									if(index >= element.children().length) {
+										zimoko.AsyncDispatch(element, element.append, [itemTemplate]);
+									}
+									else {
+										var $ele = $(element.children().get(index));
+								
+										zimoko.AsyncDispatch($ele, $ele.before, [itemTemplate]);
+										//$ele.before(itemTemplate);
+									}
+							
+									if(isObservable) {
+										item.parent = parent;
+										zimoko.AsyncDispatch(item, item.attach, [itemTemplate]);
+									
+										//item.attach(itemTemplate);
+									}
+								}*/
 							},
 							onItemsRemoved: function(sender, items) {
 								if(items.length < val.length) {
-									setTimeout(function() {
-										for(var i = 0; i < items.length; i++) {
-											var index = items[i].index;
-											var item = items[i].item;
-								
-											$ele = $(element.children().get(index));
-								
-											if(item && item instanceof zimoko.Observable) item.detach($ele);
-								
-											$ele.remove();
-										}
-									}, 1 / 60);
+									zimoko.Async.each(items, function(index, itm) {
+										var index = itm.index;
+										var item = itm.item;
+							
+										$ele = $(element.children().get(index));
+							
+										if(item && item instanceof zimoko.Observable) 
+											item.detach($ele);
+							
+										zimoko.Async.dispatch($ele, $ele.remove, []);
+									});
+									/*for(var i = 0; i < items.length; i++) {
+										var index = items[i].index;
+										var item = items[i].item;
+							
+										$ele = $(element.children().get(index));
+							
+										if(item && item instanceof zimoko.Observable) 
+											zimoko.AsyncDispatch(item, item.detach, [$ele]);
+							
+										zimoko.AsyncDispatch($ele, $ele.remove, []);
+									}*/
 								}
 								else {
+									zimoko.Async.each(items, function(index, itm) {
+										var index = itm.index;
+										var item = itm.item;
+						
+										$ele = $(element.children().get(index));
+						
+										if(item && item instanceof zimoko.Observable) 
+											item.detach($ele);
+									});
+									
 									element.html('');
-								
-									setTimeout(function() {
-										for(var i = 0; i < items.length; i++) {
-											var index = items[i].index;
-											var item = items[i].item;
-								
-											$ele = $(element.children().get(index));
-								
-											if(item && item instanceof zimoko.Observable) item.detach($ele);
-										}
-									}, 1 / 60);
+									
+									/*for(var i = 0; i < items.length; i++) {
+										var index = items[i].index;
+										var item = items[i].item;
+						
+										$ele = $(element.children().get(index));
+						
+										if(item && item instanceof zimoko.Observable) 
+											zimoko.Async.dispatch(item, item.detach, [$ele]);
+									}*/
 								}
 							}
 						};	
 						
 						element.data('zimokoForeachListener', foreachListener);
 						
-						setTimeout(function() {
-							for(var i = 0; i < val.length; i++) {
-								var item = val.elementAt(i);
-								var isObservable = (item instanceof zimoko.Observable);
-							
-								var itemTemplate = element.data('zimokoForeachTemplate').clone();
-							
-								element.append(itemTemplate);
-							
-								if(isObservable) {
-									item.parent = parent;
-									item.attach(itemTemplate);
-								}
-							}
-						}, 1 / 60);
-						
-						val.subscribe(foreachListener);
-					}
-				}
-				
-				if(val instanceof Array || val instanceof zimoko.SortableCollection) {
-					setTimeout(function() {
-						for(var i = 0; i < val.length; i++) {
-							var item = val[i];
+						zimoko.Async.each(val.toArray(), function(index, item) {
 							var isObservable = (item instanceof zimoko.Observable);
+						
 							var itemTemplate = element.data('zimokoForeachTemplate').clone();
 						
 							element.append(itemTemplate);
 						
 							if(isObservable) {
 								item.parent = parent;
+								
 								item.attach(itemTemplate);
-							}	
-						}
-					}, 1 / 60);
+								//item.attach(itemTemplate);
+							}
+						});
+						
+						/*for(var i = 0; i < val.length; i++) {
+							var item = val.elementAt(i);
+							var isObservable = (item instanceof zimoko.Observable);
+						
+							var itemTemplate = element.data('zimokoForeachTemplate').clone();
+						
+							zimoko.AsyncDispatch(element, element.append, [itemTemplate]);
+							//element.append(itemTemplate);
+						
+							if(isObservable) {
+								item.parent = parent;
+								
+								zimoko.Async.dispatch(item, item.attach, [itemTemplate]);
+								//item.attach(itemTemplate);
+							}
+						}*/
+						
+						val.subscribe(foreachListener);
+					}
+				}
+				
+				if(val instanceof Array || val instanceof zimoko.SortableCollection) {
+					zimoko.Async.each(val, function(index, item) {
+						var isObservable = (item instanceof zimoko.Observable);
+						var itemTemplate = element.data('zimokoForeachTemplate').clone();
+					
+						element.append(itemTemplate);
+					
+						if(isObservable) {
+							item.parent = parent;
+							
+							item.attach(itemTemplate);
+						}	
+					});
+					
+					/*for(var i = 0; i < val.length; i++) {
+						var item = val[i];
+						var isObservable = (item instanceof zimoko.Observable);
+						var itemTemplate = element.data('zimokoForeachTemplate').clone();
+					
+						zimoko.AsyncDispatch(element, element.append, [itemTemplate]);
+						//element.append(itemTemplate);
+					
+						if(isObservable) {
+							item.parent = parent;
+							
+							zimoko.AsyncDispatch(item, item.attach, [itemTemplate]);
+							//item.attach(itemTemplate);
+						}	
+					}*/
 				}
 			},
 			remove: function(element, value) {
@@ -2003,26 +2134,24 @@
 					previousValue.unsubscribe(element.data('zimokoForeachListener'));
 					previousValue.parent = undefined;
 					
-					setTimeout(function() {
-						for(var i = 0; i < previousValue.length; i++) {
-							var item = previousValue.elementAt(i);
-						
-							$ele = $(element.children().get(i));
-								
-							if(item && item instanceof zimoko.Observable) item.detach($ele);
-						}
-					}, 1 / 60);
+					for(var i = 0; i < previousValue.length; i++) {
+						var item = previousValue.elementAt(i);
+					
+						$ele = $(element.children().get(i));
+							
+						if(item && item instanceof zimoko.Observable)
+							zimoko.Async.dispatch(item, item.detach, [$ele]);
+					}
 				}
 				else if (previousValue instanceof Array || previousValue instanceof zimoko.SortableCollection) {
-					setTimeout(function() {
-						for(var i = 0; i < previousValue.length; i++) {
-							var item = previousValue[i];
-						
-							$ele = $(element.children().get(i));
-								
-							if(item && item instanceof zimoko.Observable) item.detach($ele);
-						}
-					}, 1 / 60);
+					for(var i = 0; i < previousValue.length; i++) {
+						var item = previousValue[i];
+					
+						$ele = $(element.children().get(i));
+							
+						if(item && item instanceof zimoko.Observable)
+							zimoko.Async.dispatch(item, item.detach, [$ele]);
+					}
 				}
 				
 				element.html('');

@@ -137,14 +137,14 @@ function SyncProcessor() {
     this.nextChecklist = function() {
         var self = this;
         if(this.index <  self.lists.length) {
-            var stringifiedJson = JSON.stringify(checklists[this.index]);
-            var filename = checklists[this.index]._id + '.qrf';
+            var stringifiedJson = JSON.stringify(self.lists[self.index]);
+            var filename = self.lists[self.index]._id + '.qrf';
             var encoded = btoa(escape(encodeURIComponent(stringifiedJson)));
             var data = filename + '-FN-' + encoded;
             
             window.location.href = 'qref://sc=' + data;
             
-            this.index++;
+            self.index++;
             
             setTimeout(function() {
                 self.nextChecklist();
