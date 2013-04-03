@@ -81,6 +81,7 @@ var EmergenciesObserver = new zimoko.Observable({
 		e.preventDefault();
 		ChecklistObserver.set('category', data.index);
 		ChecklistObserver.set('list', 'emergencies');
+		ChecklistObserver.set('showSections', true);
 		Navigation.go('checklist');
 	},
 	menuTap: function(element, e, data) {
@@ -396,19 +397,21 @@ var MenuObserver = new zimoko.Observable({
 		if(!$('.menu').hasClass('slided')) {
 			$('.menu').show();
 			$('.front .dashcontent').animate({left: '-245px'}, 100);
-			$('.page').animate({left:'-245px'}, 100);
+			$('.page,.page-hidden-tap').animate({left:'-245px'}, 100);
 			$('.checklistnav').animate({left:'-245px'}, 100);
 			$('.menu').animate({right:'-5px'}, 100).addClass('slided');
+			AppObserver.set('menuOpen', true);
 		}
 	},
 	close: function() {
 		if($('.menu').hasClass('slided')) {
-			$('.page').animate({left:'0px'}, 100);
+			$('.page,.page-hidden-tap').animate({left:'0px'}, 100);
 			$('.front .dashcontent').animate({left: '0px'}, 100);
 			$('.checklistnav').animate({left:'0px'}, 100);
 			$('.menu').animate({right:'-300px'}, 100, function(e) {
 				$('.menu').hide();
 			}).removeClass('slided');
+			AppObserver.set('menuOpen', false);
 		}
 	},
 	toggle: function() {
@@ -432,6 +435,10 @@ var AppObserver = new zimoko.Observable({
 	allProducts: [],
 	userProducts: [],
 	isSorting: false,
+	menuOpen: false,
+	pageTap: function(element, e, data) {
+		MenuObserver.close();
+	},
 	checklistNavTap: function(element, e, data) {
 		var ele = $(element);
         //601 - Clear drop down on navigate
@@ -780,6 +787,11 @@ var AppObserver = new zimoko.Observable({
 						AppObserver.set('loading', true);
 						ChecklistObserver.itemsDataSource.pageAndAppend(ChecklistObserver.itemsDataSource.page() + 1);
 						ChecklistObserver.itemsDataSource.read();
+					}
+					else {
+						if(ChecklistObserver.list != 'emergencies') {
+							ChecklistObserver.set('displayNext', true);
+						}
 					}
 				}
 				else if(this.hasClass('downloads')) {
@@ -1212,6 +1224,7 @@ var ChecklistObserver = new zimoko.Observable({
     modified: false,                                 
 	sectionName: '',
 	list: 'preflight',
+	displayNext: false,
 	editing: false,
 	nextSectionText: 'Next Section',
 	previousSectionText: 'Previous Section',
@@ -1249,6 +1262,8 @@ var ChecklistObserver = new zimoko.Observable({
 				$('#checklist-nav li[data-link="' + this.list +'"]').addClass('active');
 				
 				this.itemsDataSource.read();
+				
+				this.set('displayNext', false);
 				
 				this.checklist.set('lastPosition', {section: this.section, list: this.list, scroll: 0});
 				
@@ -1289,6 +1304,8 @@ var ChecklistObserver = new zimoko.Observable({
 				this.sectionsDataSource.data(this.checklist[this.list]);
 				this.set('sectionName', this.checklist[this.list][this.section].name);
 			}
+			
+			this.set('displayNext', false);
 			
 			$('#checklist .checklist').scrollTop(0);
 			

@@ -205,12 +205,14 @@
 			var duration = getDuration();
 			
 			var velocity = deltaDirection.y / (duration / 1000);
-			var momentum = 0.05 * velocity;
+			var momentum = 0.01 * velocity;
 			
 			var deltaY = (endPosition.y - previousPosition.y) + momentum;
 			
 			var scrollHeight = $element[0].scrollHeight;
 			var scrollTop = $element.scrollTop();
+			
+			$element.stop(true);
 			
 	  		if(deltaDirection.y < 0)
 			{
@@ -245,7 +247,7 @@
 			var duration = getDuration();
 			
 			var velocity = deltaDirection.y / (duration / 1000);
-			var momentum = 0.5 * velocity;
+			var momentum = 0.45 * velocity;
 			
 			var deltaY = (endPosition.y - previousPosition.y) + momentum;;
 			
@@ -256,10 +258,10 @@
 			{
 				if(scrollTop - deltaY < scrollHeight)
 				{
-					$element.animate({scrollTop: scrollTop - deltaY}, 100);
+					$element.animate({scrollTop: scrollTop - deltaY}, 850, 'easeOutCirc');
 				}
 				else {
-					$element.animate({scrollTop: scrollHeight}, 100, function() {
+					$element.animate({scrollTop: scrollHeight},850, 'easeOutCirc', function() {
 						if(bottomReachedHandler) {
 							setTimeout(function() {
 								bottomReachedHandler.call($element);
@@ -271,10 +273,10 @@
 			else if(deltaDirection.y > 0)
 			{
 				if(scrollTop - deltaY > 0) {
-					$element.animate({scrollTop: scrollTop - deltaY}, 100);
+					$element.animate({scrollTop: scrollTop - deltaY}, 850, 'easeOutCirc');
 				}
 				else {
-					$element.animate({scrollTop: 0}, 100);
+					$element.animate({scrollTop: 0}, 850, 'easeOutCirc');
 				}
 			}
 	  }
