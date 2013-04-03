@@ -11,8 +11,9 @@
 #import "QrefInAppPurchaseManager.h"
 #import "DESCrypt.h"
 #import "SSKeychain.h"
+#import "ImageDownloader.h"
 
-@interface QRefWebView : UIViewController <UIWebViewDelegate, QrefAppPurchaseDelegate> {
+@interface QRefWebView : UIViewController <UIWebViewDelegate, QrefAppPurchaseDelegate, ImageDownloaderDelegate> {
     UIWebView *webView;
     NSUserDefaults *preferences;
     QrefInAppPurchaseManager *purchaseManager;
@@ -23,6 +24,8 @@
     UIImageView *imageView;
     Reachability * reach;
 }
+
+@property (nonatomic, strong) NSOperationQueue *imageQueue;
 
 - (void) gotoURL: (NSURLRequest *) url;
 - (void) onload;

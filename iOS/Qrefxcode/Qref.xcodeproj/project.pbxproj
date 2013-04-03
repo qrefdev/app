@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		463A9778170CCC33007F2FA0 /* ImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 463A9777170CCC33007F2FA0 /* ImageDownloader.m */; };
+		463A977B170CCC4B007F2FA0 /* AsyncHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 463A977A170CCC4B007F2FA0 /* AsyncHttpRequest.m */; };
+		463A977D170CCEE5007F2FA0 /* useragents.txt in Resources */ = {isa = PBXBuildFile; fileRef = 463A977C170CCEE5007F2FA0 /* useragents.txt */; };
 		4645BBBD1688B7B300DB971E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 4645BBBC1688B7B300DB971E /* Default.png */; };
 		4645BBBF1688B7B800DB971E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4645BBBE1688B7B800DB971E /* Default-568h@2x.png */; };
 		4645BBC11688B7BC00DB971E /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4645BBC01688B7BC00DB971E /* Default@2x.png */; };
@@ -27,12 +30,6 @@
 		46B2666615C054B1002E9931 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B2666515C054B1002E9931 /* main.m */; };
 		46B2666A15C054B1002E9931 /* QRefAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B2666915C054B1002E9931 /* QRefAppDelegate.m */; };
 		46B2666D15C054B1002E9931 /* Qref.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 46B2666B15C054B1002E9931 /* Qref.xcdatamodeld */; };
-		46B2667515C054B1002E9931 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46B2667415C054B1002E9931 /* SenTestingKit.framework */; };
-		46B2667615C054B1002E9931 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46B2665715C054B1002E9931 /* UIKit.framework */; };
-		46B2667715C054B1002E9931 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46B2665915C054B1002E9931 /* Foundation.framework */; };
-		46B2667815C054B1002E9931 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46B2665D15C054B1002E9931 /* CoreData.framework */; };
-		46B2668015C054B1002E9931 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 46B2667E15C054B1002E9931 /* InfoPlist.strings */; };
-		46B2668315C054B1002E9931 /* QrefTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B2668215C054B1002E9931 /* QrefTests.m */; };
 		46CA88A616E9153E00A0E36D /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CA88A516E9153E00A0E36D /* Reachability.m */; };
 		46CA88A816E9157900A0E36D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46CA88A716E9157900A0E36D /* SystemConfiguration.framework */; };
 		46D0A5581607D1BA0007247D /* QRefWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D0A5571607D1BA0007247D /* QRefWebView.m */; };
@@ -41,17 +38,12 @@
 		46E1D6921700DD08003D42C4 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E1D6911700DD08003D42C4 /* SSKeychain.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		46B2667915C054B1002E9931 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 46B2664A15C054B0002E9931 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 46B2665215C054B1002E9931;
-			remoteInfo = Qref;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
+		463A9776170CCC33007F2FA0 /* ImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageDownloader.h; sourceTree = "<group>"; };
+		463A9777170CCC33007F2FA0 /* ImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageDownloader.m; sourceTree = "<group>"; };
+		463A9779170CCC4B007F2FA0 /* AsyncHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncHttpRequest.h; sourceTree = "<group>"; };
+		463A977A170CCC4B007F2FA0 /* AsyncHttpRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncHttpRequest.m; sourceTree = "<group>"; };
+		463A977C170CCEE5007F2FA0 /* useragents.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = useragents.txt; sourceTree = "<group>"; };
 		4645BBBC1688B7B300DB971E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		4645BBBE1688B7B800DB971E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		4645BBC01688B7BC00DB971E /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
@@ -80,7 +72,6 @@
 		46B2666815C054B1002E9931 /* QRefAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QRefAppDelegate.h; sourceTree = "<group>"; };
 		46B2666915C054B1002E9931 /* QRefAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QRefAppDelegate.m; sourceTree = "<group>"; };
 		46B2666C15C054B1002E9931 /* Qref.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Qref.xcdatamodel; sourceTree = "<group>"; };
-		46B2667315C054B1002E9931 /* QrefTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QrefTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		46B2667415C054B1002E9931 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		46B2667D15C054B1002E9931 /* QrefTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "QrefTests-Info.plist"; sourceTree = "<group>"; };
 		46B2667F15C054B1002E9931 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -113,17 +104,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		46B2666F15C054B1002E9931 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				46B2667515C054B1002E9931 /* SenTestingKit.framework in Frameworks */,
-				46B2667615C054B1002E9931 /* UIKit.framework in Frameworks */,
-				46B2667715C054B1002E9931 /* Foundation.framework in Frameworks */,
-				46B2667815C054B1002E9931 /* CoreData.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -149,7 +129,6 @@
 			isa = PBXGroup;
 			children = (
 				46B2665315C054B1002E9931 /* Qref.app */,
-				46B2667315C054B1002E9931 /* QrefTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -169,6 +148,10 @@
 		46B2665F15C054B1002E9931 /* Qref */ = {
 			isa = PBXGroup;
 			children = (
+				463A9779170CCC4B007F2FA0 /* AsyncHttpRequest.h */,
+				463A977A170CCC4B007F2FA0 /* AsyncHttpRequest.m */,
+				463A9776170CCC33007F2FA0 /* ImageDownloader.h */,
+				463A9777170CCC33007F2FA0 /* ImageDownloader.m */,
 				46E1D6931700E46A003D42C4 /* Qref.entitlements */,
 				46E1D6901700DD08003D42C4 /* SSKeychain.h */,
 				46E1D6911700DD08003D42C4 /* SSKeychain.m */,
@@ -195,6 +178,7 @@
 		46B2666015C054B1002E9931 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				463A977C170CCEE5007F2FA0 /* useragents.txt */,
 				46B2666115C054B1002E9931 /* Qref-Info.plist */,
 				46B2666215C054B1002E9931 /* InfoPlist.strings */,
 				46B2666515C054B1002E9931 /* main.m */,
@@ -261,25 +245,6 @@
 			productReference = 46B2665315C054B1002E9931 /* Qref.app */;
 			productType = "com.apple.product-type.application";
 		};
-		46B2667215C054B1002E9931 /* QrefTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 46B2668915C054B1002E9931 /* Build configuration list for PBXNativeTarget "QrefTests" */;
-			buildPhases = (
-				46B2666E15C054B1002E9931 /* Sources */,
-				46B2666F15C054B1002E9931 /* Frameworks */,
-				46B2667015C054B1002E9931 /* Resources */,
-				46B2667115C054B1002E9931 /* ShellScript */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				46B2667A15C054B1002E9931 /* PBXTargetDependency */,
-			);
-			name = QrefTests;
-			productName = QrefTests;
-			productReference = 46B2667315C054B1002E9931 /* QrefTests.octest */;
-			productType = "com.apple.product-type.bundle";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -287,7 +252,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = QRef;
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0460;
 			};
 			buildConfigurationList = 46B2664D15C054B0002E9931 /* Build configuration list for PBXProject "Qref" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -302,7 +267,6 @@
 			projectRoot = "";
 			targets = (
 				46B2665215C054B1002E9931 /* Qref */,
-				46B2667215C054B1002E9931 /* QrefTests */,
 			);
 		};
 /* End PBXProject section */
@@ -322,34 +286,11 @@
 				4645BBC11688B7BC00DB971E /* Default@2x.png in Resources */,
 				46E188F716B6F3FF0014D937 /* Icon@2x.png in Resources */,
 				46E188FA16B6F4020014D937 /* Icon.png in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		46B2667015C054B1002E9931 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				46B2668015C054B1002E9931 /* InfoPlist.strings in Resources */,
+				463A977D170CCEE5007F2FA0 /* useragents.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		46B2667115C054B1002E9931 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		46B2664F15C054B1002E9931 /* Sources */ = {
@@ -365,26 +306,12 @@
 				4671DFB91610FDB40078873D /* QSStrings.m in Sources */,
 				46CA88A616E9153E00A0E36D /* Reachability.m in Sources */,
 				46E1D6921700DD08003D42C4 /* SSKeychain.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		46B2666E15C054B1002E9931 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				46B2668315C054B1002E9931 /* QrefTests.m in Sources */,
+				463A9778170CCC33007F2FA0 /* ImageDownloader.m in Sources */,
+				463A977B170CCC4B007F2FA0 /* AsyncHttpRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		46B2667A15C054B1002E9931 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 46B2665215C054B1002E9931 /* Qref */;
-			targetProxy = 46B2667915C054B1002E9931 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		46B2666215C054B1002E9931 /* InfoPlist.strings */ = {
@@ -412,6 +339,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -426,7 +357,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -438,6 +369,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -445,7 +380,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -462,7 +397,7 @@
 				GCC_PREFIX_HEADER = "Qref/Qref-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Qref/Qref-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SDKROOT)/usr/lib/system\"",
@@ -472,7 +407,7 @@
 					"\"$(SDKROOT)/usr/include\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "75BC32B4-E1E2-4595-A2D6-3F3978C82BCA";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2DD82692-7DBF-4668-BD04-1F883118DDE1";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -487,7 +422,7 @@
 				GCC_PREFIX_HEADER = "Qref/Qref-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Qref/Qref-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SDKROOT)/usr/lib/system\"",
@@ -497,43 +432,9 @@
 					"\"$(SDKROOT)/usr/include\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "75BC32B4-E1E2-4595-A2D6-3F3978C82BCA";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2DD82692-7DBF-4668-BD04-1F883118DDE1";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
-			};
-			name = Release;
-		};
-		46B2668A15C054B1002E9931 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Qref.app/Qref";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Qref/Qref-Prefix.pch";
-				INFOPLIST_FILE = "QrefTests/QrefTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Debug;
-		};
-		46B2668B15C054B1002E9931 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Qref.app/Qref";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Qref/Qref-Prefix.pch";
-				INFOPLIST_FILE = "QrefTests/QrefTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};
@@ -554,15 +455,6 @@
 			buildConfigurations = (
 				46B2668715C054B1002E9931 /* Debug */,
 				46B2668815C054B1002E9931 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		46B2668915C054B1002E9931 /* Build configuration list for PBXNativeTarget "QrefTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				46B2668A15C054B1002E9931 /* Debug */,
-				46B2668B15C054B1002E9931 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

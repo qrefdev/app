@@ -16,8 +16,9 @@
     if (self) {
         // Custom initialization
         
-        self->server = @"https://my.qref.com/";
+        self->server = @"https://my.qref.com";
         
+        self.imageQueue = [[NSOperationQueue alloc] init];
         CGRect bounds = [[UIScreen mainScreen] bounds];
         CGFloat screenScale = [[UIScreen mainScreen] scale];
         
@@ -339,8 +340,69 @@
 }
 
 - (void) hasImageInCache:(NSString *)imageJSON {
-    NSArray *array = [imageJSON componentsSeparatedByString:@";"];
-    
+
+    [self.imageQueue addOperationWithBlock:^{
+        NSArray *array = [imageJSON componentsSeparatedByString:@";"];
+        
+            NSString *undefinedCheck = [array objectAtIndex:0];
+            if(![undefinedCheck isEqualToString:@"undefined"])
+            {
+                NSString *file = [array objectAtIndex:0];
+                NSString *fileType = [array objectAtIndex:2];
+                NSArray *fileSegments = [file componentsSeparatedByString:@"/"];
+                file = [fileSegments lastObject];
+                NSString *resourcePath = [[NSBundle mainBundle] resourcePath];
+                NSString *resourceFilePath = [resourcePath stringByAppendingString:[NSString stringWithFormat:@"/%@", [array objectAtIndex:0]]];
+                NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+                NSFileManager *manager = [NSFileManager defaultManager];
+                NSString *cachedFilePath = [cachePath stringByAppendingString:[NSString stringWithFormat:@"/qref/%@", [fileType stringByAppendingString: file]]];
+                //NSURL *url = [NSURL fileURLWithPath:cachedFilePath];
+            
+                if([manager fileExistsAtPath:resourceFilePath])
+                {
+                    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                        [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"PushImage('%@');", imageJSON]];
+                    }];
+                }
+                else if([manager fileExistsAtPath:cachedFilePath])
+                {
+                    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                        NSString *imageInfo = cachedFilePath;
+                        imageInfo = [NSString stringWithFormat:@"%@;%@;%@",imageInfo,[array objectAtIndex:1],[array objectAtIndex:2]];
+                        [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"PushImage('%@');", imageInfo]];
+                        imageInfo = nil;
+                    }];
+                }
+                else
+                {
+                    NSString *serv = self->server;
+                    NSString *serverUrl = [serv stringByAppendingString:[array objectAtIndex:0]];
+                    
+                    ImageDownloader *downloader = [[ImageDownloader alloc] init];
+                    downloader.delegate = self;
+                    
+                    [downloader download:serverUrl imageName:imageJSON];
+                }
+                
+                cachedFilePath = nil;
+                manager = nil;
+                resourceFilePath = nil;
+                resourcePath = nil;
+                cachePath = nil;
+                file = nil;
+                fileSegments = nil;
+                fileType = nil;
+                
+            }
+        
+        undefinedCheck = nil;
+        array = nil;
+    }];
+}
+
+- (void) downloadComplete:(NSData *)imageData imageName:(NSString *)name {
+        NSArray *array = [name componentsSeparatedByString:@";"];
+        
         NSString *undefinedCheck = [array objectAtIndex:0];
         if(![undefinedCheck isEqualToString:@"undefined"])
         {
@@ -353,70 +415,48 @@
             NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
             NSFileManager *manager = [NSFileManager defaultManager];
             NSString *cachedFilePath = [cachePath stringByAppendingString:[NSString stringWithFormat:@"/qref/%@", [fileType stringByAppendingString: file]]];
-            //NSURL *url = [NSURL fileURLWithPath:cachedFilePath];
-        
-            if([manager fileExistsAtPath:resourceFilePath])
+            
+            if(imageData.length > 0)
             {
-                [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"PushImage('%@');", imageJSON]];
-            }
-            else if([manager fileExistsAtPath:cachedFilePath])
-            {
-                NSString *imageInfo = cachedFilePath;
-                imageInfo = [NSString stringWithFormat:@"%@;%@;%@",imageInfo,[array objectAtIndex:1],[array objectAtIndex:2]];
-                [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"PushImage('%@');", imageInfo]];
-                imageInfo = nil;
-            }
-            else
-            {
-                NSString *serv = self->server;
-                NSURL *serverUrl = [NSURL URLWithString:[serv stringByAppendingString:[array objectAtIndex:0]]];
-        
-                NSData *imageData = [[NSData alloc] initWithContentsOfURL:serverUrl];
-
-                if(imageData.length > 0)
-                {
-                    @try {
-                        //UIImage *image = [UIImage imageWithData:imageData];
-                        
-                        if([manager fileExistsAtPath:[cachePath stringByAppendingString:@"/qref"]] == NO)
+                @try {
+                    //UIImage *image = [UIImage imageWithData:imageData];
+                    
+                    if([manager fileExistsAtPath:[cachePath stringByAppendingString:@"/qref"]] == NO)
+                    {
+                        NSError *__autoreleasing * directoryError;
+                        if(![manager createDirectoryAtPath:[cachePath stringByAppendingString:@"/qref"] withIntermediateDirectories:NO attributes:nil error:directoryError])
                         {
-                            NSError *__autoreleasing * directoryError;
-                            if(![manager createDirectoryAtPath:[cachePath stringByAppendingString:@"/qref"] withIntermediateDirectories:NO attributes:nil error:directoryError])
-                            {
-                                NSLog(@"Error creating directory %@", [cachePath stringByAppendingString:@"/qref"]);
-                            }
-                        
+                            NSLog(@"Error creating directory %@", [cachePath stringByAppendingString:@"/qref"]);
                         }
                         
-                        BOOL ok = [manager createFileAtPath:cachedFilePath contents:nil attributes:nil];
-                        
-                        if (!ok) {
-                            NSLog(@"Error creating file %@", cachedFilePath);
-                        } else {
+                    }
+                    
+                    BOOL ok = [manager createFileAtPath:cachedFilePath contents:nil attributes:nil];
+                    
+                    if (!ok) {
+                        NSLog(@"Error creating file %@", cachedFilePath);
+                    } else {
+                        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                             NSFileHandle* myFileHandle = [NSFileHandle fileHandleForWritingAtPath:cachedFilePath];
                             [myFileHandle writeData:imageData];
                             [myFileHandle closeFile];
                             myFileHandle = nil;
-                        }
+                        }];
+                    }
                     
-                        NSString *imageInfo = cachedFilePath;
-                        imageInfo = [NSString stringWithFormat:@"%@;%@;%@",imageInfo,[array objectAtIndex:1],[array objectAtIndex:2]];
+                    NSString *imageInfo = cachedFilePath;
+                    imageInfo = [NSString stringWithFormat:@"%@;%@;%@",imageInfo,[array objectAtIndex:1],[array objectAtIndex:2]];
                     
+                    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                         [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"PushImage('%@');", imageInfo]];
-                        
-                        imageInfo = nil;
-                    }
-                    @catch (NSException *exception) {
-                    
-                    }
-                    @finally {
-                    
-                    }
+                    }];
                 }
-                
-                imageData = nil;
-                serverUrl = nil;
-                serv = nil;
+                @catch (NSException *exception) {
+                    
+                }
+                @finally {
+                    
+                }
             }
             
             cachedFilePath = nil;
@@ -427,11 +467,7 @@
             file = nil;
             fileSegments = nil;
             fileType = nil;
-            
         }
-    
-    undefinedCheck = nil;
-    array = nil;
 }
 
 - (void) productRequest:(SKProduct *)product canPurchase:(BOOL)canPurchase {

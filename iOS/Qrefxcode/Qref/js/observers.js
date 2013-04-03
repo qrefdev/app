@@ -441,27 +441,40 @@ var AppObserver = new zimoko.Observable({
 	},
 	checklistNavTap: function(element, e, data) {
 		var ele = $(element);
-        //601 - Clear drop down on navigate
-		ChecklistObserver.set('showSections', false);
 		
 		if(ChecklistObserver.editing && ChecklistObserver.modified) {
 			Sync.syncOneLocal(ChecklistObserver.checklist._original);
 		}
 		
-		ChecklistObserver.set('editing', false);
-		setTimeout(function() {
-			if(ele.attr('data-link') == 'emergencies') {
-				Navigation.go('#emergencies');
-			}
-			else {
-				Navigation.go("#checklist");
-			}
+		zimoko.Async.each([
+			(function() { ChecklistObserver.set('editing', false); }),
+			(function() { ChecklistObserver.set('showSections', false) ;}),
+			(function() { 
+				setTimeout(function() {
+					setTimeout(function() {
+						if(ele.attr('data-link') == 'emergencies') {
+							if($('#emergencies').css('display') == 'none') {
+								Navigation.go('#emergencies');
+							}
+						}
+						else {
+							if($('#checklist').css('display') == 'none') {
+								Navigation.go("#checklist");
+							}
+						}
+					}, 200);
 			
-			if(ChecklistObserver.list == ele.attr('data-link'))
-				ele.addClass('active');
-			
-			ChecklistObserver.set('list', ele.attr('data-link'));
-		}, 200);
+					if(ChecklistObserver.list == ele.attr('data-link'))
+						ele.addClass('active');
+					
+					setTimeout(function() {
+						ChecklistObserver.set('list', ele.attr('data-link'));
+					}, 10);
+				}, 200);
+			})
+		], function(index, item) {
+			item();
+		});
 		
 		e.stopPropagation();
 		e.preventDefault();
