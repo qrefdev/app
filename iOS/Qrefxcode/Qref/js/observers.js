@@ -79,10 +79,31 @@ var EmergenciesObserver = new zimoko.Observable({
 	itemTap: function(element, e, data) {
 		e.stopPropagation();
 		e.preventDefault();
-		ChecklistObserver.set('category', data.index);
-		ChecklistObserver.set('list', 'emergencies');
-		ChecklistObserver.set('showSections', true);
-		Navigation.go('checklist');
+		
+		zimoko.Async.each([function() {
+			ChecklistObserver.set('category', data.index);
+		},
+		function() {
+			ChecklistObserver.set('list', 'emergencies');
+		},
+		function() {
+			ChecklistObserver.set('section', 1);
+		},
+		function() {
+			ChecklistObserver.set('section', 0);
+		},
+		function() {
+			ChecklistObserver.set('showSections', true);
+		},
+		function() {
+			setTimeout(function() {
+				Navigation.go('checklist');
+			}, 100);
+		}],
+		function(index, item) {
+			item();
+		});
+		
 	},
 	menuTap: function(element, e, data) {
 		e.stopPropagation();
@@ -445,6 +466,10 @@ var AppObserver = new zimoko.Observable({
 		if(ChecklistObserver.editing && ChecklistObserver.modified) {
 			Sync.syncOneLocal(ChecklistObserver.checklist._original);
 		}
+		
+		$('.scrollable').stop();
+		
+		$('#checklist .checklist').scrollTop(0);
 		
 		zimoko.Async.each([
 			(function() { ChecklistObserver.set('editing', false); }),
@@ -1073,6 +1098,10 @@ var DashboardObserver = new zimoko.Observable({
 			
 			AppObserver.set('loading', true);
 			
+			$('.scrollable').stop();
+		
+			$('#checklist .checklist').scrollTop(0);
+			
 			setTimeout(function() {
 				ChecklistObserver.set('checklist', data);
 			}, 10);
@@ -1087,10 +1116,6 @@ var DashboardObserver = new zimoko.Observable({
 						
 							setTimeout(function() {
 								ChecklistObserver.set('section', lp.section);
-				
-								/*setTimeout(function() {
-									$('#checklist .checklist').scrollTop(lp.scroll);
-								}, 10);*/
 							}, 100);
 						}, 100);
 					}, 100);
@@ -1280,7 +1305,11 @@ var ChecklistObserver = new zimoko.Observable({
 				
 				this.checklist.set('lastPosition', {section: this.section, list: this.list, scroll: 0});
 				
-				$('#checklist .checklist').scrollTop(0);
+				$('.scrollable').stop();
+				
+				setTimeout(function() {
+					$('#checklist .checklist').scrollTop(0);
+				}, 250);
 				
 				/*setTimeout(function() {
 					ChecklistObserver.previousSectionTextGenerate();
@@ -1310,16 +1339,18 @@ var ChecklistObserver = new zimoko.Observable({
 				//console.log("Category Index: " + this.category);
 				this.itemsDataSource.data(this.checklist[this.list][this.category].items[this.section].items);
 				this.sectionsDataSource.data(this.checklist[this.list][this.category].items);
+				
 				this.set('sectionName', this.checklist[this.list][this.category].items[this.section].name);
 			}
 			else {
 				this.itemsDataSource.data(this.checklist[this.list][this.section].items);
 				this.sectionsDataSource.data(this.checklist[this.list]);
+				
 				this.set('sectionName', this.checklist[this.list][this.section].name);
 			}
 			
-			this.set('displayNext', false);
-			
+			$('.scrollable').stop();
+		
 			$('#checklist .checklist').scrollTop(0);
 			
 			$('#checklist-nav li').removeClass('active');
@@ -1350,6 +1381,11 @@ var ChecklistObserver = new zimoko.Observable({
 	previousSectionTap: function(element, e, data) {
 		e.stopPropagation();
 		e.preventDefault();
+		
+		$('.scrollable').stop();
+		
+		$('#checklist .checklist').scrollTop(0);
+		
 		ChecklistObserver.set('showSections', false);
 		
 		if(ChecklistObserver.section - 1 >= 0) {
@@ -1380,6 +1416,11 @@ var ChecklistObserver = new zimoko.Observable({
 	nextSectionTap: function(element, e, data) {
 		e.stopPropagation();
 		e.preventDefault();
+		
+		$('.scrollable').stop();
+		
+		$('#checklist .checklist').scrollTop(0);
+		
 		ChecklistObserver.set('showSections', false);
 	
 		if(ChecklistObserver.list == 'emergencies' && ChecklistObserver.section + 1 < ChecklistObserver.checklist[ChecklistObserver.list][ChecklistObserver.category].items.length) {
@@ -1472,6 +1513,15 @@ var ChecklistObserver = new zimoko.Observable({
 	onDataSourceRead: function(event) {
 		var self = this;
 		setTimeout(function() {
+			setTimeout(function() {
+				if(ChecklistObserver.itemsDataSource.page() < ChecklistObserver.itemsDataSource.totalPages()) {
+					self.set('displayNext', false);
+				}
+				else {
+					self.set('displayNext', true);
+				}
+			}, 100);
+			
 			for(var i = 0; i < self.items.length; i++) {
 				var item = self.items.elementAt(i);
 			

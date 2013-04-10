@@ -658,9 +658,9 @@
 		
 		this.data = function(objects) {
 			if(objects) {
-				this._sources = [];
-				this._data.clear();
+				this.clear();
 				this._page = 1;
+				this.total = 0;
 				this.preventRead = true;
 				addObjects.call(this,objects);
 				_apply.call(this);
