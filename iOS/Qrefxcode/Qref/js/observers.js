@@ -67,7 +67,10 @@ var EditTailObserver = new zimoko.Observable({
 	backTap: function(element, e, data) {
 		e.stopPropagation();
 		e.preventDefault();
-		Navigation.back();
+		
+		setTimeout(function() {
+			Navigation.back();
+		}, 100);
 	}
 });
 
@@ -1262,7 +1265,7 @@ var ChecklistObserver = new zimoko.Observable({
     modified: false,                                 
 	sectionName: '',
 	list: 'preflight',
-	displayNext: false,
+	displayNext: true,
 	editing: false,
 	nextSectionText: 'Next Section',
 	previousSectionText: 'Previous Section',
@@ -1301,7 +1304,7 @@ var ChecklistObserver = new zimoko.Observable({
 				
 				this.itemsDataSource.read();
 				
-				this.set('displayNext', false);
+				//this.set('displayNext', false);
 				
 				this.checklist.set('lastPosition', {section: this.section, list: this.list, scroll: 0});
 				
@@ -1515,7 +1518,7 @@ var ChecklistObserver = new zimoko.Observable({
 		setTimeout(function() {
 			setTimeout(function() {
 				if(ChecklistObserver.itemsDataSource.page() < ChecklistObserver.itemsDataSource.totalPages()) {
-					self.set('displayNext', false);
+					self.set('displayNext', true);
 				}
 				else {
 					self.set('displayNext', true);

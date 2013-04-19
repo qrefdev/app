@@ -772,33 +772,6 @@ html, body {
 	display: none;
 }
 
-.checklist .nextSection {
-	float: left;
-	position: relative;
-	width: 100%;
-	display: none;
-    padding-bottom: 20px;
-}
-
-.checklist .nextSection .icon {
-	float: right;
-	position: relative;
-	font-size: 26px;
-}
-
-.checklist .previousSection {
-	float: left;
-	position: relative;
-	width: 100%;
-	display: none;
-}
-
-.checklist .previousSection .icon {
-	float: left;
-	position: relative;
-	font-size: 26px;
-}
-
 /** Checklist Sections Menu **/
 .check-sections {
 	position: absolute;
@@ -1307,6 +1280,70 @@ z-index: 999999;
 /** Global ul li **/
 ul li {
 	cursor: pointer;
+}
+
+/** Section Nav for Checklist **/
+.section-nav {
+	position: absolute;
+	top:0px;
+	height: 38px;
+	left: 0px;
+	width: 100%;
+	overflow: hidden;
+	text-align: center;
+	z-index: 99;
+	-webkit-box-shadow:  0px 3px 5px 1px rgba(0, 0, 0, 0.5);
+        
+        box-shadow:  0px 3px 5px 1px rgba(0, 0, 0, 0.5);
+}
+
+.section-nav .name {
+	position: absolute;
+	left: 30px;
+	right: 30px;
+	top: 0px;
+	height: 38px;
+}
+
+.section-nav .name p {
+	max-height: 38px;
+    white-space: nowrap;
+	width: 100%; 
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin-top: 12px;
+}
+
+.section-nav .nextSection {
+	position: absolute;
+	right: -10px;
+	top: -8px;
+	width: 38px;
+	height: 38px;
+	overflow: hidden;
+	display: none;
+}
+
+.section-nav .nextSection .icon {
+	float: left;
+	position: relative;
+	font-size: 22px;
+}
+
+.section-nav .previousSection {
+	position: absolute;
+	left: 12px;
+	top: -8px;
+	width: 38px;
+	height: 38px;
+	overflow: hidden;
+	display: none;
+}
+
+.section-nav .previousSection .icon {
+	float: left;
+	position: relative;
+	font-size: 22px;
 }
 
 /** Media Queries for Emergency Icons **/

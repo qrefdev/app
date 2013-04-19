@@ -59,6 +59,8 @@
                                                      name:kReachabilityChangedNotification
                                                    object:nil];
         [self->reach startNotifier];
+        
+        [[NSURLCache sharedURLCache] removeAllCachedResponses];
     }
    return self;
 }
