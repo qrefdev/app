@@ -109,10 +109,14 @@
 			<div class="wrap">
 				<div class="topbar">
 					<div class="item back" data-bind="tap: backTap">
-						<p><i class="icon icon-chevron-left"></i></p>
+						<p><i class="icon icon-double-angle-left"></i></p>
 					</div>
-					<div class="item-middle sections" style="text-align: center;" data-bind="tap: sectionsTap">
+					<!--<div class="item-middle sections" style="text-align: center;" data-bind="tap: sectionsTap">
 						<div><span id="area" style="margin-right: 2px;" data-bind="html: sectionName"></span></div><i class="icon icon-caret-down"></i>
+					</div>-->
+					<div class="item-middle-empty">
+						<p style="text-align: center; padding: 8px; margin: 0px;" data-bind="text: checklist.model.name">	
+						</p>
 					</div>
 					<div class="item edit-list" data-bind="tap: editTap, attr: {'class': (function() { if(editing) return 'item edit-list active'; else return 'item edit-list';})()}">
 						<p><i class="icon icon-pencil"></i></p>
@@ -122,14 +126,15 @@
 					</div>
 				</div>
 				<div class="content">
-					<div class="section-nav">
-						<div class="previousSection" data-bind="visible: (function() { if(list == 'preflight') {return section > 0;} else if(list != 'emergencies') {return true;}})()"><p data-bind="tap: previousSectionTap"><i class="icon icon-arrow-left"></i></p></div>
+					<div class="section-nav sections" data-bind="tap: sectionsTap">
+						<i class="icon icon-caret-down" style="position: absolute; left: 48%; bottom: -3px;"></i>
 						<div class="name">
 							<p data-bind="html: sectionName"></p>
 						</div>
-						<div class="nextSection" data-bind="visible: (function() { if(((list == 'preflight' || list == 'takeoff') && checklist && displayNext) || (list == 'landing' && checklist && section < checklist.landing.length - 1 && displayNext)) {return true; } else {return false;}})()"><p data-bind="tap: nextSectionTap"><i class="icon icon-arrow-right"></i></p></div>
+						<div class="previousSection" data-bind="tap: previousSectionTap, visible: (function() { if(list == 'preflight') {return section > 0;} else if(list != 'emergencies') {return true;}})()"><p style="margin: 0px; padding: 8px;"><i class="icon icon-chevron-left"></i></p></div>
+						<div class="nextSection" data-bind="tap: nextSectionTap, visible: (function() { if(((list == 'preflight' || list == 'takeoff') && checklist && displayNext) || (list == 'landing' && checklist && section < checklist.landing.length - 1 && displayNext)) {return true; } else {return false;}})()"><p style="margin: 0px; padding: 8px;"><i class="icon icon-chevron-right"></i></p></div>
 					</div>
-					<div style="position: absolute; top: 38px; left: 0px; bottom: 0px; right: 0px; width: 100%">
+					<div style="position: absolute; top: 46px; left: 0px; bottom: 0px; right: 0px; width: 100%">
 						<div class="grid checklist scrollable">
 							<div class="container">
 								<ul id="checklist-items" class="vertical" data-bind="foreach: items">
@@ -148,7 +153,7 @@
 					</div>
 					<div class="shadow">
 					</div>
-                    <div class="grid check-sections flyover" data-bind="fadeVisible: showSections">
+                    <div class="grid check-sections flyover" data-bind="fadeVisible: showSections" style="top: 66px;">
                         <div class="container inside scrollable">
                             <ul id="check-sections-items" class="vertical" data-bind="foreach: sections">
                                 <li data-bind="tap: parent.sectionTap, attr: {'class': (function() { if(index == parent.section) return 'active'; else return ''; })()}"><p data-bind="html: name"></p></li>
@@ -164,7 +169,7 @@
 			<div class="wrap">
 				<div class="topbar">
 					<div class="item-large back" data-bind="tap: backTap">
-						<p><i class="icon icon-chevron-left"></i></p>
+						<p><i class="icon icon-double-angle-left"></i></p>
 					</div>
 					<div class="item-middle-large" style="text-align: center;">
 						<p>Emergencies</p>
@@ -195,7 +200,7 @@
 			<div class="wrap">
 				<div class="topbar">
 					<div class="item-large back" data-bind="tap: backTap">
-						<p><i class="icon icon-chevron-left"></i></p>
+						<p><i class="icon icon-double-angle-left"></i></p>
 					</div>
 					<div class="item-middle-large" style="text-align: center;">
 						<p>Product Downloads</p>
@@ -257,7 +262,7 @@
 			<div class="wrap">
 				<div class="topbar">
 					<div class="item-large back" data-bind="tap: backTap">
-						<p><i class="icon icon-chevron-left"></i></p>
+						<p><i class="icon icon-double-angle-left"></i></p>
 					</div>
 					<div class="item-middle-large conversions" style="text-align: center;" data-bind="tap: conversionsTap">
 						<div><span id="selectedConversion" style="margin-right: 5px;" data-bind="html: conversionSelectedName"></span></div><i class="icon icon-caret-down"></i>
@@ -360,7 +365,7 @@
 			<div class="wrap">
 				<div class="topbar">
 					<div class="item-large back" data-bind="tap: backTap">
-						<p><i class="icon icon-chevron-left"></i></p>
+						<p><i class="icon icon-double-angle-left"></i></p>
 					</div>
 					<div class="item-middle-large" style="text-align: center;">
 						<p>Product Details</p>
@@ -410,7 +415,7 @@
 			<div class="wrap">
 				<div class="topbar">
 					<div class="item-large back" data-bind="tap: backTap">
-						<p><i class="icon icon-chevron-left"></i></p>
+						<p><i class="icon icon-double-angle-left"></i></p>
 					</div>
 					<div class="item-middle-large">
 						<p data-bind="html: (function() { if(adding) return 'Add Item'; else return 'Edit Item'; })()"></p>
@@ -437,7 +442,7 @@
 			<div class="wrap">
 				<div class="topbar">
 					<div class="item-large back" data-bind="tap: backTap">
-						<p><i class="icon icon-chevron-left"></i></p>
+						<p><i class="icon icon-double-angle-left"></i></p>
 					</div>
 					<div class="item-middle-large">
 						<p>Edit Tail Number</p>
@@ -461,7 +466,7 @@
 			<div class="wrap">
 				<div class="topbar">
 					<div class="item-large back" data-bind="tap: backTap">
-						<p><i class="icon icon-chevron-left"></i></p>
+						<p><i class="icon icon-double-angle-left"></i></p>
 					</div>
 					<div class="item-middle-large">
 						<p>Sign in</p>
@@ -489,7 +494,7 @@
 			<div class="wrap">
 				<div class="topbar">
 					<div class="item-large back" data-bind="tap: backTap">
-						<p><i class="icon icon-chevron-left"></i></p>
+						<p><i class="icon icon-double-angle-left"></i></p>
 					</div>
 					<div class="item-middle-large">
 						<p>Forgot Password</p>
@@ -514,7 +519,7 @@
 			<div class="wrap">
 				<div class="topbar">
 					<div class="item-large back" data-bind="tap: backTap">
-						<p><i class="icon icon-chevron-left"></i></p>
+						<p><i class="icon icon-double-angle-left"></i></p>
 					</div>
 					<div class="item-middle-large">
 						<p>Change Password</p>
@@ -541,7 +546,7 @@
 			<div class="wrap">
 				<div class="topbar">
 					<div class="item-large back" data-bind="tap: backTap">
-						<p><i class="icon icon-chevron-left"></i></p>
+						<p><i class="icon icon-double-angle-left"></i></p>
 					</div>
 					<div class="item-middle-large">
 						<p>Register</p>

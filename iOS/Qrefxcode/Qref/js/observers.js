@@ -403,7 +403,10 @@ var MenuObserver = new zimoko.Observable({
 				checklists = undefined;
 				ChecklistObserver.set('checklist', undefined);
 				DashboardObserver.set('dataSource', undefined);
-				Navigation.go('#dashboard');
+				
+				if(AppObserver.navHash != '#dashboard') {
+					Navigation.go('#dashboard');
+				}
 			}
 		});
 		
@@ -1242,15 +1245,19 @@ var DashboardObserver = new zimoko.Observable({
 		}, 200);
 	},
 	onDataSourceRead: function(event) {
-		var items = this.dataSource.view();
+		var _this = this;
 		
-		this.punch();
+		setTimeout(function() {
+			var items = _this.dataSource.view();
 		
-		var imageProcessor = new ImageProcessor(this.items.toArray(), "checklistListing", true);
-		imageProcessor.init();
-		imageProcessor.processImages();
+			_this.punch();
 		
-		AppObserver.set('loading', false);
+			var imageProcessor = new ImageProcessor(items.toArray(), "checklistListing", true);
+			imageProcessor.init();
+			imageProcessor.processImages();
+		
+			AppObserver.set('loading', false);
+		}, 100);
 	}
 });
 

@@ -16,7 +16,7 @@
     if (self) {
         // Custom initialization
         
-        self->server = @"https://my.qref.com";
+        self->server = @"https://my.qref.com/";
         
         self.imageQueue = [[NSOperationQueue alloc] init];
         CGRect bounds = [[UIScreen mainScreen] bounds];
