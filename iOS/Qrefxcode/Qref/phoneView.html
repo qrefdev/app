@@ -131,8 +131,8 @@
 						<div class="name">
 							<p data-bind="html: sectionName"></p>
 						</div>
-						<div class="previousSection" data-bind="tap: previousSectionTap, visible: (function() { if(list == 'preflight') {return section > 0;} else if(list != 'emergencies') {return true;}})()"><p style="margin: 0px; padding: 8px;"><i class="icon icon-chevron-left"></i></p></div>
-						<div class="nextSection" data-bind="tap: nextSectionTap, visible: (function() { if(((list == 'preflight' || list == 'takeoff') && checklist && displayNext) || (list == 'landing' && checklist && section < checklist.landing.length - 1 && displayNext)) {return true; } else {return false;}})()"><p style="margin: 0px; padding: 8px;"><i class="icon icon-chevron-right"></i></p></div>
+						<div class="previousSection" data-bind="tap: previousSectionTap, visible: (function() { if(list == 'preflight') {return section > 0;} else if(list != 'emergencies') {return true;}})()"><p style="margin: 5px; padding: 8px;"><i class="icon icon-chevron-left"></i></p></div>
+						<div class="nextSection" data-bind="tap: nextSectionTap, visible: (function() { if(((list == 'preflight' || list == 'takeoff') && checklist && displayNext) || (list == 'landing' && checklist && section < checklist.landing.length - 1 && displayNext)) {return true; } else {return false;}})()"><p style="margin: 5px; padding: 8px;"><i class="icon icon-chevron-right"></i></p></div>
 					</div>
 					<div style="position: absolute; top: 46px; left: 0px; bottom: 0px; right: 0px; width: 100%">
 						<div class="grid checklist scrollable">
@@ -223,6 +223,10 @@
 									</div>
 								</li>
 							</ul>
+							<div class="section-nav" data-bind="tap: requestModelTap, visible: displayRequestModel">
+								<p>Request a Model</p>
+								<div class="nextSection" style="display: block"><p style="margin: 5px; padding: 8px;"><i class="icon icon-chevron-right"></i></p></div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -264,14 +268,22 @@
 					<div class="item-large back" data-bind="tap: backTap">
 						<p><i class="icon icon-double-angle-left"></i></p>
 					</div>
-					<div class="item-middle-large conversions" style="text-align: center;" data-bind="tap: conversionsTap">
-						<div><span id="selectedConversion" style="margin-right: 5px;" data-bind="html: conversionSelectedName"></span></div><i class="icon icon-caret-down"></i>
+					<div class="item-middle-empty" style="text-align: center;">
+						<p style="margin-top: 8px;">
+							Conversions
+						</p>
 					</div>
 					<div class="item-large topmenu" data-bind="tap: menuTap">
 						<p><i class="icon icon-th-list"></i></p>
 					</div>
 				</div>
 				<div class="content e6b" style="bottom: 0px;">
+					<div class="section-nav sections" data-bind="tap: conversionsTap">
+						<i class="icon icon-caret-down" style="position: absolute; left: 48%; bottom: -3px;"></i>
+						<div class="name">
+							<p data-bind="html: conversionSelectedName"></p>
+						</div>
+					</div>
 					<div class="utcTime"><p class="utcCurrent"></p> <i class="icon icon-time"></i></div>
 					<div class="row" style="margin-top: 40px;">
 						<div class="topConversion" data-bind="html: topConversion">MPH</div><input id="convertTop" type="number" class="textbox" data-bind="value: topConversionValue, keyup: conversionTopKeyDown" style="" value="0" />
@@ -279,7 +291,7 @@
 					<div class="row">
 						<div class="bottomConversion" data-bind="html: bottomConversion">KTS</div><input id="convertBottom" data-bind="value: bottomConversionValue, keyup: conversionBottomKeyDown" class="textbox" type="number" value="0" />
 					</div>
-                    <div class="grid available-conversions flyover" data-bind="fadeVisible: showConversions">
+                    <div class="grid available-conversions flyover" data-bind="fadeVisible: showConversions" style="margin-top: 48px;">
                         <div class="container inside scrollable">
                             <ul id="conversion-items" class="vertical">
                                 <li data-bind="tap: conversionTap" class="active" data-multiplier="0.868976242" data-inverse="1.150779448" data-top="MPH" data-bottom="KTS" data-value="0"><p>MPH <> KTS</p></li>
@@ -580,11 +592,11 @@
 				<ul>
 					<!--<li data-link="settings"><i class="icon icon-cog"></i><p>Settings</p></li>-->
 					<li data-link="dashboard" data-bind="tap: menuNavTap"><i class="icon icon-dashboard"></i><p>Dashboard</p></li>
+					<li data-bind="tap: downloadTap, visible: token"><i class="icon icon-download"></i><p>Download Models</p></li>
 					<li data-link="changePassword" data-bind="tap: menuNavTap, visible: token" id="changepassword-menu"><i class="icon icon-lock"></i><p>Change Password</p></li>
 					<li data-link="signin" data-bind="tap: menuNavTap, visible: !token" id="signin-menu"><i class="icon icon-signin" ></i><p>Sign in</p></li>
 					<li data-link="register" data-bind="tap: menuNavTap, visible: !token" id="register-menu"><i class="icon icon-pencil"></i><p>Register</p></li>
 					<li data-link="e6b" data-bind="tap: menuNavTap"><i class="icon icon-table"></i><p>Conversions</p></li>
-					<li data-bind="tap: requestModelTap, visible: token"><i class="icon icon-envelope-alt"></i><p>Request a Model</p></li>
 					<li data-bind="tap: orderPrintedTap, visible: token"><i class="icon icon-print"></i><p>Order Printed Version</p></li>
 					<li data-bind="tap: syncNavTap, visible: token" id="sync-menu"><i class="icon icon-repeat"></i><p>Sync</p></li>
 					<li data-bind="tap: signOutNavTap, visible: token" id="signout-menu"><i class="icon icon-signout"></i><p>Sign out</p></li>

@@ -433,7 +433,7 @@ html, body {
 }
 
 .topbar .item p {
-	margin: 0;
+	margin: 5px;
 	padding: 3px;
     white-space: nowrap;
 	overflow: hidden;
@@ -449,7 +449,7 @@ html, body {
 }
 
 .topbar .icon {
-	font-size: 24px;
+	font-size: 18px;
 }
 
 
@@ -945,7 +945,7 @@ form label {
 	width: 100%;
 	text-align: center;
 	padding: 5px;
-	font-size: 11px; 
+	font-size: 14px; 
 }
 
 .emergencies ul {
@@ -1340,7 +1340,8 @@ ul li {
 
 .section-nav .nextSection .icon {
 	position: relative;
-	font-size: 32px;
+	margin-top: 5px;
+	font-size: 26px;
 }
 
 .section-nav .previousSection {
@@ -1356,7 +1357,42 @@ ul li {
 
 .section-nav .previousSection .icon {
 	position: relative;
+	margin-top: 5px;
+	font-size: 26px;
+}
+
+.downloads .section-nav {
+	float: left;
+	position: relative;
+	height: 46px;
+	width: 100%;
+	overflow: hidden;
+	text-align: center;
+	z-index: 1;
+}
+
+.downloads .section-nav .nextSection {
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	width: 64px;
+	height: 46px;
+	overflow: hidden;
+	display: none;
+	text-align: center;
+}
+
+.downloads .section-nav .nextSection .icon {
+	position: relative;
+	font-size: 26px;
+}
+
+.back .icon {
 	font-size: 32px;
+}
+
+.topbar .back p {
+	margin-top: -5px;
 }
 
 /** Media Queries for Emergency Icons **/

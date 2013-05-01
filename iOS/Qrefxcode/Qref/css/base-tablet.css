@@ -1,0 +1,1409 @@
+@font-face {
+	font-family: 'Myriad';
+	src: url('fonts/myriadpro.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'MyriadBold';
+	src: url('fonts/myriadprobold.ttf') format('truetype');
+}
+
+div, section, article, img {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none; /* Disable selection/Copy of UIWebView */
+}
+
+html, body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+    background: #1f1f1f;
+	font-family: Myriad, Helvetica;
+}
+
+.wrapper {
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+}
+
+.wrap {
+	position: absolute;
+	float: left;
+	width: 100%;
+	height: 100%;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	overflow: hidden;
+}
+
+/** Text Boxes & Text Areas **/
+.textbox {
+	position: relative;
+	margin: 5px auto;
+	padding: 10px;
+	text-align: left;
+	width: 90%;
+	height: 36px;
+	font-size: 16px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	display:block;
+	font-family: MyriadBold, Myriad;
+}
+
+/** Page Wrapper **/
+
+.page-hidden-tap {
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	overflow: visible;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	z-index: 100;
+}
+
+.page {
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	overflow: visible;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	z-index: 100;
+    display: none;
+}
+
+
+/** Bottom Nav Bar **/
+.nav {
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	width: 100%;
+	height: auto;
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+	z-index: 110;
+}
+
+.nav ul {
+	float: left;
+	position: relative;
+	width: 100%;
+	height: auto;
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+.nav ul li {
+	float: left;
+	position: relative;
+	width: auto;
+	height: 60px;
+	padding: 0;
+	margin: 0;
+	text-align: left;
+	cursor: pointer;
+}
+
+.nav ul .item {
+	width: 49.95%;
+	margin: 0;
+	padding: 0;
+}
+
+.nav ul .item-25 {
+	width: 24.80%;
+	margin: 0;
+	padding: 0;
+}
+
+.nav ul .item-33 {
+	width: 32%;
+	margin: 0;
+	padding: 0;
+}
+
+.nav ul .item .header {
+	font-size: 16px;
+	position: absolute;
+	left: 60px;
+	top: 15px;
+}
+
+.nav ul .item .subheader {
+	font-size: 12px;
+	left: 60px;
+	top: 35px;
+	position: absolute;
+}
+
+.nav ul .item-25 .header {
+	font-size: 12px;
+	position: absolute;
+	left: 60px;
+	top: 15px;
+}
+
+.nav ul .item-25 .subheader {
+	font-size: 10px;
+	left: 60px;
+	top: 35px;
+	position: absolute;
+}
+
+.nav ul .item-33 .header {
+	font-size: 14px;
+	position: absolute;
+	left: 60px;
+	top: 15px;
+}
+
+.nav ul .item-33 .subheader {
+	font-size: 12px;
+	left: 60px;
+	top: 35px;
+	position: absolute;
+}
+
+.nav ul .item div:first-child {
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	top: 0px;
+	width: 100%;
+	height: 80px;
+}
+
+.nav ul .item div .icon {
+	font-size: 34px;
+	position: absolute;
+	top: 15px;
+	left: 5px;
+	display: block;
+}
+
+.nav ul .item-25 div .icon {
+	width: 100%;
+	text-align: center;
+	padding-top: 0px;
+	display: block;
+	height: 80px;
+}
+
+.nav ul .item-25 div .icon img {
+	width: 50%;
+	max-width: 48px;
+}
+
+.nav ul .item-33 div .icon {
+	font-size: 24px;
+	float: left;
+	margin-top: 25px;
+	display: block;
+}
+
+.nav ul .header-only {
+	font-size: 16px;
+	position: absolute;
+	left: 60px;
+	top: 20px;
+}
+
+.nav ul .subheader-only {
+	font-size: 10px;
+	text-align: center;
+	width: 100%;
+	position:  absolute;
+	bottom: 3px;
+}
+
+.checklistnav ul .subheader-only {
+	font-size: 14px;
+}
+
+/** Dashboard Top Bar **/
+.dashbar {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	width: 100%;
+	height: 80px;
+	font-size: 12px;
+	overflow: hidden;
+	padding: 0;
+	margin: 0;
+}
+
+.dashbar .item {
+	float: left;
+	position: relative;
+	width: auto;
+	height: 32px;
+	margin: 0px;
+	z-index: 1;
+	cursor: pointer;
+}
+
+.dashbar .item p {
+	margin: 0;
+	padding: 6px;
+}
+
+.dashbar .item-right p {
+	padding: 6px;
+	margin: 0;
+}
+
+.dashbar .item-right {
+	float: right;
+	position: relative;
+	width: 20%;
+	height: 32px;
+	margin: 0px;
+	z-index: 1;
+	cursor: pointer;
+}
+
+.dashbar .icon {
+	font-size: 18px;
+}
+
+.dashbar .header {
+	position: absolute;
+	width: 100%;
+	z-index: 1;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	height: 32px;
+	padding: 0;
+	margin: 0;
+	text-align: center;
+	letter-spacing: 5px;
+}
+
+.dashbar .icon {
+	font-size: 18px;
+}
+
+
+/** Top Bar for all other pages **/
+.topbar {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	width: 100%;
+	height: auto;
+	font-size: 12px;
+	overflow: visible;
+	padding: 0;
+	margin: 0;
+	z-index: 1100;
+}
+
+.topbar .item {
+	float: left;
+	position: relative;
+	width: 18.25%;
+	height: 32px;
+	z-index: 5;
+	cursor: pointer;
+	text-align: center;
+}
+
+.topbar .item-middle-empty {
+	float: left;
+	position: relative;
+	width: 45%;
+	z-index: 10;
+	cursor: pointer;
+	text-align: center;
+	text-overflow: ellipsis;
+	height: 32px;
+}
+
+.topbar .item-middle {
+	float: left;
+	position: relative;
+	width: 45%;
+	z-index: 10;
+	cursor: pointer;
+	text-align: center;
+	text-overflow: ellipsis;
+}
+
+.topbar .item-middle-large {
+	float: left;
+	position: relative;
+	width: 50%;
+	z-index: 10;
+	cursor: pointer;
+	height: auto;
+	text-align: center;
+	text-overflow: ellipsis;
+}
+
+.topbar .item-middle-large p {
+	margin: 8px;
+    margin-top: 12px;
+	max-height: 24px;
+    white-space: nowrap;
+	width: 95%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.topbar .item-middle-large div {
+    float: left;
+    margin: 8px 0px 8px 0px;
+	max-height: 24px;
+    white-space: nowrap;
+	width: 85%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+    position: relative;
+}
+
+.topbar .item-middle-large i {
+    float: left;
+    position: relative;
+    margin-top: 3px;
+    margin-right: 5px;
+}
+
+.topbar .item-middle p {
+	margin: 8px;
+    margin-top: 12px;
+	white-space: nowrap;
+	width: 95%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-height: 24px;
+}
+
+.topbar .item-middle div {
+    float: left;
+	max-height: 24px;
+    margin: 8px 0px 8px 0px;
+    white-space: nowrap;
+	width: 85%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+    position: relative;
+}
+
+.topbar .item-middle i {
+    float: left;
+    position: relative;
+    margin-right: 5px;
+    margin-top: 3px;
+}
+
+.topbar .item-large {
+	float: left;
+	position: relative;
+	width: 25%;
+	height: 32px;
+	z-index: 5;
+	cursor: pointer;
+	text-align: center;
+}
+
+.topbar .item p {
+	margin: 5px;
+	padding: 3px;
+    white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.topbar .item-large p {
+	margin: 0;
+	padding: 6px;
+    white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.topbar .icon {
+	font-size: 18px;
+}
+
+
+/** Content Wrapper **/
+.content {
+	position: absolute;
+	top: 32px;
+	left: 0px;
+	right: 0px;
+	bottom: 60px;
+	width: 100%;
+	overflow: auto;
+	padding: 0;
+	margin: 0;
+}
+
+.content-full {
+	position: absolute;
+	top: 32px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	width: 100%;
+	overflow: auto;
+	padding: 0;
+	margin: 0;
+}
+
+
+/** Grid System **/
+.grid {
+	float: left;
+	position: relative;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+.grid .vertical {
+	float: left;
+	position: relative;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+.grid .vertical li {
+	float: left;
+	position: relative;
+	width: 100%;
+	margin-bottom: 2px;
+}
+
+.grid .vertical li:last-child {
+	margin-bottom: 0;
+}
+
+.grid .horizontal {
+	float: left;
+	position: relative;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.grid .horizontal li {
+	float: left;
+	position: relative;
+	width: auto;
+	margin-right: 2px;
+}
+
+.grid .horizontal li:last-child {
+	margin-right: 0;
+}
+
+.grid .full {
+	float: left;
+	position: relative;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.grid .full .span50 {
+	float: left;
+	position: relative;
+	width: 49%;
+	margin-right: 2px;
+	margin-bottom: 2px;
+}
+
+.grid .full .span50:nth-child(even) {
+	margin-right: 0;
+}
+
+.grid .full .span33 {
+	float: left;
+	position: relative;
+	width: 32%;
+	margin-right: 2px;
+	margin-bottom: 2px;
+}
+
+.grid .full .span33:nth-child(3n) {
+	margin-right: 0px;
+}
+
+.grid .full .span25 {
+	float: left;
+	position: relative;
+	width: 24%;
+	margin-right: 2px;
+	margin-bottom: 2px;
+}
+
+.grid .full .span25:nth-child(4n) {
+	margin-right: 0px;
+}
+
+.grid .separator {
+	width: 100%;
+	float: left;
+	position: relative;
+	margin: 0;
+	padding: 0;
+	height: auto;
+}
+
+.grid .separator p {
+	padding: 5px;
+}
+
+
+/** Sign in and Register Button */
+.button-signin, .button-register {
+	font-size: 22px;
+	padding: 20px 0px 20px 0px;
+	width: 90%;
+}
+
+/** Dashboard Listing && Download Listing **/
+.dashboard-planes-selector, .downloads {
+	overflow: auto;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	width: 100%;
+	height: 100%;
+}
+
+.dashboard-planes-selector .plane-icon {
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+	top: 20px;
+	padding: 0;
+	margin: 0;
+	z-index: 0;
+	width: 125px;
+}
+
+.downloads .plane-icon {
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+	top: 5px;
+	padding: 0px;
+	margin: 0px;
+	z-index: 0;
+	width: 125px;
+}
+
+.dashboard-planes-selector .vertical li , .downloads .vertical li{
+	overflow: hidden;
+}
+
+.dashboard-planes-selector .plane-icon img, .downloads .plane-icon img {
+	width: 100%;
+	margin: 0px;
+    padding: 0px;
+}
+
+.dashboard-planes-selector .vertical li .holder, .downloads .vertical li .holder {
+	float: left;
+	position: relative;
+	margin-top: 10px;
+	margin-left: 5px;
+	padding: 10px;
+	width: auto;
+}
+
+.dashboard-planes-selector .vertical li .delete {
+	position: absolute;
+	left: 15px;
+	top: 35%; 
+	display: none;
+}
+
+.dashboard-planes-selector .vertical li .handle {
+	position: absolute;
+	right: 0px;
+	width: 40px;
+	top: 25%;
+	display: none;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	z-index: 10;
+}
+
+.dashboard-planes-selector .vertical li .handle .item {
+	float: left;
+	position: relative;
+	width: 20px;
+	height: 5px;
+	margin-top: 3px;
+	margin-left: 12px;
+}
+
+.dashboard-planes-selector .heading, .downloads .header {
+	width: auto;
+	position: relative;
+	padding: 0px;
+	margin-left: 0px;
+	margin-top: 5px;
+	margin-bottom: 0px;
+	margin-right: 0px;
+}
+
+.dashboard-planes-selector .subheading, .downloads .subheading {
+	width: auto;
+	position: relative;
+	margin-left: 0px;
+	margin-top: 3px;
+}
+
+.dashboard-planes-selector .vertical li ul {
+	width: auto;
+	padding: 0;
+	position: relative;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	list-style-type: none;
+	background: none;
+}
+
+.dashboard-planes-selector .vertical li ul li {
+	float: left;
+	width: auto;
+	font-size: 14px;
+	position: relative;
+    margin: 0px;
+	padding: 10px 5px 10px 5px;
+    z-index: 999;
+}
+
+/** Checklist **/
+.checklist {
+	position: absolute;
+	width: 100%;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	top: 0px;
+	height: 100%;
+	overflow: auto;
+}
+
+.checklist .vertical li .icon {
+	font-size: 34px;
+	float: left;
+	position: relative;
+	margin-top: 15px;
+	margin-left: 5px;
+	display: block;
+}
+
+.checklist .vertical li .holder {
+	float: left;
+	position: relative;
+	margin-top: 10px;
+	margin-left: 5px;
+	width: auto;
+}
+
+.checklist .vertical li .check {
+	font-size: 16px;
+	position: relative;
+	width: auto;
+}
+
+.checklist .vertical li .response {
+	font-size: 12px;
+	margin-top: 5px;	
+	margin-bottom: 10px;
+	position: relative;
+	width: auto;
+}
+
+.checklist .vertical li .delete {
+	position: absolute;
+	left: 15px;
+	top: 28%;
+	display: none;
+}
+
+.checklist .vertical li .handle {
+	position: absolute;
+	right: 0px;
+	width: 40px;
+	top: 10px;
+	display: none;
+}
+
+.checklist .vertical li .handle .item {
+	float: left;
+	position: relative;
+	width: 20px;
+	height: 5px;
+	margin-top: 3px;
+	margin-left: 12px;
+}
+
+.checklist .vertical li .add {
+	position: absolute;
+	right: 60px;
+	top: 32%;
+	display: none;
+}
+
+/** Checklist Sections Menu **/
+.check-sections {
+	position: absolute;
+	top: 32px;
+	left: 10%;
+	width: 70%;
+	bottom: 62px;
+	z-index: 99999;
+	overflow: auto;
+}
+
+.check-sections .vertical {
+	float: left;
+	position: relative;
+	width: 100%;
+	margin: 0;
+	margin-top: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+.check-sections .vertical li {
+	float: left;
+	position: relative;
+	width: 100%;
+}
+
+.shadow {
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	left: 0px;
+	height:30px;
+	z-index: 999;
+	margin: 0px;
+	padding: 0px;
+}
+
+/** Loader and Info Boxes **/
+.loader {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 300px;
+	margin-left: -28.5px;
+	height: 100px;
+	margin-top: -28.5px;
+	z-index: 99999999;
+}
+
+.loader img {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+.info {
+	position: absolute;
+	top: 35%;
+	left: 0%;
+	width: 100%;
+	margin-left: 0px;
+	height: auto;
+	margin-top: 0px;
+	z-index: 9999;
+}
+
+.info figcaption {
+	float: left;
+	position: relative;
+	margin: 0px;
+	padding: 20px;
+	width: 97%;
+	font-size: 16px;
+}
+
+.model {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	left: 0px;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	background: rgba(0,0,0,0.75);
+	display: none;
+	z-index: 99999999;
+}
+
+
+/** Form Stuff **/
+form {
+	float: left;
+	position: relative;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+form label {
+	position: relative;
+	margin: 10px auto;
+	padding: 5px;
+	text-align: left;
+	width: 90%;
+	height: 16px;
+	font-size: 12px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	display:block;
+}
+
+/** Container Wrapper for Scroll **/
+.container {
+	position: absolute;
+	width: 100%;
+	height: auto;
+	top: 0px;
+	left: 0px;
+}
+
+.dashcontent {
+	position: absolute;
+	width: 100%;
+	top: 80px;
+	bottom: 60px;
+	left: 0px;
+	right: 0px;
+}
+
+/** Emergency Sub Listing **/
+/** Checklist **/
+.emergencies {
+	position: absolute;
+	width: 100%;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	top: 0px;
+	height: 100%;
+	overflow: auto;
+	list-style-type: none;
+}
+
+.emergencies .icon {
+	float: left;
+	width: 100%;
+	position: relative;
+	text-align: center;
+	padding: 5px;
+}
+
+.emergencies .icon img {
+	width: 45%;
+}
+
+.emergencies .section-name {
+	float: left;
+	position: relative;
+	width: 100%;
+	text-align: center;
+	padding: 5px;
+	font-size: 14px; 
+}
+
+.emergencies ul {
+	position: relative;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+
+.emergencies ul li {
+	float: left;
+	position: relative;
+	width: 43%;
+	margin: 0px;
+	padding: 10px;
+	height: 64px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	overflow hidden;
+}
+
+#emergency-items {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+/** Product Details **/
+.detailsHeading {
+	float: left;
+	position: relative;
+	width: 100%;
+	height: auto;
+	margin: 0;
+	padding: 0;
+}
+
+.productImage {
+	float: left;
+	position: relative;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+	text-align: center;
+}
+
+.productImage img {
+	width: 100%;
+}
+
+.detailsHeading h1 {
+	float: left;
+	width: 100%;
+	position: relative;
+	padding: 5px;
+	margin: 5px;
+}
+
+.detailsHeading .buynow {
+	float: right;
+	margin: 5px;
+	padding: 10px;
+}
+
+.details {
+	float: left;
+	position: relative;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+}
+
+.details p {
+	float: left;
+	position: relative;
+	width: 97%;
+	margin: 0px;
+	margin-left: 5px;
+	padding: 5px;
+}
+
+.detailsHeading .productModel {
+	float: left;
+	position: relative;
+	width: auto;
+	margin: 5px;
+	padding: 5px;
+}
+
+.details .modelYear {
+	width: 97%;
+	margin: 5px;
+	padding: 0px;
+	float: left;
+	position: relative;
+}
+
+.details .description {
+	float: left;
+	position: relative;
+	margin: 0px;
+	margin-left: 5px;
+	padding: 5px;
+	width: 97%;
+}
+
+.details .row {
+	float: left;
+	position: relative;
+	width: 100%;
+	margin: 0;
+	
+}
+
+.productDetailsListing {
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+/** Currently Logged in User Display **/
+.currentLogin {
+    width: 92%;
+    height: auto;
+    font-size: 12px;
+    position: relative;
+    padding: 5px;
+    margin: 5px;
+}
+.currentLogin .icon {
+    font-size: 14px;
+    color: #f1f1f1;
+    float: left;
+}
+
+.currentLogin .user {
+    float: left;
+    position: relative;
+    width: auto;
+    height: auto;
+    margin-left: 5px;
+    text-wrap: unrestricted;
+}
+
+/** Version display **/
+.version {
+	position: absolute;
+	bottom: 0px;
+	right: 10px;
+	color: #d4d4d4;
+	font-size: 11px;
+}
+
+/** MISC **/
+.row {
+	float: left;
+	position: relative;
+	width: 100%;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+/** iOS HTML Recreation Elements **/
+.flyover {
+	position: absolute;
+	top: 20px;
+	left: 4px;
+	bottom: 8px;
+	right: 0px;
+	width: 97%;
+    display: none;
+	background: #aaadb3; /* Old browsers */
+background: -moz-linear-gradient(top,  #aaadb3 0%, #0a162e 4%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#aaadb3), color-stop(4%,#0a162e)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #aaadb3 0%,#0a162e 4%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #aaadb3 0%,#0a162e 4%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #aaadb3 0%,#0a162e 4%); /* IE10+ */
+background: linear-gradient(to bottom,  #aaadb3 0%,#0a162e 4%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#aaadb3', endColorstr='#0a162e',GradientType=0 ); /* IE6-9 */
+border-radius: 8px;
+-webkit-border-radius: 8px;
+-webkit-box-shadow:  0px 0px 0px 1px rgba(73, 73, 73, 0.75);
+box-shadow:  0px 0px 0px 1px rgba(73, 73, 73, 0.75);
+border: 1px solid #0f0f0f;
+overflow: visible;
+z-index: 999999;
+}
+
+.flyover:before {
+	content: "";
+	position: absolute;
+	background: #aaadb3;
+	transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);
+	top: -14px;
+	left: 45%;
+	width: 25px;
+	height: 25px;
+	border-top: 1px solid #0f0f0f;
+	border-left: 1px solid #0f0f0f;
+	-webkit-box-shadow:  -1px -1px 0px 0px rgba(73, 73, 73, 0.75);
+    box-shadow:  -1px -1px 0px 0px rgba(73, 73, 73, 0.75);
+background: #9fa3ab; /* Old browsers */
+background: -moz-linear-gradient(-45deg,  #9fa3ab 49%, #3b4458 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, right bottom, color-stop(49%,#9fa3ab), color-stop(100%,#3b4458)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(-45deg,  #9fa3ab 49%,#3b4458 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(-45deg,  #9fa3ab 49%,#3b4458 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(-45deg,  #9fa3ab 49%,#3b4458 100%); /* IE10+ */
+background: linear-gradient(135deg,  #9fa3ab 49%,#3b4458 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9fa3ab', endColorstr='#3b4458',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+z-index: 999999;
+}
+
+.flyover .inside {
+	background: #0c0c0c;
+	-webkit-box-shadow: inset 0px 0px 5px 3px rgba(0, 0, 0, 0.35);
+    box-shadow: inset 0px 0px 5px 3px rgba(0, 0, 0, 0.35);
+    border-radius: 8px;
+-webkit-border-radius: 8px;
+	position: absolute;
+	overflow: auto;
+	width: 97%;
+	top: 5px;
+	left: 5px;
+	right: 5px;
+	bottom: 5px;
+	z-index: 999999;
+}
+
+.flyover ul { 
+	float: left;
+	width: 100%;
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+	z-index: 999999;
+}
+
+.flyover ul li {
+	float: left;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+	border-bottom: 1px solid #242424;
+}
+
+.flyover ul li:hover p {
+	color: #ffffff;
+}
+
+.flyover ul li:last-child {
+	border-bottom: 0px;
+}
+
+.flyover ul .active {
+	background: #0589f4; /* Old browsers */
+	background: -moz-linear-gradient(top,  #0589f4 0%, #015fe6 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#0589f4), color-stop(100%,#015fe6)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #0589f4 0%,#015fe6 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #0589f4 0%,#015fe6 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #0589f4 0%,#015fe6 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #0589f4 0%,#015fe6 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0589f4', endColorstr='#015fe6',GradientType=0 ); /* IE6-9 */
+	color: #ffffff;
+}
+
+.flyover ul .active p {
+	color: #ffffff;
+}
+
+.flyover ul li p {
+	width: 100%;
+	padding: 10px;
+	margin: 0px;
+	font-family: Myriad;
+	font-size: 22px;
+	color: #ffffff;
+}
+
+/** Loading Symbol **/
+.ball {
+	top: 0px;
+	left: 0px;
+	position: absolute;
+	background-color: rgba(0,0,0,0.5);
+	border:5px solid rgba(255,20,20,0.9);
+	opacity:.9;
+	border-top:5px solid rgba(0,0,0,0);
+	border-left:5px solid rgba(0,0,0,0);
+	border-radius:50px;
+	box-shadow: 0 0 35px rgb(255,20,20); 
+	width:50px;
+	height:50px;
+	-moz-animation:spin .5s infinite linear;
+	-webkit-animation:spin .5s infinite linear;
+}
+.ball1 {
+	background-color: rgba(0,0,0,0.5);
+	border:5px solid rgba(255,20,20,0.9);
+	opacity:.9;
+	border-top:5px solid rgba(0,0,0,0);
+	border-left:5px solid rgba(0,0,0,0);
+	border-radius:50px;
+	box-shadow: 0 0 15px rgb(255,20,20); 
+	width:30px;
+	height:30px;
+	position:absolute;
+	top: 10px;
+	left: 10px;
+	-moz-animation:spinoff .5s infinite linear;
+	-webkit-animation:spinoff .5s infinite linear;
+}
+@-moz-keyframes spin {
+	0% { -moz-transform:rotate(0deg); }
+	100% { -moz-transform:rotate(360deg); }
+}
+@-moz-keyframes spinoff {
+	0% { -moz-transform:rotate(0deg); }
+	100% { -moz-transform:rotate(-360deg); }
+}
+@-webkit-keyframes spin {
+	0% { -webkit-transform:rotate(0deg); }
+	100% { -webkit-transform:rotate(360deg); }
+}
+@-webkit-keyframes spinoff {
+	0% { -webkit-transform:rotate(0deg); }
+	100% { -webkit-transform:rotate(-360deg); }
+}
+
+/** Scrollbar **/
+.scrollbar {
+	position: absolute;
+	right:5px;
+	width: 5px;
+	background: #f1f1f1;
+	opacity: 0.5;
+	height: 100px;
+	z-index: 9999999;
+	border-radius: 2px;
+	-webkit-border-radius: 2px;
+}
+
+/** Global ul li **/
+ul li {
+	cursor: pointer;
+}
+
+/** Section Nav for Checklist **/
+.section-nav {
+	position: absolute;
+	top:0px;
+	height: 46px;
+	left: 0px;
+	width: 100%;
+	overflow: hidden;
+	text-align: center;
+	z-index: 99;
+	-webkit-box-shadow:  0px 3px 5px 1px rgba(0, 0, 0, 0.5);
+        
+        box-shadow:  0px 3px 5px 1px rgba(0, 0, 0, 0.5);
+}
+
+.section-nav .name {
+	position: absolute;
+	left: 46px;
+	right: 46px;
+	top: 0px;
+	height: 46px;
+}
+
+.section-nav .name p {
+	max-height: 46px;
+    white-space: nowrap;
+	width: 100%; 
+	font-weight: bold;
+	font-size: 22px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin-top: 12px;
+}
+
+.section-nav .nextSection {
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	width: 64px;
+	height: 46px;
+	overflow: hidden;
+	display: none;
+	text-align: center;
+}
+
+.section-nav .nextSection .icon {
+	position: relative;
+	margin-top: 5px;
+	font-size: 26px;
+}
+
+.section-nav .previousSection {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 64px;
+	height: 46px;
+	overflow: hidden;
+	display: none;
+	text-align: center;
+}
+
+.section-nav .previousSection .icon {
+	position: relative;
+	margin-top: 5px;
+	font-size: 26px;
+}
+
+.downloads .section-nav {
+	float: left;
+	position: relative;
+	height: 46px;
+	width: 100%;
+	overflow: hidden;
+	text-align: center;
+	z-index: 1;
+}
+
+.downloads .section-nav .nextSection {
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	width: 64px;
+	height: 46px;
+	overflow: hidden;
+	display: none;
+	text-align: center;
+}
+
+.downloads .section-nav .nextSection .icon {
+	position: relative;
+	font-size: 26px;
+}
+
+.back .icon {
+	font-size: 32px;
+}
+
+.topbar .back p {
+	margin-top: -5px;
+}
+
+/** Media Queries for Emergency Icons **/
+@media only screen and (orientation: portrait) {
+	.emergencies ul li {
+		width: 43%;
+	}
+}
+
+@media only screen and (orientation: landscape) {
+	.emergencies ul li {
+		width: 21%;
+	}
+}

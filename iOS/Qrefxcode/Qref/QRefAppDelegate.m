@@ -31,10 +31,18 @@
     [self.navigationController setNavigationBarHidden:true];
     [self.window setRootViewController:self.navigationController];
     
-    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"phoneView" ofType:@"html"]];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"phoneView" ofType:@"html"]];
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
-    [self.webView gotoURL:request];
+        [self.webView gotoURL:request];
+    }
+    else {
+        NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"tabletView" ofType:@"html"]];
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        
+        [self.webView gotoURL:request];
+    }
     
     return YES;
 }

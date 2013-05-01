@@ -33,6 +33,7 @@
 		46CA88A616E9153E00A0E36D /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CA88A516E9153E00A0E36D /* Reachability.m */; };
 		46CA88A816E9157900A0E36D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46CA88A716E9157900A0E36D /* SystemConfiguration.framework */; };
 		46D0A5581607D1BA0007247D /* QRefWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D0A5571607D1BA0007247D /* QRefWebView.m */; };
+		46E0934F1731A392007ACB9B /* tabletView.html in Resources */ = {isa = PBXBuildFile; fileRef = 46E0934E1731A392007ACB9B /* tabletView.html */; };
 		46E188F716B6F3FF0014D937 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 46E188F616B6F3FF0014D937 /* Icon@2x.png */; };
 		46E188FA16B6F4020014D937 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 46E188F916B6F4020014D937 /* Icon.png */; };
 		46E1D6921700DD08003D42C4 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E1D6911700DD08003D42C4 /* SSKeychain.m */; };
@@ -82,6 +83,7 @@
 		46CA88A716E9157900A0E36D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		46D0A5561607D1BA0007247D /* QRefWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRefWebView.h; sourceTree = "<group>"; };
 		46D0A5571607D1BA0007247D /* QRefWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRefWebView.m; sourceTree = "<group>"; };
+		46E0934E1731A392007ACB9B /* tabletView.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = tabletView.html; sourceTree = "<group>"; };
 		46E188F616B6F3FF0014D937 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		46E188F916B6F4020014D937 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		46E1D6901700DD08003D42C4 /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 		46B2668C15C05552002E9931 /* HTML */ = {
 			isa = PBXGroup;
 			children = (
+				46E0934E1731A392007ACB9B /* tabletView.html */,
 				4659C5C81625E851000A68E2 /* css */,
 				4659C5C91625E851000A68E2 /* images */,
 				4659C5CA1625E851000A68E2 /* js */,
@@ -287,6 +290,7 @@
 				46E188F716B6F3FF0014D937 /* Icon@2x.png in Resources */,
 				46E188FA16B6F4020014D937 /* Icon.png in Resources */,
 				463A977D170CCEE5007F2FA0 /* useragents.txt in Resources */,
+				46E0934F1731A392007ACB9B /* tabletView.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -397,7 +401,7 @@
 				GCC_PREFIX_HEADER = "Qref/Qref-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Qref/Qref-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SDKROOT)/usr/lib/system\"",
@@ -408,7 +412,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2DD82692-7DBF-4668-BD04-1F883118DDE1";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -422,7 +426,7 @@
 				GCC_PREFIX_HEADER = "Qref/Qref-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Qref/Qref-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SDKROOT)/usr/lib/system\"",
@@ -433,7 +437,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2DD82692-7DBF-4668-BD04-1F883118DDE1";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -76,10 +76,17 @@
 			this.scrollBar[0].addEventListener("touchmove", function(e) {
 				self.touchMove(e);
 			}, false);
-			 
-			window.addEventListener("touchend", function(e) {
-				self.touchEnd(e);
-			}, false);
+			
+			if(window.addEventListener) {
+				window.addEventListener("touchend", function(e) {
+					self.touchEnd(e);
+				}, false);
+			}
+			else {
+				window.ontouchend = function(e) {
+					self.touchEnd(e);
+				};
+			}
  		}
  	
  		this.scrollBar.bind("dragstart", function(e) { e.preventDefault(); });
