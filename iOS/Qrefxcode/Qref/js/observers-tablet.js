@@ -293,7 +293,7 @@ var E6BObserver = new zimoko.Observable({
 
 E6BObserver.subscribe(E6BObserver);
 
-var StoreDataSource = new zimoko.DataSource({pageSize: 25});
+var StoreDataSource = new zimoko.DataSource({pageSize: 20});
 
 var StoreObserver = new zimoko.Observable({
 	dataSource: StoreDataSource,
@@ -1035,7 +1035,7 @@ var AppObserver = new zimoko.Observable({
 
 AppObserver.subscribe(AppObserver);
 
-var DashboardDataSource = new zimoko.DataSource({pageSize: 25});
+var DashboardDataSource = new zimoko.DataSource({pageSize: 20});
 
 var DashboardObserver = new zimoko.Observable({
 	items: new zimoko.ObservableCollection(),
@@ -1212,7 +1212,7 @@ var DashboardObserver = new zimoko.Observable({
 		e.preventDefault();
 		MenuObserver.toggle();
 	},
-	dataSource: new zimoko.DataSource({pageSize: 25}),
+	dataSource: new zimoko.DataSource({pageSize: 20}),
 	editing: false,
 	token: undefined,
 	onPropertyChanged: function(sender, property) {
@@ -1244,7 +1244,7 @@ var DashboardObserver = new zimoko.Observable({
 				this.dataSource.read();
 			}
 			else {
-				this.dataSource = new zimoko.DataSource({pageSize: 25});
+				this.dataSource = new zimoko.DataSource({pageSize: 20});
 				this.dataSource.preventRead = true;
 				this.dataSource.sort(new zimoko.Sort(['manufacturer.name', 'model.name', 'index'], 'asc'));
 				this.dataSource.filter(new zimoko.FilterSet('and', [
@@ -1314,7 +1314,7 @@ var ChecklistObserver = new zimoko.Observable({
 	nextSectionText: 'Next Section',
 	previousSectionText: 'Previous Section',
 	showSections: false,
-	itemsDataSource: new zimoko.DataSource({pageSize: 25}),
+	itemsDataSource: new zimoko.DataSource({pageSize: 20}),
 	sectionsDataSource: new zimoko.DataSource({pageSize: 1000}),
 	onPropertyChanged: function(sender, property) {
 		if(property == 'checklist') {			

@@ -53,7 +53,7 @@ html, body {
 	text-align: left;
 	width: 90%;
 	height: 36px;
-	font-size: 16px;
+	font-size: 22px;
 	-webkit-border-radius: 10px;
 	border-radius: 10px;
 	display:block;
@@ -441,8 +441,8 @@ html, body {
 }
 
 .topbar .item-large p {
-	margin: 0;
-	padding: 6px;
+	margin: 5px;
+	padding: 3px;
     white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -734,52 +734,54 @@ html, body {
 	float: left;
 	position: relative;
 	margin-top: 10px;
-	margin-left: 5px;
-	width: auto;
+	margin-left: 15px;
+	width: 98%;
 }
 
 .checklist .vertical li .check {
+	float: left;
 	font-size: 16px;
 	position: relative;
-	width: auto;
+	width: 49%;
 }
 
 .checklist .vertical li .response {
-	font-size: 12px;
+	float: right;
+	font-size: 16px;
 	margin-top: 5px;	
 	margin-bottom: 10px;
 	position: relative;
-	width: auto;
+	width: 49%;
 }
 
 .checklist .vertical li .delete {
 	position: absolute;
 	left: 15px;
-	top: 28%;
+	top: 5px;
 	display: none;
 }
 
 .checklist .vertical li .handle {
 	position: absolute;
 	right: 0px;
-	width: 40px;
-	top: 10px;
+	width: 25px;
+	top: 5px;
 	display: none;
 }
 
 .checklist .vertical li .handle .item {
 	float: left;
 	position: relative;
-	width: 20px;
-	height: 5px;
-	margin-top: 3px;
-	margin-left: 12px;
+	width: 15px;
+	height: 2px;
+	margin-top: 2px;
+	margin-left: 6px;
 }
 
 .checklist .vertical li .add {
 	position: absolute;
 	right: 60px;
-	top: 32%;
+	top: 8px;
 	display: none;
 }
 
@@ -936,7 +938,7 @@ form label {
 }
 
 .emergencies .icon img {
-	width: 45%;
+	width: 30%;
 }
 
 .emergencies .section-name {
@@ -1112,10 +1114,10 @@ form label {
 .flyover {
 	position: absolute;
 	top: 20px;
-	left: 4px;
-	bottom: 8px;
+	left: 21.5%;
+	height: 350px;
 	right: 0px;
-	width: 97%;
+	width: 400px;
     display: none;
 	background: #aaadb3; /* Old browsers */
 background: -moz-linear-gradient(top,  #aaadb3 0%, #0a162e 4%); /* FF3.6+ */
@@ -1141,7 +1143,7 @@ z-index: 999999;
 	transform: rotate(45deg);
 	-webkit-transform: rotate(45deg);
 	top: -14px;
-	left: 45%;
+	left: 48%;
 	width: 25px;
 	height: 25px;
 	border-top: 1px solid #0f0f0f;
@@ -1167,7 +1169,7 @@ z-index: 999999;
 -webkit-border-radius: 8px;
 	position: absolute;
 	overflow: auto;
-	width: 97%;
+	width: 97.5%;
 	top: 5px;
 	left: 5px;
 	right: 5px;
@@ -1405,5 +1407,9 @@ ul li {
 @media only screen and (orientation: landscape) {
 	.emergencies ul li {
 		width: 21%;
+	}
+	
+	.flyover {
+		left: 28.5%;
 	}
 }

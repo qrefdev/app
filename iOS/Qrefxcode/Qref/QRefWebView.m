@@ -22,20 +22,53 @@
         CGRect bounds = [[UIScreen mainScreen] bounds];
         CGFloat screenScale = [[UIScreen mainScreen] scale];
         
-        if(screenScale > 1) {
-            if(bounds.size.width * screenScale > 1000 || bounds.size.height * screenScale > 1000) {
-                self->startUpImage = [UIImage imageNamed:@"Default-568h@2x.png"];
+        if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            if(screenScale > 1) {
+                if(bounds.size.width * screenScale > 1000 || bounds.size.height * screenScale > 1000) {
+                    self->startUpImage = [UIImage imageNamed:@"Default-568h@2x.png"];
+                }
+                else {
+                    self->startUpImage = [UIImage imageNamed:@"Default@2x.png"];
+                }
             }
             else {
-                self->startUpImage = [UIImage imageNamed:@"Default@2x.png"];
+                self->startUpImage = [UIImage imageNamed:@"Default.png"];
             }
         }
-        else {
-            self->startUpImage = [UIImage imageNamed:@"Default.png"];
+        else if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+            if(screenScale > 1) {
+                if([UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeLeft || [UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeRight) {
+                    self->startUpImage = [UIImage imageNamed:@"Default-Landscape@2x~ipad.png"];
+                }
+                else {
+                    self->startUpImage = [UIImage imageNamed:@"Default-Portrait@2x~ipad.png"];
+                }
+            }
+            else {
+                if([UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeLeft || [UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeRight) {
+                    self->startUpImage = [UIImage imageNamed:@"Default-Landscape~ipad.png"];
+                }
+                else {
+                    self->startUpImage = [UIImage imageNamed:@"Default-Portrait~ipad.png"];
+                }
+            }
         }
         
-        self->imageView = [[UIImageView alloc] initWithImage:self->startUpImage];
-        [self->imageView setContentMode:UIViewContentModeScaleAspectFill];
+        if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            self->imageView = [[UIImageView alloc] initWithFrame:bounds];
+        }
+        else if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+            if([UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeLeft || [UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeRight) {
+                self->imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, bounds.size.height, bounds.size.width)];
+            }
+            else {
+                self->imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, bounds.size.width, bounds.size.height)];
+            }
+        }
+        
+        self->imageView.image = self->startUpImage;
+        
+        [self->imageView setContentMode:UIViewContentModeTopLeft];
         
         self->webView = [[UIWebView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
         self->webView.delegate = self;
@@ -675,7 +708,16 @@
         CGRect bounds = [[UIScreen mainScreen] bounds];
         
         [self setView:self->webView];
-        [self->webView setFrame: CGRectMake(0, 18, bounds.size.width, bounds.size.height - 18)];
+        
+        if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft ||
+           [[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeRight) {
+        
+            [self->webView setFrame:CGRectMake(0, 18, bounds.size.height, bounds.size.width - 18)];
+        }
+        else {
+            [self->webView setFrame: CGRectMake(0, 18, bounds.size.width, bounds.size.height - 18)];
+        }
+        
         [[UIApplication sharedApplication] setStatusBarHidden:NO];
         
         [self->imageView removeFromSuperview];
