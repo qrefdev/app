@@ -1141,7 +1141,7 @@ z-index: 999999;
 	transform: rotate(45deg);
 	-webkit-transform: rotate(45deg);
 	top: -14px;
-	left: 45%;
+	left: 46.3%;
 	width: 25px;
 	height: 25px;
 	border-top: 1px solid #0f0f0f;
@@ -1406,4 +1406,16 @@ ul li {
 	.emergencies ul li {
 		width: 21%;
 	}
+    
+    .flyover {
+        width: 98.5%;
+    }
+    
+    .flyover .inside {
+        width: 98.3%;
+    }
+    
+    .flyover:before {
+        left:47.5%;
+    }
 }

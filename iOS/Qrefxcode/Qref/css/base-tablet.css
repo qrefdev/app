@@ -1114,7 +1114,7 @@ form label {
 .flyover {
 	position: absolute;
 	top: 20px;
-	left: 21.5%;
+	left: 23.3%;
 	height: 350px;
 	right: 0px;
 	width: 400px;
@@ -1410,6 +1410,6 @@ ul li {
 	}
 	
 	.flyover {
-		left: 28.5%;
+		left: 29.8%;
 	}
 }

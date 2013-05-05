@@ -37,7 +37,7 @@
         }
         else if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
             if(screenScale > 1) {
-                if([UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeLeft || [UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeRight) {
+                if([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft || [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight) {
                     self->startUpImage = [UIImage imageNamed:@"Default-Landscape@2x~ipad.png"];
                 }
                 else {
@@ -45,7 +45,7 @@
                 }
             }
             else {
-                if([UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeLeft || [UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeRight) {
+                if([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft || [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight) {
                     self->startUpImage = [UIImage imageNamed:@"Default-Landscape~ipad.png"];
                 }
                 else {
@@ -58,7 +58,7 @@
             self->imageView = [[UIImageView alloc] initWithFrame:bounds];
         }
         else if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-            if([UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeLeft || [UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeRight) {
+            if([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft || [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight) {
                 self->imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, bounds.size.height, bounds.size.width)];
             }
             else {
@@ -68,7 +68,7 @@
         
         self->imageView.image = self->startUpImage;
         
-        [self->imageView setContentMode:UIViewContentModeTopLeft];
+        [self->imageView setContentMode:UIViewContentModeScaleAspectFill];
         
         self->webView = [[UIWebView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
         self->webView.delegate = self;

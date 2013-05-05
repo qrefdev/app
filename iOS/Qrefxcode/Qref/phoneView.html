@@ -127,7 +127,7 @@
 				</div>
 				<div class="content">
 					<div class="section-nav sections" data-bind="tap: sectionsTap">
-						<i class="icon icon-caret-down" style="position: absolute; left: 48%; bottom: -3px;"></i>
+						<i class="icon icon-caret-down" style="position: absolute; left: 49%; bottom: -3px;"></i>
 						<div class="name">
 							<p data-bind="html: sectionName"></p>
 						</div>
@@ -279,7 +279,7 @@
 				</div>
 				<div class="content e6b" style="bottom: 0px;">
 					<div class="section-nav sections" data-bind="tap: conversionsTap">
-						<i class="icon icon-caret-down" style="position: absolute; left: 48%; bottom: -3px;"></i>
+						<i class="icon icon-caret-down" style="position: absolute; left: 49%; bottom: -3px;"></i>
 						<div class="name">
 							<p data-bind="html: conversionSelectedName"></p>
 						</div>
@@ -443,6 +443,8 @@
 							<input class="textbox required" data-bind="value: response" type="text" id="response" name="response" placeholder="response" />
 							
 							<div style="margin: 10px auto; width: 90%" class="submit" data-bind="visible: root.adding"><div class="special"><p>Save</p><i class="icon icon-arrow-right"></i></div></div>
+                            
+                            <div style="margin: 10px auto; width: 90%" class="button" data-bind="tap: root.backTap, visible: !root.adding"><div class="special"><p>Save</p><i class="icon icon-arrow-right"></i></div></div>
 						</form>
 					</div>
 				</div>
@@ -467,6 +469,8 @@
 					<div style="float: left; position: relative; width: 100%; margin-top: 5px;" data-bind="with: item">
 						<form id="editTailForm" method="post" action="javascript:void(null);">
 							<input class="textbox required" data-bind="value: tailNumber" type="text" id="tailnumber" name="tailnumber" placeholder="tail number" />
+                            
+                            <div style="margin: 10px auto; width: 90%" class="button" data-bind="tap: root.backTap"><div class="special"><p>Save</p><i class="icon icon-arrow-right"></i></div></div>
 						</form>
 					</div>
 				</div>
@@ -493,8 +497,8 @@
 						<input class="textbox required" type="email" id="email" name="email" data-bind="keyup: keyUp"  placeholder="email" />
 						<input class="textbox required" type="password" id="password" data-bind="keyup: keyUp" name="password" placeholder="password" />
 						<div style="margin: 10px auto 0px auto; width: 90%" class="submit"><div class="special"><p>Sign in</p><i class="icon icon-arrow-right"></i></div></div>
-						<div class="button" data-bind="tap: navTap" data-link="passwordRecovery" style="border-radius: 0px; margin: 10px auto 0px auto; width: 90%; -webkit-border-radius: 0px;"><div class="special2"><p>Forgot password</p><i class="icon icon-question-sign"></i></div></div>
-						<div class="button" data-bind="tap: navTap" data-link="register" style="border-radius: 0px; margin: 0px auto; width: 90%; -webkit-border-radius: 0px;" ><div class="special2"><p>Need an account</p><i class="icon icon-question-sign"></i></div></div>
+						<div class="button" data-bind="tap: navTap" data-link="passwordRecovery" style="margin: 10px auto 0px auto; width: 90%;"><div class="special2"><p>Forgot password</p><i class="icon icon-question-sign"></i></div></div>
+						<div class="button" data-bind="tap: navTap" data-link="register" style="margin: 0px auto; width: 90%;" ><div class="special2"><p>Need an account</p><i class="icon icon-question-sign"></i></div></div>
 						</form>
 					</div>
 				</div>
@@ -658,16 +662,16 @@
         <div class="theme-dark model" id="savebox">
 			<figure class="info" >
 				<figcaption class="data">Saved Changes</figcaption>
-				<button class="okay no" style="width: 90%; margin: 20px auto; -webkit-border-radius: 0px; border-radius: 0px;"><div class="special"><p>OK</p><i class="icon icon-ok"></i></div></button>
-                <button class="okay yes" style="width: 90%; margin: 20px auto; -webkit-border-radius: 0px; border-radius: 0px;"><div class="special"><p>Sync to Web</p><i class="icon icon-ok"></i></div></button>
+				<div class="button okay no" style="width: 90%; margin: 20px auto;"><div class="special"><p>OK</p><i class="icon icon-ok"></i></div></div>
+                <div class="button okay yes" style="width: 90%; margin: 20px auto;"><div class="special"><p>Sync to Web</p><i class="icon icon-ok"></i></div></div>
 			</figure>
 		</div>
         
         <div class="theme-dark model" id="signoutbox">
 			<figure class="info" >
 				<figcaption class="data">Sign out?</figcaption>
-				<button class="okay yes" style="width: 90%; margin: 20px auto; -webkit-border-radius: 0px; border-radius: 0px;"><div class="special"><p>Sign out</p><i class="icon icon-ok"></i></div></button>
-                <button class="okay no" style="width: 90%; margin: 20px auto; -webkit-border-radius: 0px; border-radius: 0px;"><div class="special"><p>Cancel</p><i class="icon icon-ok"></i></div></button>
+				<div class="button okay yes" style="width: 90%; margin: 20px auto;"><div class="special"><p>Sign out</p><i class="icon icon-ok"></i></div></div>
+                <div class="button okay no" style="width: 90%; margin: 20px auto;"><div class="special"><p>Cancel</p><i class="icon icon-ok"></i></div></div>
 			</figure>
 		</div>
 		

@@ -1334,6 +1334,7 @@ var ChecklistObserver = new zimoko.Observable({
 				
 				setTimeout(function() {
 					_this.itemsDataSource.data(_this.checklist[_this.list][_this.section].items);
+                    _this.itemsDataSource.read();
 				}, 100);
 				
 				this.sectionsDataSource.clear();
@@ -1361,8 +1362,6 @@ var ChecklistObserver = new zimoko.Observable({
 				this.checklist.set('lastPosition', {section: this.section, list: this.list, scroll: 0});
 				
 				$('.scrollable').stop();
-				
-				this.itemsDataSource.read();
 				
 				setTimeout(function() {
 					$('#checklist .checklist').scrollTop(0);
@@ -1399,6 +1398,7 @@ var ChecklistObserver = new zimoko.Observable({
 				
 				setTimeout(function() {
 					_this.itemsDataSource.data(_this.checklist[_this.list][_this.category].items[_this.section].items);
+                    _this.itemsDataSource.read();
 				}, 100);
 				
 				this.sectionsDataSource.clear();
@@ -1414,6 +1414,7 @@ var ChecklistObserver = new zimoko.Observable({
 				
 				setTimeout(function() {
 					_this.itemsDataSource.data(_this.checklist[_this.list][_this.section].items);
+                    _this.itemsDataSource.read();
 				}, 100);
 				
 				this.sectionsDataSource.clear();
@@ -1430,8 +1431,6 @@ var ChecklistObserver = new zimoko.Observable({
 			
 			$('#checklist-nav li').removeClass('active');
 			$('#checklist-nav li[data-link="' + this.list +'"]').addClass('active');
-			
-			this.itemsDataSource.read();
 			
 			this.checklist.set('lastPosition', {section: this.section, category: this.category, list: this.list, scroll: 0});
 			

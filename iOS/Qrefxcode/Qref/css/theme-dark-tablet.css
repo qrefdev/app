@@ -229,7 +229,8 @@ background: -o-linear-gradient(top,  #292e32 0%,#111214 100%); /* Opera 11.10+ *
 background: -ms-linear-gradient(top,  #292e32 0%,#111214 100%); /* IE10+ */
 background: linear-gradient(to bottom,  #292e32 0%,#111214 100%); /* W3C */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#292e32', endColorstr='#111214',GradientType=0 ); /* IE6-9 */
-
+    -webkit-border-radius: 5px;
+	border-radius: 5px;
 overflow: hidden;
 	height: 78px;
 	color: #d6dbdf;
@@ -464,9 +465,9 @@ border-top: 1px solid #2b2f32;
 }
 
 .theme-dark .checklist .vertical li .response {
-	color: #6b737e;
+	color: #d6dbdf;
 	font-family: Myriad, Helvetica;
-	font-size: 16px;
+	font-size: 24px;
 }
 
 .theme-dark .checklist .vertical li .delete {
