@@ -608,7 +608,7 @@ html, body {
 	position: absolute;
 	right: 0px;
 	bottom: 0px;
-	top: 20px;
+	top: 10px;
 	padding: 0;
 	margin: 0;
 	z-index: 0;
@@ -619,7 +619,7 @@ html, body {
 	position: absolute;
 	right: 0px;
 	bottom: 0px;
-	top: 5px;
+	top: 10px;
 	padding: 0px;
 	margin: 0px;
 	z-index: 0;
@@ -642,7 +642,7 @@ html, body {
 	margin-top: 10px;
 	margin-left: 5px;
 	padding: 10px;
-	width: auto;
+	width: 95%;
 }
 
 .dashboard-planes-selector .vertical li .delete {
@@ -692,17 +692,19 @@ html, body {
 .dashboard-planes-selector .vertical li ul {
 	width: auto;
 	padding: 0;
-	position: relative;
-	margin-top: 10px;
-	margin-bottom: 10px;
+	position: absolute;
+    margin: 0px;
+    top: 27.5%;
+    right: 145px;
 	list-style-type: none;
 	background: none;
 }
 
 .dashboard-planes-selector .vertical li ul li {
 	float: left;
+    position: relative;
 	width: auto;
-	font-size: 14px;
+	font-size: 18px;
 	position: relative;
     margin: 0px;
 	padding: 10px 5px 10px 5px;
@@ -938,7 +940,7 @@ form label {
 }
 
 .emergencies .icon img {
-	width: 30%;
+	width: 25%;
 }
 
 .emergencies .section-name {
@@ -1400,7 +1402,7 @@ ul li {
 /** Media Queries for Emergency Icons **/
 @media only screen and (orientation: portrait) {
 	.emergencies ul li {
-		width: 43%;
+		width: 21%;
 	}
 }
 

@@ -33,25 +33,14 @@ function Install(productId) {
         url: host + 'services/rpc/aircraft/product/authorize/install',
         success: function(data) {
            if(data.success)
-           {  
-				AppObserver.getUncachedChecklists(function(success) {
-					AppObserver.set('loading', false);
-					
-					if(success) {
-						var dialog = new Dialog('#infobox', 'A new check list has been created with the random tail number: ' + tailNumberIdentifier, function() {
-							Navigation.go('dashboard');
-						});
-					
-						dialog.show();
-					}
-					else {
-						var dialog = new Dialog('#infobox', 'Failed to load the new checklist from server! Please use the Sync option to try again at a later time!', function() {
-							Navigation.go('dashboard');
-						});
-						
-						dialog.show();
-					}
+           { 
+				var dialog = new Dialog('#infobox', 'A new check list has been created with the random tail number: ' + tailNumberIdentifier, function() {
+					Navigation.go('dashboard');
 				});
+		
+				dialog.show();
+				
+				Sync.sync();
            }
            else
            {

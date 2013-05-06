@@ -375,7 +375,7 @@ border-top: 1px solid #2b2f32;
 	color: #d6dbdf;
 	border: none;
 	font-family: MyriadBold, Myriad;
-	font-size: 10px;
+	font-size: 14px;
 	background: #11467c; /* Old browsers */
 background: #292e32; /* Old browsers */
 background: -moz-linear-gradient(top,  #292e32 0%, #111214 100%); /* FF3.6+ */
@@ -385,7 +385,7 @@ background: -o-linear-gradient(top,  #292e32 0%,#111214 100%); /* Opera 11.10+ *
 background: -ms-linear-gradient(top,  #292e32 0%,#111214 100%); /* IE10+ */
 background: linear-gradient(to bottom,  #292e32 0%,#111214 100%); /* W3C */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#292e32', endColorstr='#111214',GradientType=0 ); /* IE6-9 */
-	min-width: 40px;
+	min-width: 60px;
 	border-radius: 5px;
 	text-align: center;
 	margin-right: 2px;
@@ -465,9 +465,9 @@ border-top: 1px solid #2b2f32;
 }
 
 .theme-dark .checklist .vertical li .response {
-	color: #d6dbdf;
+	color: #adbfd9;
 	font-family: Myriad, Helvetica;
-	font-size: 24px;
+	font-size: 18px;
 }
 
 .theme-dark .checklist .vertical li .delete {
