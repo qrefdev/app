@@ -13,8 +13,13 @@
 #import "SSKeychain.h"
 #import "ImageDownloader.h"
 
+@protocol QRefWebViewProtocol <NSObject>
+
+- (void) responseReceived:(NSString *) invokeCommand value:(NSString *) value;
+
+@end
+
 @interface QRefWebView : UIViewController <UIWebViewDelegate, QrefAppPurchaseDelegate, ImageDownloaderDelegate> {
-    UIWebView *webView;
     NSUserDefaults *preferences;
     QrefInAppPurchaseManager *purchaseManager;
     NSMutableString *incomingData;
@@ -26,6 +31,9 @@
 }
 
 @property (nonatomic, strong) NSOperationQueue *imageQueue;
+@property (nonatomic, strong) UIWebView *webView;
+@property (nonatomic, strong) id<QRefWebViewProtocol> delegate;
+
 
 - (void) gotoURL: (NSURLRequest *) url;
 - (void) onload;

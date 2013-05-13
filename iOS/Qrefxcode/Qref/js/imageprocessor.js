@@ -5,14 +5,13 @@ function ImageProcessor(itemsToProcess, cacheType, icon) {
     this.type = cacheType;
     this.isIcon = icon;
     
-    var self = this;
-    
     this.init = function() {
         this.count = this.items.length;
         this.index = 0;
     };
     
     this.processImages = function() {
+        var self = this;
         if(this.count > 0)
         {
             var item = this.items[this.index];
@@ -42,7 +41,7 @@ function ImageProcessor(itemsToProcess, cacheType, icon) {
             {
                 setTimeout(function() {
                     self.processImages();
-                }, 100);
+                }, 125);
             }
         }
     };

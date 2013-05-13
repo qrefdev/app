@@ -83,7 +83,7 @@ function PushImage(data) {
 	}
 	else if(imageArray[2].toLowerCase() == "checklistlisting")
 	{
-		var item = $("#dashboard-planes li[data-id='" + imageArray[1] + "']");
+		var item = $("#dashboard li[data-id='" + imageArray[1] + "']");
 	
 		if(item.length > 0)
 			item.find(".plane-icon").html('<img src="' + imageArray[0] + '" />');
@@ -91,6 +91,7 @@ function PushImage(data) {
 	else if(imageArray[2].toLowerCase() == "productdetails")
 	{
 		var details = $("#productDetailsListing");
+        
 		details.find(".productImage").html('<img src="' + imageArray[0] + '" />');
 	}
 }

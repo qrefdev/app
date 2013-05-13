@@ -105,8 +105,6 @@ var zimoko = new (function() {})();
 		var process = new asyncEach(items, callback);
 	};
 	
-	zimoko.Async
-	
 	zimoko.ui = function() { };
 	
 	/** Parse an elements style string into a object **/

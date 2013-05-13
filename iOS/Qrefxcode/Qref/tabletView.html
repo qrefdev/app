@@ -145,7 +145,10 @@
 										</div>
 										<div class="delete" data-bind="tap: parent.deleteTap">delete</div>
 										<div class="add" data-bind="tap: parent.addTap, fadeVisible: parent.editing"><i class="icon-plus"></i></div>
-										<div class="handle" data-bind="fadeVisible: parent.editing"><div class="item"></div><div class="item"></div><div class="item"></div>
+										<div class="handle" data-bind="fadeVisible: parent.editing"><div class="item"></div><div class="item"></div><div class="item"></div></div>
+										<div class="checkmark" data-bind="visible: (function() { if(parent.canCheck && !parent.editing) return true; else return false; })(), tap: parent.checkTap">
+											<div class="checker" data-bind="visible: (function() { if(isChecked) return true; else return false; })()"><i class="icon icon-ok"></i></div>
+										</div>
 									</li>
 								</ul>
 							</div>
@@ -596,7 +599,7 @@
 				<ul>
 					<!--<li data-link="settings"><i class="icon icon-cog"></i><p>Settings</p></li>-->
 					<li data-link="dashboard" data-bind="tap: menuNavTap"><i class="icon icon-dashboard"></i><p>Dashboard</p></li>
-					<li data-bind="tap: downloadTap, visible: token"><i class="icon icon-download"></i><p>Download Models</p></li>
+					<li data-bind="tap: checkingTap, visible: token"><i class="icon icon-ok"></i><p>Checking</p> <label style="position: absolute; top: 15px; right: 5px;" onclick="return false;"><input id="checkingCheckbox" type="checkbox" class="ios-switch" /><div class="switch"></div></label></li>
 					<li data-link="changePassword" data-bind="tap: menuNavTap, visible: token" id="changepassword-menu"><i class="icon icon-lock"></i><p>Change Password</p></li>
 					<li data-link="signin" data-bind="tap: menuNavTap, visible: !token" id="signin-menu"><i class="icon icon-signin" ></i><p>Sign in</p></li>
 					<li data-link="register" data-bind="tap: menuNavTap, visible: !token" id="register-menu"><i class="icon icon-pencil"></i><p>Register</p></li>
@@ -679,7 +682,7 @@
 		<div class="theme-dark model" id="infobox">
 			<figure class="info" >
 				<figcaption class="data"></figcaption>
-				<button class="okay" style="width: 90%; margin: 20px auto; -webkit-border-radius: 0px; border-radius: 0px;"><div class="special"><p>OK</p><i class="icon icon-ok"></i></div></button>
+				<div class="button okay" style="width: 90%; margin: 20px auto;"><div class="special"><p>OK</p><i class="icon icon-ok"></i></div></div>
 			</figure>
 		</div>
 		</div>

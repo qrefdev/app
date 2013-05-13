@@ -70,11 +70,11 @@
         
         [self->imageView setContentMode:UIViewContentModeScaleAspectFill];
         
-        self->webView = [[UIWebView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-        self->webView.delegate = self;
+        self.webView = [[UIWebView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        self.webView.delegate = self;
         
-        [self->webView setBackgroundColor:[UIColor clearColor]];
-        //[self setView:self->webView];
+        [self.webView setBackgroundColor:[UIColor clearColor]];
+        //[self setView:self.webView];
         
         [self setView:self->imageView];
         
@@ -102,21 +102,21 @@
     Reachability * rch = [notif object];
     
     if([rch isReachable]) {
-        [self->webView stringByEvaluatingJavaScriptFromString:@"reachability = true;"];
+        [self.webView stringByEvaluatingJavaScriptFromString:@"reachability = true;"];
     }
     else {
-        [self->webView stringByEvaluatingJavaScriptFromString:@"reachability = false;"];
+        [self.webView stringByEvaluatingJavaScriptFromString:@"reachability = false;"];
     }
 }
 
 - (void) keyboardShown: (NSNotification *) notif {
     CGSize keyboardSize = [[[notif userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
-    [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat: @"keyboardShown(%.2f, %.2f);", keyboardSize.height, self->webView.frame.size.height]];
+    [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat: @"keyboardShown(%.2f, %.2f);", keyboardSize.height, self.webView.frame.size.height]];
 }
 
 - (void) keyboardHidden: (NSNotification *) notif {
-    [self->webView stringByEvaluatingJavaScriptFromString:@"keyboardHidden();"];
+    [self.webView stringByEvaluatingJavaScriptFromString:@"keyboardHidden();"];
 }
 
 
@@ -133,7 +133,7 @@
 }
 
 - (void) dealloc {
-    self->webView = nil;
+    self.webView = nil;
     self->preferences = nil;
     self->purchaseManager = nil;
     self->startUpImage = nil;
@@ -149,7 +149,7 @@
 }
 
 - (void)gotoURL:(NSURLRequest *)url {
-    [self->webView loadRequest:url];
+    [self.webView loadRequest:url];
 }
 
 - (void) webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
@@ -202,6 +202,8 @@
                 {
                     if(value != nil)
                     {
+                        NSLog(@"Image cache requested");
+                        
                         //to prevent internal caching of webpages in application
                         NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:0 diskCapacity:0 diskPath:nil];
                         [NSURLCache setSharedURLCache:sharedCache];
@@ -220,6 +222,11 @@
                     
                     [thread start];
                 }
+                else if([key isEqualToString:@"setCanCheck"]) {
+                    if(value != nil) {
+                        [self setCanCheck: value];
+                    }
+                }
                 else if([key isEqualToString:@"setLogin"]) {
                     if(value != nil) {
                         [self setLogin: value];
@@ -230,7 +237,7 @@
                         [self localLogin: value];
                     }
                     else {
-                        [self->webView stringByEvaluatingJavaScriptFromString:@"InvalidSignin();"];
+                        [self.webView stringByEvaluatingJavaScriptFromString:@"InvalidSignin();"];
                     }
                 }
                 else if([key isEqualToString:@"clearChecklistCache"]) {
@@ -341,6 +348,11 @@
                     sharedCache = nil;
 
                 }
+                else {
+                    if(self.delegate != nil) {
+                        [self.delegate responseReceived:key value:value];
+                    }
+                }
             }
         }
         
@@ -361,17 +373,17 @@
     if(transaction != nil)
     {
         NSString * base64Receipt = [QSStrings  encodeBase64WithData:transaction.transactionReceipt];
-        [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat: @"SendReceipt('%@');", base64Receipt]];
+        [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat: @"SendReceipt('%@');", base64Receipt]];
         base64Receipt = nil;
     }
 }
 
 - (void) failedTransaction:(SKPaymentTransaction *)transaction {
-    [self->webView stringByEvaluatingJavaScriptFromString:@"PurchaseFailed();"];
+    [self.webView stringByEvaluatingJavaScriptFromString:@"PurchaseFailed();"];
 }
 
 - (void) canceledTransaction {
-    [self->webView stringByEvaluatingJavaScriptFromString:@"PurchaseCanceled();"];
+    [self.webView stringByEvaluatingJavaScriptFromString:@"PurchaseCanceled();"];
 }
 
 - (void) hasImageInCache:(NSString *)imageJSON {
@@ -386,32 +398,28 @@
                 NSString *fileType = [array objectAtIndex:2];
                 NSArray *fileSegments = [file componentsSeparatedByString:@"/"];
                 file = [fileSegments lastObject];
-                NSString *resourcePath = [[NSBundle mainBundle] resourcePath];
-                NSString *resourceFilePath = [resourcePath stringByAppendingString:[NSString stringWithFormat:@"/%@", [array objectAtIndex:0]]];
                 NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
                 NSFileManager *manager = [NSFileManager defaultManager];
-                NSString *cachedFilePath = [cachePath stringByAppendingString:[NSString stringWithFormat:@"/qref/%@", [fileType stringByAppendingString: file]]];
+                NSString *cachedFilePath = [cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"/qref/%@", [fileType stringByAppendingString: file]]];
                 //NSURL *url = [NSURL fileURLWithPath:cachedFilePath];
             
-                if([manager fileExistsAtPath:resourceFilePath])
+                if([manager fileExistsAtPath:cachedFilePath])
                 {
-                    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                        [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"PushImage('%@');", imageJSON]];
-                    }];
-                }
-                else if([manager fileExistsAtPath:cachedFilePath])
-                {
+                    NSLog(@"file already exists, retrieving...");
                     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                         NSString *imageInfo = cachedFilePath;
+                        NSLog(@"File path: %@", cachedFilePath);
                         imageInfo = [NSString stringWithFormat:@"%@;%@;%@",imageInfo,[array objectAtIndex:1],[array objectAtIndex:2]];
-                        [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"PushImage('%@');", imageInfo]];
+                        [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"PushImage('%@');", imageInfo]];
                         imageInfo = nil;
                     }];
                 }
                 else
                 {
+                    NSLog(@"Downloading file..");
                     NSString *serv = self->server;
-                    NSString *serverUrl = [serv stringByAppendingString:[array objectAtIndex:0]];
+                    NSString *serverUrl = [serv stringByAppendingPathComponent:[array objectAtIndex:0]];
+                    NSLog(@"File path: %@", serverUrl);
                     
                     ImageDownloader *downloader = [[ImageDownloader alloc] init];
                     downloader.delegate = self;
@@ -421,8 +429,6 @@
                 
                 cachedFilePath = nil;
                 manager = nil;
-                resourceFilePath = nil;
-                resourcePath = nil;
                 cachePath = nil;
                 file = nil;
                 fileSegments = nil;
@@ -435,6 +441,10 @@
     }];
 }
 
+- (void) setCanCheck: (NSString *) value {
+    [self->preferences setObject:value forKey:@"canCheck"];
+}
+
 - (void) downloadComplete:(NSData *)imageData imageName:(NSString *)name {
         NSArray *array = [name componentsSeparatedByString:@";"];
         
@@ -445,49 +455,35 @@
             NSString *fileType = [array objectAtIndex:2];
             NSArray *fileSegments = [file componentsSeparatedByString:@"/"];
             file = [fileSegments lastObject];
-            NSString *resourcePath = [[NSBundle mainBundle] resourcePath];
-            NSString *resourceFilePath = [resourcePath stringByAppendingString:[NSString stringWithFormat:@"/%@", [array objectAtIndex:0]]];
             NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
             NSFileManager *manager = [NSFileManager defaultManager];
-            NSString *cachedFilePath = [cachePath stringByAppendingString:[NSString stringWithFormat:@"/qref/%@", [fileType stringByAppendingString: file]]];
+            NSString *cachedFilePath = [cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"/qref/%@", [fileType stringByAppendingString: file]]];
             
             if(imageData.length > 0)
             {
-                @try {
-                    //UIImage *image = [UIImage imageWithData:imageData];
-                    
-                    if([manager fileExistsAtPath:[cachePath stringByAppendingString:@"/qref"]] == NO)
+                NSLog(@"Image data > 0");
+                
+                if([manager fileExistsAtPath:[cachePath stringByAppendingPathComponent:@"/qref"]] == NO)
+                {
+                    NSError *__autoreleasing * directoryError;
+                    if(![manager createDirectoryAtPath:[cachePath stringByAppendingPathComponent:@"/qref"] withIntermediateDirectories:NO attributes:nil error:directoryError])
                     {
-                        NSError *__autoreleasing * directoryError;
-                        if(![manager createDirectoryAtPath:[cachePath stringByAppendingString:@"/qref"] withIntermediateDirectories:NO attributes:nil error:directoryError])
-                        {
-                            NSLog(@"Error creating directory %@", [cachePath stringByAppendingString:@"/qref"]);
-                        }
-                        
+                        NSLog(@"Error creating directory %@", [cachePath stringByAppendingPathComponent:@"/qref"]);
                     }
                     
-                    BOOL ok = [manager createFileAtPath:cachedFilePath contents:nil attributes:nil];
-                    
-                    if (!ok) {
-                        NSLog(@"Error creating file %@", cachedFilePath);
-                    } else {
-                        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                            NSFileHandle* myFileHandle = [NSFileHandle fileHandleForWritingAtPath:cachedFilePath];
-                            [myFileHandle writeData:imageData];
-                            [myFileHandle closeFile];
-                            myFileHandle = nil;
-                        }];
-                    }
-                    
-                    NSString *imageInfo = cachedFilePath;
-                    imageInfo = [NSString stringWithFormat:@"%@;%@;%@",imageInfo,[array objectAtIndex:1],[array objectAtIndex:2]];
-                    
+                }
+                
+                @try {
                     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                        [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"PushImage('%@');", imageInfo]];
+                        [imageData writeToFile:cachedFilePath atomically:YES];
+                        NSString *imageInfo = cachedFilePath;
+                        imageInfo = [NSString stringWithFormat:@"%@;%@;%@",imageInfo,[array objectAtIndex:1],[array objectAtIndex:2]];
+                        [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"PushImage('%@');", imageInfo]];
+                        NSLog(@"Writing file image file: %@", cachedFilePath);
                     }];
                 }
                 @catch (NSException *exception) {
-                    
+                    NSLog(@"Error writing image file");
                 }
                 @finally {
                     
@@ -496,8 +492,6 @@
             
             cachedFilePath = nil;
             manager = nil;
-            resourceFilePath = nil;
-            resourcePath = nil;
             cachePath = nil;
             file = nil;
             fileSegments = nil;
@@ -514,12 +508,12 @@
         }
         else
         {
-            [self->webView stringByEvaluatingJavaScriptFromString:@"InvalidProduct();"];
+            [self.webView stringByEvaluatingJavaScriptFromString:@"InvalidProduct();"];
         }
     }
     else
     {
-        [self->webView stringByEvaluatingJavaScriptFromString:@"CannotPurchase();"];
+        [self.webView stringByEvaluatingJavaScriptFromString:@"CannotPurchase();"];
     }
 }
 
@@ -663,7 +657,7 @@
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self->webView stringByEvaluatingJavaScriptFromString:@"signinLoadChecklists();"];
+        [self.webView stringByEvaluatingJavaScriptFromString:@"signinLoadChecklists();"];
     });
 }
 
@@ -704,18 +698,18 @@
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self->webView stringByEvaluatingJavaScriptFromString:@"DataLoaded();"];
+        [self.webView stringByEvaluatingJavaScriptFromString:@"DataLoaded();"];
         CGRect bounds = [[UIScreen mainScreen] bounds];
         
-        [self setView:self->webView];
+        [self setView:self.webView];
         
         if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft ||
            [[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeRight) {
         
-            [self->webView setFrame:CGRectMake(0, 18, bounds.size.height, bounds.size.width - 18)];
+            [self.webView setFrame:CGRectMake(0, 18, bounds.size.height, bounds.size.width - 18)];
         }
         else {
-            [self->webView setFrame: CGRectMake(0, 18, bounds.size.width, bounds.size.height - 18)];
+            [self.webView setFrame: CGRectMake(0, 18, bounds.size.width, bounds.size.height - 18)];
         }
         
         [[UIApplication sharedApplication] setStatusBarHidden:NO];
@@ -774,7 +768,7 @@
         if([decryptedChecklistData length] > 0)
         {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"AppendChecklist('%@');", decryptedChecklistData]];
+                [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"AppendChecklist('%@');", decryptedChecklistData]];
             });
         }
     }
@@ -816,9 +810,9 @@
                         NSString *chunk = [decryptedChecklistData substringWithRange:range];
                 
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"LoadChecklistPacket('%@');", chunk]];
+                            [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"LoadChecklistPacket('%@');", chunk]];
                         });
-                       // [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"LoadChecklistPacket('%@');", chunk]];
+                       // [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"LoadChecklistPacket('%@');", chunk]];
                     }
                     else if(i * 6024 < [decryptedChecklistData length])
                     {
@@ -832,24 +826,24 @@
                         NSString *chunk = [decryptedChecklistData substringWithRange:range];
                     
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"LoadChecklistPacket('%@');", chunk]];
+                            [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"LoadChecklistPacket('%@');", chunk]];
                         });
-                        //[self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"LoadChecklistPacket('%@');", chunk]];
+                        //[self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"LoadChecklistPacket('%@');", chunk]];
                     }
                 }
             }
             else
             {
-                [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"LoadChecklistPacket('%@');", decryptedChecklistData]];
+                [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"LoadChecklistPacket('%@');", decryptedChecklistData]];
             }
         }
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self->webView stringByEvaluatingJavaScriptFromString:@"DataLoaded();"];
+        [self.webView stringByEvaluatingJavaScriptFromString:@"DataLoaded();"];
         CGRect bounds = [[UIScreen mainScreen] bounds];
-        [self setView:self->webView];
-        [self->webView setFrame: CGRectMake(0, 18, bounds.size.width, bounds.size.height - 18)];
+        [self setView:self.webView];
+        [self.webView setFrame: CGRectMake(0, 18, bounds.size.width, bounds.size.height - 18)];
         [[UIApplication sharedApplication] setStatusBarHidden:NO];
     });
 }*/
@@ -864,9 +858,10 @@
     NSString *user = [self->preferences stringForKey:@"User"];
     NSString *token = [self->preferences stringForKey:@"Token"];
     NSString *UID = [self->preferences stringForKey:@"UID"];
+    NSString *canCheck = [self->preferences stringForKey:@"canCheck"];
     
     NSString * jsCallBack = @"window.getSelection().removeAllRanges();";
-    [self->webView stringByEvaluatingJavaScriptFromString:jsCallBack];
+    [self.webView stringByEvaluatingJavaScriptFromString:jsCallBack];
     
     if(UID == nil)
     {
@@ -883,12 +878,12 @@
     
     if(user != nil)
     {
-        [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"UpdateLoginDisplay('%@');", user]];
+        [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"UpdateLoginDisplay('%@');", user]];
     }
     
     if(token != nil)
     {
-        [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"AppObserver.set('token', '%@');", token]];
+        [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"AppObserver.set('token', '%@');", token]];
     }
     
     NSThread  * thread = [[NSThread alloc] initWithTarget:self selector:@selector(findCachedChecklists) object:nil];
@@ -897,43 +892,47 @@
     
     if(nightTimeModeTime != nil)
     {
-        [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"NightTimeModeTime = '%@';", nightTimeModeTime]];
+        [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"NightTimeModeTime = '%@';", nightTimeModeTime]];
     }
     
     if(nightTimeModeTimeOff != nil)
     {
-        [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"NightTimeModeTimeOff = '%@';", nightTimeModeTimeOff]];
+        [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"NightTimeModeTimeOff = '%@';", nightTimeModeTimeOff]];
     }
     
     if(nightTheme != nil)
     {
-        [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"NightTheme = '%@';", nightTheme]];
+        [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"NightTheme = '%@';", nightTheme]];
     }
     
     if(dayTheme != nil)
     {
-        [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"DayTheme = '%@';", dayTheme]];
+        [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"DayTheme = '%@';", dayTheme]];
     }
     
     if(autoSwitch != nil)
     {
-        [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"AutoSwitch = '%@';", autoSwitch]];
+        [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"AutoSwitch = '%@';", autoSwitch]];
+    }
+    
+    if(canCheck != nil) {
+        [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"ChecklistObserver.set('canCheck', %@);", canCheck]];
     }
     
     if([self->reach isReachable]) {
-        [self->webView stringByEvaluatingJavaScriptFromString:@"reachability = true;"];
+        [self.webView stringByEvaluatingJavaScriptFromString:@"reachability = true;"];
     }
     else {
-        [self->webView stringByEvaluatingJavaScriptFromString:@"reachability = false;"];
+        [self.webView stringByEvaluatingJavaScriptFromString:@"reachability = false;"];
     }
     
-    [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"MenuObserver.set('version', '%@');", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]]];
+    [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"MenuObserver.set('version', '%@');", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]]];
     
     self->refreshTimer = [NSTimer scheduledTimerWithTimeInterval:600.0 target:self selector:@selector(refreshToken:) userInfo:nil  repeats:YES];
 }
 
 - (void) refreshToken:(NSTimer *)timer {
-    [self->webView stringByEvaluatingJavaScriptFromString:@"RefreshToken();"];
+    [self.webView stringByEvaluatingJavaScriptFromString:@"RefreshToken();"];
 }
 
 //Trys to do a local login
@@ -954,12 +953,12 @@
         //Update the javascript
         if(user != nil)
         {
-            [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"UpdateLoginDisplay('%@');", user]];
+            [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"UpdateLoginDisplay('%@');", user]];
         }
         
         if(token != nil)
         {
-            [self->webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"AppObserver.set('token', '%@');", token]];
+            [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"AppObserver.set('token', '%@');", token]];
         }
         
         //Try and get cached checklists
@@ -970,7 +969,7 @@
         [self->preferences synchronize];
     }
     else {
-        [self->webView stringByEvaluatingJavaScriptFromString:@"InvalidSignin();"];
+        [self.webView stringByEvaluatingJavaScriptFromString:@"InvalidSignin();"];
     }
 }
 

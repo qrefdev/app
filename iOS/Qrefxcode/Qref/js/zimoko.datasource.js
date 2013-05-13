@@ -545,8 +545,8 @@
 					var index = this._data.indexOf(change.item);
 				
 					if(index > -1) {
-						this._data.removeAt(index);
 						this._data.insertAt(change.item, change.newIndex);
+						this._data.removeAt(index);
 					}
 					else {
 						this._data.insertAt(change.item, change.newIndex);
@@ -907,7 +907,7 @@
 			var item = new zimoko.Observable(object);
 			this._sources.splice(index, 0, item);
 			_sort.call(this);
-			_apply.call(this);
+			this._data.insertAt(item, index);
 			_dataSourceChange.call(this,{sender: self, items: [item]});
 		};
 		
@@ -915,8 +915,8 @@
 			removeObject.call(this,object);
 		};
 		
-		
 		this.refresh = function() {
+			_sort.call(this);
 			_apply.call(this);
 		};
 		
