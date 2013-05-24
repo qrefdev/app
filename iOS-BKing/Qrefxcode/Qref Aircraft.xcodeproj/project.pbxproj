@@ -1,0 +1,570 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4645BBBD1688B7B300DB971E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 4645BBBC1688B7B300DB971E /* Default.png */; };
+		4645BBBF1688B7B800DB971E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4645BBBE1688B7B800DB971E /* Default-568h@2x.png */; };
+		4645BBC11688B7BC00DB971E /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4645BBC01688B7BC00DB971E /* Default@2x.png */; };
+		4659C5CC1625E851000A68E2 /* css in Resources */ = {isa = PBXBuildFile; fileRef = 4659C5C81625E851000A68E2 /* css */; };
+		4659C5CD1625E851000A68E2 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 4659C5C91625E851000A68E2 /* images */; };
+		4659C5CE1625E851000A68E2 /* js in Resources */ = {isa = PBXBuildFile; fileRef = 4659C5CA1625E851000A68E2 /* js */; };
+		4659C5CF1625E851000A68E2 /* phoneView.html in Resources */ = {isa = PBXBuildFile; fileRef = 4659C5CB1625E851000A68E2 /* phoneView.html */; };
+		4671DFB91610FDB40078873D /* QSStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4671DFB51610FDB40078873D /* QSStrings.m */; };
+		469F6F85160A212700279439 /* QrefInAppPurchaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 469F6F84160A212700279439 /* QrefInAppPurchaseManager.m */; };
+		469F6F8A160A506200279439 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 469F6F89160A506100279439 /* StoreKit.framework */; };
+		469F6F8D160A593F00279439 /* DESCrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 469F6F8C160A593F00279439 /* DESCrypt.m */; };
+		469F6F9D160A87EE00279439 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 469F6F9C160A87EE00279439 /* Security.framework */; };
+		46B2665815C054B1002E9931 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46B2665715C054B1002E9931 /* UIKit.framework */; };
+		46B2665A15C054B1002E9931 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46B2665915C054B1002E9931 /* Foundation.framework */; };
+		46B2665C15C054B1002E9931 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46B2665B15C054B1002E9931 /* CoreGraphics.framework */; };
+		46B2665E15C054B1002E9931 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46B2665D15C054B1002E9931 /* CoreData.framework */; };
+		46B2666415C054B1002E9931 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 46B2666215C054B1002E9931 /* InfoPlist.strings */; };
+		46B2666615C054B1002E9931 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B2666515C054B1002E9931 /* main.m */; };
+		46B2666A15C054B1002E9931 /* QRefAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B2666915C054B1002E9931 /* QRefAppDelegate.m */; };
+		46B2666D15C054B1002E9931 /* Qref.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 46B2666B15C054B1002E9931 /* Qref.xcdatamodeld */; };
+		46B2667515C054B1002E9931 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46B2667415C054B1002E9931 /* SenTestingKit.framework */; };
+		46B2667615C054B1002E9931 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46B2665715C054B1002E9931 /* UIKit.framework */; };
+		46B2667715C054B1002E9931 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46B2665915C054B1002E9931 /* Foundation.framework */; };
+		46B2667815C054B1002E9931 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46B2665D15C054B1002E9931 /* CoreData.framework */; };
+		46B2668015C054B1002E9931 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 46B2667E15C054B1002E9931 /* InfoPlist.strings */; };
+		46B2668315C054B1002E9931 /* QrefTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B2668215C054B1002E9931 /* QrefTests.m */; };
+		46D0A5581607D1BA0007247D /* QRefWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D0A5571607D1BA0007247D /* QRefWebView.m */; };
+		96B33A7C168B8444001F7C01 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 96B33A7B168B8444001F7C01 /* Icon.png */; };
+		96B33A7E168B8448001F7C01 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96B33A7D168B8448001F7C01 /* Icon@2x.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		46B2667915C054B1002E9931 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46B2664A15C054B0002E9931 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 46B2665215C054B1002E9931;
+			remoteInfo = Qref;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		4645BBBC1688B7B300DB971E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		4645BBBE1688B7B800DB971E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		4645BBC01688B7BC00DB971E /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		4659C5C81625E851000A68E2 /* css */ = {isa = PBXFileReference; lastKnownFileType = folder; path = css; sourceTree = "<group>"; };
+		4659C5C91625E851000A68E2 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = images; sourceTree = "<group>"; };
+		4659C5CA1625E851000A68E2 /* js */ = {isa = PBXFileReference; lastKnownFileType = folder; path = js; sourceTree = "<group>"; };
+		4659C5CB1625E851000A68E2 /* phoneView.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = phoneView.html; sourceTree = "<group>"; };
+		4671DFB41610FDB30078873D /* QSStrings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSStrings.h; sourceTree = "<group>"; };
+		4671DFB51610FDB40078873D /* QSStrings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSStrings.m; sourceTree = "<group>"; };
+		4671DFB61610FDB40078873D /* QSUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSUtilities.h; sourceTree = "<group>"; };
+		469F6F83160A212700279439 /* QrefInAppPurchaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QrefInAppPurchaseManager.h; sourceTree = "<group>"; };
+		469F6F84160A212700279439 /* QrefInAppPurchaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QrefInAppPurchaseManager.m; sourceTree = "<group>"; };
+		469F6F89160A506100279439 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		469F6F8B160A593F00279439 /* DESCrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DESCrypt.h; sourceTree = "<group>"; };
+		469F6F8C160A593F00279439 /* DESCrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DESCrypt.m; sourceTree = "<group>"; };
+		469F6F9C160A87EE00279439 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		46B2665315C054B1002E9931 /* Qref Aircraft.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Qref Aircraft.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		46B2665715C054B1002E9931 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		46B2665915C054B1002E9931 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		46B2665B15C054B1002E9931 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		46B2665D15C054B1002E9931 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		46B2666115C054B1002E9931 /* Qref Aircraft-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Qref Aircraft-Info.plist"; sourceTree = "<group>"; };
+		46B2666315C054B1002E9931 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		46B2666515C054B1002E9931 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		46B2666715C054B1002E9931 /* Qref Aircraft-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Qref Aircraft-Prefix.pch"; sourceTree = "<group>"; };
+		46B2666815C054B1002E9931 /* QRefAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QRefAppDelegate.h; sourceTree = "<group>"; };
+		46B2666915C054B1002E9931 /* QRefAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QRefAppDelegate.m; sourceTree = "<group>"; };
+		46B2666C15C054B1002E9931 /* Qref.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Qref.xcdatamodel; sourceTree = "<group>"; };
+		46B2667315C054B1002E9931 /* Qref AircraftTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Qref AircraftTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		46B2667415C054B1002E9931 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		46B2667D15C054B1002E9931 /* Qref AircraftTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Qref AircraftTests-Info.plist"; sourceTree = "<group>"; };
+		46B2667F15C054B1002E9931 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		46B2668115C054B1002E9931 /* QrefTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QrefTests.h; sourceTree = "<group>"; };
+		46B2668215C054B1002E9931 /* QrefTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QrefTests.m; sourceTree = "<group>"; };
+		46D0A5561607D1BA0007247D /* QRefWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRefWebView.h; sourceTree = "<group>"; };
+		46D0A5571607D1BA0007247D /* QRefWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRefWebView.m; sourceTree = "<group>"; };
+		96B33A7B168B8444001F7C01 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		96B33A7D168B8448001F7C01 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		46B2665015C054B1002E9931 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				469F6F9D160A87EE00279439 /* Security.framework in Frameworks */,
+				469F6F8A160A506200279439 /* StoreKit.framework in Frameworks */,
+				46B2665815C054B1002E9931 /* UIKit.framework in Frameworks */,
+				46B2665A15C054B1002E9931 /* Foundation.framework in Frameworks */,
+				46B2665C15C054B1002E9931 /* CoreGraphics.framework in Frameworks */,
+				46B2665E15C054B1002E9931 /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		46B2666F15C054B1002E9931 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				46B2667515C054B1002E9931 /* SenTestingKit.framework in Frameworks */,
+				46B2667615C054B1002E9931 /* UIKit.framework in Frameworks */,
+				46B2667715C054B1002E9931 /* Foundation.framework in Frameworks */,
+				46B2667815C054B1002E9931 /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		46B2664815C054B0002E9931 = {
+			isa = PBXGroup;
+			children = (
+				96B33A7D168B8448001F7C01 /* Icon@2x.png */,
+				96B33A7B168B8444001F7C01 /* Icon.png */,
+				4645BBC01688B7BC00DB971E /* Default@2x.png */,
+				4645BBBE1688B7B800DB971E /* Default-568h@2x.png */,
+				4645BBBC1688B7B300DB971E /* Default.png */,
+				469F6F9C160A87EE00279439 /* Security.framework */,
+				469F6F89160A506100279439 /* StoreKit.framework */,
+				46B2665F15C054B1002E9931 /* Qref */,
+				46B2667B15C054B1002E9931 /* QrefTests */,
+				46B2665615C054B1002E9931 /* Frameworks */,
+				46B2665415C054B1002E9931 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		46B2665415C054B1002E9931 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				46B2665315C054B1002E9931 /* Qref Aircraft.app */,
+				46B2667315C054B1002E9931 /* Qref AircraftTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		46B2665615C054B1002E9931 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				46B2665715C054B1002E9931 /* UIKit.framework */,
+				46B2665915C054B1002E9931 /* Foundation.framework */,
+				46B2665B15C054B1002E9931 /* CoreGraphics.framework */,
+				46B2665D15C054B1002E9931 /* CoreData.framework */,
+				46B2667415C054B1002E9931 /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		46B2665F15C054B1002E9931 /* Qref */ = {
+			isa = PBXGroup;
+			children = (
+				46B266B415C05BD0002E9931 /* Resources */,
+				46B2666815C054B1002E9931 /* QRefAppDelegate.h */,
+				46B2666915C054B1002E9931 /* QRefAppDelegate.m */,
+				46B2666B15C054B1002E9931 /* Qref.xcdatamodeld */,
+				46B2666015C054B1002E9931 /* Supporting Files */,
+				46D0A5561607D1BA0007247D /* QRefWebView.h */,
+				46D0A5571607D1BA0007247D /* QRefWebView.m */,
+				4671DFB41610FDB30078873D /* QSStrings.h */,
+				4671DFB51610FDB40078873D /* QSStrings.m */,
+				4671DFB61610FDB40078873D /* QSUtilities.h */,
+				469F6F83160A212700279439 /* QrefInAppPurchaseManager.h */,
+				469F6F84160A212700279439 /* QrefInAppPurchaseManager.m */,
+				469F6F8B160A593F00279439 /* DESCrypt.h */,
+				469F6F8C160A593F00279439 /* DESCrypt.m */,
+			);
+			path = Qref;
+			sourceTree = "<group>";
+		};
+		46B2666015C054B1002E9931 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				46B2666115C054B1002E9931 /* Qref Aircraft-Info.plist */,
+				46B2666215C054B1002E9931 /* InfoPlist.strings */,
+				46B2666515C054B1002E9931 /* main.m */,
+				46B2666715C054B1002E9931 /* Qref Aircraft-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		46B2667B15C054B1002E9931 /* QrefTests */ = {
+			isa = PBXGroup;
+			children = (
+				46B2668115C054B1002E9931 /* QrefTests.h */,
+				46B2668215C054B1002E9931 /* QrefTests.m */,
+				46B2667C15C054B1002E9931 /* Supporting Files */,
+			);
+			path = QrefTests;
+			sourceTree = "<group>";
+		};
+		46B2667C15C054B1002E9931 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				46B2667D15C054B1002E9931 /* Qref AircraftTests-Info.plist */,
+				46B2667E15C054B1002E9931 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		46B2668C15C05552002E9931 /* HTML */ = {
+			isa = PBXGroup;
+			children = (
+				4659C5C81625E851000A68E2 /* css */,
+				4659C5C91625E851000A68E2 /* images */,
+				4659C5CA1625E851000A68E2 /* js */,
+				4659C5CB1625E851000A68E2 /* phoneView.html */,
+			);
+			name = HTML;
+			sourceTree = "<group>";
+		};
+		46B266B415C05BD0002E9931 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				46B2668C15C05552002E9931 /* HTML */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		46B2665215C054B1002E9931 /* Qref Aircraft */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 46B2668615C054B1002E9931 /* Build configuration list for PBXNativeTarget "Qref Aircraft" */;
+			buildPhases = (
+				46B2664F15C054B1002E9931 /* Sources */,
+				46B2665015C054B1002E9931 /* Frameworks */,
+				46B2665115C054B1002E9931 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Qref Aircraft";
+			productName = Qref;
+			productReference = 46B2665315C054B1002E9931 /* Qref Aircraft.app */;
+			productType = "com.apple.product-type.application";
+		};
+		46B2667215C054B1002E9931 /* Qref AircraftTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 46B2668915C054B1002E9931 /* Build configuration list for PBXNativeTarget "Qref AircraftTests" */;
+			buildPhases = (
+				46B2666E15C054B1002E9931 /* Sources */,
+				46B2666F15C054B1002E9931 /* Frameworks */,
+				46B2667015C054B1002E9931 /* Resources */,
+				46B2667115C054B1002E9931 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				46B2667A15C054B1002E9931 /* PBXTargetDependency */,
+			);
+			name = "Qref AircraftTests";
+			productName = QrefTests;
+			productReference = 46B2667315C054B1002E9931 /* Qref AircraftTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		46B2664A15C054B0002E9931 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = QRef;
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = 46B2664D15C054B0002E9931 /* Build configuration list for PBXProject "Qref Aircraft" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 46B2664815C054B0002E9931;
+			productRefGroup = 46B2665415C054B1002E9931 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				46B2665215C054B1002E9931 /* Qref Aircraft */,
+				46B2667215C054B1002E9931 /* Qref AircraftTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		46B2665115C054B1002E9931 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				46B2666415C054B1002E9931 /* InfoPlist.strings in Resources */,
+				4659C5CC1625E851000A68E2 /* css in Resources */,
+				4659C5CD1625E851000A68E2 /* images in Resources */,
+				4659C5CE1625E851000A68E2 /* js in Resources */,
+				4659C5CF1625E851000A68E2 /* phoneView.html in Resources */,
+				4645BBBD1688B7B300DB971E /* Default.png in Resources */,
+				4645BBBF1688B7B800DB971E /* Default-568h@2x.png in Resources */,
+				4645BBC11688B7BC00DB971E /* Default@2x.png in Resources */,
+				96B33A7C168B8444001F7C01 /* Icon.png in Resources */,
+				96B33A7E168B8448001F7C01 /* Icon@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		46B2667015C054B1002E9931 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				46B2668015C054B1002E9931 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		46B2667115C054B1002E9931 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		46B2664F15C054B1002E9931 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				46B2666615C054B1002E9931 /* main.m in Sources */,
+				46B2666A15C054B1002E9931 /* QRefAppDelegate.m in Sources */,
+				46B2666D15C054B1002E9931 /* Qref.xcdatamodeld in Sources */,
+				46D0A5581607D1BA0007247D /* QRefWebView.m in Sources */,
+				469F6F85160A212700279439 /* QrefInAppPurchaseManager.m in Sources */,
+				469F6F8D160A593F00279439 /* DESCrypt.m in Sources */,
+				4671DFB91610FDB40078873D /* QSStrings.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		46B2666E15C054B1002E9931 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				46B2668315C054B1002E9931 /* QrefTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		46B2667A15C054B1002E9931 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 46B2665215C054B1002E9931 /* Qref Aircraft */;
+			targetProxy = 46B2667915C054B1002E9931 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		46B2666215C054B1002E9931 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				46B2666315C054B1002E9931 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		46B2667E15C054B1002E9931 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				46B2667F15C054B1002E9931 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		46B2668415C054B1002E9931 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		46B2668515C054B1002E9931 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		46B2668715C054B1002E9931 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Javas Ventures";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Qref/Qref Aircraft-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INFOPLIST_FILE = "Qref/Qref Aircraft-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)/usr/lib/system\"",
+				);
+				"LIBRARY_SEARCH_PATHS[arch=*]" = (
+					"$(inherited)",
+					"\"$(SDKROOT)/usr/include\"",
+				);
+				PRODUCT_NAME = "Qref Aircraft";
+				PROVISIONING_PROFILE = "769908A5-2CC6-4024-9C62-17553A218E87";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		46B2668815C054B1002E9931 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Javas Ventures";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Qref/Qref Aircraft-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INFOPLIST_FILE = "Qref/Qref Aircraft-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)/usr/lib/system\"",
+				);
+				"LIBRARY_SEARCH_PATHS[arch=*]" = (
+					"$(inherited)",
+					"\"$(SDKROOT)/usr/include\"",
+				);
+				PRODUCT_NAME = "Qref Aircraft";
+				PROVISIONING_PROFILE = "769908A5-2CC6-4024-9C62-17553A218E87";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		46B2668A15C054B1002E9931 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Qref.app/Qref";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Qref/Qref-Prefix.pch";
+				INFOPLIST_FILE = "QrefTests/Qref AircraftTests-Info.plist";
+				PRODUCT_NAME = "Qref AircraftTests";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		46B2668B15C054B1002E9931 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Qref.app/Qref";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Qref/Qref-Prefix.pch";
+				INFOPLIST_FILE = "QrefTests/Qref AircraftTests-Info.plist";
+				PRODUCT_NAME = "Qref AircraftTests";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		46B2664D15C054B0002E9931 /* Build configuration list for PBXProject "Qref Aircraft" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				46B2668415C054B1002E9931 /* Debug */,
+				46B2668515C054B1002E9931 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		46B2668615C054B1002E9931 /* Build configuration list for PBXNativeTarget "Qref Aircraft" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				46B2668715C054B1002E9931 /* Debug */,
+				46B2668815C054B1002E9931 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		46B2668915C054B1002E9931 /* Build configuration list for PBXNativeTarget "Qref AircraftTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				46B2668A15C054B1002E9931 /* Debug */,
+				46B2668B15C054B1002E9931 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		46B2666B15C054B1002E9931 /* Qref.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				46B2666C15C054B1002E9931 /* Qref.xcdatamodel */,
+			);
+			currentVersion = 46B2666C15C054B1002E9931 /* Qref.xcdatamodel */;
+			path = Qref.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 46B2664A15C054B0002E9931 /* Project object */;
+}

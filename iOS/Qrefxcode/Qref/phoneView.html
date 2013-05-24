@@ -114,9 +114,16 @@
 					<!--<div class="item-middle sections" style="text-align: center;" data-bind="tap: sectionsTap">
 						<div><span id="area" style="margin-right: 2px;" data-bind="html: sectionName"></span></div><i class="icon icon-caret-down"></i>
 					</div>-->
-					<div class="item-middle-empty">
+					<div class="item-middle-empty" data-bind="visible: (function() {return !canCheck; })();">
 						<p style="text-align: center; padding: 8px; margin: 0px;" data-bind="text: checklist.model.name">	
 						</p>
+					</div>
+					<div data-bind="visible: canCheck" class="item-middle-empty" style="width: 29%;">
+						<p style="text-align: center; padding: 8px; margin: 0px;" data-bind="text: checklist.model.name">	
+						</p>
+					</div>
+					<div class="item" data-bind="tap: clearTap, visible: canCheck" style="width: 17%">
+						<p>CLR</p>
 					</div>
 					<div class="item edit-list" data-bind="tap: editTap, attr: {'class': (function() { if(editing) return 'item edit-list active'; else return 'item edit-list';})()}">
 						<p><i class="icon icon-pencil"></i></p>

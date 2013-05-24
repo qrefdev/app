@@ -202,7 +202,7 @@
                 {
                     if(value != nil)
                     {
-                        NSLog(@"Image cache requested");
+                        //NSLog(@"Image cache requested");
                         
                         //to prevent internal caching of webpages in application
                         NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:0 diskCapacity:0 diskPath:nil];
@@ -264,7 +264,7 @@
                 {
                     if(value != nil)
                     {
-                        [self->preferences setValue:value forKey:@"DayTheme"];
+                        [self->preferences setValue:value forKey:@"qrefDayTheme"];
                         somethingChanged = YES;
                     }
                 }
@@ -272,7 +272,7 @@
                 {
                     if(value != nil)
                     {
-                        [self->preferences setValue:value forKey:@"NightTheme"];
+                        [self->preferences setValue:value forKey:@"qrefNightTheme"];
                         somethingChanged = YES;
                     }
                 }
@@ -280,7 +280,7 @@
                 {
                     if(value != nil)
                     {
-                        [self->preferences setValue:value forKey:@"AutoSwitch"];
+                        [self->preferences setValue:value forKey:@"qrefAutoSwitch"];
                         somethingChanged = YES;
                     }
                 }
@@ -288,7 +288,7 @@
                 {
                     if(value != nil)
                     {
-                        [self->preferences setValue:value forKey:@"NightTimeModeTime"];
+                        [self->preferences setValue:value forKey:@"qrefNightTimeModeTime"];
                         somethingChanged = YES;
                     }
                 }
@@ -296,7 +296,7 @@
                 {
                     if(value != nil)
                     {
-                        [self->preferences setValue:value forKey:@"NightTimeModeTimeOff"];
+                        [self->preferences setValue:value forKey:@"qrefNightTimeModeTimeOff"];
                         somethingChanged = YES;
                     }
                 }
@@ -304,9 +304,9 @@
                 {
                     if(value != nil)
                     {
-                        [self->preferences setValue:value forKey:@"Token"];
+                        [self->preferences setValue:value forKey:@"qrefToken"];
                         
-                        NSString * user = [self->preferences stringForKey:@"User"];
+                        NSString * user = [self->preferences stringForKey:@"qrefUser"];
                         
                         if(user != nil)
                         {
@@ -318,18 +318,18 @@
                 {
                     if(value != nil)
                     {
-                        [self->preferences setValue:value forKey:@"User"];
+                        [self->preferences setValue:value forKey:@"qrefUser"];
                         somethingChanged = YES;
                     }
                 }
                 else if([key isEqualToString:@"clearToken"])
                 {
-                    [self->preferences setValue:@"" forKey:@"Token"];
+                    [self->preferences setValue:@"" forKey:@"qrefToken"];
                     somethingChanged = YES;
                 }
                 else if([key isEqualToString:@"clearUser"])
                 {
-                    [self->preferences setValue:@"" forKey:@"User"];
+                    [self->preferences setValue:@"" forKey:@"qrefUser"];
                     [self->preferences setValue:@"" forKey:@"Checklists"];
                     somethingChanged = YES;
                 }
@@ -348,9 +348,9 @@
                     sharedCache = nil;
 
                 }
-                else {
+                else if(![key isEqualToString:@"timestamp"]){
                     if(self.delegate != nil) {
-                        [self.delegate responseReceived:key value:value];
+                        [self.delegate webViewResponseReceived:key value:value];
                     }
                 }
             }
@@ -405,10 +405,10 @@
             
                 if([manager fileExistsAtPath:cachedFilePath])
                 {
-                    NSLog(@"file already exists, retrieving...");
+                    //NSLog(@"file already exists, retrieving...");
                     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                         NSString *imageInfo = cachedFilePath;
-                        NSLog(@"File path: %@", cachedFilePath);
+                        //NSLog(@"File path: %@", cachedFilePath);
                         imageInfo = [NSString stringWithFormat:@"%@;%@;%@",imageInfo,[array objectAtIndex:1],[array objectAtIndex:2]];
                         [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"PushImage('%@');", imageInfo]];
                         imageInfo = nil;
@@ -416,10 +416,10 @@
                 }
                 else
                 {
-                    NSLog(@"Downloading file..");
+                   // NSLog(@"Downloading file..");
                     NSString *serv = self->server;
                     NSString *serverUrl = [serv stringByAppendingPathComponent:[array objectAtIndex:0]];
-                    NSLog(@"File path: %@", serverUrl);
+                   // NSLog(@"File path: %@", serverUrl);
                     
                     ImageDownloader *downloader = [[ImageDownloader alloc] init];
                     downloader.delegate = self;
@@ -442,7 +442,7 @@
 }
 
 - (void) setCanCheck: (NSString *) value {
-    [self->preferences setObject:value forKey:@"canCheck"];
+    [self->preferences setObject:value forKey:@"qrefCanCheck"];
 }
 
 - (void) downloadComplete:(NSData *)imageData imageName:(NSString *)name {
@@ -461,7 +461,7 @@
             
             if(imageData.length > 0)
             {
-                NSLog(@"Image data > 0");
+                //NSLog(@"Image data > 0");
                 
                 if([manager fileExistsAtPath:[cachePath stringByAppendingPathComponent:@"/qref"]] == NO)
                 {
@@ -479,7 +479,7 @@
                         NSString *imageInfo = cachedFilePath;
                         imageInfo = [NSString stringWithFormat:@"%@;%@;%@",imageInfo,[array objectAtIndex:1],[array objectAtIndex:2]];
                         [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"PushImage('%@');", imageInfo]];
-                        NSLog(@"Writing file image file: %@", cachedFilePath);
+                       // NSLog(@"Writing file image file: %@", cachedFilePath);
                     }];
                 }
                 @catch (NSException *exception) {
@@ -518,8 +518,8 @@
 }
 
 /*- (void) saveChecklists: (NSString *) checklists {
-    NSString *UID = [self->preferences stringForKey:@"UID"];
-    NSString *user = [self->preferences stringForKey:@"User"];
+    NSString *UID = [self->preferences stringForKey:@"qrefUID"];
+    NSString *user = [self->preferences stringForKey:@"qrefUser"];
     
     if(UID != nil && user != nil && checklists != nil)
     {
@@ -543,8 +543,8 @@
 */
 
 - (void) saveChecklist:(NSString *) checklist {
-    NSString *UID = [self->preferences stringForKey:@"UID"];
-    NSString *user = [self->preferences stringForKey:@"User"];
+    NSString *UID = [self->preferences stringForKey:@"qrefUID"];
+    NSString *user = [self->preferences stringForKey:@"qrefUser"];
     
     NSArray * items = [checklist componentsSeparatedByString:@"-FN-"];
     
@@ -626,7 +626,7 @@
     NSMutableArray * cached = [NSMutableArray array];
     
     NSUserDefaults * pref = [NSUserDefaults standardUserDefaults];
-    NSString *user = [pref stringForKey:@"User"];
+    NSString *user = [pref stringForKey:@"qrefUser"];
     
     if(user != nil) {
         NSMutableArray *ids = [NSMutableArray arrayWithArray:[pref arrayForKey:[user stringByAppendingString:@"userChecklistIds"]]];
@@ -667,7 +667,7 @@
     NSMutableArray * cached = [NSMutableArray array];
     
     NSUserDefaults * pref = [NSUserDefaults standardUserDefaults];
-    NSString *user = [pref stringForKey:@"User"];
+    NSString *user = [pref stringForKey:@"qrefUser"];
     
     if(user != nil) {
         NSMutableArray *ids = [NSMutableArray arrayWithArray:[pref arrayForKey:[user stringByAppendingString:@"userChecklistIds"]]];
@@ -718,6 +718,10 @@
         self->imageView = nil;
         
         self->startUpImage = nil;
+        
+        if(self.delegate) {
+            [self.delegate webViewDidLoad];
+        }
     });
 }
 
@@ -749,8 +753,8 @@
 
 - (void) loadChecklist: (NSData *) data {
     NSUserDefaults * preference = [NSUserDefaults standardUserDefaults];
-    NSString *user = [preference stringForKey:@"User"];
-    NSString *UID = [preference stringForKey:@"UID"];
+    NSString *user = [preference stringForKey:@"qrefUser"];
+    NSString *UID = [preference stringForKey:@"qrefUID"];
     
     if(user != nil && data != nil && UID != nil)
     {
@@ -776,8 +780,8 @@
 /*
 - (void) loadChecklist {
     NSUserDefaults * preference = [NSUserDefaults standardUserDefaults];
-    NSString *user = [preference stringForKey:@"User"];
-    NSString *UID = [preference stringForKey:@"UID"];
+    NSString *user = [preference stringForKey:@"qrefUser"];
+    NSString *UID = [preference stringForKey:@"qrefUID"];
     NSData *checklistData = [preference dataForKey:@"Checklists"];
     
     if(user != nil && checklistData != nil && UID != nil)
@@ -850,15 +854,19 @@
 
 - (void) onload {
     
-    NSString *nightTimeModeTime = [self->preferences stringForKey:@"NightTimeModeTime"];
-    NSString *nightTimeModeTimeOff = [self->preferences stringForKey:@"NightTimeModeTimeOff"];
-    NSString *nightTheme = [self->preferences stringForKey:@"NightTheme"];
-    NSString *dayTheme = [self->preferences stringForKey:@"DayTheme"];
-    NSString *autoSwitch = [self->preferences stringForKey:@"AutoSwitch"];
-    NSString *user = [self->preferences stringForKey:@"User"];
-    NSString *token = [self->preferences stringForKey:@"Token"];
-    NSString *UID = [self->preferences stringForKey:@"UID"];
-    NSString *canCheck = [self->preferences stringForKey:@"canCheck"];
+    if(self.delegate != nil) {
+        [self.delegate webViewBeforeLoad];
+    }
+    
+    NSString *nightTimeModeTime = [self->preferences stringForKey:@"qrefNightTimeModeTime"];
+    NSString *nightTimeModeTimeOff = [self->preferences stringForKey:@"qrefNightTimeModeTimeOff"];
+    NSString *nightTheme = [self->preferences stringForKey:@"qrefNightTheme"];
+    NSString *dayTheme = [self->preferences stringForKey:@"qrefDayTheme"];
+    NSString *autoSwitch = [self->preferences stringForKey:@"qrefAutoSwitch"];
+    NSString *user = [self->preferences stringForKey:@"qrefUser"];
+    NSString *token = [self->preferences stringForKey:@"qrefToken"];
+    NSString *UID = [self->preferences stringForKey:@"qrefUID"];
+    NSString *canCheck = [self->preferences stringForKey:@"qrefCanCheck"];
     
     NSString * jsCallBack = @"window.getSelection().removeAllRanges();";
     [self.webView stringByEvaluatingJavaScriptFromString:jsCallBack];
@@ -871,7 +879,7 @@
         
         CFRelease(ref);
         
-        [self->preferences setObject:uid forKey:@"UID"];
+        [self->preferences setObject:uid forKey:@"qrefUID"];
         
         UID = uid;
     }
@@ -946,8 +954,8 @@
     if([pass isEqualToString:storedPass]) {
         NSString * token = [SSKeychain passwordForService:@"com.qref.qrefChecklists" account:[user stringByAppendingString:@"-Token"]];
         
-        [self->preferences setValue:token forKey:@"Token"];
-        [self->preferences setValue:user forKey:@"User"];
+        [self->preferences setValue:token forKey:@"qrefToken"];
+        [self->preferences setValue:user forKey:@"qrefUser"];
         
         
         //Update the javascript
@@ -980,6 +988,62 @@
     NSString * pass = [details objectAtIndex:1];
     
     [SSKeychain setPassword:pass forService:@"com.qref.qrefChecklists" account:user];
+}
+
+//BKing API Additions
+- (NSString *) decodeValue:(NSString *)value {
+    NSString *baseDecoded = [[NSString alloc] initWithData: [QSStrings decodeBase64WithString:value] encoding:NSUTF8StringEncoding];
+
+    return [baseDecoded stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+}
+
+- (UIImage *) getCachedImage:(NSString *)url {
+    NSString *file = url;
+    NSArray *fileSegments = [file componentsSeparatedByString:@"/"];
+    file = [fileSegments lastObject];
+    NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    NSFileManager *manager = [NSFileManager defaultManager];
+    NSString *cachedFilePath = [cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"/qref/%@", file]];
+    UIImage *image = nil;
+    
+    if([manager fileExistsAtPath:cachedFilePath])
+    {
+        image = [UIImage imageWithContentsOfFile:cachedFilePath];
+    }
+    else {
+        if([file hasPrefix:@"productDetails"]) {
+            @try {
+                NSString *urlWithoutPrefix = [url stringByReplacingOccurrencesOfString:@"productDetails" withString:@""];
+                NSString *serv = self->server;
+                
+                NSString *serverUrl = [serv stringByAppendingPathComponent:urlWithoutPrefix];
+                
+                NSURL *nsurl = [NSURL URLWithString:serverUrl];
+                NSData *data = [NSData dataWithContentsOfURL:nsurl];
+                image = [UIImage imageWithData:data];
+                [data writeToFile:cachedFilePath atomically:YES];
+            } @catch (NSException *e) {
+                return nil;
+            }
+        }
+        else if([file hasPrefix:@"checklistlisting"]) {
+            @try {
+                NSString *urlWithoutPrefix = [url stringByReplacingOccurrencesOfString:@"checklistlisting" withString:@""];
+                NSString *serv = self->server;
+                
+                NSString *serverUrl = [serv stringByAppendingPathComponent:urlWithoutPrefix];
+                
+                NSURL *nsurl = [NSURL URLWithString:serverUrl];
+                NSData *data = [NSData dataWithContentsOfURL:nsurl];
+                image = [UIImage imageWithData:data];
+                [data writeToFile:cachedFilePath atomically:YES];
+            } @catch (NSException *e) {
+                return nil;
+            }
+        }
+    }
+    
+    return image;
 }
 
 @end
