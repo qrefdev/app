@@ -2,12 +2,17 @@
 function SyncProcessor() {
     this.timer = undefined;
     this.syncing = false;
-    this.index = 0;
-    this.lists = [];
 	
     this.syncLocal = function() {
         if(checklists && AppObserver.token != '' && AppObserver.token != undefined) {
             this.syncToPhone(checklists);
+        }
+    };
+    
+    this.syncOneLocalSilent = function(checklist) {
+    	if(checklist != undefined && AppObserver.token != '' && AppObserver.token != undefined)
+		{
+        	this.syncToPhone([checklist]);
         }
     };
     
@@ -35,6 +40,8 @@ function SyncProcessor() {
 	this.sync = function() {
 		var self = this;
 		
+        if(checklists == undefined) checklists = [];
+        
 		if(checklists != undefined && AppObserver.token != '' && AppObserver.token != undefined)
 		{
 			AppObserver.set('syncing', true);
@@ -89,17 +96,19 @@ function SyncProcessor() {
                                 }
                                 else
                                 {
-                                	
                                     items[i].lastPosition = undefined;
-
-									checklists.push(items[i]);
-									DashboardObserver.dataSource.add(items[i]);
+									
+                                    checklists.push(items[i]);
+									DashboardDataSource.add(items[i]);
                                 }
                                 
     							currentItem = undefined;
                             }
-                             
-                            DashboardObserver.dataSource.read();
+                            
+                            if(DashboardObserver.dataSource != DashboardDataSource)
+        						DashboardObserver.set('dataSource', DashboardDataSource);
+        					else
+                            	DashboardObserver.dataSource.read();
                              
                             self.syncToPhone(checklists);
                         }, 20);
@@ -116,58 +125,48 @@ function SyncProcessor() {
 	
 	this.syncToPhone = function(lists) {
 		var self = this;
-		if(lists != undefined && !self.syncing)
-		{
-            self.syncing = true;
-            self.lists = lists;
-            //var temp = JSON.stringify(checklists);
-            //var stringifiedJson = window.btoa(escape(encodeURIComponent(temp)));
-            //var stringifiedJson = window.btoa(checklists);
-            
-            //self.syncToPhoneStart(stringifiedJson);
-            
+		window.location.href = 'qref://nlog=ListCount:' + lists.length;
+		if(lists != undefined)
+		{   
             setTimeout(function() {
-                self.index = 0;
-                self.nextChecklist();
+            	process(0, lists[0]);
             }, 20);
+            
+            function process(index, item) {
+				var stringifiedJson = JSON.stringify(item);
+				var filename = item._id + '.qrf';
+				var encoded = btoa(escape(encodeURIComponent(stringifiedJson)));
+				var data = filename + '-FN-' + encoded;
+        
+        		
+        		//window.location.href = 'qref://nlog=' + data;
+				
+				window.location.href = 'qref://sc=' + data;
+				
+				if(index == lists.length - 1) {
+		
+					if(AppObserver.syncing)
+						AppObserver.set('syncing', false);
+		
+					if(AppObserver.saving) {
+						AppObserver.set('saving', false);
+						var saveDialog = new ConfirmationDialog('#savebox', function(doSync) {
+							if(doSync && self.lists.length > 0) {
+								Sync.syncOneServer(self.lists[0]);
+							}
+						});
+			
+						saveDialog.show();
+					}
+				}
+				else {
+					setTimeout(function() {
+						process(index+1,lists[index+1]);
+					}, 1000);
+				}
+			}
 		}
 	};
-    
-    // 606 - New method of syncing for lower memory usage!
-    this.nextChecklist = function() {
-        var self = this;
-        if(this.index <  self.lists.length) {
-            var stringifiedJson = JSON.stringify(self.lists[self.index]);
-            var filename = self.lists[self.index]._id + '.qrf';
-            var encoded = btoa(escape(encodeURIComponent(stringifiedJson)));
-            var data = filename + '-FN-' + encoded;
-            
-            window.location.href = 'qref://sc=' + data;
-            
-            self.index++;
-            
-            setTimeout(function() {
-                self.nextChecklist();
-            }, 20);
-        }
-        else {
-            self.syncing = false;
-            
-            if(AppObserver.syncing)
-                AppObserver.set('syncing', false);
-            
-            if(AppObserver.saving) {
-                AppObserver.set('saving', false);
-                var saveDialog = new ConfirmationDialog('#savebox', function(doSync) {
-                    if(doSync && self.lists.length > 0) {
-                        Sync.syncOneServer(self.lists[0]);
-                    }
-                });
-                
-                saveDialog.show();
-            }
-        }
-    };
     
     /// Old Code - No Longer Used
     /*

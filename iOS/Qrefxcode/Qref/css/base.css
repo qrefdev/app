@@ -1417,6 +1417,20 @@ ul li {
 	margin-top: -5px;
 }
 
+.help {
+	position: absolute;
+	left: 10px;
+	bottom: 0px;
+}
+
+.help a {
+	color: #f1f1f1;
+}
+
+.help a:hover {
+	color: #fff;
+}
+
 /** Media Queries for Emergency Icons **/
 @media only screen and (orientation: portrait) {
 	.emergencies ul li {

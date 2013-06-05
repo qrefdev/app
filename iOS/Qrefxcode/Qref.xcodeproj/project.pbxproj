@@ -412,6 +412,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = Qref/Qref.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Aaron Klick (97YQ95B3S8)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Aaron Klick (97YQ95B3S8)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Qref/Qref-Prefix.pch";
@@ -427,7 +428,8 @@
 					"\"$(SDKROOT)/usr/include\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2DD82692-7DBF-4668-BD04-1F883118DDE1";
+				PROVISIONING_PROFILE = "2DD82692-7DBF-4668-BD04-1F883118DDE1";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "181EB1A1-F8B0-48D3-8206-8E0E6E35DD1C";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -437,6 +439,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = Qref/Qref.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Aaron Klick (97YQ95B3S8)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Aaron Klick (97YQ95B3S8)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Qref/Qref-Prefix.pch";
@@ -452,7 +455,8 @@
 					"\"$(SDKROOT)/usr/include\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2DD82692-7DBF-4668-BD04-1F883118DDE1";
+				PROVISIONING_PROFILE = "2DD82692-7DBF-4668-BD04-1F883118DDE1";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "181EB1A1-F8B0-48D3-8206-8E0E6E35DD1C";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

@@ -153,8 +153,8 @@
 										<div class="delete" data-bind="tap: parent.deleteTap">delete</div>
 										<div class="add" data-bind="tap: parent.addTap, fadeVisible: parent.editing"><i class="icon-plus"></i></div>
 										<div class="handle" data-bind="fadeVisible: parent.editing"><div class="item"></div><div class="item"></div><div class="item"></div></div>
-										<div class="checkmark" data-bind="visible: (function() { if(parent.canCheck && !parent.editing) return true; else return false; })(), tap: parent.checkTap">
-											<div class="checker" data-bind="visible: (function() { if(isChecked) return true; else return false; })()"><i class="icon icon-ok"></i></div>
+										<div class="checkmark" style="display: none;" data-bind="visible: (function() { if(parent.canCheck && !parent.editing) return true; else return false; })(), tap: parent.checkTap">
+											<div class="checker" style="display: none;" data-bind="visible: (function() { if(isChecked) return true; else return false; })()"><i class="icon icon-ok"></i></div>
 										</div>
 									</li>
 								</ul>
@@ -603,6 +603,7 @@
 			<div class="menu">
                 <div class="currentLogin"><i class="icon icon-user"></i><div class="user" data-bind="html: email"></div></div>
 				<div class="version">version: <span data-bind="text: version"></span></div>
+				<div class="help"><a href="http://www.qref.com/mobilehelp">Need Help?</a></div>
 				<ul>
 					<!--<li data-link="settings"><i class="icon icon-cog"></i><p>Settings</p></li>-->
 					<li data-link="dashboard" data-bind="tap: menuNavTap"><i class="icon icon-dashboard"></i><p>Dashboard</p></li>

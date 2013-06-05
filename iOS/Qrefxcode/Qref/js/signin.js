@@ -59,14 +59,20 @@ function signinLoadChecklists() {
     $("#email").val("");
     $("#password").val("");
     
-    AppObserver.getChecklists(function(success, items) {
-        if(success) {
-            DashboardDataSource.data(items);
-            DashboardObserver.set('dataSource', DashboardDataSource);
-        }
+    if(AppObserver.cachePack != '' && AppObserver.cachePack != undefined && checklists == undefined) {
+        AppObserver.getChecklists(function(success, items) {
+            if(success) {
+                DashboardDataSource.data(items);
+                DashboardObserver.set('dataSource', DashboardDataSource);
+            }
 
+            AppObserver.set('loading', false);
+        });
+    }
+    else {
         AppObserver.set('loading', false);
-    });
+        Sync.sync();
+    }
     Navigation.go("dashboard");
 }
 

@@ -19,6 +19,7 @@
         self->server = @"https://my.qref.com/";
         
         self.imageQueue = [[NSOperationQueue alloc] init];
+        self.savingQueue = [[NSOperationQueue alloc] init];
         CGRect bounds = [[UIScreen mainScreen] bounds];
         CGFloat screenScale = [[UIScreen mainScreen] scale];
         
@@ -103,9 +104,11 @@
     
     if([rch isReachable]) {
         [self.webView stringByEvaluatingJavaScriptFromString:@"reachability = true;"];
+        [self.webView stringByEvaluatingJavaScriptFromString:@"AppObserver.set('reachable', true);"];
     }
     else {
         [self.webView stringByEvaluatingJavaScriptFromString:@"reachability = false;"];
+        [self.webView stringByEvaluatingJavaScriptFromString:@"AppObserver.set('reachable', false);"];
     }
 }
 
@@ -213,8 +216,11 @@
                 }
                 //Save Checklist
                 else if([key isEqualToString:@"sc"]) {
+                    NSLog(@"Saving supposedly");
                     if(value != nil) {
-                        [self saveChecklist:value];
+                        [self.savingQueue addOperationWithBlock:^{
+                            [self saveChecklist:value];
+                        }];
                     }
                 }
                 else if([key isEqualToString:@"hasChecklists"]) {
@@ -347,6 +353,11 @@
                     [NSURLCache setSharedURLCache:sharedCache];
                     sharedCache = nil;
 
+                }
+                else if([key isEqualToString:@"nlog"]) {
+                    if(value != nil) {
+                        NSLog(@"%@", value);
+                    }
                 }
                 else if(![key isEqualToString:@"timestamp"]){
                     if(self.delegate != nil) {
@@ -548,9 +559,13 @@
     
     NSArray * items = [checklist componentsSeparatedByString:@"-FN-"];
     
+    //NSLog(@"Checklist Item count: %d", items.count);
+    
     if(items.count == 2) {
         NSString *file = [items objectAtIndex:0];
         NSString *content = [items objectAtIndex:1];
+        
+        //NSLog(@"Beginning Saving checklist: %@", file);
         
         if(UID != nil && user != nil && content != nil)
         {
@@ -563,6 +578,7 @@
             if(![ids containsObject:file]) {
                 [ids addObject:file];
                 [self->preferences setValue:ids forKey:[user stringByAppendingString:@"userChecklistIds"]];
+                [self->preferences synchronize];
             }
             
             NSString *combinedUserUID = [user stringByAppendingString:UID];
@@ -581,26 +597,22 @@
             
             NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
             NSFileManager *manager = [NSFileManager defaultManager];
-            NSString *cachedFilePath = [cachePath stringByAppendingString:[NSString stringWithFormat:@"/qref/%@", file]];
+            NSString *cachedFilePath = [cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"/qref/%@", file]];
             
             if([manager fileExistsAtPath:[cachePath stringByAppendingString:@"/qref"]] == NO)
             {
                 NSError *__autoreleasing * directoryError;
-                if(![manager createDirectoryAtPath:[cachePath stringByAppendingString:@"/qref"] withIntermediateDirectories:NO attributes:nil error:directoryError])
+                if(![manager createDirectoryAtPath:[cachePath stringByAppendingPathComponent:@"/qref"] withIntermediateDirectories:NO attributes:nil error:directoryError])
                 {
-                    NSLog(@"Error creating directory %@", [cachePath stringByAppendingString:@"/qref"]);
+                    NSLog(@"Error creating directory %@", [cachePath stringByAppendingPathComponent:@"/qref"]);
                 }
                 
             }
-            
-            BOOL ok = [manager createFileAtPath:cachedFilePath contents:nil attributes:nil];
-            
-            if(ok) {
-                NSFileHandle* myFileHandle = [NSFileHandle fileHandleForWritingAtPath:cachedFilePath];
-                [myFileHandle writeData:encryptedData];
-                [myFileHandle closeFile];
-                myFileHandle = nil;
-            }
+        
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+               // NSLog(@"Saving checklist: %@", file);
+                [encryptedData writeToFile:cachedFilePath atomically:YES];
+            }];
             
             cachePath = nil;
             manager = nil;
@@ -644,10 +656,10 @@
             }
             
             for(int i = 0; i < cached.count; i++) {
-                NSData * contents = [manager contentsAtPath:[cachePath stringByAppendingString:[NSString stringWithFormat:@"/qref/%@", [cached objectAtIndex:i]]]];
+                NSData * content = [manager contentsAtPath:[cachePath stringByAppendingString:[NSString stringWithFormat:@"/qref/%@", [cached objectAtIndex:i]]]];
                 
-                [self loadChecklist:contents];
-                contents = nil;
+                [self loadChecklist:content];
+                content = nil;
             }
         }
         
@@ -685,10 +697,10 @@
             }
             
             for(int i = 0; i < cached.count; i++) {
-                NSData * contents = [manager contentsAtPath:[cachePath stringByAppendingString:[NSString stringWithFormat:@"/qref/%@", [cached objectAtIndex:i]]]];
+                NSData * content = [manager contentsAtPath:[cachePath stringByAppendingString:[NSString stringWithFormat:@"/qref/%@", [cached objectAtIndex:i]]]];
                 
-                [self loadChecklist:contents];
-                contents = nil;
+                [self loadChecklist:content];
+                content = nil;
             }
         }
         

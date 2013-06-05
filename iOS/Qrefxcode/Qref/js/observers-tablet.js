@@ -77,6 +77,12 @@ var EditTailObserver = new zimoko.Observable({
 		setTimeout(function() {
 			Navigation.back();
 		}, 100);
+		
+		if(EditTailObserver.item) {
+			setTimeout(function() {
+				Sync.syncOneLocalSilent(EditTailObserver.item);
+			}, 100);
+		}
 	}
 });
 
@@ -390,7 +396,9 @@ var MenuObserver = new zimoko.Observable({
 		e.stopPropagation();
 		e.preventDefault();
 		
-		Navigation.go('#' + ele.attr('data-link'));
+		if(AppObserver.navHash != '#' + ele.attr('data-link')) {                             
+			Navigation.go('#' + ele.attr('data-link'));
+		}
 		
 		MenuObserver.close();
 	},
@@ -485,6 +493,8 @@ var MenuObserver = new zimoko.Observable({
 			$('.checklistnav').animate({left:'-245px'}, 100);
 			$('.menu').animate({right:'-5px'}, 100).addClass('slided');
 			AppObserver.set('menuOpen', true);
+			DashboardObserver.set('editing', false);
+			ChecklistObserver.set('editing', false);
 		}
 	},
 	close: function() {
@@ -515,6 +525,7 @@ var AppObserver = new zimoko.Observable({
 	loading: false,
 	syncing: false,
     saving: false,
+    reachable: true,
 	navHash: '#dashboard',
 	allProducts: [],
 	userProducts: [],
@@ -596,6 +607,16 @@ var AppObserver = new zimoko.Observable({
 			MenuObserver.set('token', this.token);
 			DashboardObserver.set('token', this.token);
 		}
+        else if(property == 'reachable') {
+        	if(AppObserver.reachable == false) {
+				$('.menu li[data-link="changePassword"]').hide();
+				$('.help').hide();
+			}
+			else {
+				$('.menu li[data-link="changePassword"]').show();
+				$('.help').show();
+			}
+        }
 		else if(property == 'email') {
 			MenuObserver.set('email', this.email);
 		}
@@ -868,7 +889,7 @@ var AppObserver = new zimoko.Observable({
 					}
 				});
 			}
-			else if(self.cachePack != undefined && checklists == undefined)
+			else if((self.cachePack != '' && self.cachePack != undefined) && checklists == undefined)
 			{
 				try {
                     //601 - Fixed issue with callback not being properly issued
@@ -1002,6 +1023,10 @@ var AppObserver = new zimoko.Observable({
 	load: function() {
 		var self = this;
 		
+        $(window).tap(function(e) {
+            ChecklistObserver.set('showSections', false);
+        });
+                                        
 		$(window).swipe({
 			swipeRight: function(event, duration) {
 				MenuObserver.close();
@@ -1152,30 +1177,26 @@ var AppObserver = new zimoko.Observable({
                 this.set('storeHasItems', success);
             });
         }*/
-		
-        if(reachability) {
-            this.getChecklists(function(success, items) {
-                if(success) {
-                    DashboardDataSource.data(items);
-                    DashboardObserver.set('dataSource', DashboardDataSource);
-                    
-                }
-			
-                self.set('loading', false);
-                               
-               if(AppObserver.cachePack != '' && AppObserver.cachePack != undefined) {
-                    setTimeout(function() {
-                          Sync.sync();
-                    }, 100);
-               }
-               else if (success && (AppObserver.cachePack == '' || AppObserver.cachePack == undefined)) {
-            		Sync.syncLocal();
-               }
-            });
-        }
-        else {
-            window.location.href = "qref://hasChecklists";
-        }
+    
+        this.getChecklists(function(success, items) {
+            if(success) {
+                DashboardDataSource.data(items);
+                DashboardObserver.set('dataSource', DashboardDataSource);
+                
+            }
+        
+            self.set('loading', false);
+                           
+           /*if(AppObserver.cachePack != '' && AppObserver.cachePack != undefined) {
+                setTimeout(function() {
+                      Sync.sync();
+                }, 100);
+           }
+           else if (success && (AppObserver.cachePack == '' || AppObserver.cachePack == undefined)) {
+                Sync.syncLocal();
+           }*/
+            //Sync.syncLocal();
+        });
 		
 		var utcTimer = new Timer(1000, function() {
 			var now = new Date();
@@ -1378,6 +1399,10 @@ var DashboardObserver = new zimoko.Observable({
 			ele.prev().animate({'left':'0px'}, 200, function() {
 				data.set('isDeleted', true);
 				
+				setTimeout(function() {
+					Sync.syncOneLocalSilent(data);
+				}, 100);
+				
 				DashboardObserver.dataSource.remove(data);
 			});
 		});
@@ -1401,13 +1426,11 @@ var DashboardObserver = new zimoko.Observable({
 	onPropertyChanged: function(sender, property) {
 		if(property == 'editing') {
 			if(!this.editing) {
-				$('#checklist .checklist li').each(function() {
-					var del = $(this).find('.delete');
-					
-					if(del.css('display') != 'none') {
-						del.fadeOut(200);
-						del.prev().animate({'left': '0px'});
-					}
+				$('#dashboard-planes li .delete').each(function() {
+					var ele = $(this);
+
+					ele.fadeOut(200);
+					ele.prev().animate({'left': '0px'}, 200);
 				});
 			}
 		}
@@ -1642,13 +1665,11 @@ var ChecklistObserver = new zimoko.Observable({
 		}
 		else if(property == 'editing') {
 			if(!this.editing) {
-				$('#checklist checklist li .delete').each(function() {
+				$('#checklist .checklist li .delete').each(function() {
 					var ele = $(this);
-					
-					if(ele.css('display') != 'none') {
-						ele.fadeOut(200);
-						ele.prev().animate({'left': '0px'}, 200);
-					}
+
+					ele.fadeOut(200);
+					ele.prev().animate({'left': '0px'}, 200);
 				});
 			}
 		}
@@ -1661,6 +1682,8 @@ var ChecklistObserver = new zimoko.Observable({
 		var landing = checklist.landing;
 		var emergencies = checklist.emergencies;
 		
+        ChecklistObserver.set('showSections', false);
+                                              
 		setTimeout(function() {
 			for(var i = 0; i < ChecklistObserver.items.length; i++) {
 				ChecklistObserver.items.elementAt(i).set('isChecked', false);
@@ -1711,6 +1734,9 @@ var ChecklistObserver = new zimoko.Observable({
 		
 	},
 	checkTap: function(element, e, data) {
+                                              
+        ChecklistObserver.set('showSections', false);
+                                              
 		if(data.isChecked) {
 			data.set('isChecked', false);
 		}
@@ -1914,12 +1940,14 @@ var ChecklistObserver = new zimoko.Observable({
 		e.stopPropagation();
 		e.preventDefault();
 		MenuObserver.toggle();
+        ChecklistObserver.set('showSections', false);
 	},
 	addTap: function(element, e, data) {
 		var index = data.index;
 		
 		e.stopPropagation();
 		e.preventDefault();
+        ChecklistObserver.set('showSections', false);
 		
 		EditAddObserver.set('item', new zimoko.Observable({check: '', response: '', icon: null, _id: zimoko.createGuid()}));
 		
@@ -1938,6 +1966,7 @@ var ChecklistObserver = new zimoko.Observable({
 		
 		e.stopPropagation();
 		e.preventDefault();
+        ChecklistObserver.set('showSections', false);
 		
 		var deleteB = ele.find('.delete');
 		var holder = ele.find('.holder'); 
@@ -1952,7 +1981,8 @@ var ChecklistObserver = new zimoko.Observable({
 		
 		e.stopPropagation();
 		e.preventDefault();
-		
+		ChecklistObserver.set('showSections', false);
+                                              
 		if(ChecklistObserver.editing) {
 			ele.fadeOut(200, function() {
 				ele.prev().animate({'left':'0px'}, 200, function(e) {
@@ -1973,7 +2003,7 @@ var ChecklistObserver = new zimoko.Observable({
 		
 		e.stopPropagation();
 		e.preventDefault();
-		
+		ChecklistObserver.set('showSections', false);
 		ele = ele.find('.delete');
 		
 		if(ChecklistObserver.editing && ele.css('display') == 'none') {
@@ -1988,6 +2018,10 @@ var ChecklistObserver = new zimoko.Observable({
 			ele.fadeOut(200, function() {
 				ele.prev().animate({'left':'0px'}, 200);
 			});
+                                              
+			if(ChecklistObserver.canCheck) {
+				data.set('isChecked', !data.isChecked);
+			}
 		}
 	},
 	sectionTap: function(element, e, data) {

@@ -88,11 +88,10 @@ var zimoko = new (function() {})();
 			this.next = function() {
 				if(this.index < this.list.length) {
 					var item = this.list[this.index];
-					
-					if(typeof(this.cb) == 'function')
-						this.cb.call(item, this.index, item);
-						
-					
+ 
+                        if(typeof(this.cb) == 'function')
+                            this.cb.call(item, this.index, item);
+	
 					this.index++;
 					
 					zimoko.Async.dispatch(this, this.next, []);		
