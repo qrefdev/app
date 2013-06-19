@@ -133,15 +133,15 @@ function SyncProcessor() {
             }, 20);
             
             function process(index, item) {
-				var stringifiedJson = JSON.stringify(item);
-				var filename = item._id + '.qrf';
-				var encoded = btoa(escape(encodeURIComponent(stringifiedJson)));
-				var data = filename + '-FN-' + encoded;
+				//var stringifiedJson = JSON.stringify(item);
+				//var filename = item._id + '.qrf';
+				//var encoded = btoa(escape(encodeURIComponent(stringifiedJson)));
+				//var data = filename + '-FN-' + encoded;
         
         		
         		//window.location.href = 'qref://nlog=' + data;
 				
-				window.location.href = 'qref://sc=' + data;
+				window.location.href = 'qref://sc=' + item._id;
 				
 				if(index == lists.length - 1) {
 		
@@ -162,7 +162,7 @@ function SyncProcessor() {
 				else {
 					setTimeout(function() {
 						process(index+1,lists[index+1]);
-					}, 1000);
+					}, 100);
 				}
 			}
 		}
@@ -283,7 +283,7 @@ function SyncProcessor() {
 		$.ajax({
 			type: 'get',
 			dataType: 'json',
-			url: host + 'services/ajax/aircraft/checklists?token=' + AppObserver.token,
+			url: host + 'services/ajax/aircraft/checklists?token=' + AppObserver.token + '&timestamp=' + Date.now(),
 			success: function(data) {
 				var response = data;
 				

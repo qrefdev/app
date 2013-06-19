@@ -16,17 +16,17 @@ function Signin() {
                 
                 if(response.success == true)
                 {
-                    AppObserver.set('token', response.returnValue);
+                    AppObserver.set('token', response.returnValue.token);
                     AppObserver.set('email', $("#email").val());
 
-               window.location.href = "qref://setUser=" + $("#email").val() + "&setToken=" + response.returnValue;
+               window.location.href = "qref://setUser=" + $("#email").val() + "&setToken=" + response.returnValue.token + '&setUserId=' + response.returnValue.user;
                
                     AppObserver.set('loading', true);
                     setTimeout(function() {
                         window.location.href = "qref://hasChecklists";
                                
                        setTimeout(function() {
-                            window.location.href = "qref://setLogin=" + $("#email").val() + "(QREFUPS)" + Whirlpool($("#password").val());
+                            window.location.href = "qref://setLogin=" + $("#email").val() + "(QREFUPS)" + response.returnValue.user + '(QREFUPS)' + Whirlpool($("#password").val());
                        }, 1000);
                     }, 1000);
                 }

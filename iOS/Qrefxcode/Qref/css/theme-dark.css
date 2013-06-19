@@ -471,12 +471,12 @@ border-top: 1px solid #2b2f32;
 }
 
 
-.theme-dark .checklist .vertical li .checkmark {
+.theme-dark .checklist .vertical li .checkmark, .theme-dark .downloads .vertical li .checkmark {
     background: #1f1f1f;
     border: 1px solid #6b737e;
 }
 
-.theme-dark .checklist .vertical li .checkmark .checker .icon {
+.theme-dark .checklist .vertical li .checkmark .checker .icon, .theme-dark .downloads .vertical li .checkmark .checker .icon {
     color: #3d8ef4;
 }
 

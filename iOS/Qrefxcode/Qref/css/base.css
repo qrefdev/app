@@ -783,7 +783,7 @@ html, body {
 	display: none;
 }
 
-.checklist .vertical li .checkmark {
+.checklist .vertical li .checkmark, .downloads .vertical li .checkmark {
     position: absolute;
     width: 32px;
     height: 32px;
@@ -793,16 +793,21 @@ html, body {
     -webkit-border-radius: 5px;
 }
 
-.checklist .vertical li .checkmark .checker {
+.checklist .vertical li .checkmark .checker, .downloads .vertical li .checkmark .checker {
     width: 32px;
     height: 32px;
 }
 
-.checklist .vertical li .checkmark .checker .icon {
+.checklist .vertical li .checkmark .checker .icon, .downloads .vertical li .checkmark .checker .icon {
     position: absolute;
     left: -10px;
     top: -20px;
     font-size: 40px;
+}
+
+.downloads .vertical li .checkmark .checker .icon {
+    top: -5px;
+    left: -5px;
 }
 
 /** Checklist Sections Menu **/
@@ -1431,11 +1436,19 @@ ul li {
 	color: #fff;
 }
 
+.CProw{display: table-row;}
+.CPcell{display: table-cell; padding-right: 10px;}
+.CPspacer{height: 10px;}
+
 /** Media Queries for Emergency Icons **/
 @media only screen and (orientation: portrait) {
 	.emergencies ul li {
 		width: 43%;
 	}
+    
+    .CProw {
+        font-size: 9px;
+    }
 }
 
 @media only screen and (orientation: landscape) {

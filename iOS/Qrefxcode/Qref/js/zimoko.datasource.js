@@ -425,91 +425,61 @@
 		var _dataSourceError = function(event) {
 			var datasource = this;
 			
-			setTimeout(function() {
-				for(var i = 0; i < datasource.listeners.length; i++) {
-					var listener = datasource.listeners[i];
-					
-					if(listener && typeof(listener.onDataSourceUpdate) == 'function') {
-						var asyncMethod = new zimoko.Async.method(listener, listener.onDataSourceError, [event]);
-						asyncMethod.exec();
-					}
+			zimoko.Async.each(datasource.listeners, function(index, listener) {
+				if(listener && typeof(listener.onDataSourceUpdate) == 'function') {
+					listener.onDataSourceError.call(listener, event);
 				}
-			}, 1 / 60);
+			});
 		};
 		
 		var _dataSourceUpdate = function(event) {
 			var datasource = this;
 			
-			setTimeout(function() {
-				for(var i = 0; i < datasource.listeners.length; i++) {
-					var listener = datasource.listeners[i];
-					
-					if(listener && typeof(listener.onDataSourceUpdate) == 'function') {
-						var asyncMethod = new zimoko.Async.method(listener, listener.onDataSourceUpdate, [event]);
-						asyncMethod.exec();
-					}
+			zimoko.Async.each(datasource.listeners, function(index, listener) {
+				if(listener && typeof(listener.onDataSourceUpdate) == 'function') {
+					listener.onDataSourceUpdate.call(listener, event);
 				}
-			}, 1 / 60);
+			});
 		};
 		
 		var _dataSourceCreate = function(event) {
 			var datasource = this;
 			
-			setTimeout(function() {
-				for(var i = 0; i < datasource.listeners.length; i++) {
-					var listener = datasource.listeners[i];
-					
-					if(listener && typeof(listener.onDataSourceCreate) == 'function') {
-						var asyncMethod = new zimoko.Async.method(listener, listener.onDataSourceCreate, [event]);
-						asyncMethod.exec();
-					}
-				} 
-			}, 1 / 60);
+			zimoko.Async.each(datasource.listeners, function(index, listener) {	
+				if(listener && typeof(listener.onDataSourceCreate) == 'function') {
+					listener.onDataSourceCreate.call(listener, event);
+				}
+			}); 
 		};
 		
 		var _dataSourceDelete = function(event) {
 			var datasource = this;
 			
-			setTimeout(function() {
-				for(var i = 0; i < datasource.listeners.length; i++) {
-					var listener = datasource.listeners[i];
-					
-					if(listener && typeof(listener.onDataSourceDelete) == 'function') {
-						var asyncMethod = new zimoko.Async.method(listener, listener.onDataSourceDelete, [event]);
-						asyncMethod.exec();
-					}
-				} 
-			}, 1 / 60);
+			zimoko.Async.each(datasource.listeners, function(index, listener) {
+				if(listener && typeof(listener.onDataSourceDelete) == 'function') {
+					listener.onDataSourceDelete.call(listener, event);
+				}
+			});
 		};
 		
 		var _dataSourceRead = function(event) {
 			var datasource = this;
 			
-			setTimeout(function() {
-				for(var i = 0; i < datasource.listeners.length; i++) {
-					var listener = datasource.listeners[i];
-					
-					if(listener && typeof(listener.onDataSourceRead) == 'function') {
-						var asyncMethod = new zimoko.Async.method(listener, listener.onDataSourceRead, [event]);
-						asyncMethod.exec();
-					}
-				} 
-			}, 1 / 60);
+			zimoko.Async.each(datasource.listeners, function(index, listener) {	
+				if(listener && typeof(listener.onDataSourceRead) == 'function') {
+					listener.onDataSourceRead.call(listener, event);
+				}
+			}); 
 		};
 		
 		var _dataSourceChange = function(event) {
 			var datasource = this;
 			
-			setTimeout(function() {
-				for(var i = 0; i < datasource.listeners.length; i++) {
-					var listener = datasource.listeners[i];
-					
-					if(listener && typeof(listener.onDataSourceChange) == 'function') {
-						var asyncMethod = new zimoko.Async.method(listener, listener.onDataSourceChange, [event]);
-						asyncMethod.exec();
-					}
+			zimoko.Async.each(datasource.listeners, function(index, listener) {
+				if(listener && typeof(listener.onDataSourceChange) == 'function') {
+					listener.onDataSourceChange.call(listener,event);
 				}
-			}, 1 / 60);
+			});
 		};
 		
 		var _apply = function(append) {
@@ -982,9 +952,7 @@
 			if(!this.reading) {
 				this.reading = true;
 				
-				setTimeout(function() {
-					datasource.transport.read(options);
-				}, 1 / 60);
+				datasource.transport.read(options);
 			}
 		};
 		
@@ -1048,10 +1016,8 @@
 					_dataSourceError.call(datasource,{sender: datasource, data: object, errors: errors});
 				}
 			}; 
-			
-			setTimeout(function() {
-				datasource.transport.create(options);
-			}, 1 / 60);
+
+			datasource.transport.create(options);
 		};
 		
 		this.delete = function(object) {
@@ -1101,7 +1067,6 @@
 			var originalObject = object;
 			var datasource = this;
 			
-			setTimeout(function() {
 				if(datasource.transport.schema.model) {
 					for(var name in this.transport.schema.model) {
 						var modelSetting = this.transport.schema.model[name];
@@ -1158,11 +1123,8 @@
 						_dataSourceError.call(datasource,{sender: datasource, data: object, errors: errors});			
 					}
 				};
-			
-				setTimeout(function() {
+
 					datasource.transport.update(options);
-				}, 1 / 60);
-			}, 1 / 60);
 		};
 	});
 })();

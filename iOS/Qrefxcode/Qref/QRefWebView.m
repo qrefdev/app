@@ -185,8 +185,6 @@
         NSArray *paramsArray = [paramsString componentsSeparatedByString:@"&"];
         int paramsAmount = [paramsArray count];
         
-        BOOL somethingChanged = NO;
-        
         for (int i = 0; i < paramsAmount; i++) {
             NSArray *keyValuePair = [[paramsArray objectAtIndex:i] componentsSeparatedByString:@"="];
             NSString *key = [keyValuePair objectAtIndex:0];
@@ -199,7 +197,6 @@
                 if([key isEqualToString:@"onload"])
                 {
                     [self onload];
-                    somethingChanged = YES;
                 }
                 else if([key isEqualToString:@"imageCache"])
                 {
@@ -264,14 +261,12 @@
                 else if([key isEqualToString:@"checklistsEnd"])
                 {
                     //[self saveChecklists:self->incomingData];
-                    somethingChanged = YES;
                 }
                 else if([key isEqualToString:@"daytheme"])
                 {
                     if(value != nil)
                     {
                         [self->preferences setValue:value forKey:@"qrefDayTheme"];
-                        somethingChanged = YES;
                     }
                 }
                 else if([key isEqualToString:@"nighttheme"])
@@ -279,7 +274,6 @@
                     if(value != nil)
                     {
                         [self->preferences setValue:value forKey:@"qrefNightTheme"];
-                        somethingChanged = YES;
                     }
                 }
                 else if([key isEqualToString:@"autotheme"])
@@ -287,7 +281,6 @@
                     if(value != nil)
                     {
                         [self->preferences setValue:value forKey:@"qrefAutoSwitch"];
-                        somethingChanged = YES;
                     }
                 }
                 else if([key isEqualToString:@"nighttimemodetime"])
@@ -295,7 +288,6 @@
                     if(value != nil)
                     {
                         [self->preferences setValue:value forKey:@"qrefNightTimeModeTime"];
-                        somethingChanged = YES;
                     }
                 }
                 else if([key isEqualToString:@"nighttimemodetimeoff"])
@@ -303,7 +295,6 @@
                     if(value != nil)
                     {
                         [self->preferences setValue:value forKey:@"qrefNightTimeModeTimeOff"];
-                        somethingChanged = YES;
                     }
                 }
                 else if([key isEqualToString:@"setToken"])
@@ -325,19 +316,21 @@
                     if(value != nil)
                     {
                         [self->preferences setValue:value forKey:@"qrefUser"];
-                        somethingChanged = YES;
+                    }
+                }
+                else if([key isEqualToString:@"setUserId"]) {
+                    if(value != nil) {
+                        [self->preferences setValue:value forKey:@"qrefUserId"];
                     }
                 }
                 else if([key isEqualToString:@"clearToken"])
                 {
                     [self->preferences setValue:@"" forKey:@"qrefToken"];
-                    somethingChanged = YES;
                 }
                 else if([key isEqualToString:@"clearUser"])
                 {
                     [self->preferences setValue:@"" forKey:@"qrefUser"];
                     [self->preferences setValue:@"" forKey:@"Checklists"];
-                    somethingChanged = YES;
                 }
                 else if([key isEqualToString:@"purchase"])
                 {
@@ -553,83 +546,81 @@
 }
 */
 
-- (void) saveChecklist:(NSString *) checklist {
+- (void) saveChecklist:(NSString *) cId {
     NSString *UID = [self->preferences stringForKey:@"qrefUID"];
-    NSString *user = [self->preferences stringForKey:@"qrefUser"];
+    NSString *user = [self->preferences stringForKey:@"qrefUserId"];
     
-    NSArray * items = [checklist componentsSeparatedByString:@"-FN-"];
-    
-    //NSLog(@"Checklist Item count: %d", items.count);
-    
-    if(items.count == 2) {
-        NSString *file = [items objectAtIndex:0];
-        NSString *content = [items objectAtIndex:1];
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        NSString *checklist = [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat: @"AppObserver.getChecklist('%@');", cId]];
         
-        //NSLog(@"Beginning Saving checklist: %@", file);
+        //NSLog(@"Checklist Item count: %d", items.count);
         
-        if(UID != nil && user != nil && content != nil)
-        {
-            NSMutableArray *ids = [NSMutableArray arrayWithArray:[self->preferences arrayForKey:[user stringByAppendingString:@"userChecklistIds"]]];
+        if(checklist.length > 0) {
+            NSString *file = [cId stringByAppendingString:@".qrf"];
+            NSString *content = checklist;
             
-            if(ids == nil) {
-                ids = [NSMutableArray array];
-            }
+            //NSLog(@"Beginning Saving checklist: %@", file);
             
-            if(![ids containsObject:file]) {
-                [ids addObject:file];
-                [self->preferences setValue:ids forKey:[user stringByAppendingString:@"userChecklistIds"]];
-                [self->preferences synchronize];
-            }
-            
-            NSString *combinedUserUID = [user stringByAppendingString:UID];
-            NSData *encryptedData = nil;
-            
-            NSData *decoded = [content dataUsingEncoding:NSASCIIStringEncoding];
-            
-            NSString *dataToEncrypt = [[NSString alloc] initWithBytes:[decoded bytes] length:[decoded length] encoding:NSASCIIStringEncoding];
-            
-            @try {
-                encryptedData = [DESCrypt crypt:dataToEncrypt password:combinedUserUID];
-            }
-            @catch (NSException *exception) {
-                encryptedData = [dataToEncrypt dataUsingEncoding:NSASCIIStringEncoding];
-            }
-            
-            NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-            NSFileManager *manager = [NSFileManager defaultManager];
-            NSString *cachedFilePath = [cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"/qref/%@", file]];
-            
-            if([manager fileExistsAtPath:[cachePath stringByAppendingString:@"/qref"]] == NO)
+            if(UID != nil && user != nil && content != nil)
             {
-                NSError *__autoreleasing * directoryError;
-                if(![manager createDirectoryAtPath:[cachePath stringByAppendingPathComponent:@"/qref"] withIntermediateDirectories:NO attributes:nil error:directoryError])
-                {
-                    NSLog(@"Error creating directory %@", [cachePath stringByAppendingPathComponent:@"/qref"]);
+                NSMutableArray *ids = [NSMutableArray arrayWithArray:[self->preferences arrayForKey:[user stringByAppendingString:@"userChecklistIds"]]];
+                
+                if(ids == nil) {
+                    ids = [NSMutableArray array];
                 }
                 
-            }
-        
-            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-               // NSLog(@"Saving checklist: %@", file);
-                [encryptedData writeToFile:cachedFilePath atomically:YES];
-            }];
+                if(![ids containsObject:file]) {
+                    [ids addObject:file];
+                    [self->preferences setValue:ids forKey:[user stringByAppendingString:@"userChecklistIds"]];
+                    [self->preferences synchronize];
+                }
+                
+                NSString *combinedUserUID = [user stringByAppendingString:UID];
+                NSData *encryptedData = nil;
+                
+                NSData *decoded = [content dataUsingEncoding:NSASCIIStringEncoding];
+                
+                NSString *dataToEncrypt = [[NSString alloc] initWithBytes:[decoded bytes] length:[decoded length] encoding:NSASCIIStringEncoding];
+                
+                @try {
+                    encryptedData = [DESCrypt crypt:dataToEncrypt password:combinedUserUID];
+                }
+                @catch (NSException *exception) {
+                    encryptedData = [dataToEncrypt dataUsingEncoding:NSASCIIStringEncoding];
+                }
+                
+                NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+                NSFileManager *manager = [NSFileManager defaultManager];
+                NSString *cachedFilePath = [cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"/qref/%@", file]];
+                
+                if([manager fileExistsAtPath:[cachePath stringByAppendingString:@"/qref"]] == NO)
+                {
+                    NSError *__autoreleasing * directoryError;
+                    if(![manager createDirectoryAtPath:[cachePath stringByAppendingPathComponent:@"/qref"] withIntermediateDirectories:NO attributes:nil error:directoryError])
+                    {
+                        NSLog(@"Error creating directory %@", [cachePath stringByAppendingPathComponent:@"/qref"]);
+                    }
+                    
+                }
             
-            cachePath = nil;
-            manager = nil;
-            cachedFilePath = nil;
-            decoded = nil;
-            dataToEncrypt = nil;
-            encryptedData = nil;
-            combinedUserUID = nil;
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                   // NSLog(@"Saving checklist: %@", file);
+                    [encryptedData writeToFile:cachedFilePath atomically:YES];
+                }];
+                
+                cachePath = nil;
+                manager = nil;
+                cachedFilePath = nil;
+                decoded = nil;
+                dataToEncrypt = nil;
+                encryptedData = nil;
+                combinedUserUID = nil;
+            }
+            
+            file = nil;
+            content = nil;
         }
-        
-        file = nil;
-        content = nil;
-    }
-    
-    items = nil;
-    user = nil;
-    UID = nil;
+    }];
 }
 
 - (void) signinFindCachedChecklists {
@@ -638,7 +629,7 @@
     NSMutableArray * cached = [NSMutableArray array];
     
     NSUserDefaults * pref = [NSUserDefaults standardUserDefaults];
-    NSString *user = [pref stringForKey:@"qrefUser"];
+    NSString *user = [pref stringForKey:@"qrefUserId"];
     
     if(user != nil) {
         NSMutableArray *ids = [NSMutableArray arrayWithArray:[pref arrayForKey:[user stringByAppendingString:@"userChecklistIds"]]];
@@ -679,7 +670,7 @@
     NSMutableArray * cached = [NSMutableArray array];
     
     NSUserDefaults * pref = [NSUserDefaults standardUserDefaults];
-    NSString *user = [pref stringForKey:@"qrefUser"];
+    NSString *user = [pref stringForKey:@"qrefUserId"];
     
     if(user != nil) {
         NSMutableArray *ids = [NSMutableArray arrayWithArray:[pref arrayForKey:[user stringByAppendingString:@"userChecklistIds"]]];
@@ -765,7 +756,7 @@
 
 - (void) loadChecklist: (NSData *) data {
     NSUserDefaults * preference = [NSUserDefaults standardUserDefaults];
-    NSString *user = [preference stringForKey:@"qrefUser"];
+    NSString *user = [preference stringForKey:@"qrefUserId"];
     NSString *UID = [preference stringForKey:@"qrefUID"];
     
     if(user != nil && data != nil && UID != nil)
@@ -966,7 +957,10 @@
     if([pass isEqualToString:storedPass]) {
         NSString * token = [SSKeychain passwordForService:@"com.qref.qrefChecklists" account:[user stringByAppendingString:@"-Token"]];
         
+        NSString * userId = [SSKeychain passwordForService:@"com.qref.qrefChecklists" account:[user stringByAppendingString:@"-ID"]];
+        
         [self->preferences setValue:token forKey:@"qrefToken"];
+        [self->preferences setValue:userId forKey:@"qrefUserId"];
         [self->preferences setValue:user forKey:@"qrefUser"];
         
         
@@ -997,9 +991,11 @@
 - (void) setLogin: (NSString *) data {
     NSArray * details = [data componentsSeparatedByString:@"(QREFUPS)"];
     NSString * user = [details objectAtIndex:0];
-    NSString * pass = [details objectAtIndex:1];
+    NSString * userId = [details objectAtIndex:1];
+    NSString * pass = [details objectAtIndex:2];
     
     [SSKeychain setPassword:pass forService:@"com.qref.qrefChecklists" account:user];
+    [SSKeychain setPassword:userId forService:@"com.qref.qreChecklists" account:[user stringByAppendingString:@"-ID"]];
 }
 
 //BKing API Additions

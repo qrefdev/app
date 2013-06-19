@@ -56,10 +56,10 @@
 					</div>
 				</div>
 				<div class="dashcontent">
-					<div class="grid dashboard-planes-selector scrollable">
+					<div class="grid dashboard-planes-selector scrollable" data-bind="virtual: '.li-item'">
 						<div class="container">
-							<ul id="dashboard-planes" class="vertical" data-bind="foreach: items">
-								<li data-bind="attr: {'data-id': _id }, tap: parent.itemTap, swipeRight: parent.itemSwipeRight">
+							<ul id="dashboard-planes" class="vertical" data-bind="virtualForeach: items">
+								<li class="li-item" data-bind="attr: {'data-id': _id }, tap: parent.itemTap, swipeRight: parent.itemSwipeRight">
 									<div class="plane-icon"></div>
 									<div class="holder">
 										<div class="heading" data-bind="html: manufacturer.name + ' ' + model.name"></div>
@@ -142,9 +142,9 @@
 						<div class="nextSection" data-bind="tap: nextSectionTap, visible: (function() { if(((list == 'preflight' || list == 'takeoff') && checklist && displayNext) || (list == 'landing' && checklist && section < checklist.landing.length - 1 && displayNext)) {return true; } else {return false;}})()"><p style="margin: 5px; padding: 8px;"><i class="icon icon-chevron-right"></i></p></div>
 					</div>
 					<div style="position: absolute; top: 46px; left: 0px; bottom: 0px; right: 0px; width: 100%">
-						<div class="grid checklist scrollable">
+						<div class="grid checklist scrollable" data-bind="virtual: 'li'">
 							<div class="container">
-								<ul id="checklist-items" class="vertical" data-bind="foreach: items">
+								<ul id="checklist-items" class="vertical" data-bind="virtualForeach: items">
 									<li data-bind="attr: {'data-id': _id}, tap: parent.itemTap, swipeRight: parent.itemSwipeRight">
 										<div class="holder">
 											<div class="check" data-bind="visible: (check != ''), html: check"></div>
@@ -153,7 +153,7 @@
 										<div class="delete" data-bind="tap: parent.deleteTap">delete</div>
 										<div class="add" data-bind="tap: parent.addTap, fadeVisible: parent.editing"><i class="icon-plus"></i></div>
 										<div class="handle" data-bind="fadeVisible: parent.editing"><div class="item"></div><div class="item"></div><div class="item"></div></div>
-										<div class="checkmark" style="display: none;" data-bind="visible: (function() { if(parent.canCheck && !parent.editing) return true; else return false; })(), tap: parent.checkTap">
+										<div class="checkmark" style="display: none;" data-bind="visible: (function() { if(parent.canCheck && !parent.editing && parent.sectionName.toLowerCase() != 'cruise performance') return true; else return false; })(), tap: parent.checkTap">
 											<div class="checker" style="display: none;" data-bind="visible: (function() { if(isChecked) return true; else return false; })()"><i class="icon icon-ok"></i></div>
 										</div>
 									</li>
@@ -220,10 +220,10 @@
 					</div>
 				</div>
 				<div class="content" style="bottom: 0px;">
-					<div class="grid downloads scrollable">
+					<div class="grid downloads scrollable" data-bind="virtual: 'li'">
 						<div class="container">
-							<ul id="downloads-items" class="vertical" data-bind="foreach: items">
-								<li data-bind="attr: {'data-id': _id, 'class': function() { if (userOwnsProduct) return 'active'; else return '';}}, tap: parent.itemTap">
+							<ul id="downloads-items" class="vertical" data-bind="virtualForeach: items">
+								<li data-bind="attr: {'data-id': _id}, tap: parent.itemTap">
 									<div class="plane-icon"></div>
 									<div class="holder">
 										<div class="heading" data-bind="html: manufacturer.name + ' ' + model.name"></div>
@@ -231,6 +231,9 @@
 										<div class="subheading" data-bind="html: model.modelYear, visible: model.modelYear"></div>
 										<div class="subheading" data-bind="html: serialNumber, visible: serialNumber"></div>
 									</div>
+                                    <div class="checkmark" style="display: none;" data-bind="visible: (function() { if (userOwnsProduct) return 'active'; else return '';})()">
+                                        <div class="checker"><i class="icon icon-ok"></i></div>
+                                    </div>
 								</li>
 							</ul>
 							<div class="section-nav" data-bind="tap: requestModelTap, visible: displayRequestModel">
@@ -396,38 +399,40 @@
 						<p><i class="icon icon-th-list"></i></p>
 					</div>
 				</div>
-				<div id="productDetailsListing" data-bind="with: product" class="content scrollable" style="bottom: 0px;">
-					<div class="container">
-						<div class="row detailsHeading">
-							<h1 class="productModel" data-bind="html: manufacturer.name + ' ' + model.name"></h1> 
-							<div class="buynow" data-bind="tap: root.purchaseTap, html: (function() { if(userOwnsProduct) return 'INSTALL'; else return '$' + parseFloat(suggestedRetailPrice).toFixed(2); })()">Install</div>
-						</div>
-						<div class="row">
-							<div class="productImage"></div>
-						</div>
-						<div class="details">
-							<div class="row detailsHeading" data-bind="visible: manufacturer.description">
-								<h1>Manufacturer Information</h1>
-								<p class="serial manufacturerDescription" data-bind="html: manufacturer.description"></p>
-							</div>
-							<div class="row detailsHeading" data-bind="visible: model.description">
-								<h1>Model Information</h1>
-								<p class="serial modelDescription" data-bind="html: model.description"></p>
-							</div>
-							<div class="row detailsHeading" data-bind="visible: serialNumber">
-								<h1>Serial Number(s)</h1>
-								<p class="serial productSerialNumbers" data-bind="html: serialNumber"></p>
-							</div>
-							<div class="row detailsHeading">
-								<h1>Model Year(s)</h1>
-								<p class="serial productModelYear" data-bind="html: model.modelYear"></p>
-							</div>
-							<div class="row detailsHeading" data-bind="visible: description">
-								<h1>Description</h1>
-								<p class="description" data-bind="html: description"></p>
-							</div>
-						</div>
-					</div>
+				<div id="productDetailsListing" data-bind="with: product" class="content" style="bottom: 0px;">
+                    <div class="content scrollable" style="top: 0px; bottom: 0px;">
+                        <div class="container">
+                            <div class="row detailsHeading">
+                                <h1 class="productModel" data-bind="html: manufacturer.name + ' ' + model.name"></h1> 
+                                <div class="buynow" data-bind="tap: root.purchaseTap, html: (function() { if(userOwnsProduct) return 'INSTALL'; else return '$' + parseFloat(suggestedRetailPrice).toFixed(2); })()">Install</div>
+                            </div>
+                            <div class="row">
+                                <div class="productImage"></div>
+                            </div>
+                            <div class="details">
+                                <div class="row detailsHeading" data-bind="visible: manufacturer.description">
+                                    <h1>Manufacturer Information</h1>
+                                    <p class="serial manufacturerDescription" data-bind="html: manufacturer.description"></p>
+                                </div>
+                                <div class="row detailsHeading" data-bind="visible: model.description">
+                                    <h1>Model Information</h1>
+                                    <p class="serial modelDescription" data-bind="html: model.description"></p>
+                                </div>
+                                <div class="row detailsHeading" data-bind="visible: serialNumber">
+                                    <h1>Serial Number(s)</h1>
+                                    <p class="serial productSerialNumbers" data-bind="html: serialNumber"></p>
+                                </div>
+                                <div class="row detailsHeading">
+                                    <h1>Model Year(s)</h1>
+                                    <p class="serial productModelYear" data-bind="html: model.modelYear"></p>
+                                </div>
+                                <div class="row detailsHeading" data-bind="visible: description">
+                                    <h1>Description</h1>
+                                    <p class="description" data-bind="html: description"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 				</div>
 			</div>
 		</article>
