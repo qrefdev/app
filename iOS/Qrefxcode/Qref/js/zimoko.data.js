@@ -832,7 +832,7 @@
 						handler.update.call(self, self.element, new zimoko.ValueAccessor(self.observable, prop));
 					}
 				}
-			}, 1 / 60);
+			}, 0);
 		};
 		
 		this.detach = function() {
@@ -848,7 +848,7 @@
 						handler.remove.call(self, self.element, new zimoko.ValueAccessor(self.observable, property));
 					}
 				}
-			}, 1 / 60);
+			}, 0);
 			
 			this.observable.unsubscribe(this);
 			
@@ -1524,7 +1524,7 @@
 										//item.attach(itemTemplate);
 									}
 								}
-							}, 1 / 260);
+							}, 0);
 							
 							/*
 							for(var i = 0; i < items.length; i++) {
@@ -1567,7 +1567,7 @@
 										$ele.remove();
 									}
 								}
-                            }, 1 / 260);
+                            }, 0);
 						}
 					};	
 					
@@ -1609,7 +1609,7 @@
 								//item.attach(itemTemplate);
 							}
 						}
-					}, 1 / 260);
+					}, 0);
 					
 					/*for(var i = 0; i < val.length; i++) {
 						var item = val[i];
@@ -1700,7 +1700,7 @@
 											//item.attach(itemTemplate);
 										}
 									}
-								}, 1 / 260);
+								}, 0);
 								
 								/*
 								for(var i = 0; i < items.length; i++) {
@@ -1743,7 +1743,7 @@
 											$ele.remove();
 										}
 									}
-								}, 1 / 260);
+								}, 0);
 							}
 						};	
 						val.subscribe(foreachListener);
@@ -1769,7 +1769,7 @@
 									//item.attach(itemTemplate);
 								}
 							}
-						}, 1 / 260);
+						}, 0);
 					}
 				}
 				
@@ -1790,7 +1790,7 @@
 								item.attach(itemTemplate);
 							}	
 						}
-					}, 1 / 260);
+					}, 0);
 					/*for(var i = 0; i < val.length; i++) {
 						var item = val[i];
 						var isObservable = (item instanceof zimoko.Observable);
@@ -1881,7 +1881,7 @@
 										//item.attach(itemTemplate);
 									}
 								}
-							}, 1 / 260);
+							}, 0);
 							
 							setTimeout(function() {
 								var pt = element.parent();
@@ -1899,7 +1899,7 @@
 									var elements = element.children();
 									zimoko.applyVirtualCoords(elements, scrollTop, pt);
 								}
-							}, 350);
+							}, 10);
 							/*
 							for(var i = 0; i < items.length; i++) {
 								var item = items[i].item;
@@ -1941,7 +1941,7 @@
 										$ele.remove();
 									}
 								}
-							}, 1 / 260);
+							}, 0);
 							
 							setTimeout(function() {
 								var pt = element.parent();
@@ -1959,7 +1959,7 @@
 									var elements = element.children();
 									zimoko.applyVirtualCoords(elements, scrollTop, pt);
 								}
-							}, 350);
+							}, 10);
 						}
 					};	
 					
@@ -2001,7 +2001,7 @@
 								//item.attach(itemTemplate);
 							}
 						}
-					}, 1 / 260);
+					},0);
 					
 					setTimeout(function() {
 						var pt = element.parent();
@@ -2019,7 +2019,7 @@
 							var elements = element.children();
 							zimoko.applyVirtualCoords(elements, scrollTop, pt);
 						}
-					}, 350);
+					}, 10);
 					/*for(var i = 0; i < val.length; i++) {
 						var item = val[i];
 						var isObservable = (item instanceof zimoko.Observable);
@@ -2109,7 +2109,7 @@
 											//item.attach(itemTemplate);
 										}
 									}
-								}, 1 / 260);
+								}, 0);
 								
 								setTimeout(function() {
 									var pt = element.parent();
@@ -2127,7 +2127,7 @@
 										var elements = element.children();
 										zimoko.applyVirtualCoords(elements, scrollTop, pt);
 									}
-								}, 350);
+								}, 10);
 								/*
 								for(var i = 0; i < items.length; i++) {
 									var item = items[i].item;
@@ -2169,7 +2169,7 @@
 											$ele.remove();
 										}
 									}
-								}, 1 / 260);
+								}, 0);
 								
 								setTimeout(function() {
 									var pt = element.parent();
@@ -2187,7 +2187,7 @@
 										var elements = element.children();
 										zimoko.applyVirtualCoords(elements, scrollTop, pt);
 									}
-								}, 350);
+								}, 10);
 							}
 						};	
 						val.subscribe(foreachListener);
@@ -2212,7 +2212,7 @@
 									//item.attach(itemTemplate);
 								}
 							}
-						}, 1 / 260);
+						}, 0);
 						
 						setTimeout(function() {
 							var pt = element.parent();
@@ -2230,7 +2230,7 @@
 								var elements = element.children();
 								zimoko.applyVirtualCoords(elements, scrollTop, pt);
 							}
-						}, 350);
+						}, 10);
 					}
 				}
 				
@@ -2251,7 +2251,7 @@
 								item.attach(itemTemplate);
 							}	
 						}
-					}, 1 / 260);
+					}, 0);
 					setTimeout(function() {
 						var pt = element.parent();
 					
@@ -2268,7 +2268,7 @@
 							var elements = element.children();
 							zimoko.applyVirtualCoords(elements, scrollTop, pt);
 						}
-					}, 350);
+					}, 10);
 					/*for(var i = 0; i < val.length; i++) {
 						var item = val[i];
 						var isObservable = (item instanceof zimoko.Observable);
@@ -2348,7 +2348,7 @@
 								}
 							}
 						});
-					}, 1 / 260);
+					}, 0);
 				};
  					
  				element.scroll(virtualListener);

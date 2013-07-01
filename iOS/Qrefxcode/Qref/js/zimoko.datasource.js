@@ -1056,9 +1056,7 @@
 				}
 			}; 
 			
-			setTimeout(function() {
-				datasource.transport.delete(options);
-			}, 1 / 60);
+            datasource.transport.delete(options);
 		};
 		
 		this.update = function(object) {

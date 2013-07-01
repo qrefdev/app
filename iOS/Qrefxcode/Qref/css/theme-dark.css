@@ -888,6 +888,29 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#11467c', end
 color: #ffffff;
 }
 
+/** Emergencies Section Selector **/
+.emergencies-sections ul li {
+	float: left;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+	border-bottom: 1px solid #242424;
+}
+
+.emergencies-sections ul li p {
+    color: #f1f1f1;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.emergencies-sections ul li:hover p {
+	color: #ffffff;
+}
+
+.emergencies-sections ul li:last-child {
+	border-bottom: 0px;
+}
+
 /**
  * iOS 6 style switch checkboxes
  * by Lea Verou http://lea.verou.me

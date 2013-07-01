@@ -101,17 +101,15 @@ var EmergenciesObserver = new zimoko.Observable({
 			ChecklistObserver.set('list', 'emergencies');
 		},
 		function() {
-			ChecklistObserver.set('section', 1);
+			ChecklistObserver.set('showSections', false);
 		},
 		function() {
-			ChecklistObserver.set('section', 0);
-		},
-		function() {
-			ChecklistObserver.set('showSections', true);
+			EmergenciesSectionsObserver.set('sectionName', data.name);
+			EmergenciesSectionsObserver.set('sections', data.items.toObservableObjects());
 		},
 		function() {
 			setTimeout(function() {
-				Navigation.go('checklist');
+				Navigation.go('emergencies-sections');
 			}, 100);
 		}],
 		function(index, item) {
@@ -128,6 +126,23 @@ var EmergenciesObserver = new zimoko.Observable({
 		e.stopPropagation();
 		e.preventDefault();
 		Navigation.go("dashboard");
+	}
+});
+
+var EmergenciesSectionsObserver = new zimoko.Observable({
+	sections: [],
+	sectionName: '',
+	backTap: function(element, e, data) {
+		e.stopPropagation();
+		e.preventDefault();
+		Navigation.back();
+	},
+	sectionTap: function(element, e, data) {		
+		ChecklistObserver.set('section', data.index);
+		
+		setTimeout(function() {
+			Navigation.go('checklist');
+		}, 100);
 	}
 });
 
@@ -1001,7 +1016,8 @@ var AppObserver = new zimoko.Observable({
         $(window).tap(function(e) {
             ChecklistObserver.set('showSections', false);
         });
-                                        
+      
+      	/*
 		$(window).swipe({
 			swipeRight: function(event, duration) {
 				MenuObserver.close();
@@ -1012,6 +1028,7 @@ var AppObserver = new zimoko.Observable({
 			threshold: 100,
 			durationThreshold: 265
 		});
+		*/
 		
 		$(".submit").tap(function(e) {
 			$(this).closest('form').submit();

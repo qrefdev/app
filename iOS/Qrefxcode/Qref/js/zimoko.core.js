@@ -13,7 +13,7 @@ var zimoko = new (function() {})();
 			window.oRequestAnimationFrame ||
 			window.msRequestAnimationFrame ||
 			function( /* function FrameRequestCallback */ callback, /* DOMElement Element */ element ) {
-				window.setTimeout( callback, 1000 / 60 );
+				window.setTimeout( callback, 0 );
 			};
 		} )();
 	}
@@ -66,7 +66,7 @@ var zimoko = new (function() {})();
 			if(this.object) {
 				setTimeout(function() {
 					self.method.apply(self.object, self.args);
-				}, 1 / 60);
+				}, 0);
 			} else {
 				self.method.apply(self, self.args);
 			}

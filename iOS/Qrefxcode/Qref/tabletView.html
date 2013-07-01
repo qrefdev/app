@@ -59,7 +59,7 @@
 					<div class="grid dashboard-planes-selector scrollable" data-bind="virtual: '.li-item'">
 						<div class="container">
 							<ul id="dashboard-planes" class="vertical" data-bind="virtualForeach: items">
-								<li class="li-item" data-bind="attr: {'data-id': _id }, tap: parent.itemTap, swipeRight: parent.itemSwipeRight">
+								<li class="li-item" data-bind="attr: {'data-id': _id }, tap: parent.itemTap, swipeRight: parent.itemSwipeRight, swipeLeft: parent.itemSwipeRight">
 									<div class="plane-icon"></div>
 									<div class="holder">
 										<div class="heading" data-bind="html: manufacturer.name + ' ' + model.name"></div>
@@ -115,7 +115,7 @@
 						<div><span id="area" style="margin-right: 2px;" data-bind="html: sectionName"></span></div><i class="icon icon-caret-down"></i>
 					</div>-->
 					<div class="item-middle-empty" data-bind="visible: (function() {return !canCheck; })();">
-						<p style="text-align: center; padding: 8px; margin: 0px;" data-bind="text: checklist.model.name">
+						<p style="text-align: center; padding: 8px; margin: 0px;" data-bind="text: checklist.model.name">	
 						</p>
 					</div>
 					<div data-bind="visible: canCheck" class="item-middle-empty" style="width: 28.5%;">
@@ -145,7 +145,7 @@
 						<div class="grid checklist scrollable" data-bind="virtual: 'li'">
 							<div class="container">
 								<ul id="checklist-items" class="vertical" data-bind="virtualForeach: items">
-									<li data-bind="attr: {'data-id': _id}, tap: parent.itemTap, swipeRight: parent.itemSwipeRight">
+									<li data-bind="attr: {'data-id': _id}, tap: parent.itemTap, swipeRight: parent.itemSwipeRight, swipeLeft: parent.itemSwipeRight">
 										<div class="holder">
 											<div class="check" data-bind="visible: (check != ''), html: check"></div>
 											<div class="response" data-bind="visible: (response != ''), html: response"></div>
@@ -201,6 +201,40 @@
 					</div>
 					<div class="shadow">
 					</div>
+				</div>
+			</div>
+		</article>
+<!-- Emergencies Section Selection -->
+        <article id="emergencies-sections" data-bind="swipeRight: backTap" data-page-show="slideInLeft" data-page-hide="slideOutLeft" class="theme-dark page">
+			<div class="wrap">
+				<div class="topbar">
+					<div class="item-large back" data-bind="tap: backTap">
+						<p><i class="icon icon-double-angle-left"></i></p>
+					</div>
+					<div class="item-middle-empty" style="text-align: center;">
+						<p style="margin-top: 8px;">
+                        Emergencies
+						</p>
+					</div>
+					<div class="item-large topmenu" data-bind="tap: menuTap">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
+				</div>
+				<div class="content">
+					<div class="section-nav sections">
+						<div class="name">
+							<p data-bind="html: sectionName"></p>
+						</div>
+                    </div>
+                    <div style="position: absolute; top: 46px; left: 0px; bottom: 0px; right: 0px; width: 100%">
+                        <div class="grid emergencies-sections scrollable">
+                            <div class="container">
+                                <ul class="vertical" data-bind="foreach: sections">
+                                    <li data-bind="tap: parent.sectionTap"><p data-bind="html: name"></p></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
 				</div>
 			</div>
 		</article>
@@ -452,17 +486,17 @@
 					</div>
 				</div>
 				<div class="content">
-					<div style="float: left; position: relative; width: 100%; margin-top: 5px;" data-bind="with: item">
-						<form id="editAddForm" method="post" action="javascript:void(null);">
-							<input class="textbox required" data-bind="value: check" type="text" placeholder="check" />
-							<input class="textbox required" data-bind="value: response" type="text" placeholder="response" />
-							
-							<div style="margin: 10px auto; width: 90%" class="submit" data-bind="visible: root.adding"><div class="special"><p>Save</p><i class="icon icon-arrow-right"></i></div></div>
+                    <div style="float: left; position: relative; width: 100%; margin-top: 5px;" data-bind="with: item">
+                        <form id="editAddForm" method="post" action="javascript:void(null);">
+                            <input class="textbox required" style="display: block;" data-bind="value: check" type="text" placeholder="check" />
+                            <input class="textbox required" style="display: block;" data-bind="value: response" type="text" placeholder="response" />
                             
-                            <div style="margin: 10px auto; width: 90%" class="button" data-bind="tap: root.backTap, visible: !root.adding"><div class="special"><p>Save</p><i class="icon icon-arrow-right"></i></div></div>
-						</form>
-					</div>
-				</div>
+                            <div style="margin: 10px auto; width: 90%; position: relative;" class="submit" data-bind="visible: root.adding"><div class="special"><p>Save</p><i class="icon icon-arrow-right"></i></div></div>
+                            
+                            <div style="margin: 10px auto; width: 90%; position: relative" class="button" data-bind="tap: root.backTap, visible: (function(){return !root.adding;})()"><div class="special"><p>Save</p><i class="icon icon-arrow-right"></i></div></div>
+                        </form>
+                    </div>
+                </div>
 			</div>
 		</article>
 		

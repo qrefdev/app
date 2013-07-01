@@ -26,6 +26,7 @@ $(document).ready(function() {
 	E6BObserver.attach('#e6b');
 	MenuObserver.attach('#menu');
 	EmergenciesObserver.attach('#emergencies');
+    EmergenciesSectionsObserver.attach('#emergencies-sections');
 	ChecklistObserver.attach('#checklist');
 	DashboardObserver.attach('#dashboard');
 	AppObserver.attach('body');

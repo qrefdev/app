@@ -59,7 +59,7 @@
 					<div class="grid dashboard-planes-selector scrollable" data-bind="virtual: '.li-item'">
 						<div class="container">
 							<ul id="dashboard-planes" class="vertical" data-bind="virtualForeach: items">
-								<li class="li-item" data-bind="attr: {'data-id': _id }, tap: parent.itemTap, swipeRight: parent.itemSwipeRight">
+								<li class="li-item" data-bind="attr: {'data-id': _id }, tap: parent.itemTap, swipeRight: parent.itemSwipeRight, swipeLeft: parent.itemSwipeRight">
 									<div class="plane-icon"></div>
 									<div class="holder">
 										<div class="heading" data-bind="html: manufacturer.name + ' ' + model.name"></div>
@@ -145,7 +145,7 @@
 						<div class="grid checklist scrollable" data-bind="virtual: 'li'">
 							<div class="container">
 								<ul id="checklist-items" class="vertical" data-bind="virtualForeach: items">
-									<li data-bind="attr: {'data-id': _id}, tap: parent.itemTap, swipeRight: parent.itemSwipeRight">
+									<li data-bind="attr: {'data-id': _id}, tap: parent.itemTap, swipeRight: parent.itemSwipeRight, swipeLeft: parent.itemSwipeRight">
 										<div class="holder">
 											<div class="check" data-bind="visible: (check != ''), html: check"></div>
 											<div class="response" data-bind="visible: (response != ''), html: response"></div>
@@ -201,6 +201,40 @@
 					</div>
 					<div class="shadow">
 					</div>
+				</div>
+			</div>
+		</article>
+<!-- Emergencies Section Selection -->
+        <article id="emergencies-sections" data-bind="swipeRight: backTap" data-page-show="slideInLeft" data-page-hide="slideOutLeft" class="theme-dark page">
+			<div class="wrap">
+				<div class="topbar">
+					<div class="item-large back" data-bind="tap: backTap">
+						<p><i class="icon icon-double-angle-left"></i></p>
+					</div>
+					<div class="item-middle-empty" style="text-align: center;">
+						<p style="margin-top: 8px;">
+                        Emergencies
+						</p>
+					</div>
+					<div class="item-large topmenu" data-bind="tap: menuTap">
+						<p><i class="icon icon-th-list"></i></p>
+					</div>
+				</div>
+				<div class="content">
+					<div class="section-nav sections">
+						<div class="name">
+							<p data-bind="html: sectionName"></p>
+						</div>
+                    </div>
+                    <div style="position: absolute; top: 46px; left: 0px; bottom: 0px; right: 0px; width: 100%">
+                        <div class="grid emergencies-sections scrollable">
+                            <div class="container">
+                                <ul class="vertical" data-bind="foreach: sections">
+                                    <li data-bind="tap: parent.sectionTap"><p data-bind="html: name"></p></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
 				</div>
 			</div>
 		</article>

@@ -1461,7 +1461,7 @@ ul li {
 	}
     
     .CProw {
-        font-size: 9px;
+        font-size: 18pt;
     }
 }
 
@@ -1473,4 +1473,8 @@ ul li {
 	.flyover {
 		left: 29.8%;
 	}
+    
+    .CProw {
+        font-size: 22pt;
+    }
 }

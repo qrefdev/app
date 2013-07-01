@@ -1447,7 +1447,7 @@ ul li {
 	}
     
     .CProw {
-        font-size: 9px;
+        font-size: 13pt;
     }
 }
 
@@ -1466,5 +1466,9 @@ ul li {
     
     .flyover:before {
         left:47.5%;
+    }
+    
+    .CProw {
+        font-size: 18pt;
     }
 }
