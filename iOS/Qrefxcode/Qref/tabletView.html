@@ -9,7 +9,8 @@
 		<meta name="format-detection" content="address=no" />
 		<link rel="stylesheet" href="css/fontawesome.css" />
 		<link rel="stylesheet" href="css/base-tablet.css" />
-		<link rel="stylesheet" href="css/theme-dark-tablet.css" />
+        <link rel="stylesheet" href="css/theme-light.css" />
+            <link rel="stylesheet" href="css/theme-light-tablet.css" />
 		<link rel="stylesheet" href="css/animate.css" />
 		<script src="js/jquery.js"></script>
 		<script src="js/jquery.ui.js"></script>
@@ -40,10 +41,10 @@
 	<body> 
 	<div class="wrapper">
 <!-- Dashboard Screen -->
-		<article id="dashboard" data-page-show="inVisible" data-page-hide="outVisible" class="theme-dark page">
+		<article id="dashboard" data-page-show="inVisible" data-page-hide="outVisible" class="theme-light page">
 			<div class="wrap">
 				<div class="dashbar">
-					<div class="item" style="background: url('images/logo.png') 50% 50% no-repeat; background-size: 100% 100%; width: 150px; height: 60px;">
+					<div class="item logo">
 					</div>
 					<div class="item item-right topmenu" data-bind="tap: menuTap">
 						<p><i class="icon icon-th-list"></i></p>
@@ -105,7 +106,7 @@
 		</article>
 		
 <!-- Checklist Screen -->
-		<article id="checklist" data-page-show="inVisible" data-page-hide="outVisible" class="theme-dark page">
+		<article id="checklist" data-page-show="inVisible" data-page-hide="outVisible" class="theme-light page">
 			<div class="wrap">
 				<div class="topbar">
 					<div class="item back" data-bind="tap: backTap">
@@ -175,7 +176,7 @@
 		</article>
 		
 <!-- Emergencies Special Section Screen -->
-		<article id="emergencies" data-page-show="inVisible" data-page-hide="outVisible" class="theme-dark page">
+		<article id="emergencies" data-page-show="inVisible" data-page-hide="outVisible" class="theme-light page">
 			<div class="wrap">
 				<div class="topbar">
 					<div class="item-large back" data-bind="tap: backTap">
@@ -205,7 +206,7 @@
 			</div>
 		</article>
 <!-- Emergencies Section Selection -->
-        <article id="emergencies-sections" data-bind="swipeRight: backTap" data-page-show="slideInLeft" data-page-hide="slideOutLeft" class="theme-dark page">
+        <article id="emergencies-sections" data-bind="swipeRight: backTap" data-page-show="slideInLeft" data-page-hide="slideOutLeft" class="theme-light page">
 			<div class="wrap">
 				<div class="topbar">
 					<div class="item-large back" data-bind="tap: backTap">
@@ -240,7 +241,7 @@
 		</article>
 		
 <!-- Product Download Listing -->
-		<article id="downloads" data-bind="swipeRight: backTap" data-page-show="slideInLeft" data-page-hide="slideOutLeft" class="theme-dark page">
+		<article id="downloads" data-bind="swipeRight: backTap" data-page-show="slideInLeft" data-page-hide="slideOutLeft" class="theme-light page">
 			<div class="wrap">
 				<div class="topbar">
 					<div class="item-large back" data-bind="tap: backTap">
@@ -281,7 +282,7 @@
 		</article>
 		
 <!-- E6B Selection -->
-	<!--<article id="e6bselection" style="display: none;" class="theme-dark page">
+	<!--<article id="e6bselection" style="display: none;" class="theme-light page">
 			<section class="page">
 				<div class="topbar">
 					<div class="item-large back">
@@ -309,7 +310,7 @@
 
 
 <!-- E6B Conversions -->
-		<article id="e6b" data-bind="swipeRight: backTap" data-page-show="slideInLeft" data-page-hide="slideOutLeft" class="theme-dark page">
+		<article id="e6b" data-bind="swipeRight: backTap" data-page-show="slideInLeft" data-page-hide="slideOutLeft" class="theme-light page">
 			<div class="wrap">
 				<div class="topbar">
 					<div class="item-large back" data-bind="tap: backTap">
@@ -355,7 +356,7 @@
 		</article>	
 		
 <!-- Setting Screen -->
-		<!--<article id="settings" data-page-show="slideInLeft" data-page-hide="slideOutLeft" class="theme-dark page">
+		<!--<article id="settings" data-page-show="slideInLeft" data-page-hide="slideOutLeft" class="theme-light page">
 			<div class="wrap">
 				<div class="topbar">
 					<div class="item-large back">
@@ -377,13 +378,13 @@
 								</div>
 								<select class="textbox" style="width: 95%; height: 30px; color: #000000;" id="dayTheme">
 									<option value="theme-light">Light</option>
-									<option value="theme-dark">Dark</option>
+									<option value="theme-light">Dark</option>
 								</select>
 								<div class="row dark-bg">
 									<h2>Night Time Theme</h2>
 								</div>
 								<select class="textbox" style="width: 95%; height: 30px; color: #000000;" id="nightTheme">
-									<option value="theme-dark">Dark</option>
+									<option value="theme-light">Dark</option>
 									<option value="theme-light">Light</option>
 								</select>
 							</li>
@@ -420,7 +421,7 @@
 		</article>-->
 
 <!-- Product Details -->
-		<article id="productdetails" data-bind="swipeRight: backTap"  data-page-show="slideInRight" data-page-hide="slideOutRight" class="theme-dark page">
+		<article id="productdetails" data-bind="swipeRight: backTap"  data-page-show="slideInRight" data-page-hide="slideOutRight" class="theme-light page">
 			<div class="wrap">
 				<div class="topbar">
 					<div class="item-large back" data-bind="tap: backTap">
@@ -472,7 +473,7 @@
 		</article>
 		
 <!-- Edit Checklist / Add Checklist Item Screen -->
-		<article id="editadd" data-bind="swipeRight: backTap" data-page-show="slideInLeft" data-page-hide="slideOutLeft" class="theme-dark page">
+		<article id="editadd" data-bind="swipeRight: backTap" data-page-show="slideInLeft" data-page-hide="slideOutLeft" class="theme-light page">
 			<div class="wrap">
 				<div class="topbar">
 					<div class="item-large back" data-bind="tap: backTap">
@@ -501,7 +502,7 @@
 		</article>
 		
 <!-- Edit Tail Number Screen -->
-		<article id="edittail" data-bind="swipeRight: backTap" data-page-show="slideInLeft" data-page-hide="slideOutLeft" style="display: none;" class="theme-dark page">
+		<article id="edittail" data-bind="swipeRight: backTap" data-page-show="slideInLeft" data-page-hide="slideOutLeft" style="display: none;" class="theme-light page">
 			<div class="wrap">
 				<div class="topbar">
 					<div class="item-large back" data-bind="tap: backTap">
@@ -527,7 +528,7 @@
 		</article>
 		
 <!-- Sign in Screen -->
-		<article id="signin" data-bind="swipeRight: backTap" data-page-show="slideInLeft" data-page-hide="slideOutLeft" class="theme-dark page">
+		<article id="signin" data-bind="swipeRight: backTap" data-page-show="slideInLeft" data-page-hide="slideOutLeft" class="theme-light page">
 			<div class="wrap">
 				<div class="topbar">
 					<div class="item-large back" data-bind="tap: backTap">
@@ -555,7 +556,7 @@
 		</article>
 		
 		<!-- Password Recovery Screen -->
-		<article id="passwordRecovery" data-bind="swipeRight: backTap" data-page-show="slideInRight" data-page-hide="slideOutRight" class="theme-dark page">
+		<article id="passwordRecovery" data-bind="swipeRight: backTap" data-page-show="slideInRight" data-page-hide="slideOutRight" class="theme-light page">
 			<div class="wrap">
 				<div class="topbar">
 					<div class="item-large back" data-bind="tap: backTap">
@@ -580,7 +581,7 @@
 		</article>
 		
 				<!-- Password Recovery Screen -->
-		<article id="changePassword" data-bind="swipeRight: backTap" data-page-show="slideInRight" data-page-hide="slideOutRight" class="theme-dark page">
+		<article id="changePassword" data-bind="swipeRight: backTap" data-page-show="slideInRight" data-page-hide="slideOutRight" class="theme-light page">
 			<div class="wrap">
 				<div class="topbar">
 					<div class="item-large back" data-bind="tap: backTap">
@@ -607,7 +608,7 @@
 		</article>
 		
 <!-- Register Area -->
-		<article id="register" data-bind="swipeRight: backTap" data-page-show="slideInRight" data-page-hide="slideOutRight" class="theme-dark page">
+		<article id="register" data-bind="swipeRight: backTap" data-page-show="slideInRight" data-page-hide="slideOutRight" class="theme-light page">
 			<div class="wrap">
 				<div class="topbar">
 					<div class="item-large back" data-bind="tap: backTap">
@@ -633,12 +634,12 @@
 			</div>
 		</article>
 		
-		<article id="hiddenTapSpace" data-bind="tap: pageTap, visible: menuOpen" class="theme-dark page-hidden-tap" style="z-index: 100">
+		<article id="hiddenTapSpace" data-bind="tap: pageTap, visible: menuOpen" class="theme-light page-hidden-tap" style="z-index: 100">
 			
 		</article>
 		
 <!-- Menu -->
-		<div id="menu" class="theme-dark">
+		<div id="menu" class="theme-light">
 			<div class="menu">
                 <div class="currentLogin"><i class="icon icon-user"></i><div class="user" data-bind="html: email"></div></div>
 				<div class="version">version: <span data-bind="text: version"></span></div>
@@ -659,7 +660,7 @@
 		</div>
 		
 <!-- Checklist Bottom Navigation -->
-		<div id="checklist-nav" class="theme-dark" data-bind="visible: (function() { return (navHash == '#checklist' || navHash == '#emergencies'); })()">
+		<div id="checklist-nav" class="theme-light" data-bind="visible: (function() { return (navHash == '#checklist' || navHash == '#emergencies'); })()">
 			<nav class="nav checklistnav">
 				<ul>
 					<li data-link="preflight" data-bind="tap: checklistNavTap" class="item-25"><div><div class="icon"><img src="images/tab-preflight@2x.png" /></div><div class="subheader-only">Preflight</div></div></li>
@@ -674,7 +675,7 @@
 		</div>
 		
 <!-- Loader Screens -->
-		<div class="theme-dark model" data-bind="fadeVisible: loading">
+		<div class="theme-light model" data-bind="fadeVisible: loading">
 			<figure class="loader">
 				<div class="ball"></div>
 				<div class="ball1"></div>
@@ -685,7 +686,7 @@
                 </p>
             </div>
 		</div>
-        <div class="theme-dark model" data-bind="fadeVisible: syncing">
+        <div class="theme-light model" data-bind="fadeVisible: syncing">
 			<figure class="loader">
 				<div class="ball"></div>
 				<div class="ball1"></div>
@@ -697,7 +698,7 @@
             </div>
 		</div>
         
-        <div class="theme-dark model" data-bind="fadeVisible: saving">
+        <div class="theme-light model" data-bind="fadeVisible: saving">
 			<figure class="loader">
 				<div class="ball"></div>
 				<div class="ball1"></div>
@@ -709,7 +710,7 @@
             </div>
 		</div>
         
-        <div class="theme-dark model" id="savebox">
+        <div class="theme-light model" id="savebox">
 			<figure class="info" >
 				<figcaption class="data">Saved Changes</figcaption>
 				<div class="button okay no" style="width: 90%; margin: 20px auto;"><div class="special"><p>OK</p><i class="icon icon-ok"></i></div></div>
@@ -717,7 +718,7 @@
 			</figure>
 		</div>
         
-        <div class="theme-dark model" id="signoutbox">
+        <div class="theme-light model" id="signoutbox">
 			<figure class="info" >
 				<figcaption class="data">Sign out?</figcaption>
 				<div class="button okay yes" style="width: 90%; margin: 20px auto;"><div class="special"><p>Sign out</p><i class="icon icon-ok"></i></div></div>
@@ -726,7 +727,7 @@
 		</div>
 		
 <!-- Info Dialog -->
-		<div class="theme-dark model" id="infobox">
+		<div class="theme-light model" id="infobox">
 			<figure class="info" >
 				<figcaption class="data"></figcaption>
 				<div class="button okay" style="width: 90%; margin: 20px auto;"><div class="special"><p>OK</p><i class="icon icon-ok"></i></div></div>

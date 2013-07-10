@@ -5,7 +5,7 @@ var NightTimeModeTime = "00:00";
 var NightTimeModeTimeOff = "00:00";
 var AutoSwitch = false;
 var NightMode = false;
-var NightTheme = "theme-dark";
+var NightTheme = "theme-light";
 var DayTheme = "theme-light";
 var reachability = true;
 //Initialize
