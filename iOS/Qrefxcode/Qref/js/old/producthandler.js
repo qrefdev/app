@@ -190,7 +190,7 @@ function MyProductsHandler() {
 
 //Handles the loading of the product details
 function ProductDetails() {
-	this.details = $("#productDetailsListing");
+	this.details = $("#productdetails #productDetailsListing");
 	var self = this;
 	
 	//Do whatever necessary to start the purchase

@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "46B2665215C054B1002E9931"
-               BuildableName = "Qref.app"
-               BlueprintName = "Qref"
-               ReferencedContainer = "container:Qref.xcodeproj">
+               BuildableName = "Qref Aircraft.app"
+               BlueprintName = "Qref Aircraft"
+               ReferencedContainer = "container:Qref Checklists.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "46B2665215C054B1002E9931"
-            BuildableName = "Qref.app"
-            BlueprintName = "Qref"
-            ReferencedContainer = "container:Qref.xcodeproj">
+            BuildableName = "Qref Aircraft.app"
+            BlueprintName = "Qref Aircraft"
+            ReferencedContainer = "container:Qref Checklists.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -52,9 +52,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "46B2665215C054B1002E9931"
-            BuildableName = "Qref.app"
-            BlueprintName = "Qref"
-            ReferencedContainer = "container:Qref.xcodeproj">
+            BuildableName = "Qref Aircraft.app"
+            BlueprintName = "Qref Aircraft"
+            ReferencedContainer = "container:Qref Checklists.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -70,9 +70,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "46B2665215C054B1002E9931"
-            BuildableName = "Qref.app"
-            BlueprintName = "Qref"
-            ReferencedContainer = "container:Qref.xcodeproj">
+            BuildableName = "Qref Aircraft.app"
+            BlueprintName = "Qref Aircraft"
+            ReferencedContainer = "container:Qref Checklists.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -9,3 +9,11 @@
 .theme-light .checklist .vertical li .response {
 	font-size: 18px;
 }
+
+.theme-light .dashboard-planes-selector .heading, .theme-light .downloads .heading {
+    font-size: 26px;
+}
+
+.theme-light .dashboard-planes-selector .subheading, .theme-light .downloads .subheading {
+    font-size: 18px;
+}

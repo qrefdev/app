@@ -2461,10 +2461,47 @@
                 });
 			}
 		},
+         'slideVisible': {
+            init: function(element, value) {
+                var val = value.get();
+         
+                if(val) {
+                    element.css({'-webkit-transform': 'translateY(100%)', 'display': 'block'});
+                    zimoko.ui.animate(element, 'slideInTop', function(e) {
+                           element.css({'-webkit-transform': 'translateY(0px)'});
+                           });
+                }
+                else {
+                    zimoko.ui.animate(element, 'slideOutTop', function(e) {
+                           element.hide();
+                           });
+                }
+            },
+            update: function(element, value) {
+                var val = value.get();
+         
+                if(val) {
+                    element.css({'-webkit-transform': 'translateY(100%)', 'display': 'block'});
+                    zimoko.ui.animate(element, 'slideInTop', function(e) {
+                           element.css({'-webkit-transform': 'translateY(0px)'});
+                           });
+                }
+                else {
+                zimoko.ui.animate(element, 'slideOutTop', function(e) {
+                           element.hide();
+                           });
+                }
+            },
+            remove: function(element, value) {
+            zimoko.ui.animate(element, 'slideOutTop', function(e) {
+                           element.hide();
+                           });
+            }
+         },
 		'visible': {
 			init: function(element, value) {
 				var val = value.get();
-				 
+	
 				if(val)
 					element.show();
 				else

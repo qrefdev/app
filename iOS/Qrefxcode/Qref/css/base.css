@@ -18,7 +18,7 @@ html, body {
 	padding: 0;
 	width: 100%;
 	height: 100%;
-    background: #1f1f1f;
+    background: #fff;
 	font-family: Myriad, Helvetica;
 }
 
@@ -48,16 +48,23 @@ html, body {
 /** Text Boxes & Text Areas **/
 .textbox {
 	position: relative;
-	margin: 5px auto;
 	padding: 10px;
 	text-align: left;
-	width: 90%;
-	height: 36px;
+	width: 100%;
+	height: 50px;
 	font-size: 22px;
-	-webkit-border-radius: 10px;
-	border-radius: 10px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
 	display:block;
-	font-family: MyriadBold, Myriad;
+	font-family: Myriad;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.textbox.tailNumber {
+	padding: 16px 10px 10px 17px;
+	font-size: 50px;
+	height: 78px;
 }
 
 /** Page Wrapper **/
@@ -110,8 +117,9 @@ html, body {
 	width: 100%;
 	height: auto;
 	list-style-type: none;
-	padding: 0;
+	padding: 0 5px;
 	margin: 0;
+    box-sizing: border-box;
 }
 
 .nav ul li {
@@ -119,10 +127,12 @@ html, body {
 	position: relative;
 	width: auto;
 	height: 60px;
-	padding: 0;
+	padding: 3px;
 	margin: 0;
 	text-align: left;
 	cursor: pointer;
+    box-sizing: border-box;
+    opacity: .7;
 }
 
 .nav ul .item {
@@ -132,9 +142,10 @@ html, body {
 }
 
 .nav ul .item-25 {
-	width: 24.80%;
+	width: 25%;
 	margin: 0;
 	padding: 0;
+    height: 65px;
 }
 
 .nav ul .item-33 {
@@ -146,13 +157,13 @@ html, body {
 .nav ul .item .header {
 	font-size: 16px;
 	position: absolute;
-	left: 60px;
+	left: 53px;
 	top: 15px;
 }
 
 .nav ul .item .subheader {
 	font-size: 12px;
-	left: 60px;
+	left: 53px;
 	top: 35px;
 	position: absolute;
 }
@@ -205,10 +216,10 @@ html, body {
 
 .nav ul .item-25 div .icon {
 	width: 100%;
+    height: 100%;
 	text-align: center;
 	padding-top: 0px;
 	display: block;
-	height: 80px;
 }
 
 .nav ul .item-25 div .icon img {
@@ -230,16 +241,17 @@ html, body {
 	top: 20px;
 }
 
-.nav ul .subheader-only {
-	font-size: 10px;
-	text-align: center;
-	width: 100%;
-	position:  absolute;
-	bottom: 3px;
+.nav.checklistnav ul {
+    height: 84px;
 }
 
-.checklistnav ul .subheader-only {
-	font-size: 14px;
+.nav.checklistnav ul .subheader-only {
+	text-align: center;
+	width: 100%;
+	margin-top: 2px;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-family: MyriadBold;
 }
 
 /** Dashboard Top Bar **/
@@ -271,8 +283,13 @@ html, body {
 	padding: 6px;
 }
 
-.dashbar .item-right p {
-	padding: 6px;
+.dashbar .topmenu p {
+	padding-top: 8px;
+	margin: 0;
+}
+
+.dashbar .edit-check p {
+	padding-top: 7px;
 	margin: 0;
 }
 
@@ -292,7 +309,7 @@ html, body {
 
 .dashbar .header {
 	position: absolute;
-	width: 100%;
+	width: 95%;
 	z-index: 1;
 	bottom: 0px;
 	left: 0px;
@@ -300,8 +317,10 @@ html, body {
 	height: 32px;
 	padding: 0;
 	margin: 0;
-	text-align: center;
-	letter-spacing: 5px;
+	text-align: right;
+    font-family: Myriad;
+    font-size: 22px;
+    top: 23px;
 }
 
 .dashbar .icon {
@@ -316,12 +335,14 @@ html, body {
 	left: 0px;
 	right: 0px;
 	width: 100%;
-	height: auto;
+	height: 36px;
 	font-size: 12px;
 	overflow: visible;
 	padding: 0;
 	margin: 0;
 	z-index: 1100;
+    line-height: 41px;
+    text-align: center;
 }
 
 .topbar .item {
@@ -425,15 +446,16 @@ html, body {
 .topbar .item-large {
 	float: left;
 	position: relative;
-	width: 25%;
-	height: 32px;
+	width: 18%;
+	height: 35px;
+    padding-top: 1px;
 	z-index: 5;
 	cursor: pointer;
 	text-align: center;
 }
 
 .topbar .item p {
-	margin: 5px;
+	margin: 2px 0 0 0;
 	padding: 3px;
     white-space: nowrap;
 	overflow: hidden;
@@ -441,11 +463,14 @@ html, body {
 }
 
 .topbar .item-large p {
-	margin: 5px;
-	padding: 3px;
+	margin: 0px;
     white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+
+.topbar .back p {
+	margin-top: -1px;
 }
 
 .topbar .icon {
@@ -456,10 +481,10 @@ html, body {
 /** Content Wrapper **/
 .content {
 	position: absolute;
-	top: 32px;
+	top: 36px;
 	left: 0px;
 	right: 0px;
-	bottom: 60px;
+	bottom: 90px;
 	width: 100%;
 	overflow: auto;
 	padding: 0;
@@ -501,11 +526,10 @@ html, body {
 	float: left;
 	position: relative;
 	width: 100%;
-	margin-bottom: 2px;
 }
 
 .grid .vertical li:last-child {
-	margin-bottom: 0;
+	margin-bottom: 15px;
 }
 
 .grid .horizontal {
@@ -608,7 +632,7 @@ html, body {
 	position: absolute;
 	right: 0px;
 	bottom: 0px;
-	top: 20px;
+	top: 8px;
 	padding: 0;
 	margin: 0;
 	z-index: 0;
@@ -639,10 +663,9 @@ html, body {
 .dashboard-planes-selector .vertical li .holder, .downloads .vertical li .holder {
 	float: left;
 	position: relative;
-	margin-top: 10px;
-	margin-left: 5px;
-	padding: 10px;
-	width: auto;
+	margin: 10px 0 0 10px;
+	padding: 0;
+	width: 100%;
 }
 
 .dashboard-planes-selector .vertical li .delete {
@@ -686,15 +709,12 @@ html, body {
 	width: auto;
 	position: relative;
 	margin-left: 0px;
-	margin-top: 3px;
 }
 
 .dashboard-planes-selector .vertical li ul {
 	width: auto;
 	padding: 0;
 	position: relative;
-	margin-top: 10px;
-	margin-bottom: 10px;
 	list-style-type: none;
 	background: none;
 }
@@ -705,7 +725,7 @@ html, body {
 	font-size: 14px;
 	position: relative;
     margin: 0px;
-	padding: 10px 5px 10px 5px;
+	padding: 10px 10px 14px 0;
     z-index: 999;
 }
 
@@ -734,8 +754,8 @@ html, body {
 	float: left;
 	position: relative;
 	margin-top: 10px;
-	margin-left: 5px;
-	width: auto;
+	margin-left: 10px;
+    margin-bottom: 2px;
 }
 
 .checklist .vertical li .check {
@@ -746,8 +766,8 @@ html, body {
 
 .checklist .vertical li .response {
 	font-size: 12px;
-	margin-top: 5px;	
-	margin-bottom: 10px;
+	margin-top: 2px;
+	margin-bottom: 7px;
 	position: relative;
 	width: auto;
 }
@@ -779,29 +799,29 @@ html, body {
 .checklist .vertical li .add {
 	position: absolute;
 	right: 60px;
-	top: 32%;
+	top: 22px;
 	display: none;
 }
 
 .checklist .vertical li .checkmark, .downloads .vertical li .checkmark {
     position: absolute;
-    width: 32px;
-    height: 32px;
-    right: 20px;
-    top: 32%;
+    width: 30px;
+    height: 30px;
+    right: 12px;
+    top: 12px;
     border-radius: 5px;
     -webkit-border-radius: 5px;
 }
 
 .checklist .vertical li .checkmark .checker, .downloads .vertical li .checkmark .checker {
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
 }
 
 .checklist .vertical li .checkmark .checker .icon, .downloads .vertical li .checkmark .checker .icon {
     position: absolute;
     left: -10px;
-    top: -20px;
+    top: -24px;
     font-size: 40px;
 }
 
@@ -819,6 +839,12 @@ html, body {
 	bottom: 62px;
 	z-index: 99999;
 	overflow: auto;
+}
+
+.check-sections-container {
+ 	position: absolute;
+    top: 88px;
+    overflow: hidden;
 }
 
 .check-sections .vertical {
@@ -842,7 +868,7 @@ html, body {
 	bottom: 0px;
 	right: 0px;
 	left: 0px;
-	height:30px;
+	height:15px;
 	z-index: 999;
 	margin: 0px;
 	padding: 0px;
@@ -868,7 +894,7 @@ html, body {
 
 .info {
 	position: absolute;
-	top: 35%;
+	top: 25%;
 	left: 0%;
 	width: 100%;
 	margin-left: 0px;
@@ -882,8 +908,8 @@ html, body {
 	position: relative;
 	margin: 0px;
 	padding: 20px;
-	width: 97%;
-	font-size: 16px;
+	width: 92%;
+	font-size: 24px;
 }
 
 .model {
@@ -894,7 +920,6 @@ html, body {
 	top: 0px;
 	right: 0px;
 	bottom: 0px;
-	background: rgba(0,0,0,0.75);
 	display: none;
 	z-index: 99999999;
 }
@@ -903,10 +928,11 @@ html, body {
 /** Form Stuff **/
 form {
 	float: left;
-	position: relative;
-	width: 100%;
-	padding: 0;
-	margin: 0;
+    position: relative;
+    width: 100%;
+    padding: 10px;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 form label {
@@ -935,7 +961,7 @@ form label {
 	position: absolute;
 	width: 100%;
 	top: 80px;
-	bottom: 60px;
+	bottom: 70px;
 	left: 0px;
 	right: 0px;
 }
@@ -959,7 +985,6 @@ form label {
 	width: 100%;
 	position: relative;
 	text-align: center;
-	padding: 5px;
 }
 
 .emergencies .icon img {
@@ -971,7 +996,6 @@ form label {
 	position: relative;
 	width: 100%;
 	text-align: center;
-	padding: 5px;
 	font-size: 14px; 
 }
 
@@ -986,18 +1010,22 @@ form label {
 	float: left;
 	position: relative;
 	width: 43%;
-	margin: 0px;
-	padding: 10px;
-	height: 64px;
-	margin-top: 10px;
-	margin-bottom: 10px;
-	overflow hidden;
+	margin: 0 10px 10px 10px;
+	overflow: hidden;
+}
+
+.topbar .back {
+    float: left;
+}
+
+.topbar .topmenu {
+    float: right;
 }
 
 #emergency-items {
 	list-style-type: none;
 	padding: 0;
-	margin: 0;
+	margin: 10px 0 0 0;
 }
 
 /** Product Details **/
@@ -1101,6 +1129,7 @@ form label {
     position: relative;
     padding: 5px;
     margin: 5px;
+    font-family: MyriadBold;
 }
 .currentLogin .icon {
     font-size: 14px;
@@ -1120,11 +1149,20 @@ form label {
 /** Version display **/
 .version {
 	position: absolute;
-	bottom: 0px;
-	right: 10px;
+	bottom: 5px;
+	left: 20px;
 	color: #d4d4d4;
 	font-size: 11px;
 }
+
+.username {
+	position: absolute;
+	left: 20px;
+	bottom: 18px;
+    font-family: MyriadBold;
+    font-size: 14px;
+}
+
 
 /** MISC **/
 .row {
@@ -1132,73 +1170,25 @@ form label {
 	position: relative;
 	width: 100%;
 	padding-top: 5px;
-	padding-bottom: 5px;
 }
 
 /** iOS HTML Recreation Elements **/
 .flyover {
 	position: absolute;
 	top: 20px;
-	left: 4px;
-	bottom: 8px;
+	left: 0px;
+	bottom: 0px;
 	right: 0px;
-	width: 97%;
+	width: 100%;
     display: none;
-	background: #aaadb3; /* Old browsers */
-background: -moz-linear-gradient(top,  #aaadb3 0%, #0a162e 4%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#aaadb3), color-stop(4%,#0a162e)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top,  #aaadb3 0%,#0a162e 4%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top,  #aaadb3 0%,#0a162e 4%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top,  #aaadb3 0%,#0a162e 4%); /* IE10+ */
-background: linear-gradient(to bottom,  #aaadb3 0%,#0a162e 4%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#aaadb3', endColorstr='#0a162e',GradientType=0 ); /* IE6-9 */
-border-radius: 8px;
--webkit-border-radius: 8px;
--webkit-box-shadow:  0px 0px 0px 1px rgba(73, 73, 73, 0.75);
-box-shadow:  0px 0px 0px 1px rgba(73, 73, 73, 0.75);
-border: 1px solid #0f0f0f;
-overflow: visible;
-z-index: 999999;
-}
-
-.flyover:before {
-	content: "";
-	position: absolute;
-	background: #aaadb3;
-	transform: rotate(45deg);
-	-webkit-transform: rotate(45deg);
-	top: -14px;
-	left: 46.3%;
-	width: 25px;
-	height: 25px;
-	border-top: 1px solid #0f0f0f;
-	border-left: 1px solid #0f0f0f;
-	-webkit-box-shadow:  -1px -1px 0px 0px rgba(73, 73, 73, 0.75);
-    box-shadow:  -1px -1px 0px 0px rgba(73, 73, 73, 0.75);
-background: #9fa3ab; /* Old browsers */
-background: -moz-linear-gradient(-45deg,  #9fa3ab 49%, #3b4458 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, right bottom, color-stop(49%,#9fa3ab), color-stop(100%,#3b4458)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(-45deg,  #9fa3ab 49%,#3b4458 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(-45deg,  #9fa3ab 49%,#3b4458 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(-45deg,  #9fa3ab 49%,#3b4458 100%); /* IE10+ */
-background: linear-gradient(135deg,  #9fa3ab 49%,#3b4458 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9fa3ab', endColorstr='#3b4458',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-z-index: 999999;
+    overflow: visible;
+    z-index: 999999;
 }
 
 .flyover .inside {
-	background: #0c0c0c;
-	-webkit-box-shadow: inset 0px 0px 5px 3px rgba(0, 0, 0, 0.35);
-    box-shadow: inset 0px 0px 5px 3px rgba(0, 0, 0, 0.35);
-    border-radius: 8px;
--webkit-border-radius: 8px;
 	position: absolute;
 	overflow: auto;
-	width: 97%;
-	top: 5px;
-	left: 5px;
-	right: 5px;
-	bottom: 5px;
+	width: 100%;
 	z-index: 999999;
 }
 
@@ -1216,40 +1206,17 @@ z-index: 999999;
 	width: 100%;
 	margin: 0px;
 	padding: 0px;
-	border-bottom: 1px solid #242424;
-}
-
-.flyover ul li:hover p {
-	color: #ffffff;
 }
 
 .flyover ul li:last-child {
 	border-bottom: 0px;
 }
 
-.flyover ul .active {
-	background: #11467c; /* Old browsers */
-    background: -moz-linear-gradient(top,  #11467c 0%, #001b36 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#11467c), color-stop(100%,#001b36)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #11467c 0%,#001b36 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #11467c 0%,#001b36 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #11467c 0%,#001b36 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  #11467c 0%,#001b36 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#11467c', endColorstr='#001b36',GradientType=0 ); /* IE6-9 */
-	color: #ffffff;
-}
-
-.flyover ul .active p {
-	color: #ffffff;
-}
-
 .flyover ul li p {
-	width: 100%;
 	padding: 10px;
 	margin: 0px;
 	font-family: Myriad;
 	font-size: 22px;
-	color: #ffffff;
 }
 
 /** Loading Symbol **/
@@ -1329,10 +1296,7 @@ ul li {
 	width: 100%;
 	overflow: hidden;
 	text-align: center;
-	z-index: 99;
-	-webkit-box-shadow:  0px 3px 5px 1px rgba(0, 0, 0, 0.5);
-        
-        box-shadow:  0px 3px 5px 1px rgba(0, 0, 0, 0.5);
+	z-index: 900;
 }
 
 .section-nav .name {
@@ -1343,11 +1307,15 @@ ul li {
 	height: 46px;
 }
 
+.section-nav .name.name-emergencies {
+    left: 10px;
+    right: 10px;
+}
+
 .section-nav .name p {
 	max-height: 46px;
     white-space: nowrap;
 	width: 100%; 
-	font-weight: bold;
 	font-size: 22px;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -1415,30 +1383,24 @@ ul li {
 }
 
 .back .icon {
-	font-size: 32px;
+	font-size: 29px;
+    line-height: 13px;
 }
 
-.topbar .back p {
-	margin-top: -5px;
+.CProw{
+    display: table-row;
 }
-
-.help {
-	position: absolute;
-	left: 10px;
-	bottom: 0px;
+.CPcell{
+    display: table-cell; 
+    padding-right: 10px;
+    text-align: right;
 }
-
-.help a {
-	color: #f1f1f1;
+.CProw .CPcell:first-child {
+    text-align: left;
 }
-
-.help a:hover {
-	color: #fff;
+.CPspacer{
+    height: 10px;
 }
-
-.CProw{display: table-row;}
-.CPcell{display: table-cell; padding-right: 10px;}
-.CPspacer{height: 10px;}
 
 /** Media Queries for Emergency Icons **/
 @media only screen and (orientation: portrait) {
@@ -1455,18 +1417,6 @@ ul li {
 	.emergencies ul li {
 		width: 21%;
 	}
-    
-    .flyover {
-        width: 98.5%;
-    }
-    
-    .flyover .inside {
-        width: 98.3%;
-    }
-    
-    .flyover:before {
-        left:47.5%;
-    }
     
     .CProw {
         font-size: 18pt;

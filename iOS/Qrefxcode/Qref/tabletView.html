@@ -10,9 +10,10 @@
 		<link rel="stylesheet" href="css/fontawesome.css" />
 		<link rel="stylesheet" href="css/base-tablet.css" />
         <link rel="stylesheet" href="css/theme-light.css" />
-            <link rel="stylesheet" href="css/theme-light-tablet.css" />
+        <link rel="stylesheet" href="css/theme-light-tablet.css" />
 		<link rel="stylesheet" href="css/animate.css" />
-		<script src="js/jquery.js"></script>
+        <link rel="stylesheet" href="css/checkbox.css" />
+        <script src="js/jquery.js"></script>
 		<script src="js/jquery.ui.js"></script>
 		<script src="js/jquery.punch.js"></script>
 		<script src="js/jquery.validate.js"></script>
@@ -53,7 +54,7 @@
 						<p><i class="icon icon-pencil"></i></p>
 					</div>
 					<div class="header">
-						<p>MY AIRCRAFT</p>
+						<p>My Aircraft</p>
 					</div>
 				</div>
 				<div class="dashcontent">
@@ -70,9 +71,11 @@
 											<span data-bind="html: model.modelYear, visible: model.modelYear"></span>
 										</div>
 										<ul>
-											<li class="product-subarea" data-bind="tap: parent.subItemTap" data-link="preflight">Preflight</li><li class="product-subarea" data-bind="tap: parent.subItemTap" data-link="takeoff">Takeoff</li>
-											<li class="product-subarea" data-bind="tap: parent.subItemTap" data-link="landing">Landing</li><li class="product-subarea" data-bind="tap: parent.subItemTap" data-link="emergencies">Emergencies</li>
-											<li class="product-subarea" data-bind="tap: parent.subItemTap, visible: (function() { if(lastPosition) return true; else return false;})()" data-link="last">Last</li>
+											<li class="product-subarea last" data-bind="tap: parent.subItemTap, visible: (function() { if(lastPosition) return true; else return false;})()" data-link="last">Recent</li>
+											<li class="product-subarea" data-bind="tap: parent.subItemTap" data-link="preflight">Preflight</li>
+                                            <li class="product-subarea" data-bind="tap: parent.subItemTap" data-link="takeoff">Takeoff</li>
+											<li class="product-subarea" data-bind="tap: parent.subItemTap" data-link="landing">Landing</li>
+                                            <li class="product-subarea" data-bind="tap: parent.subItemTap" data-link="emergencies">Emergencies</li>
 										</ul>
 									</div>
 									<div class="delete" data-bind="tap: parent.deleteTap">delete</div>
@@ -88,8 +91,8 @@
 					<div class="grid dashboard-planes-selector scrollable">
 						<div class="container">
 							<ul class="vertical">
-								<li data-link="signin" data-bind="tap: navTap"><div class="special"><p>Sign in</p><i class="icon icon-arrow-right"></i></div></li>
-								<li data-link="register" data-bind="tap: navTap"><div class="special"><p>Register</p><i class="icon icon-arrow-right"></i></div></li>
+								<li data-link="signin" style="right: 10px;" data-bind="tap: navTap"><div class="special"><p>Sign in</p><i class="icon icon-arrow-right"></i></div></li>
+								<li data-link="register" style="right: 10px;" data-bind="tap: navTap"><div class="special"><p>Register</p><i class="icon icon-arrow-right"></i></div></li>
 							</ul>
 						</div>
 					</div>
@@ -164,7 +167,7 @@
 					</div>
 					<div class="shadow">
 					</div>
-                    <div class="grid check-sections flyover" data-bind="fadeVisible: showSections" style="top: 66px;">
+                    <div class="grid check-sections flyover" data-bind="fadeVisible: showSections" style="top: 47px;">
                         <div class="container inside scrollable">
                             <ul id="check-sections-items" class="vertical" data-bind="foreach: sections">
                                 <li data-bind="tap: parent.sectionTap, attr: {'class': (function() { if(index == parent.section) return 'active'; else return ''; })()}"><p data-bind="html: name"></p></li>
@@ -179,11 +182,9 @@
 		<article id="emergencies" data-page-show="inVisible" data-page-hide="outVisible" class="theme-light page">
 			<div class="wrap">
 				<div class="topbar">
+                    <span>Emergencies</span>
 					<div class="item-large back" data-bind="tap: backTap">
 						<p><i class="icon icon-double-angle-left"></i></p>
-					</div>
-					<div class="item-middle-large" style="text-align: center;">
-						<p>Emergencies</p>
 					</div>
 					<div class="item-large topmenu" data-bind="tap: menuTap">
 						<p><i class="icon icon-th-list"></i></p>
@@ -194,7 +195,23 @@
 						<div class="container">
 							<ul id="emergency-items" class="full" data-bind="foreach: emergencies">
 								<li data-link="checklist" data-bind="tap: parent.itemTap">
-									<div class="icon"><img data-bind="attr: {'src': (function() { if(name) { if(name.toLowerCase().indexOf('electric') > -1) return 'images/electrical.png'; else if(name.toLowerCase().indexOf('fire') > -1) return 'images/fire.png'; else if(name.toLowerCase().indexOf('control') > -1) return 'images/flight-controls.png'; else if(name.toLowerCase().indexOf('instrument') > -1) return 'images/flight-instruments.png'; else if(name.toLowerCase().indexOf('landing') > -1) return 'images/forced-landing.png'; else if(name.toLowerCase().indexOf('nav') > -1 || name.toLowerCase().indexOf('pilot') > -1) return 'images/nav-autopilot.png'; else if(name.toLowerCase().indexOf('propeller') > -1 || name.toLowerCase().indexOf('engine') > -1) return 'images/propeller-engine.png'; else if(name.toLowerCase().indexOf('other') > -1) return 'images/other.png'; else return 'images/other.png'; } else { return 'images/other.png'; }})()}" /></div>
+									<div class="icon">
+                                        <img data-bind="attr: {
+                                            'class': (function() {
+                                                if(name) {
+                                                    if(name.toLowerCase().indexOf('electric') > -1) return 'electrical';
+                                                    else if(name.toLowerCase().indexOf('fire') > -1) return 'fire';
+                                                    else if(name.toLowerCase().indexOf('control') > -1) return 'flight'; 
+                                                    else if(name.toLowerCase().indexOf('instrument') > -1) return 'flight-instruments';
+                                                    else if(name.toLowerCase().indexOf('landing') > -1) return 'forced-landing'; 
+                                                    else if(name.toLowerCase().indexOf('nav') > -1 || name.toLowerCase().indexOf('pilot') > -1) return 'nav-autopilot';
+                                                    else if(name.toLowerCase().indexOf('propeller') > -1 || name.toLowerCase().indexOf('engine') > -1) return 'propeller-engine'; 
+                                                    else if(name.toLowerCase().indexOf('other') > -1) return 'other';
+                                                    else return 'other'; }
+                                                else { return 'other'; }
+                                            })()}"
+                                        />
+                                    </div>
 									<div class="section-name" data-bind="html: name"></div>
 								</li>
 							</ul>
@@ -518,7 +535,7 @@
 				<div class="content">
 					<div style="float: left; position: relative; width: 100%; margin-top: 5px;" data-bind="with: item">
 						<form id="editTailForm" method="post" action="javascript:void(null);">
-							<input class="textbox required" data-bind="value: tailNumber" type="text" id="tailnumber" name="tailnumber" placeholder="tail number" />
+							<input class="textbox required" data-bind="value: tailNumber" type="text" id="tailnumber" name="tailnumber" placeholder="tail number" maxlength="6" />
                             
                             <div style="margin: 10px auto; width: 90%" class="button" data-bind="tap: root.backTap"><div class="special"><p>Save</p><i class="icon icon-arrow-right"></i></div></div>
 						</form>
@@ -652,7 +669,7 @@
 					<li data-link="signin" data-bind="tap: menuNavTap, visible: !token" id="signin-menu"><i class="icon icon-signin" ></i><p>Sign in</p></li>
 					<li data-link="register" data-bind="tap: menuNavTap, visible: !token" id="register-menu"><i class="icon icon-pencil"></i><p>Register</p></li>
 					<li data-link="e6b" data-bind="tap: menuNavTap"><i class="icon icon-table"></i><p>Conversions</p></li>
-					<li data-bind="tap: orderPrintedTap, visible: token"><i class="icon icon-print"></i><p>Order Printed Version</p></li>
+					<li data-bind="tap: orderPrintedTap, visible: token"><i class="icon icon-print"></i><p>Buy Printed Version</p></li>
 					<li data-bind="tap: syncNavTap, visible: token" id="sync-menu"><i class="icon icon-repeat"></i><p>Sync</p></li>
 					<li data-bind="tap: signOutNavTap, visible: token" id="signout-menu"><i class="icon icon-signout"></i><p>Sign out</p></li>
 				</ul>

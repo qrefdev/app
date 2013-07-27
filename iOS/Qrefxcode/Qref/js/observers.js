@@ -153,7 +153,7 @@ var E6BObserver = new zimoko.Observable({
 	bottomConversion: 'KTS',
 	conversionMultiplier: 0.868976242,
 	conversionInverse: 1.150779448,
-	conversionSelectedName: 'MPH <> KTS',
+	conversionSelectedName: 'MPH <i class="icon icon-resize-horizontal"></i> KTS',
 	conversionSelected: $('#conversion-items li[class="active"]'),
 	showConversions: false,
 	backTap: function(element, e, data) {
@@ -195,11 +195,12 @@ var E6BObserver = new zimoko.Observable({
 		if(property == 'conversionSelected') {
 			if(this.conversionSelected != undefined) {
 
-				this.conversionMultiplier = parseFloat(this.conversionSelected.attr('data-multiplier'));
+                SelectedName =  this.conversionSelected.attr('data-top') + ' <i class="icon icon-resize-horizontal"></i> ' + this.conversionSelected.attr('data-bottom');
+                this.conversionMultiplier = parseFloat(this.conversionSelected.attr('data-multiplier'));
 				this.conversionInverse = parseFloat(this.conversionSelected.attr('data-inverse'));
 				this.set('topConversion', this.conversionSelected.attr('data-top'));
 				this.set('bottomConversion', this.conversionSelected.attr('data-bottom'));
-				this.set('conversionSelectedName', this.conversionSelected.text());
+				this.set('conversionSelectedName', SelectedName);
 							
 				this.convertTopToBottom();
 			}
@@ -1191,8 +1192,17 @@ var AppObserver = new zimoko.Observable({
 		
 		var utcTimer = new Timer(1000, function() {
 			var now = new Date();
-		
-			$(".utcCurrent").html(now.toUTCString());
+
+             var currentDate = new Date();
+             var day = currentDate.getUTCDate();
+             var month = currentDate.getUTCMonth() + 1;
+             var year = currentDate.getUTCFullYear();
+             var hour = currentDate.getUTCHours();
+             var minute = currentDate.getUTCMinutes();
+             var seconds = currentDate.getUTCSeconds();
+             $(".utcCurrent").html('<span class="e6bDate">' + month + "/" + day + "/" + year + '</span>' + hour + ":" + minute + ":" + seconds + ' Z');
+
+             //$(".utcCurrent").html(now.toUTCString());
 		});
 		
 		utcTimer.start();
