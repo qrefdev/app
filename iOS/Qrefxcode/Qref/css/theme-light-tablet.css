@@ -1,5 +1,5 @@
 .theme-light .dashboard-planes-selector .vertical li ul li {
-	font-size: 14px;
+	font-size: 20px;
 }
 
 .theme-light .dashboard-planes-selector .vertical li ul li {
@@ -7,7 +7,7 @@
 }
 
 .theme-light .checklist .vertical li .response {
-	font-size: 18px;
+	font-size: 21px;
 }
 
 .theme-light .dashboard-planes-selector .heading, .theme-light .downloads .heading {
@@ -16,4 +16,8 @@
 
 .theme-light .dashboard-planes-selector .subheading, .theme-light .downloads .subheading {
     font-size: 18px;
+}
+
+.theme-light .menu ul li p {
+    font-size: 20px;
 }

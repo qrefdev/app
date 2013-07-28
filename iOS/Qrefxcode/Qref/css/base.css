@@ -112,14 +112,14 @@ html, body {
 }
 
 .nav ul {
-	float: left;
 	position: relative;
 	width: 100%;
 	height: auto;
 	list-style-type: none;
 	padding: 0 5px;
-	margin: 0;
+	margin: 0 auto;
     box-sizing: border-box;
+    max-width: 766px;
 }
 
 .nav ul li {
@@ -146,6 +146,7 @@ html, body {
 	margin: 0;
 	padding: 0;
     height: 65px;
+    max-width: 189px;
 }
 
 .nav ul .item-33 {
@@ -756,6 +757,7 @@ html, body {
 	margin-top: 10px;
 	margin-left: 10px;
     margin-bottom: 2px;
+    width: 100%;
 }
 
 .checklist .vertical li .check {
@@ -1402,7 +1404,7 @@ ul li {
     height: 10px;
 }
 
-/** Media Queries for Emergency Icons **/
+/** Media Queries **/
 @media only screen and (orientation: portrait) {
 	.emergencies ul li {
 		width: 43%;

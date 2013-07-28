@@ -151,15 +151,7 @@ a:hover {
 
 .theme-light .dashbar .active,
 .theme-light .topbar .active {
-background: #003edd; /* Old browsers */
-background: -moz-linear-gradient(top,  #003edd 0%, #002ead 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#003edd), color-stop(100%,#002ead)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top,  #003edd 0%,#002ead 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top,  #003edd 0%,#002ead 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top,  #003edd 0%,#002ead 100%); /* IE10+ */
-background: linear-gradient(to bottom,  #003edd 0%,#002ead 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#003edd', endColorstr='#002ead',GradientType=0 ); /* IE6-9 */
-    color: #eee;
+    /* Archived */
 }
 
 /** Top Bar for all other pages **/
@@ -282,7 +274,7 @@ border-top: 1px solid #ccc;
 }
 
 .theme-light .downloads .vertical li {
-    margin-bottom: 8px;
+    padding-bottom: 8px;
 }
 
 .theme-light .dashboard-planes-selector .vertical .active, .theme-light .downloads .vertical .active {
@@ -382,7 +374,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#003edd', end
 	border: 2px solid #fff;
 	border-right: none;
 	padding-left: 5px;
-	padding-top: 10px;
+	padding-top: 9px;
 	padding-bottom: 10px;
 }
 
@@ -454,7 +446,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a90329', end
 }
 
 .theme-light .checklist .vertical li .active {
-background: #11467c; /* Old browsers */
+/*background: #11467c; /* Old browsers */
 background: -moz-linear-gradient(top,  #11467c 0%, #001b36 100%); /* FF3.6+ */
 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#11467c), color-stop(100%,#001b36)); /* Chrome,Safari4+ */
 background: -webkit-linear-gradient(top,  #11467c 0%,#001b36 100%); /* Chrome10+,Safari5.1+ */
@@ -462,7 +454,7 @@ background: -o-linear-gradient(top,  #11467c 0%,#001b36 100%); /* Opera 11.10+ *
 background: -ms-linear-gradient(top,  #11467c 0%,#001b36 100%); /* IE10+ */
 background: linear-gradient(to bottom,  #11467c 0%,#001b36 100%); /* W3C */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#11467c', endColorstr='#001b36',GradientType=0 ); /* IE6-9 */
-color: #d6dbdf;
+color: #d6dbdf;*/
 }
 
 .theme-light .shadow {
@@ -739,14 +731,7 @@ color: #d6dbdf;
 }
 
 .theme-light .emergencies ul li .active {
-	background: #11467c; /* Old browsers */
-	background: -moz-linear-gradient(top,  #11467c 0%, #001b36 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#11467c), color-stop(100%,#001b36)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  #11467c 0%,#001b36 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  #11467c 0%,#001b36 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  #11467c 0%,#001b36 100%); /* IE10+ */
-	background: linear-gradient(to bottom,  #11467c 0%,#001b36 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#11467c', endColorstr='#001b36',GradientType=0 ); /* IE6-9 */
+    /* Archived */
 }
 
 .theme-light .section-nav .active {
