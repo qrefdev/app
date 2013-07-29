@@ -742,6 +742,10 @@ html, body {
 	overflow: auto;
 }
 
+.checklist .vertical li {
+    overflow: hidden;
+}
+
 .checklist .vertical li .icon {
 	font-size: 34px;
 	float: left;
@@ -757,7 +761,7 @@ html, body {
 	margin-top: 10px;
 	margin-left: 10px;
     margin-bottom: 2px;
-    width: 100%;
+    width: 98%;
 }
 
 .checklist .vertical li .check {
@@ -952,10 +956,12 @@ form label {
 
 /** Container Wrapper for Scroll **/
 .container {
-	position: relative;
+	position: absolute;
 	width: 100%;
 	height: auto;
-	float:left;
+    top: 0px;
+    left: 0px;
+    overflow-x: hidden;
 }
 
 .dashcontent {
@@ -965,6 +971,7 @@ form label {
 	bottom: 70px;
 	left: 0px;
 	right: 0px;
+    overflow-x: hidden;
 }
 
 /** Emergency Sub Listing **/

@@ -137,7 +137,7 @@
 						<div class="previousSection" data-bind="tap: previousSectionTap, visible: (function() { if(list == 'preflight') {return section > 0;} else if(list != 'emergencies') {return true;}})()"><p style="margin: 5px; padding: 8px;"><i class="icon icon-chevron-left"></i></p></div>
 						<div class="nextSection" data-bind="tap: nextSectionTap, visible: (function() { if(((list == 'preflight' || list == 'takeoff') && checklist && displayNext) || (list == 'landing' && checklist && section < checklist.landing.length - 1 && displayNext)) {return true; } else {return false;}})()"><p style="margin: 5px; padding: 8px;"><i class="icon icon-chevron-right"></i></p></div>
 					</div>
-					<div style="position: absolute; top: 46px; left: 0px; bottom: 0px; right: 0px; width: 100%">
+					<div style="position: absolute; top: 46px; left: 0px; bottom: 0px; right: 0px; width: 100%; overflow-x:hidden;">
 						<div class="grid checklist scrollable">
 							<div class="container">
 								<ul id="checklist-items" class="vertical" data-bind="foreach: items">
@@ -486,7 +486,7 @@
                             <input class="textbox required" style="display: block;" data-bind="value: check" type="text" placeholder="check" />
                             <input class="textbox required" style="display: block;" data-bind="value: response" type="text" placeholder="response" />
                             
-                            <div class="button" data-bind="visible: root.adding"><div class="special"><p>Save</p><i class="icon icon-arrow-right"></i></div></div>
+                            <div class="button" data-bind="visible: root.adding, tap: root.edit"><div class="special"><p>Save</p><i class="icon icon-arrow-right"></i></div></div>
                             
                             <div class="button" data-bind="tap: root.backTap, visible: (function(){return !root.adding;})()"><div class="special"><p>Save</p><i class="icon icon-arrow-right"></i></div></div>
                         </form>

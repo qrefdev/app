@@ -19,7 +19,9 @@ var EditAddObserver = new zimoko.Observable({
 		EditAddObserver.item.unsubscribe('response',EditAddObserver);
 		Navigation.back();
 	},
-	edit: function() {
+	edit: function(element, e, data) {
+        e.stopPropagation();
+        e.preventDefault();
 		$('#editAddForm input').blur();
 	
 		if(EditAddObserver.adding) {
@@ -49,11 +51,11 @@ var EditAddObserver = new zimoko.Observable({
 			
 			ChecklistObserver.set('modified', true);
 			ChecklistObserver.itemsDataSource.insertAt(EditAddObserver.item._original, index + 1);
-			
-			setTimeout(function() {
-				Navigation.back();
-			}, 100);
 		}
+                                            
+        setTimeout(function() {
+            Navigation.back();
+        }, 100);
 	},
 	onPropertyChanged: function(sender, property) {
 		if(property == 'check' || property == 'response') {
@@ -1111,7 +1113,7 @@ var AppObserver = new zimoko.Observable({
 					}
 				});
 				           
-				zimoko.applyVirtualCoords($('#checklist-items').children(), $('.checklist').scrollTop(), $('.checklist'));
+				//zimoko.applyVirtualCoords($('#checklist-items').children(), $('.checklist').scrollTop(), $('.checklist'));
 				/*
 				$("#checklist-items").children().each(function(index, item) {
 					var id = $(this).attr("data-id");
@@ -1155,7 +1157,7 @@ var AppObserver = new zimoko.Observable({
 						}
 					}
 				});
-				zimoko.applyVirtualCoords($('#dashboard-planes').children(), $('.dashboard-planes-selector').scrollTop(), $('.dashboard-planes-selector'));
+				//zimoko.applyVirtualCoords($('#dashboard-planes').children(), $('.dashboard-planes-selector').scrollTop(), $('.dashboard-planes-selector'));
 				/*$("#dashboard-planes").children().each(function(index, item) {
 					
 				});*/
@@ -2052,6 +2054,7 @@ var ChecklistObserver = new zimoko.Observable({
 	}
 });
 
+ChecklistObserver.items.subscribe(ChecklistObserver);
 ChecklistObserver.subscribe('checklist', ChecklistObserver);
 ChecklistObserver.subscribe('canCheck', ChecklistObserver);
 ChecklistObserver.subscribe('list', ChecklistObserver);

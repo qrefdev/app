@@ -19,7 +19,9 @@ var EditAddObserver = new zimoko.Observable({
 		EditAddObserver.item.unsubscribe('response',EditAddObserver);
 		Navigation.back();
 	},
-	edit: function() {
+	edit: function(element, e, data) {
+        e.stopPropagation();
+        e.preventDefault();
 		$('#editAddForm input').blur();
 	
 		if(EditAddObserver.adding) {
@@ -49,11 +51,11 @@ var EditAddObserver = new zimoko.Observable({
 			
 			ChecklistObserver.set('modified', true);
 			ChecklistObserver.itemsDataSource.insertAt(EditAddObserver.item._original, index + 1);
-			
-			setTimeout(function() {
-				Navigation.back();
-			}, 100);
 		}
+                                            
+        setTimeout(function() {
+            Navigation.back();
+        }, 100);
 	},
 	onPropertyChanged: function(sender, property) {
 		if(property == 'check' || property == 'response') {
@@ -1111,7 +1113,7 @@ var AppObserver = new zimoko.Observable({
 					}
 				});
 				           
-				zimoko.applyVirtualCoords($('#checklist-items').children(), $('.checklist').scrollTop(), $('.checklist'));
+				//zimoko.applyVirtualCoords($('#checklist-items').children(), $('.checklist').scrollTop(), $('.checklist'));
 				/*
 				$("#checklist-items").children().each(function(index, item) {
 					var id = $(this).attr("data-id");
@@ -1155,7 +1157,7 @@ var AppObserver = new zimoko.Observable({
 						}
 					}
 				});
-				zimoko.applyVirtualCoords($('#dashboard-planes').children(), $('.dashboard-planes-selector').scrollTop(), $('.dashboard-planes-selector'));
+				//zimoko.applyVirtualCoords($('#dashboard-planes').children(), $('.dashboard-planes-selector').scrollTop(), $('.dashboard-planes-selector'));
 				/*$("#dashboard-planes").children().each(function(index, item) {
 					
 				});*/
@@ -1505,14 +1507,14 @@ var DashboardObserver = new zimoko.Observable({
 			_this.punch();
 	
 			AppObserver.set('loading', false);
-        }, 100);
+        }, 300);
                                               
         setTimeout(function() {
             var items = _this.dataSource.view();
         	var imageProcessor = new ImageProcessor(items.toArray(), "checklistlisting", true);
 			imageProcessor.init();
 			imageProcessor.processImages();
-        }, 100);
+        }, 300);
 	}
 });
 
@@ -1556,13 +1558,16 @@ var ChecklistObserver = new zimoko.Observable({
 					if(item.isChecked == undefined)
 						item.isChecked = false;
 				}
+                                              
+                this.itemsDataSource.unsubscribe(this);
+                this.itemsDataSource.subscribe(this);
 				
 				this.itemsDataSource.data(this.checklist[this.list][this.section].items);
-            	this.itemsDataSource.read();
-				
-				this.itemsDataSource.unsubscribe(this);
-				this.itemsDataSource.subscribe(this);
-				
+                                              
+                setTimeout(function() {
+                    _this.itemsDataSource.read();
+                }, 250);
+                                              
 				this.set('items', this.itemsDataSource.view());
 				this.set('sections', this.checklist[this.list].toObservableObjects());
 				
@@ -1626,7 +1631,9 @@ var ChecklistObserver = new zimoko.Observable({
 				}
 				
 				this.itemsDataSource.data(this.checklist[this.list][this.category].items[this.section].items);
-				this.itemsDataSource.read();
+                setTimeout(function() {
+                    _this.itemsDataSource.read();
+                }, 250);
                                               
 				this.set('sections', this.checklist[this.list][this.category].items.toObservableObjects());
 				
@@ -1643,7 +1650,10 @@ var ChecklistObserver = new zimoko.Observable({
 				}
 				
 				this.itemsDataSource.data(this.checklist[this.list][this.section].items);
-                this.itemsDataSource.read();          
+                                              
+                setTimeout(function() {
+                    _this.itemsDataSource.read();
+                }, 250);
                                               
 				this.set('sections', this.checklist[this.list].toObservableObjects());
 			
@@ -1805,10 +1815,8 @@ var ChecklistObserver = new zimoko.Observable({
 				if(ChecklistObserver.category + 1 < ChecklistObserver.checklist[ChecklistObserver.list].length) 
 					ChecklistObserver.set('category', ChecklistObserver.category + 1);
 			}
-				
-			setTimeout(function() {
-				ChecklistObserver.set('section', 0);
-			}, 5);
+            
+            ChecklistObserver.set('section', 0);
 		}          
         
         ChecklistObserver.set('showSections', false);
@@ -1890,34 +1898,25 @@ var ChecklistObserver = new zimoko.Observable({
 					}
 				}
 			}
-		});
+		}, 300);
 	},
 	onDataSourceRead: function(event) {
 		var self = this;
         AppObserver.set('loading', false);
                                               
-		setTimeout(function() {
-			setTimeout(function() {
-				if(ChecklistObserver.itemsDataSource.page() < ChecklistObserver.itemsDataSource.totalPages()) {
-					self.set('displayNext', true);
-				}
-				else {
-					self.set('displayNext', true);
-				}
-			}, 100);
-			
-			for(var i = 0; i < self.items.length; i++) {
-				var item = self.items.elementAt(i);
-			
-				if(item != undefined) {
-					var element = $('#checklist li[data-id="' + item._id +'"]');
-				
-					if(element.length > 0) {
-						element.find('.handle').punch();
-					}
-				}
-			}
-		}, 250);
+        setTimeout(function() {
+            for(var i = 0; i < self.items.length; i++) {
+                var item = self.items.elementAt(i);
+            
+                if(item != undefined) {
+                    var element = $('#checklist li[data-id="' + item._id +'"]');
+                
+                    if(element.length > 0) {
+                        element.find('.handle').punch();
+                    }
+                }
+            }
+        }, 300);
 	},
 	editTap: function(element, e, data) {
 		e.stopPropagation();

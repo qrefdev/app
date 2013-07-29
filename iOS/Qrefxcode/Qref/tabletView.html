@@ -488,7 +488,7 @@
                             <input class="textbox required" style="display: block;" data-bind="value: check" type="text" placeholder="check" />
                             <input class="textbox required" style="display: block;" data-bind="value: response" type="text" placeholder="response" />
                             
-                            <div class="button" data-bind="visible: root.adding"><div class="special"><p>Save</p><i class="icon icon-arrow-right"></i></div></div>
+                            <div class="button" data-bind="visible: root.adding, tap: root.edit"><div class="special"><p>Save</p><i class="icon icon-arrow-right"></i></div></div>
                             
                             <div class="button" data-bind="tap: root.backTap, visible: (function(){return !root.adding;})()"><div class="special"><p>Save</p><i class="icon icon-arrow-right"></i></div></div>
                         </form>
