@@ -425,7 +425,7 @@
 		var _dataSourceError = function(event) {
 			var datasource = this;
 			
-			zimoko.Async.each(datasource.listeners, function(index, listener) {
+			zimoko.each(datasource.listeners, function(index, listener) {
 				if(listener && typeof(listener.onDataSourceUpdate) == 'function') {
 					listener.onDataSourceError.call(listener, event);
 				}
@@ -435,7 +435,7 @@
 		var _dataSourceUpdate = function(event) {
 			var datasource = this;
 			
-			zimoko.Async.each(datasource.listeners, function(index, listener) {
+			zimoko.each(datasource.listeners, function(index, listener) {
 				if(listener && typeof(listener.onDataSourceUpdate) == 'function') {
 					listener.onDataSourceUpdate.call(listener, event);
 				}
@@ -445,7 +445,7 @@
 		var _dataSourceCreate = function(event) {
 			var datasource = this;
 			
-			zimoko.Async.each(datasource.listeners, function(index, listener) {	
+			zimoko.each(datasource.listeners, function(index, listener) {	
 				if(listener && typeof(listener.onDataSourceCreate) == 'function') {
 					listener.onDataSourceCreate.call(listener, event);
 				}
@@ -455,7 +455,7 @@
 		var _dataSourceDelete = function(event) {
 			var datasource = this;
 			
-			zimoko.Async.each(datasource.listeners, function(index, listener) {
+			zimoko.each(datasource.listeners, function(index, listener) {
 				if(listener && typeof(listener.onDataSourceDelete) == 'function') {
 					listener.onDataSourceDelete.call(listener, event);
 				}
@@ -465,7 +465,7 @@
 		var _dataSourceRead = function(event) {
 			var datasource = this;
 			
-			zimoko.Async.each(datasource.listeners, function(index, listener) {	
+			zimoko.each(datasource.listeners, function(index, listener) {	
 				if(listener && typeof(listener.onDataSourceRead) == 'function') {
 					listener.onDataSourceRead.call(listener, event);
 				}
@@ -475,7 +475,7 @@
 		var _dataSourceChange = function(event) {
 			var datasource = this;
 			
-			zimoko.Async.each(datasource.listeners, function(index, listener) {
+			zimoko.each(datasource.listeners, function(index, listener) {
 				if(listener && typeof(listener.onDataSourceChange) == 'function') {
 					listener.onDataSourceChange.call(listener,event);
 				}

@@ -35,7 +35,9 @@
 	  var moved = false;
 	  
 	  var TapHandler = undefined;	
-  		
+
+	  var tapHadActive = false;
+  	
   	  TapHandler = options;
       
       $element = $(element);
@@ -65,6 +67,14 @@
 				clientY = event.touches[0].pageY;
 			}
 			
+			if(!$element.hasClass('active')) {
+				$element.addClass('active');
+				tapHadActive = false;
+			}
+			else {
+				tapHadActive = true;
+			}
+			
 			moved = false;
 	  }
 	  
@@ -91,6 +101,13 @@
 					triggerHandler(event);
 				}
 			}
+			
+			if(!tapHadActive) {
+				$element.removeClass('active');
+			}
+			else {
+				tapHadActive = false;
+			}
 	  }
 	  
 	  function trigger() {
@@ -108,12 +125,6 @@
 	  
 	  function triggerHandler(event) {
 		if(TapHandler) {
-			if(!$element.hasClass('active')) {
-				$element.addClass('active');
-				setTimeout(function() {
-					$element.removeClass('active');
-				}, 50);
-			}
             TapHandler.call($element[0], event);
 		}
 	  }

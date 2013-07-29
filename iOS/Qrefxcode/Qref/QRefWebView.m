@@ -18,6 +18,8 @@
         
         self->server = @"https://my.qref.com/";
         
+        [self setWantsFullScreenLayout:YES];
+        
         self.imageQueue = [[NSOperationQueue alloc] init];
         self.savingQueue = [[NSOperationQueue alloc] init];
         CGRect bounds = [[UIScreen mainScreen] bounds];
@@ -99,6 +101,10 @@
    return self;
 }
 
+-(UIStatusBarStyle) preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
+}
+
 - (void) reachabilityChanged:(NSNotification *) notif {
     Reachability * rch = [notif object];
     
@@ -126,6 +132,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self setNeedsStatusBarAppearanceUpdate];
 	// Do any additional setup after loading the view.
 }
 
@@ -706,13 +714,18 @@
         
         [self setView:self.webView];
         
-        if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft ||
-           [[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeRight) {
-        
-            [self.webView setFrame:CGRectMake(0, 18, bounds.size.height, bounds.size.width - 18)];
+        if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft) {
+            
+            [self.webView setFrame:CGRectMake(22, 0, bounds.size.width - 22, bounds.size.height)];
         }
-        else {
-            [self.webView setFrame: CGRectMake(0, 18, bounds.size.width, bounds.size.height - 18)];
+        else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeRight) {
+            [self.webView setFrame:CGRectMake(0, 0, bounds.size.width - 22, bounds.size.height)];
+        }
+        else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortrait) {
+            [self.webView setFrame: CGRectMake(0, 22, bounds.size.width, bounds.size.height - 22)];
+        }
+        else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortraitUpsideDown) {
+            [self.webView setFrame: CGRectMake(0, 22, bounds.size.width, bounds.size.height - 22)];
         }
         
         [[UIApplication sharedApplication] setStatusBarHidden:NO];
@@ -726,6 +739,24 @@
             [self.delegate webViewDidLoad];
         }
     });
+}
+
+- (void) viewDidLayoutSubviews {
+    CGRect bounds = [[UIScreen mainScreen] bounds];
+    
+    if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft) {
+        
+        [self.webView setFrame:CGRectMake(22, 0, bounds.size.width - 22, bounds.size.height)];
+    }
+    else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeRight) {
+        [self.webView setFrame:CGRectMake(0, 0, bounds.size.width - 22, bounds.size.height)];
+    }
+    else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortrait) {
+        [self.webView setFrame: CGRectMake(0, 22, bounds.size.width, bounds.size.height - 22)];
+    }
+    else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortraitUpsideDown) {
+        [self.webView setFrame: CGRectMake(0, 22, bounds.size.width, bounds.size.height - 22)];
+    }
 }
 
 - (void) clearChecklists {

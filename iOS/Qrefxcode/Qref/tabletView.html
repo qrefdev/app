@@ -465,8 +465,8 @@
                     </div>
 				</div>
                     <div class="shadow" style="bottom: 65px;"></div>
+                    <div class="buynow" data-bind="tap: root.purchaseTap, html: (function() { if(userOwnsProduct) return 'INSTALL'; else return '$' + parseFloat(suggestedRetailPrice).toFixed(2); })()">Install</div>
 				</div>
-                <div class="buynow" data-bind="tap: root.purchaseTap, html: (function() { if(userOwnsProduct) return 'INSTALL'; else return '$' + parseFloat(suggestedRetailPrice).toFixed(2); })()">Install</div>
 			</div>
 		</article>
 		
@@ -536,8 +536,8 @@
 				<div class="content">
 					<div style="float: left; position: relative; width: 100%; margin-top: 5px;">
 						<form id="signinForm" method="post" action="javascript:void(null);">
-						<input class="textbox required" type="email" id="email" name="email" data-bind="keyup: keyUp"  placeholder="email" />
-						<input class="textbox required" type="password" id="password" data-bind="keyup: keyUp" name="password" placeholder="password" />
+						<input class="textbox required" autofocus="autofocus" tabindex="0" type="email" id="email" name="email" data-bind="keyup: keyUp"  placeholder="email" />
+						<input class="textbox required" type="password" id="password" tabindex="1" data-bind="keyup: keyUp" name="password" placeholder="password" />
 						<div class="submit"><div class="special"><p>Sign in</p><i class="icon icon-arrow-right"></i></div></div>
 						<div style="position: relative; margin-top: -7px;">
                             <div class="button" style="position: absolute;" data-bind="tap: navTap" data-link="passwordRecovery"><div class="special2"><p>Forgot password</p><i class="icon icon-question-sign"></i></div>

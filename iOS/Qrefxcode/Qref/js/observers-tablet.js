@@ -15,7 +15,8 @@ var EditAddObserver = new zimoko.Observable({
 		
 		$('#editAddForm input').blur();
 		
-		EditAddObserver.item.unsubscribe(EditAddObserver);
+		EditAddObserver.item.unsubscribe('check',EditAddObserver);
+		EditAddObserver.item.unsubscribe('response',EditAddObserver);
 		Navigation.back();
 	},
 	edit: function() {
@@ -143,6 +144,9 @@ var EmergenciesSectionsObserver = new zimoko.Observable({
 		setTimeout(function() {
 			Navigation.go('checklist');
 		}, 100);
+	},
+	menuTap: function(element, e, data) {
+		MenuObserver.toggle();
 	}
 });
 
@@ -153,7 +157,7 @@ var E6BObserver = new zimoko.Observable({
 	bottomConversion: 'KTS',
 	conversionMultiplier: 0.868976242,
 	conversionInverse: 1.150779448,
-	conversionSelectedName: 'MPH <> KTS',
+	conversionSelectedName: 'MPH <i class="icon icon-resize-horizontal"></i> KTS',
 	conversionSelected: $('#conversion-items li[class="active"]'),
 	showConversions: false,
 	backTap: function(element, e, data) {
@@ -195,11 +199,12 @@ var E6BObserver = new zimoko.Observable({
 		if(property == 'conversionSelected') {
 			if(this.conversionSelected != undefined) {
 
-				this.conversionMultiplier = parseFloat(this.conversionSelected.attr('data-multiplier'));
+                SelectedName =  this.conversionSelected.attr('data-top') + ' <i class="icon icon-resize-horizontal"></i> ' + this.conversionSelected.attr('data-bottom');
+                this.conversionMultiplier = parseFloat(this.conversionSelected.attr('data-multiplier'));
 				this.conversionInverse = parseFloat(this.conversionSelected.attr('data-inverse'));
 				this.set('topConversion', this.conversionSelected.attr('data-top'));
 				this.set('bottomConversion', this.conversionSelected.attr('data-bottom'));
-				this.set('conversionSelectedName', this.conversionSelected.text());
+				this.set('conversionSelectedName', SelectedName);
 							
 				this.convertTopToBottom();
 			}
@@ -285,9 +290,9 @@ var E6BObserver = new zimoko.Observable({
 	},
 });
 
-E6BObserver.subscribe(E6BObserver);
+E6BObserver.subscribe('conversionSelected', E6BObserver);
 
-var StoreDataSource = new zimoko.DataSource({pageSize: 30});
+var StoreDataSource = new zimoko.DataSource({pageSize: 20});
 
 var StoreObserver = new zimoko.Observable({
 	dataSource: StoreDataSource,
@@ -364,7 +369,7 @@ var ProductDetailsObserver = new zimoko.Observable({
 	}
 });
 
-ProductDetailsObserver.subscribe(ProductDetailsObserver);
+ProductDetailsObserver.subscribe('product', ProductDetailsObserver);
 
 //601 - Sped up menu animation
 //602 - Fixed close issue on some menu item taps
@@ -1191,8 +1196,17 @@ var AppObserver = new zimoko.Observable({
 		
 		var utcTimer = new Timer(1000, function() {
 			var now = new Date();
-		
-			$(".utcCurrent").html(now.toUTCString());
+
+             var currentDate = new Date();
+             var day = currentDate.getUTCDate();
+             var month = currentDate.getUTCMonth() + 1;
+             var year = currentDate.getUTCFullYear();
+             var hour = currentDate.getUTCHours();
+             var minute = currentDate.getUTCMinutes();
+             var seconds = currentDate.getUTCSeconds();
+             $(".utcCurrent").html('<span class="e6bDate">' + month + "/" + day + "/" + year + '</span>' + hour + ":" + minute + ":" + seconds + ' Z');
+
+             //$(".utcCurrent").html(now.toUTCString());
 		});
 		
 		utcTimer.start();
@@ -1232,9 +1246,13 @@ var AppObserver = new zimoko.Observable({
 	} 
 });
 
-AppObserver.subscribe(AppObserver);
+AppObserver.subscribe('token', AppObserver);
+AppObserver.subscribe('reachable', AppObserver);
+AppObserver.subscribe('email', AppObserver);
+AppObserver.subscribe('allProducts', AppObserver);
+AppObserver.subscribe('navHash', AppObserver);
 
-var DashboardDataSource = new zimoko.DataSource({pageSize: 30});
+var DashboardDataSource = new zimoko.DataSource({pageSize: 20});
 
 var DashboardObserver = new zimoko.Observable({
 	items: new zimoko.ObservableCollection(),
@@ -1438,7 +1456,7 @@ var DashboardObserver = new zimoko.Observable({
 				}, 250);
 			}
 			else {
-				this.dataSource = new zimoko.DataSource({pageSize: 30});
+				this.dataSource = new zimoko.DataSource({pageSize: 20});
 				this.dataSource.preventRead = true;
 				this.dataSource.sort(new zimoko.Sort(['manufacturer.name', 'model.name', 'index'], 'asc'));
 				this.dataSource.filter(new zimoko.FilterSet('and', [
@@ -1498,7 +1516,8 @@ var DashboardObserver = new zimoko.Observable({
 	}
 });
 
-DashboardObserver.subscribe(DashboardObserver);
+DashboardObserver.subscribe('editing', DashboardObserver);
+DashboardObserver.subscribe('dataSource', DashboardObserver);
 
 var ChecklistObserver = new zimoko.Observable({
 	items: new zimoko.ObservableCollection(),
@@ -1515,7 +1534,7 @@ var ChecklistObserver = new zimoko.Observable({
 	nextSectionText: 'Next Section',
 	previousSectionText: 'Previous Section',
 	showSections: false,
-	itemsDataSource: new zimoko.DataSource({pageSize: 30}),
+	itemsDataSource: new zimoko.DataSource({pageSize: 20}),
 	sectionsDataSource: new zimoko.DataSource({pageSize: 1000}),
 	onPropertyChanged: function(sender, property) {
 		if(property == 'checklist') {			
@@ -1530,6 +1549,13 @@ var ChecklistObserver = new zimoko.Observable({
 				this.itemsDataSource.sort(new zimoko.Sort(['index'], 'asc'));
 				
 				this.itemsDataSource.clear();
+				
+				for(var i = 0; i < this.checklist[this.list][this.section].items.length; i++) {
+					var item = this.checklist[this.list][this.section].items[i];
+					
+					if(item.isChecked == undefined)
+						item.isChecked = false;
+				}
 				
 				this.itemsDataSource.data(this.checklist[this.list][this.section].items);
             	this.itemsDataSource.read();
@@ -1591,6 +1617,14 @@ var ChecklistObserver = new zimoko.Observable({
 				//console.log("Category Index: " + this.category);
 				this.itemsDataSource.clear();
 				
+				
+				for(var i = 0; i < this.checklist[this.list][this.category].items[this.section].items.length; i++) {
+					var item = this.checklist[this.list][this.category].items[this.section].items[i];
+					
+					if(item.isChecked == undefined)
+						item.isChecked = false;
+				}
+				
 				this.itemsDataSource.data(this.checklist[this.list][this.category].items[this.section].items);
 				this.itemsDataSource.read();
                                               
@@ -1600,7 +1634,14 @@ var ChecklistObserver = new zimoko.Observable({
 			}
 			else {
 				this.itemsDataSource.clear();
-				 
+				
+				for(var i = 0; i < this.checklist[this.list][this.section].items.length; i++) {
+					var item = this.checklist[this.list][this.section].items[i];
+					
+					if(item.isChecked == undefined)
+						item.isChecked = false;
+				}
+				
 				this.itemsDataSource.data(this.checklist[this.list][this.section].items);
                 this.itemsDataSource.read();          
                                               
@@ -1965,7 +2006,8 @@ var ChecklistObserver = new zimoko.Observable({
 			EditAddObserver.set('adding', false);
 			EditAddObserver.set('item', data);
 			EditAddObserver.set('index', data.index);
-			EditAddObserver.item.subscribe(EditAddObserver);
+			EditAddObserver.item.subscribe('check', EditAddObserver);
+			EditAddObserver.item.subscribe('response', EditAddObserver);
 			
 			Navigation.go('#editadd');
 		}
@@ -2010,4 +2052,9 @@ var ChecklistObserver = new zimoko.Observable({
 	}
 });
 
-ChecklistObserver.subscribe(ChecklistObserver);
+ChecklistObserver.subscribe('checklist', ChecklistObserver);
+ChecklistObserver.subscribe('canCheck', ChecklistObserver);
+ChecklistObserver.subscribe('list', ChecklistObserver);
+ChecklistObserver.subscribe('section', ChecklistObserver);
+ChecklistObserver.subscribe('category', ChecklistObserver);
+ChecklistObserver.subscribe('editing', ChecklistObserver);

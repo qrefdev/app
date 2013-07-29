@@ -104,6 +104,12 @@ var zimoko = new (function() {})();
 		var process = new asyncEach(items, callback);
 	};
 	
+	zimoko.each = function(items, callback) {
+		for(var i = 0; i < items.length; i++) {
+			callback.apply(callback, [i,items[i]]);
+		}
+	};
+	
 	zimoko.ui = function() { };
 	
 	/** Parse an elements style string into a object **/

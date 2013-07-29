@@ -54,7 +54,10 @@
 	};
 	
 	Array.prototype.removeAt = function(index) {
-	  return this.splice(index,1);
+		if(index > -1)
+	  		return this.splice(index,1);
+		
+		return null;
 	};
 	
 	zimoko.Property = zimoko.Class.extend(function() {
@@ -374,7 +377,7 @@
 		var self = this;
 		
 		this.init = function(object) {
-			this.listeners = [];
+			this.listeners = {};
 			this.bindings = [];
 			this.root = undefined;
 			this.observableId = zimoko.createGuid();
@@ -389,16 +392,27 @@
 			}
 		};
 		
-		this.subscribe = function(listener) {
-			this.listeners.push(listener);
+		this.subscribe = function(property, listener) {
+			if(this.listeners[property]) {
+				this.listeners[property].push(listener);
+			}
+			else {
+				this.listeners[property] = [];
+				this.listeners[property].push(listener);
+			}
 		};
 		
-		this.unsubscribe = function(listener) {		
-			this.listeners.removeAt(this.listeners.indexOf(listener));
+		this.unsubscribe = function(property, listener) {
+			if(this.listeners[property]) {
+				if(listener)
+					this.listeners[property].removeAt(this.listeners[property].indexOf(listener));
+				else
+					this.listeners[property] = [];
+			}
 		};
 		
 		this.unsubscribeAll = function() {
-			this.listeners = [];
+			this.listeners = {};
 		};
 		
 		this.batchSet = function(object) {
@@ -427,11 +441,15 @@
 		var _propertyChanged = function(property) {
 			var observer = this;
 			
-			zimoko.Async.each(observer.listeners, function(index, listener) {
-				if(listener.onPropertyChanged != undefined && typeof(listener.onPropertyChanged) == 'function') {
-					listener.onPropertyChanged.call(listener, observer, property);
-				}
-			});
+			if(observer.listeners[property]) {
+				setTimeout(function() {
+					zimoko.each(observer.listeners[property], function(index, listener) {
+						if(listener.onPropertyChanged != undefined && typeof(listener.onPropertyChanged) == 'function') {
+							listener.onPropertyChanged.call(listener, observer, property);
+						}
+					});
+				}, 0);
+			}
 		};
 		
 		//Unbinds the observable from the current html element
@@ -481,22 +499,6 @@
 				for(var i = 0; i < element.length; i++) {
 					_bindChild.call(observable, element[i], element[i]);
 				}
-				
-				if(observable.parent != undefined && observable.parent instanceof zimoko.Observable) {
-					for(var i = 0; i < observable.bindings.length; i++) {
-						var binding = observable.bindings[i];
-						
-						observable.parent.subscribe(binding);
-					}
-				}
-				
-				if(observable.root != undefined && observable.root instanceof zimoko.Observable) {
-					for(var i = 0; i < observable.bindings.length; i++) {
-						var binding = observable.bindings[i];
-						
-						observable.root.subscribe(binding);
-					}
-				}
 			}
 			else {
 				if(typeof(element) != 'object') {
@@ -505,22 +507,6 @@
 				
 				_bindChild.call(observable, element[0], element);
 				element.attr('data-skip', 'true');
-				
-				if(observable.parent != undefined && observable.parent instanceof zimoko.Observable) {
-					for(var i = 0; i < observable.bindings.length; i++) {
-						var binding = observable.bindings[i];
-						
-						observable.parent.subscribe(binding);
-					}
-				}
-				
-				if(observable.root != undefined && observable.root instanceof zimoko.Observable) {
-					for(var i = 0; i < observable.bindings.length; i++) {
-						var binding = observable.bindings[i];
-						
-						observable.root.subscribe(binding);
-					}
-				}
 			}
 			
 			return this;
@@ -744,23 +730,27 @@
 		var _itemsAdded = function(items) {
 			var observer = this;
 			
-			zimoko.Async.each(observer.listeners, function(index, listener) {
-				var it = items;
-				if(listener.onItemsAdded != undefined && typeof(listener.onItemsAdded) == 'function') {
-					listener.onItemsAdded.call(listener, observer, it);
-				}
-			});
+			setTimeout(function() {
+				zimoko.each(observer.listeners, function(index, listener) {
+					var it = items;
+					if(listener.onItemsAdded != undefined && typeof(listener.onItemsAdded) == 'function') {
+						listener.onItemsAdded.call(listener, observer, it);
+					}
+				});
+			}, 0);
 		};
 		
 		var _itemsRemoved = function(items) {
 			var observer = this;
 			
-			zimoko.Async.each(observer.listeners, function(index, listener) {
-				var it = items;
-				if(listener.onItemsRemoved != undefined && typeof(listener.onItemsRemoved) == 'function') {
-					listener.onItemsRemoved.call(listener, observer, it);
-				}
-			});
+			setTimeout(function() {
+				zimoko.each(observer.listeners, function(index, listener) {
+					var it = items;
+					if(listener.onItemsRemoved != undefined && typeof(listener.onItemsRemoved) == 'function') {
+						listener.onItemsRemoved.call(listener, observer, it);
+					}
+				});
+			}, 0);
 		};
 	});
 		
@@ -772,9 +762,8 @@
 	});
 	
 	zimoko.Binding = zimoko.Class.extend(function() {
-		var self = this;
-		
 		this.init = function(observable, element, type) {
+			var _this = this;
 			this.element = element;
 			this.type = type;
 			this.observable = observable;
@@ -784,94 +773,166 @@
 			else 
 				this.bindingString = '';
 				
-			this.properties = [];
-		};
-		
-		function getProperty(propertyName) {
-			if(propertyName) {
-				for(var i = 0; i < self.properties.length; i++) {
-					var property = self.properties[i];
-					
-					if(property.name == propertyName || property.value.indexOf(propertyName) > -1)
-						return property;
-				}
-			}
+			this.properties = {};
+			this.parentProperties = {};
+			this.rootProperties = {};
 			
-			return undefined;
-		}
-		
-		this.onPropertyChanged = function(sender, property) {
-			var self = this;
-			for(var i = 0; i < this.properties.length; i++)
-			{
-				var aProperty = this.properties[i];
-				
-				if(aProperty.value.indexOf(property) > -1)
-				{
-					self.render(aProperty, false);
+			this.propertyChanged = {
+				onPropertyChanged: function(sender, prop) {
+					var properties = [];
+					
+					
+					for(var key in _this.properties) {
+						if(_this.properties[key][prop]) {
+							properties.push(_this.properties[key][prop]);
+						}
+					}
+					
+					zimoko.each(properties, function(index, property) {
+						if(property) {
+							_this.render(property, false);
+						}
+					});
 				}
-			}
+			};
+			
+			this.parentPropertyChanged = {
+				onPropertyChanged: function(sender, prop) {
+					var properties = [];
+					
+					
+					for(var key in _this.parentProperties) {
+						if(_this.parentProperties[key][prop]) {
+							properties.push(_this.parentProperties[key][prop]);
+						}
+					}
+					
+					zimoko.each(properties, function(index, property) {
+						if(property) {
+							_this.render(property, false);
+						}
+					});
+				}
+			};
+			
+			this.rootPropertyChanged = {
+				onPropertyChanged: function(sender, prop) {
+					var properties = [];
+					
+					
+					for(var key in _this.rootProperties) {
+						if(_this.rootProperties[key][prop]) {
+							properties.push(_this.rootProperties[key][prop]);
+						}
+					}
+					
+					zimoko.each(properties, function(index, property) {
+						if(property) {
+							_this.render(property, false);
+						}
+					});
+				}
+			};
 		};
 		
 		this.render = function(property, init) {
 			var prop = property;
-			var self = this;
+			var _this = this;
+	
+			if(prop) {
+				var handler = this.handlers[prop.key];
 		
-			setTimeout(function() {
-				if(!(property instanceof zimoko.Property)) {
-					prop = getProperty(property);
-				} 
-		
-				var handler = self.handlers[prop.key];
-			
 				if(handler) {
 					if(init) {
-						handler.init.call(self, self.element, new zimoko.ValueAccessor(self.observable, prop));
+						handler.init.call(this, this.element, new zimoko.ValueAccessor(this.observable, prop));
 					}
 					else {
-						handler.update.call(self, self.element, new zimoko.ValueAccessor(self.observable, prop));
+						handler.update.call(this, this.element, new zimoko.ValueAccessor(this.observable, prop));
 					}
 				}
-			}, 0);
+			}
 		};
 		
 		this.detach = function() {
-			var self = this;
+			var _this = this;
+
+			for(var key in this.properties) {
+				for(var name in this.properties[key]) {
+					var property = this.properties[key][name];
 			
-			setTimeout(function() {
-				for(var i = 0; i < self.properties.length; i++) {
-					var property = self.properties[i];
-				
-					var handler = self.handlers[property.key];
-			
-					if(handler) {
-						handler.remove.call(self, self.element, new zimoko.ValueAccessor(self.observable, property));
+					if(property) {
+						var handler = this.handlers[property.key];
+		
+						if(handler) {
+							handler.remove.call(this, this.element, new zimoko.ValueAccessor(this.observable, property));
+						}
 					}
-				}
-			}, 0);
 			
-			this.observable.unsubscribe(this);
+					this.observable.unsubscribe(name, this.propertyChanged);
+				}
+			}
+			
+			this.properties = {};
 			
 			if(this.observable.parent) {
-				this.observable.parent.unsubscribe(this);
+				for(var key in this.parentProperties) {
+					for(var name in this.parentProperties[key]) {
+						var property = this.parentProperties[key][name];
+			
+						if(property) {
+							var handler = this.handlers[property.key];
+		
+							if(handler) {
+								handler.remove.call(this, this.element, new zimoko.ValueAccessor(this.observable, property));
+							}
+						}
+				
+						this.observable.parent.unsubscribe(name, this.parentPropertyChanged);
+					}
+				}
 			}
 				
 			if(this.observable.root) {
-				this.observable.root.unsubscribe(this);
+				for(var key in this.rootProperties) {
+					for(var name in this.rootProperties[key]) {
+						var property = this.rootProperties[key][name];
+			
+						if(property) {
+							var handler = this.handlers[property.key];
+		
+							if(handler) {
+								handler.remove.call(this, this.element, new zimoko.ValueAccessor(this.observable, property));
+							}
+						}
+				
+						this.observable.root.unsubscribe(name, this.rootPropertyChanged);
+					}
+				}
 			}
+			
+			this.parentProperties = {};
+			this.rootProperties = {};
 		};
 		
 		this.attach = function() {
-			var self = this;			
-			self.parse();
-		
-			self.observable.subscribe(this);
-		
-			for(var i = 0; i < self.properties.length; i++)
-			{
-				var aProperty = self.properties[i];
+			this.parse();
 			
-				self.render(aProperty, true);
+			for(var key in this.properties) {
+				for(var name in this.properties[key]) {
+					this.render(this.properties[key][name], true);
+				}
+			}
+			
+			for(var key in this.parentProperties) {
+				for(var name in this.parentProperties[key]) {
+					this.render(this.parentProperties[key][name], true);
+				}
+			}
+			
+			for(var key in this.rootProperties) {
+				for(var name in this.rootProperties[key]) {
+					this.render(this.rootProperties[key][name], true);
+				}
 			}
 		};
 		
@@ -958,6 +1019,7 @@
 		
 		this.parse = function() {
 			//reset properties
+			var _this = this;
 			this.properties = [];
 			var bindingOptions = this.bindingString.replace(/\r|\n|\t|\r\n/g, '');	
 			
@@ -969,20 +1031,60 @@
 				
 				if(optionPair.length == 2)
 				{
-					var name = "";
-					var names = [];
-					var keys = Object.keys(this.observable);
-					
-					for(var p = 0; p < keys.length; p++)
+                    var property = optionPair[0].trim();
+                                         
+					for(var name in this.observable)
 					{
-						if(optionPair[1].indexOf(keys[p]) > -1)
-							names.push(keys[p]);
+						if(optionPair[1].indexOf(name) > -1 && name != 'parent' && name != 'root') {
+							var zProp = new zimoko.Property(property, optionPair[1].trim(), name);
+					
+							if(this.properties[property]) {
+								this.properties[property][name] = zProp;
+								this.observable.subscribe(name, this.propertyChanged);
+							}
+							else {
+								this.properties[property] = {};
+								this.properties[property][name] = zProp;
+								this.observable.subscribe(name, this.propertyChanged);
+							}
+						}	
+					}
+				
+					if(this.observable.parent) {
+						for(var name in this.observable.parent) {
+							if(optionPair[1].indexOf('parent.' + name) > -1 && name != 'parent' && name != 'root') {
+								var zProp = new zimoko.Property(property, optionPair[1].trim(), name);
+							
+								if(this.parentProperties[property]) {
+									this.parentProperties[property][name] = zProp;
+									this.observable.parent.subscribe(name, this.parentPropertyChanged);
+								}
+								else {
+									this.parentProperties[property] = {};
+									this.parentProperties[property][name] = zProp;
+									this.observable.parent.subscribe(name, this.parentPropertyChanged);
+								}
+							}
+						}
 					}
 					
-					if(names.length > 0)
-						name = names[0];
-					
-					this.properties.push(new zimoko.Property(optionPair[0].trim(), optionPair[1].trim(), name));
+					if(this.observable.root) {
+						for(var name in this.observable.root) {
+							if(optionPair[1].indexOf('root.' + name) > -1 && name != 'parent' && name != 'root') {
+								var zProp = new zimoko.Property(property, optionPair[1].trim(), name);
+							
+								if(this.rootProperties[property]) {
+									this.rootProperties[property][name] = zProp;
+									this.observable.root.subscribe(name, this.rootPropertyChanged);
+								}
+								else {
+									this.rootProperties[property] = {};
+									this.rootProperties[property][name] = zProp;
+									this.observable.root.subscribe(name, this.rootPropertyChanged);
+								}
+							}
+						}
+					}
 				} 
 				else if (optionPair.length > 2) {
 					var property = optionPair[0].trim();
@@ -995,20 +1097,58 @@
 					
 					realPropertyString = realPropertyString.substring(0, realPropertyString.length - 1);
 					
-					var name = "";
-					var names = [];
-					var keys = Object.keys(this.observable);
-					
-					for(var p = 0; p < keys.length; p++)
+					for(var name in this.observable)
 					{
-						if(realPropertyString.indexOf(keys[p]) > -1)
-							names.push(keys[p]);
+						if(realPropertyString.indexOf(name) > -1 && name != 'parent' && name != 'root') {
+							var zProp = new zimoko.Property(property, realPropertyString.trim(), name);
+					
+							if(this.properties[property]) {
+								this.properties[property][name] = zProp;
+								this.observable.subscribe(name, this.propertyChanged);
+							}
+							else {
+								this.properties[property] = {};
+								this.properties[property][name] = zProp;
+								this.observable.subscribe(name, this.propertyChanged);
+							}
+						}	
+					}
+				
+					if(this.observable.parent) {
+						for(var name in this.observable.parent) {
+							if(realPropertyString.indexOf('parent.' + name) > -1 && name != 'parent' && name != 'root') {
+								var zProp = new zimoko.Property(property, realPropertyString.trim(), name);
+							
+								if(this.parentProperties[property]) {
+									this.parentProperties[property][name] = zProp;
+									this.observable.parent.subscribe(name, this.parentPropertyChanged);
+								}
+								else {
+									this.parentProperties[property] = {};
+									this.parentProperties[property][name] = zProp;
+									this.observable.parent.subscribe(name, this.parentPropertyChanged);
+								}
+							}
+						}
 					}
 					
-					if(names.length > 0)
-						name = names[0];
-						
-					this.properties.push(new zimoko.Property(property, realPropertyString.trim(), name));
+					if(this.observable.root) {
+						for(var name in this.observable.root) {
+							if(realPropertyString.indexOf('root.' + name) > -1 && name != 'parent' && name != 'root') {
+								var zProp = new zimoko.Property(property, realPropertyString.trim(), name);
+							
+								if(this.rootProperties[property]) {
+									this.rootProperties[property][name] = zProp;
+									this.observable.root.subscribe(name, this.rootPropertyChanged);
+								}
+								else {
+									this.rootProperties[property] = {};
+									this.rootProperties[property][name] = zProp;
+									this.observable.root.subscribe(name, this.rootPropertyChanged);
+								}
+							}
+						}
+					}
 				}
 			}
 		};
@@ -1491,41 +1631,41 @@
 				var isObservableCollection = (val instanceof zimoko.ObservableCollection);
 				
 				element.data('zimokoForeachValue', value);
-				element.data('zimokoForeachTemplate', $(element.html()));
+				
+				if(!element.data('zimokoForeachTemplate'))
+					element.data('zimokoForeachTemplate', element.html());
+				
 				element.html('');
 				
 				if(isObservableCollection) {
 					val.parent = parent;
 					var foreachListener = {
 						onItemsAdded: function(sender, items) {
-							setTimeout(function() {
-								for(var i = 0; i < items.length; i++) {
-									var item = items[i].item;
-									var index = items[i].index;
-									var isObservable = (item instanceof zimoko.Observable);
+							for(var i = 0; i < items.length; i++) {
+								var item = items[i].item;
+								var index = items[i].index;
+								var isObservable = (item instanceof zimoko.Observable);
+						
+								var itemTemplate = $(element.data('zimokoForeachTemplate'));
+						
+								//itemTemplate.css({visibility: 'hidden'});
 							
-									var itemTemplate = element.data('zimokoForeachTemplate').clone();
-							
-									//itemTemplate.css({visibility: 'hidden'});
-								
-									if(index >= element.children().length) {
-										element.append(itemTemplate);
-									}
-									else {
-										var $ele = $(element.children().get(index));
-										$ele.before(itemTemplate);
-									}
-							
-									if(isObservable) {
-										item.parent = parent;
-										item.attach(itemTemplate);
-										itemTemplate.attr('data-observable', item.observableId);
-									
-										//item.attach(itemTemplate);
-									}
+								if(index >= element.children().length) {
+									element.append(itemTemplate);
 								}
-							}, 0);
-							
+								else {
+									var $ele = $(element.children().get(index));
+									$ele.before(itemTemplate);
+								}
+						
+								if(isObservable) {
+									item.parent = parent;
+									item.attach(itemTemplate);
+									itemTemplate.attr('data-observable', item.observableId);
+								
+									//item.attach(itemTemplate);
+								}
+							}
 							/*
 							for(var i = 0; i < items.length; i++) {
 								var item = items[i].item;
@@ -1553,21 +1693,19 @@
 							}*/
 						},
 						onItemsRemoved: function(sender, items) {
-                            setTimeout(function() {
-								for(var i = 0; i < items.length; i++) {
-									var index = items[i].index;
-									var item = items[i].item;
-					
-									var $ele = element.find('[data-observable="' + item.observableId + '"]');
-					
-									if($ele) {
-										if(item && item instanceof zimoko.Observable) 
-											item.detach();
-					
-										$ele.remove();
-									}
+							for(var i = 0; i < items.length; i++) {
+								var index = items[i].index;
+								var item = items[i].item;
+				
+								var $ele = element.find('[data-observable="' + item.observableId + '"]');
+				
+								if($ele) {
+									if(item && item instanceof zimoko.Observable) 
+										item.detach();
+				
+									$ele.remove();
 								}
-                            }, 0);
+							}
 						}
 					};	
 					
@@ -1592,24 +1730,22 @@
 					val.subscribe(foreachListener);
 				}
 				else if(val instanceof Array || val instanceof zimoko.SortableCollection) {
-					setTimeout(function() {
-						for(var i = 0; i < val.length; i++) {
-							var item = val[i];
-							var isObservable = (item instanceof zimoko.Observable);
-							var itemTemplate = element.data('zimokoForeachTemplate').clone();
-				
-							//itemTemplate.css({visibility: 'hidden'});
-									  
-							element.append(itemTemplate);
-				
-							if(isObservable) {
-								item.parent = parent;
-							
-								item.attach(itemTemplate);
-								//item.attach(itemTemplate);
-							}
+					for(var i = 0; i < val.length; i++) {
+						var item = val[i];
+						var isObservable = (item instanceof zimoko.Observable);
+						var itemTemplate = $(element.data('zimokoForeachTemplate'));
+			
+						//itemTemplate.css({visibility: 'hidden'});
+								  
+						element.append(itemTemplate);
+			
+						if(isObservable) {
+							item.parent = parent;
+						
+							item.attach(itemTemplate);
+							//item.attach(itemTemplate);
 						}
-					}, 0);
+					}
 					
 					/*for(var i = 0; i < val.length; i++) {
 						var item = val[i];
@@ -1675,32 +1811,30 @@
 						val.parent = parent;
 						var foreachListener = {
 							onItemsAdded: function(sender, items) {
-								setTimeout(function() {
-									for(var i = 0; i < items.length; i++) {
-										var item = items[i].item;
-										var index = items[i].index;
-										var isObservable = (item instanceof zimoko.Observable);
-							
-										var itemTemplate = element.data('zimokoForeachTemplate').clone();
-							
-										//itemTemplate.css({visibility: 'hidden'});
-												  
-										if(index >= element.children().length) {
-											element.append(itemTemplate);
-										}
-										else {
-											var $ele = $(element.children().get(index));
-											$ele.before(itemTemplate);
-										}
-							
-										if(isObservable) {
-											item.parent = parent;
-											item.attach(itemTemplate);
-											itemTemplate.attr('data-observable', item.observableId);
-											//item.attach(itemTemplate);
-										}
+								for(var i = 0; i < items.length; i++) {
+									var item = items[i].item;
+									var index = items[i].index;
+									var isObservable = (item instanceof zimoko.Observable);
+						
+									var itemTemplate = $(element.data('zimokoForeachTemplate'));
+						
+									//itemTemplate.css({visibility: 'hidden'});
+											  
+									if(index >= element.children().length) {
+										element.append(itemTemplate);
 									}
-								}, 0);
+									else {
+										var $ele = $(element.children().get(index));
+										$ele.before(itemTemplate);
+									}
+						
+									if(isObservable) {
+										item.parent = parent;
+										item.attach(itemTemplate);
+										itemTemplate.attr('data-observable', item.observableId);
+										//item.attach(itemTemplate);
+									}
+								}
 								
 								/*
 								for(var i = 0; i < items.length; i++) {
@@ -1729,56 +1863,31 @@
 								}*/
 							},
 							onItemsRemoved: function(sender, items) {
-								setTimeout(function() {
-									for(var i = 0; i < items.length; i++) {
-										var index = items[i].index;
-										var item = items[i].item;
-						
-										var $ele = element.find('[data-observable="' + item.observableId + '"]');
-						
-										if($ele) {
-											if(item && item instanceof zimoko.Observable) 
-												item.detach();
-						
-											$ele.remove();
-										}
+								for(var i = 0; i < items.length; i++) {
+									var index = items[i].index;
+									var item = items[i].item;
+					
+									var $ele = element.find('[data-observable="' + item.observableId + '"]');
+					
+									if($ele) {
+										if(item && item instanceof zimoko.Observable) 
+											item.detach();
+					
+										$ele.remove();
 									}
-								}, 0);
+								}
 							}
 						};	
+						
 						val.subscribe(foreachListener);
 						element.data('zimokoForeachListener', foreachListener);
 						var items = val.toArray();
 						
-						setTimeout(function() {
-							for(var i = 0; i < items.length; i++) {
-								var item = items[i];
-								var isObservable = (item instanceof zimoko.Observable);
-						
-								var itemTemplate = element.data('zimokoForeachTemplate').clone();
-						
-								//itemTemplate.css({visibility: 'hidden'});
-										  
-								element.append(itemTemplate);
-						
-								if(isObservable) {
-									item.parent = parent;
-								
-									item.attach(itemTemplate);
-									itemTemplate.attr('data-observable', item.observableId);
-									//item.attach(itemTemplate);
-								}
-							}
-						}, 0);
-					}
-				}
-				
-				if(val instanceof Array || val instanceof zimoko.SortableCollection) {
-					setTimeout(function() {
-						for(var i = 0; i < val.length; i++) {
-							var item = val[i];
+						for(var i = 0; i < items.length; i++) {
+							var item = items[i];
 							var isObservable = (item instanceof zimoko.Observable);
-							var itemTemplate = element.data('zimokoForeachTemplate').clone();
+					
+							var itemTemplate = $(element.data('zimokoForeachTemplate'));
 					
 							//itemTemplate.css({visibility: 'hidden'});
 									  
@@ -1788,9 +1897,29 @@
 								item.parent = parent;
 							
 								item.attach(itemTemplate);
-							}	
+								itemTemplate.attr('data-observable', item.observableId);
+								//item.attach(itemTemplate);
+							}
 						}
-					}, 0);
+					}
+				}
+				
+				if(val instanceof Array || val instanceof zimoko.SortableCollection) {
+					for(var i = 0; i < val.length; i++) {
+						var item = val[i];
+						var isObservable = (item instanceof zimoko.Observable);
+						var itemTemplate = $(element.data('zimokoForeachTemplate'));
+				
+						//itemTemplate.css({visibility: 'hidden'});
+								  
+						element.append(itemTemplate);
+				
+						if(isObservable) {
+							item.parent = parent;
+						
+							item.attach(itemTemplate);
+						}	
+					}
 					/*for(var i = 0; i < val.length; i++) {
 						var item = val[i];
 						var isObservable = (item instanceof zimoko.Observable);
@@ -1848,40 +1977,41 @@
 				var isObservableCollection = (val instanceof zimoko.ObservableCollection);
 				
 				element.data('zimokoForeachValue', value);
-				element.data('zimokoForeachTemplate', $(element.html()));
+				
+				if(!element.data('zimokoForeachTemplate'))
+					element.data('zimokoForeachTemplate', $(element.html()));
+				
 				element.html('');
 				
 				if(isObservableCollection) {
 					val.parent = parent;
 					var foreachListener = {
 						onItemsAdded: function(sender, items) {
-							setTimeout(function() {
-								for(var i = 0; i < items.length; i++) {
-									var item = items[i].item;
-									var index = items[i].index;
-									var isObservable = (item instanceof zimoko.Observable);
+							for(var i = 0; i < items.length; i++) {
+								var item = items[i].item;
+								var index = items[i].index;
+								var isObservable = (item instanceof zimoko.Observable);
+						
+								var itemTemplate = element.data('zimokoForeachTemplate').clone();
+						
+								//itemTemplate.css({visibility: 'hidden'});
 							
-									var itemTemplate = element.data('zimokoForeachTemplate').clone();
-							
-									//itemTemplate.css({visibility: 'hidden'});
-								
-									if(index >= element.children().length) {
-										element.append(itemTemplate);
-									}
-									else {
-										var $ele = $(element.children().get(index));
-										$ele.before(itemTemplate);
-									}
-							
-									if(isObservable) {
-										item.parent = parent;
-										item.attach(itemTemplate);
-										itemTemplate.attr('data-observable', item.observableId);
-									
-										//item.attach(itemTemplate);
-									}
+								if(index >= element.children().length) {
+									element.append(itemTemplate);
 								}
-							}, 0);
+								else {
+									var $ele = $(element.children().get(index));
+									$ele.before(itemTemplate);
+								}
+						
+								if(isObservable) {
+									item.parent = parent;
+									item.attach(itemTemplate);
+									itemTemplate.attr('data-observable', item.observableId);
+								
+									//item.attach(itemTemplate);
+								}
+							}
 							
 							setTimeout(function() {
 								var pt = element.parent();
@@ -1899,7 +2029,7 @@
 									var elements = element.children();
 									zimoko.applyVirtualCoords(elements, scrollTop, pt);
 								}
-							}, 10);
+							}, 0);
 							/*
 							for(var i = 0; i < items.length; i++) {
 								var item = items[i].item;
@@ -1927,21 +2057,19 @@
 							}*/
 						},
 						onItemsRemoved: function(sender, items) {
-							setTimeout(function() {
-								for(var i = 0; i < items.length; i++) {
-									var index = items[i].index;
-									var item = items[i].item;
-					
-									var $ele = element.find('[data-observable="' + item.observableId + '"]');
-					
-									if($ele) {
-										if(item && item instanceof zimoko.Observable) 
-											item.detach();
-					
-										$ele.remove();
-									}
+							for(var i = 0; i < items.length; i++) {
+								var index = items[i].index;
+								var item = items[i].item;
+				
+								var $ele = element.find('[data-observable="' + item.observableId + '"]');
+				
+								if($ele) {
+									if(item && item instanceof zimoko.Observable) 
+										item.detach();
+				
+									$ele.remove();
 								}
-							}, 0);
+							}
 							
 							setTimeout(function() {
 								var pt = element.parent();
@@ -1959,7 +2087,7 @@
 									var elements = element.children();
 									zimoko.applyVirtualCoords(elements, scrollTop, pt);
 								}
-							}, 10);
+							}, 0);
 						}
 					};	
 					
@@ -1984,24 +2112,22 @@
 					val.subscribe(foreachListener);
 				}
 				else if(val instanceof Array || val instanceof zimoko.SortableCollection) {
-					setTimeout(function() {
-						for(var i = 0; i < val.length; i++) {
-							var item = val[i];
-							var isObservable = (item instanceof zimoko.Observable);
-							var itemTemplate = element.data('zimokoForeachTemplate').clone();
-				
-							//itemTemplate.css({visibility: 'hidden'});
-									  
-							element.append(itemTemplate);
-				
-							if(isObservable) {
-								item.parent = parent;
-							
-								item.attach(itemTemplate);
-								//item.attach(itemTemplate);
-							}
+					for(var i = 0; i < val.length; i++) {
+						var item = val[i];
+						var isObservable = (item instanceof zimoko.Observable);
+						var itemTemplate = element.data('zimokoForeachTemplate').clone();
+			
+						//itemTemplate.css({visibility: 'hidden'});
+								  
+						element.append(itemTemplate);
+			
+						if(isObservable) {
+							item.parent = parent;
+						
+							item.attach(itemTemplate);
+							//item.attach(itemTemplate);
 						}
-					},0);
+					}
 					
 					setTimeout(function() {
 						var pt = element.parent();
@@ -2019,7 +2145,7 @@
 							var elements = element.children();
 							zimoko.applyVirtualCoords(elements, scrollTop, pt);
 						}
-					}, 10);
+					}, 0);
 					/*for(var i = 0; i < val.length; i++) {
 						var item = val[i];
 						var isObservable = (item instanceof zimoko.Observable);
@@ -2084,32 +2210,30 @@
 						val.parent = parent;
 						var foreachListener = {
 							onItemsAdded: function(sender, items) {
-								setTimeout(function() {
-									for(var i = 0; i < items.length; i++) {
-										var item = items[i].item;
-										var index = items[i].index;
-										var isObservable = (item instanceof zimoko.Observable);
-							
-										var itemTemplate = element.data('zimokoForeachTemplate').clone();
-							
-										//itemTemplate.css({visibility: 'hidden'});
-												  
-										if(index >= element.children().length) {
-											element.append(itemTemplate);
-										}
-										else {
-											var $ele = $(element.children().get(index));
-											$ele.before(itemTemplate);
-										}
-							
-										if(isObservable) {
-											item.parent = parent;
-											item.attach(itemTemplate);
-											itemTemplate.attr('data-observable', item.observableId);
-											//item.attach(itemTemplate);
-										}
+								for(var i = 0; i < items.length; i++) {
+									var item = items[i].item;
+									var index = items[i].index;
+									var isObservable = (item instanceof zimoko.Observable);
+						
+									var itemTemplate = element.data('zimokoForeachTemplate').clone();
+						
+									//itemTemplate.css({visibility: 'hidden'});
+											  
+									if(index >= element.children().length) {
+										element.append(itemTemplate);
 									}
-								}, 0);
+									else {
+										var $ele = $(element.children().get(index));
+										$ele.before(itemTemplate);
+									}
+						
+									if(isObservable) {
+										item.parent = parent;
+										item.attach(itemTemplate);
+										itemTemplate.attr('data-observable', item.observableId);
+										//item.attach(itemTemplate);
+									}
+								}
 								
 								setTimeout(function() {
 									var pt = element.parent();
@@ -2127,7 +2251,7 @@
 										var elements = element.children();
 										zimoko.applyVirtualCoords(elements, scrollTop, pt);
 									}
-								}, 10);
+								}, 0);
 								/*
 								for(var i = 0; i < items.length; i++) {
 									var item = items[i].item;
@@ -2155,21 +2279,19 @@
 								}*/
 							},
 							onItemsRemoved: function(sender, items) {
-								setTimeout(function() {
-									for(var i = 0; i < items.length; i++) {
-										var index = items[i].index;
-										var item = items[i].item;
-						
-										var $ele = element.find('[data-observable="' + item.observableId + '"]');
-						
-										if($ele) {
-											if(item && item instanceof zimoko.Observable) 
-												item.detach();
-						
-											$ele.remove();
-										}
+								for(var i = 0; i < items.length; i++) {
+									var index = items[i].index;
+									var item = items[i].item;
+					
+									var $ele = element.find('[data-observable="' + item.observableId + '"]');
+					
+									if($ele) {
+										if(item && item instanceof zimoko.Observable) 
+											item.detach();
+					
+										$ele.remove();
 									}
-								}, 0);
+								}
 								
 								setTimeout(function() {
 									var pt = element.parent();
@@ -2187,32 +2309,31 @@
 										var elements = element.children();
 										zimoko.applyVirtualCoords(elements, scrollTop, pt);
 									}
-								}, 10);
+								}, 0);
 							}
 						};	
+						
 						val.subscribe(foreachListener);
 						element.data('zimokoForeachListener', foreachListener);
 						var items = val.toArray();
-						setTimeout(function() {
-							for(var i = 0; i < items.length; i++) {
-								var item = items[i];
-								var isObservable = (item instanceof zimoko.Observable);
-						
-								var itemTemplate = element.data('zimokoForeachTemplate').clone();
-						
-								//itemTemplate.css({visibility: 'hidden'});
-										  
-								element.append(itemTemplate);
-						
-								if(isObservable) {
-									item.parent = parent;
-								
-									item.attach(itemTemplate);
-									itemTemplate.attr('data-observable', item.observableId);
-									//item.attach(itemTemplate);
-								}
+						for(var i = 0; i < items.length; i++) {
+							var item = items[i];
+							var isObservable = (item instanceof zimoko.Observable);
+					
+							var itemTemplate = element.data('zimokoForeachTemplate').clone();
+					
+							//itemTemplate.css({visibility: 'hidden'});
+									  
+							element.append(itemTemplate);
+					
+							if(isObservable) {
+								item.parent = parent;
+							
+								item.attach(itemTemplate);
+								itemTemplate.attr('data-observable', item.observableId);
+								//item.attach(itemTemplate);
 							}
-						}, 0);
+						}
 						
 						setTimeout(function() {
 							var pt = element.parent();
@@ -2230,28 +2351,27 @@
 								var elements = element.children();
 								zimoko.applyVirtualCoords(elements, scrollTop, pt);
 							}
-						}, 10);
+						}, 0);
 					}
 				}
 				
 				if(val instanceof Array || val instanceof zimoko.SortableCollection) {
-					setTimeout(function() {
-						for(var i = 0; i < val.length; i++) {
-							var item = val[i];
-							var isObservable = (item instanceof zimoko.Observable);
-							var itemTemplate = element.data('zimokoForeachTemplate').clone();
-					
-							//itemTemplate.css({visibility: 'hidden'});
-									  
-							element.append(itemTemplate);
-					
-							if(isObservable) {
-								item.parent = parent;
-							
-								item.attach(itemTemplate);
-							}	
-						}
-					}, 0);
+					for(var i = 0; i < val.length; i++) {
+						var item = val[i];
+						var isObservable = (item instanceof zimoko.Observable);
+						var itemTemplate = element.data('zimokoForeachTemplate').clone();
+				
+						//itemTemplate.css({visibility: 'hidden'});
+								  
+						element.append(itemTemplate);
+				
+						if(isObservable) {
+							item.parent = parent;
+						
+							item.attach(itemTemplate);
+						}	
+					}
+	
 					setTimeout(function() {
 						var pt = element.parent();
 					
@@ -2268,7 +2388,7 @@
 							var elements = element.children();
 							zimoko.applyVirtualCoords(elements, scrollTop, pt);
 						}
-					}, 10);
+					}, 0);
 					/*for(var i = 0; i < val.length; i++) {
 						var item = val[i];
 						var isObservable = (item instanceof zimoko.Observable);

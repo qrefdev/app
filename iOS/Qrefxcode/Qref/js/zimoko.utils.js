@@ -195,9 +195,7 @@
 		this.trigger = function(element, event, data) {
 			var self = this;
 			if(typeof(this.value) == 'function') {
-				setTimeout(function() {
-					self.value.call(self.owner, element, event, data);
-				}, 1 / 60);
+				self.value.call(self.owner, element, event, data);
 			}
 		};
 	};
