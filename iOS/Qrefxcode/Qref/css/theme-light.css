@@ -748,13 +748,13 @@ color: #d6dbdf;*/
     background-position-y: center;
 }
         
-.theme-light .emergencies ul li .icon .other                 { background-image: url("../images/light/other.png"); }
 .theme-light .emergencies ul li .icon .electrical            { background-image: url("../images/light/electrical.png"); }
 .theme-light .emergencies ul li .icon .fire                  { background-image: url("../images/light/fire.png"); }
-.theme-light .emergencies ul li .icon .flight-controls       { background-image: url("../images/light/flight-controls"); }
+.theme-light .emergencies ul li .icon .flight-controls       { background-image: url("../images/light/flight-controls.png"); }
 .theme-light .emergencies ul li .icon .flight-instruments    { background-image: url("../images/light/flight-instruments.png"); }
 .theme-light .emergencies ul li .icon .forced-landing        { background-image: url("../images/light/forced-landing.png"); }
-.theme-light .emergencies ul li .icon .nav-autopilot         { background-image: url("../images/light/nav-instruments.png"); }
+.theme-light .emergencies ul li .icon .nav-autopilot         { background-image: url("../images/light/nav-autopilot.png"); }
+.theme-light .emergencies ul li .icon .other                 { background-image: url("../images/light/other.png"); }
 .theme-light .emergencies ul li .icon .propeller-engine      { background-image: url("../images/light/propeller-engine.png"); }
 
 /** Section nav for checklist **/
