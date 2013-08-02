@@ -42,10 +42,14 @@
 }
 
 .flyover {
-	left: 23.3%;
-	height: 350px;
-	right: 0px;
-	width: 400px;
+    left: 0;
+    height: auto;
+    right: 0px;
+    width: 100%;
+}
+
+.flyover ul li:last-child {
+	margin-bottom: 0px !important;
 }
 
 .username {

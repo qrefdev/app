@@ -2,7 +2,7 @@ a {
 	font-size: 16px;
 	font-weight: normal;
 	color: #d6dbdf;
-	font-family: MyriadBold, Myriad;
+	font-family: MyriadBold, Myriad, Helvetica;
 	text-decoration: none;
 }
 
@@ -789,12 +789,12 @@ color: #d6dbdf;*/
 
 
 .flyover {
-    background: rgba(0,0,0,.85);
+    background: rgba(0,0,0,.8);
 }
 
 .flyover ul li {
-    border-bottom: 1px solid #444;
-}
+    border-top: 1px solid #666;
+    border-bottom: 1px solid #000;}
 
 .flyover ul .active {
     background: rgba(1,77,154,.85);

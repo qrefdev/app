@@ -97,7 +97,7 @@
 				</div>
 				<nav class="nav dashnav" style="z-index: 99999;">
 					<ul>
-						<li data-link="downloads" data-bind="tap: navTap" class="item" style="z-index: 10;"><div><i class="icon icon-download"></i><div class="header">Download Aircraft Models</div></div></li>
+						<li data-link="downloads" data-bind="tap: navTap, visible: token" class="item" style="z-index: 10;"><div><i class="icon icon-download"></i><div class="header">Download Aircraft Models</div></div></li>
 						<li data-link="e6b" data-bind="tap: navTap" class="item" style="z-index: 5;"><div><i class="icon icon-table"></i><div class="header">Conversions</div></div></li>
 					</ul>
 				</nav>
@@ -536,8 +536,8 @@
 				<div class="content">
 					<div style="float: left; position: relative; width: 100%; margin-top: 5px;">
 						<form id="signinForm" method="post" action="javascript:void(null);">
-						<input class="textbox required" autofocus="autofocus" tabindex="0" type="email" id="email" name="email" data-bind="keyup: keyUp"  placeholder="email" />
-						<input class="textbox required" type="password" id="password" tabindex="1" data-bind="keyup: keyUp" name="password" placeholder="password" />
+						<input class="textbox required" type="email"    id="email"    tabindex="1" data-bind="keyup: keyUp" name="email"    placeholder="email" autofocus="autofocus" />
+						<input class="textbox required" type="password" id="password" tabindex="2" data-bind="keyup: keyUp" name="password" placeholder="password" />
 						<div class="submit"><div class="special"><p>Sign in</p><i class="icon icon-arrow-right"></i></div></div>
 						<div style="position: relative; margin-top: -7px;">
                             <div class="button" style="position: absolute;" data-bind="tap: navTap" data-link="passwordRecovery"><div class="special2"><p>Forgot password</p><i class="icon icon-question-sign"></i></div>
@@ -566,7 +566,7 @@
 				<div class="content">
 					<div style="float: left; position: relative; width: 100%; margin-top: 5px;">
 						<form id="passwordRecoveryForm" method="post" action="javascript:void(null);">
-						<input class="textbox required" type="email" value="email" id="recoveryEmail" data-bind="keyup: keyUp"  name="recoveryEmail" placeholder="email" />
+						<input class="textbox required" type="email" id="recoveryEmail" data-bind="keyup: keyUp"  name="recoveryEmail" placeholder="email" autofocus="autofocus" />
 						<div class="submit"><div class="special"><p>Send Email</p><i class="icon icon-arrow-right"></i></div></div>
 						</form>
 					</div>
@@ -589,9 +589,9 @@
 				<div class="content">
 					<div style="float: left; position: relative; width: 100%; margin-top: 5px;">
 						<form id="changePasswordForm" method="post" action="javascript:void(null);">
-							<input class="textbox required" type="password" placeholder="old password" data-bind="keyup: keyUp"  id="oldPassword" name="oldPassword" />
-							<input class="textbox required" type="password" placeholder="new password" data-bind="keyup: keyUp" id="newPassword" name="newPassword" />
-							<input class="textbox required" type="password" placeholder="confirm password" data-bind="keyup: keyUp" id="newPasswordConfirm" name="newPasswordConfirm" />
+							<input class="textbox required" type="password" placeholder="old password"     tabindex="1" data-bind="keyup: keyUp" id="oldPassword" name="oldPassword" autofocus="autofocus" />
+							<input class="textbox required" type="password" placeholder="new password"     tabindex="2" data-bind="keyup: keyUp" id="newPassword" name="newPassword" />
+							<input class="textbox required" type="password" placeholder="confirm password" tabindex="3" data-bind="keyup: keyUp" id="newPasswordConfirm" name="newPasswordConfirm" />
 							<div style="margin: 10px auto; width: 90%" class="submit"><div class="special"><p>Change</p><i class="icon icon-arrow-right"></i></div></div>
 						</form>
 					</div>
@@ -614,9 +614,9 @@
 				<div class="content">
 					<div style="float: left; position: relative; width: 100%; margin-top: 5px;">
 						<form id="registerForm" action="javascript:void(null);" method="post">
-							<input class="textbox required" type="email" id="emailRegister" name="emailRegister" data-bind="keyup: keyUp" placeholder="email" />
-							<input class="textbox required" type="password" id="passwordRegister" data-bind="keyup: keyUp" name="passwordRegister" placeholder="password" />
-							<input class="textbox required" type="password" id="confirmPassword" data-bind="keyup: keyUp" name="confirmPassword" placeholder="confirm password" />
+							<input class="textbox required" type="email"    id="emailRegister"    tabindex="1" data-bind="keyup: keyUp" name="emailRegister" placeholder="email" autofocus="autofocus" />
+							<input class="textbox required" type="password" id="passwordRegister" tabindex="2" data-bind="keyup: keyUp" name="passwordRegister" placeholder="password" />
+							<input class="textbox required" type="password" id="confirmPassword"  tabindex="3" data-bind="keyup: keyUp" name="confirmPassword" placeholder="confirm password" />
 							<div style="margin: 10px auto; width: 90%" class="submit"><div class="special"><p>Register</p><i class="icon icon-arrow-right"></i></div></div>
 						</form>
 					</div>
