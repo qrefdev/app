@@ -1266,6 +1266,9 @@ var DashboardObserver = new zimoko.Observable({
 
 		ele = ele.find('.delete');
 		
+		$('#dashboard .holder').stop().animate({'left':'0px'},200);
+		$('#dashboard .delete').stop().hide();
+		
 		if(!DashboardObserver.editing) {
 			setTimeout(function() {
 				ChecklistObserver.set('checklist', data)
@@ -1275,15 +1278,10 @@ var DashboardObserver = new zimoko.Observable({
 				Navigation.go('#checklist');
 			}, 150);
 		}
-		else if(DashboardObserver.editing && ele.css('display') == 'none') {
+		else if(DashboardObserver.editing) {
 			EditTailObserver.set('item', data);
 			
 			Navigation.go('#edittail');
-		}
-		else {
-			ele.fadeOut(200, function() {
-				ele.prev().animate({'left':'0px'}, 200);
-			});
 		}
 	},
 	navTap: function(element, e, data) {
@@ -1329,6 +1327,9 @@ var DashboardObserver = new zimoko.Observable({
 	itemSwipeRight: function(element, e, data) {
 		var ele = $(element);
 		
+		$('#dashboard .holder').stop().animate({'left':'0px'},200);
+		$('#dashboard .delete').stop().hide();
+                                              
 		e.stopPropagation();
 		e.preventDefault();
 			
@@ -1337,7 +1338,7 @@ var DashboardObserver = new zimoko.Observable({
 		
 		if(DashboardObserver.editing) {
 			handle.animate({'left': '75px'}, 200);
-			deleteB.fadeIn(200); 
+			deleteB.show(); 
 		}
 	},
 	subItemTap: function(element, e, data) {
@@ -1960,6 +1961,9 @@ var ChecklistObserver = new zimoko.Observable({
 	itemSwipeRight: function(element, e, data) {
 		var ele = $(element);
 		
+		$('#checklist .holder').stop().animate({'left':'0px'},200);
+		$('#checklist .delete').stop().hide();
+		
 		e.stopPropagation();
 		e.preventDefault();
         ChecklistObserver.set('showSections', false);
@@ -1969,7 +1973,7 @@ var ChecklistObserver = new zimoko.Observable({
 		
 		if(ChecklistObserver.editing) {
 			holder.animate({'left': '75px'}, 200);
-			deleteB.fadeIn(200); 
+			deleteB.show(); 
 		}
 	},
 	deleteTap: function(element, e, data) {
@@ -2002,7 +2006,10 @@ var ChecklistObserver = new zimoko.Observable({
 		ChecklistObserver.set('showSections', false);
 		ele = ele.find('.delete');
 		
-		if(ChecklistObserver.editing && ele.css('display') == 'none') {
+		$('#checklist .holder').stop().animate({'left':'0px'},200);
+		$('#checklist .delete').stop().hide();
+		
+		if(ChecklistObserver.editing) {
 			EditAddObserver.set('adding', false);
 			EditAddObserver.set('item', data);
 			EditAddObserver.set('index', data.index);
@@ -2011,11 +2018,7 @@ var ChecklistObserver = new zimoko.Observable({
 			
 			Navigation.go('#editadd');
 		}
-		else {
-			ele.fadeOut(200, function() {
-				ele.prev().animate({'left':'0px'}, 200);
-			});
-                                              
+		else {                                          
 			if(ChecklistObserver.canCheck) {
 				data.set('isChecked', !data.isChecked);
 			}

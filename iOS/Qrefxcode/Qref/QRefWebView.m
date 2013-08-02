@@ -101,9 +101,15 @@
    return self;
 }
 
+<<<<<<< .mine
+/*-(UIStatusBarStyle) preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
+}*/
+=======
 //-(UIStatusBarStyle) preferredStatusBarStyle{
 //    return UIStatusBarStyleLightContent;
 //}
+>>>>>>> .r115
 
 - (void) reachabilityChanged:(NSNotification *) notif {
     Reachability * rch = [notif object];
@@ -133,7 +139,11 @@
 {
     [super viewDidLoad];
     
+<<<<<<< .mine
+    //[self setNeedsStatusBarAppearanceUpdate];
+=======
 //    [self setNeedsStatusBarAppearanceUpdate];
+>>>>>>> .r115
 	// Do any additional setup after loading the view.
 }
 
