@@ -21,3 +21,7 @@
 .theme-light .menu ul li p {
     font-size: 20px;
 }
+
+.theme-light .emergencies ul li .icon div {
+    height: 100px;
+}
