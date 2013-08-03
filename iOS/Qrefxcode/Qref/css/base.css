@@ -839,10 +839,10 @@ html, body {
 /** Checklist Sections Menu **/
 .check-sections {
 	position: absolute;
-	top: 32px;
-	left: 10%;
-	width: 70%;
-	bottom: 62px;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	bottom: 0px;
 	z-index: 99999;
 	overflow: auto;
 }
@@ -1182,14 +1182,14 @@ form label {
 
 /** iOS HTML Recreation Elements **/
 .flyover {
-	position: relative;
+	position: absolute;
 	top: 20px;
 	left: 0px;
 	bottom: 0px;
 	right: 0px;
 	width: 100%;
     display: none;
-    overflow: visible;
+    overflow: auto;
     z-index: 999999;
 }
 

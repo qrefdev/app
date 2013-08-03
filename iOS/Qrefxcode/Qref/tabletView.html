@@ -159,11 +159,13 @@
 					</div>
 					<div class="shadow">
 					</div>
-                    <div class="grid check-sections flyover" data-bind="slideVisible: showSections" style="top: 47px; z-index:800;">
-                        <div class="container inside scrollable">
-                            <ul id="check-sections-items" class="vertical" data-bind="foreach: sections">
-                                <li data-bind="tap: parent.sectionTap, attr: {'class': (function() { if(index == parent.section) return 'active'; else return ''; })()}"><p data-bind="html: name"></p></li>
-                            </ul>
+                    <div class="flyover" data-bind="slideVisible: showSections" style="top: 47px; z-index:800;">
+                        <div class="grid check-sections">
+                            <div class="container inside scrollable">
+                                <ul id="check-sections-items" class="vertical" data-bind="foreach: sections">
+                                    <li data-bind="tap: parent.sectionTap, attr: {'class': (function() { if(index == parent.section) return 'active'; else return ''; })()}"><p data-bind="html: name"></p></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
 				</div>
@@ -341,16 +343,18 @@
 					<div class="row">
 						<div class="bottomConversion" data-bind="html: bottomConversion">KTS</div><input id="convertBottom" data-bind="value: bottomConversionValue, keyup: conversionBottomKeyDown" class="textbox" type="number" value="0" />
 					</div>
-                    <div class="grid available-conversions flyover" data-bind="fadeVisible: showConversions" style="margin-top: 27px;">
-                        <div class="container inside scrollable">
-                            <ul id="conversion-items" class="vertical">
-                                <li data-bind="tap: conversionTap" class="active" data-multiplier="0.868976242" data-inverse="1.150779448" data-top="MPH" data-bottom="KTS" data-value="0"><p>MPH <i class="icon icon-resize-horizontal"></i> KTS</p></li>
-                                <li data-bind="tap: conversionTap" data-multiplier="0.3048" data-inverse="3.280839895" data-top="FT" data-bottom="M" data-value="1"><p>FT <i class="icon icon-resize-horizontal"></i> M</p></li>
-                                <li data-bind="tap: conversionTap" data-multiplier="1.15077945" data-inverse="0.86897624" data-top="NM" data-bottom="SM" data-value="2"><p>NM <i class="icon icon-resize-horizontal"></i> SM</p></li>
-                                <li data-bind="tap: conversionTap" data-multiplier="1.852" data-inverse="0.539956803" data-top="NM" data-bottom="KM" data-value="3"><p>NM <i class="icon icon-resize-horizontal"></i> KM</p></li>
-                                <li data-bind="tap: conversionTap" data-multiplier="3.78541" data-inverse="0.264172177" data-top="GAL" data-bottom="LIT" data-value="4"><p>GAL <i class="icon icon-resize-horizontal"></i> LIT</p></li>
-                                <li data-bind="tap: conversionTap" data-multiplier="0.453592" data-inverse="2.20462442" data-top="LB" data-bottom="KG" data-value="5"><p>LB <i class="icon icon-resize-horizontal"></i> KG</p></li>
-                            </ul>
+                    <div class="flyover" data-bind="slideVisible: showConversions" style="margin-top: 27px; z-index:800;">
+                        <div class="grid available-conversions">
+                            <div class="container inside scrollable">
+                                <ul id="conversion-items" class="vertical">
+                                    <li data-bind="tap: conversionTap" class="active" data-multiplier="0.868976242" data-inverse="1.150779448" data-top="MPH" data-bottom="KTS" data-value="0"><p>MPH <i class="icon icon-resize-horizontal"></i> KTS</p></li>
+                                    <li data-bind="tap: conversionTap" data-multiplier="0.3048" data-inverse="3.280839895" data-top="FT" data-bottom="M" data-value="1"><p>FT <i class="icon icon-resize-horizontal"></i> M</p></li>
+                                    <li data-bind="tap: conversionTap" data-multiplier="1.15077945" data-inverse="0.86897624" data-top="NM" data-bottom="SM" data-value="2"><p>NM <i class="icon icon-resize-horizontal"></i> SM</p></li>
+                                    <li data-bind="tap: conversionTap" data-multiplier="1.852" data-inverse="0.539956803" data-top="NM" data-bottom="KM" data-value="3"><p>NM <i class="icon icon-resize-horizontal"></i> KM</p></li>
+                                    <li data-bind="tap: conversionTap" data-multiplier="3.78541" data-inverse="0.264172177" data-top="GAL" data-bottom="LIT" data-value="4"><p>GAL <i class="icon icon-resize-horizontal"></i> LIT</p></li>
+                                    <li data-bind="tap: conversionTap" data-multiplier="0.453592" data-inverse="2.20462442" data-top="LB" data-bottom="KG" data-value="5"><p>LB <i class="icon icon-resize-horizontal"></i> KG</p></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
 				</div>
