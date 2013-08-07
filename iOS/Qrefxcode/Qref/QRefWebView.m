@@ -18,6 +18,8 @@
         
         self->server = @"https://my.qref.com/";
         
+        self.mayAccept = NO;
+        
         [self setWantsFullScreenLayout:YES];
         
         self.imageQueue = [[NSOperationQueue alloc] init];
@@ -73,6 +75,16 @@
         
         [self->imageView setContentMode:UIViewContentModeScaleAspectFill];
         
+         UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(accepted:)];
+        
+        tap.numberOfTapsRequired = 1;
+        tap.delaysTouchesBegan = YES;
+        tap.cancelsTouchesInView = NO;
+        
+        [self->imageView addGestureRecognizer:tap];
+        
+        self->imageView.userInteractionEnabled = YES;
+        
         self.webView = [[UIWebView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
         self.webView.delegate = self;
         
@@ -99,6 +111,44 @@
         [[NSURLCache sharedURLCache] removeAllCachedResponses];
     }
    return self;
+}
+
+- (void) accepted: (UITapGestureRecognizer *) tap {
+    if(self.mayAccept) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.webView stringByEvaluatingJavaScriptFromString:@"DataLoaded();"];
+            CGRect bounds = [[UIScreen mainScreen] bounds];
+            
+            [self setView:self.webView];
+            
+            if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft) {
+                
+                [self.webView setFrame:CGRectMake(22, 0, bounds.size.width - 22, bounds.size.height)];
+            }
+            else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeRight) {
+                [self.webView setFrame:CGRectMake(0, 0, bounds.size.width - 22, bounds.size.height)];
+            }
+            else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortrait) {
+                [self.webView setFrame: CGRectMake(0, 22, bounds.size.width, bounds.size.height - 22)];
+            }
+            else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortraitUpsideDown) {
+                [self.webView setFrame: CGRectMake(0, 22, bounds.size.width, bounds.size.height - 22)];
+            }
+            
+            [[UIApplication sharedApplication] setStatusBarHidden:NO];
+            
+            [self->imageView removeFromSuperview];
+            self->imageView = nil;
+            
+            self->startUpImage = nil;
+            
+            if(self.delegate) {
+                [self.delegate webViewDidLoad];
+            }
+            
+            [self.webView layoutSubviews];
+        });
+    }
 }
 
 /*-(UIStatusBarStyle) preferredStatusBarStyle{
@@ -156,7 +206,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return YES;
 }
 
 - (void)gotoURL:(NSURLRequest *)url {
@@ -707,37 +757,84 @@
         manager = nil;
         cached = nil;
     }
-    
+
+    [self showAcceptButton];
+}
+
+- (void) showAcceptButton {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.webView stringByEvaluatingJavaScriptFromString:@"DataLoaded();"];
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        
+        [button setBackgroundImage:[UIImage imageNamed:@"Default-Portrait@2x-button.png"] forState:UIControlStateNormal];
+        [button setBackgroundImage:[UIImage imageNamed:@"Default-Portrait@2x-button.png"] forState:UIControlStateHighlighted];
+        [button setBackgroundImage:[UIImage imageNamed:@"Default-Portrait@2x-button.png"] forState:UIControlStateDisabled];
+        
+        button.contentMode = UIViewContentModeScaleAspectFill;
+        
         CGRect bounds = [[UIScreen mainScreen] bounds];
+        CGFloat screenScale = [[UIScreen mainScreen] scale];
         
-        [self setView:self.webView];
-        
-        if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft) {
-            
-            [self.webView setFrame:CGRectMake(22, 0, bounds.size.width - 22, bounds.size.height)];
+        if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            if(screenScale > 1) {
+                if(bounds.size.width * screenScale > 1000 || bounds.size.height * screenScale > 1000) {
+                    //568
+                    
+                    if([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft || [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight) {
+                        button.frame = CGRectMake((bounds.size.height / 2) - (135 / 2), bounds.size.width - 155, 135, 45);
+                        
+                    }
+                    else {
+                        button.frame = CGRectMake((bounds.size.width / 2) - (135 / 2), bounds.size.height - 155, 135, 45);
+                    }
+                }
+                else {
+                    //2x
+                    if([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft || [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight) {
+                        button.frame = CGRectMake((bounds.size.height / 2) - (135 / 2), bounds.size.width - 115, 135, 45);
+                        
+                    }
+                    else {
+                        button.frame = CGRectMake((bounds.size.width / 2) - (135 / 2), bounds.size.height - 115, 135, 45);
+                    }
+                }
+            }
+            else {
+                //normal
+                if([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft || [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight) {
+                    button.frame = CGRectMake((bounds.size.height / 2) - (135 / 2), bounds.size.width - 115, 135, 45);
+                    
+                }
+                else {
+                    button.frame = CGRectMake((bounds.size.width / 2) - (135 / 2), bounds.size.height - 115, 135, 45);
+                }
+            }
         }
-        else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeRight) {
-            [self.webView setFrame:CGRectMake(0, 0, bounds.size.width - 22, bounds.size.height)];
-        }
-        else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortrait) {
-            [self.webView setFrame: CGRectMake(0, 22, bounds.size.width, bounds.size.height - 22)];
-        }
-        else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortraitUpsideDown) {
-            [self.webView setFrame: CGRectMake(0, 22, bounds.size.width, bounds.size.height - 22)];
+        else if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+            if(screenScale > 1) {
+                //2x
+                if([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft || [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight) {
+                    button.frame = CGRectMake((bounds.size.height / 2) - (260 / 2), bounds.size.width - 235, 260, 90);
+                    
+                }
+                else {
+                    button.frame = CGRectMake((bounds.size.width / 2) - (260 / 2), bounds.size.height - 335, 260, 90);
+                }
+            }
+            else {
+                //normal
+                if([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft || [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight) {
+                    button.frame = CGRectMake((bounds.size.height / 2) - (260 / 2), bounds.size.width - 235, 260, 90);
+                    
+                }
+                else {
+                    button.frame = CGRectMake((bounds.size.width / 2) - (260 / 2), bounds.size.height - 335, 260, 90);
+                }
+            }
         }
         
-        [[UIApplication sharedApplication] setStatusBarHidden:NO];
+        [self->imageView addSubview:button];
         
-        [self->imageView removeFromSuperview];
-        self->imageView = nil;
-        
-        self->startUpImage = nil;
-        
-        if(self.delegate) {
-            [self.delegate webViewDidLoad];
-        }
+        self.mayAccept = YES;
     });
 }
 
@@ -968,13 +1065,18 @@
         [self.webView stringByEvaluatingJavaScriptFromString:@"reachability = false;"];
     }
     
-    [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"MenuObserver.set('version', '%@');", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]]];
+    [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"MenuObserver.set('version', '%@');", [QRefWebView build]]];
     
     self->refreshTimer = [NSTimer scheduledTimerWithTimeInterval:600.0 target:self selector:@selector(refreshToken:) userInfo:nil  repeats:YES];
 }
 
 - (void) refreshToken:(NSTimer *)timer {
     [self.webView stringByEvaluatingJavaScriptFromString:@"RefreshToken();"];
+}
+
++ (NSString *) build
+{
+    return [[NSBundle mainBundle] objectForInfoDictionaryKey: (NSString *)kCFBundleVersionKey];
 }
 
 //Trys to do a local login

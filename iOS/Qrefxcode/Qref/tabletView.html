@@ -83,10 +83,8 @@
                                 <span data-bind="html: tailNumber, visible: tailNumber" class="tailNumber"></span>
 
                                 <div class="heading" data-bind="html: manufacturer.name + ' ' + model.name"></div>
-                                <div class="subheading"><span
-                                        data-bind="html: model.description, visible: model.description"
-                                        style="margin-top: 0px"></span>, <span
-                                        data-bind="html: model.modelYear, visible: model.modelYear"></span>
+                                <div class="subheading" data-bind="with: model">
+                                	<span data-bind="html: description, visible: description" style="margin-top: 0px"></span>, <span data-bind="html: modelYear, visible: modelYear"></span>
                                 </div>
                                 <ul>
                                     <li class="product-subarea" data-bind="tap: parent.subItemTap"
@@ -600,9 +598,9 @@
             <div style="float: left; position: relative; width: 100%; margin-top: 5px;" data-bind="with: item">
                 <form id="editAddForm" method="post" action="javascript:void(null);">
                     <input class="textbox required" style="display: block;" data-bind="value: check" type="text"
-                           placeholder="check" autofocus="autofocus" tabindex="1"/>
+                           placeholder="check" autofocus="autofocus" id="editaddCheck" tabindex="0"/>
                     <input class="textbox required" style="display: block;" data-bind="value: response" type="text"
-                           placeholder="response" tabindex="2"/>
+                           placeholder="response" tabindex="1"/>
 
                     <div class="button" data-bind="visible: root.adding, tap: root.edit">
                         <div class="special"><p>Save</p><i class="icon icon-arrow-right"></i></div>

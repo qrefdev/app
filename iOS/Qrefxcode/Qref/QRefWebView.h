@@ -41,6 +41,7 @@
 @property (nonatomic, strong) NSOperationQueue *savingQueue;
 @property (nonatomic, strong) UIWebView *webView;
 @property (nonatomic, strong) id<QRefWebViewProtocol> delegate;
+@property (nonatomic) BOOL mayAccept;
 
 
 - (void) gotoURL: (NSURLRequest *) url;

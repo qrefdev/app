@@ -868,6 +868,7 @@ var AppObserver = new zimoko.Observable({
 								var item = checklists[i];
 								
 								item.lastPosition = undefined;
+                                item.model = new zimoko.Observable(item.model);
 							}
 							
 							//var temp = JSON.stringify(checklists);
@@ -899,6 +900,8 @@ var AppObserver = new zimoko.Observable({
 						
 						if(!item.lastPosition)
 							item.lastPosition = undefined;
+                                        
+                        item.model = new zimoko.Observable(item.model);
 					}	
 					
 					callback.call(self, true, checklists);
@@ -925,6 +928,8 @@ var AppObserver = new zimoko.Observable({
 								var item = checklists[i];
 								
 								item.lastPosition = undefined;
+                       
+                                item.model = new zimoko.Observable(item.model);
 							}
 							
 							callback.call(self, true, checklists);
@@ -1276,7 +1281,7 @@ var DashboardObserver = new zimoko.Observable({
 			
 			setTimeout(function() {
 				Navigation.go('#checklist');
-			}, 150);
+			}, 10);
 		}
 		else if(DashboardObserver.editing) {
 			EditTailObserver.set('item', data);
@@ -1956,6 +1961,7 @@ var ChecklistObserver = new zimoko.Observable({
             
         setTimeout(function() {                                  
 			Navigation.go('#editadd');
+            $('#editAddCheck').focus();
 		}, 50);
 	},
 	itemSwipeRight: function(element, e, data) {
@@ -2017,6 +2023,7 @@ var ChecklistObserver = new zimoko.Observable({
 			EditAddObserver.item.subscribe('response', EditAddObserver);
 			
 			Navigation.go('#editadd');
+            $('#editAddCheck').focus();
 		}
 		else {                                          
 			if(ChecklistObserver.canCheck) {

@@ -19,14 +19,14 @@ function Signin() {
                     AppObserver.set('token', response.returnValue.token);
                     AppObserver.set('email', $("#email").val());
 
-               window.location.href = "qref://setUser=" + $("#email").val() + "&setToken=" + response.returnValue.token + '&setUserId=' + response.returnValue.user;
+               window.location.href = "qref://setUser=" + signin.userName + "&setToken=" + response.returnValue.token + '&setUserId=' + response.returnValue.user;
                
                     AppObserver.set('loading', true);
                     setTimeout(function() {
                         window.location.href = "qref://hasChecklists";
                                
                        setTimeout(function() {
-                            window.location.href = "qref://setLogin=" + $("#email").val() + "(QREFUPS)" + response.returnValue.user + '(QREFUPS)' + Whirlpool($("#password").val());
+                            window.location.href = "qref://setLogin=" + signin.userName + "(QREFUPS)" + response.returnValue.user + "(QREFUPS)" + Whirlpool(signin.password);
                        }, 1000);
                     }, 1000);
                 }
@@ -45,7 +45,7 @@ function Signin() {
         });
     }
     else {
-        window.location.href = "qref://localLogin=" + $("#email").val() + "(QREFUPS)" + Whirlpool($("#password").val());
+        window.location.href = "qref://localLogin=" + signin.userName + "(QREFUPS)" + Whirlpool(signin.password);
     }
 }
 
