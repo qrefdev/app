@@ -1035,7 +1035,8 @@
                                          
 					for(var name in this.observable)
 					{
-						if(optionPair[1].indexOf(name) > -1 && name != 'parent' && name != 'root') {
+						var matches = optionPair[1].trim().match(new RegExp('^' + name + '$|\\s+' + name + '$|\\s+' + name + '\\s+|^' + name + '\\s+|\\s+' + name + '\\;|\\:' + name + '\\s+|\\:' + name + '$|.*[^.]' + name + '$|.*[^.]' + name + '\\s+|.*[^.]' + name + '.*', 'g'));
+						if(matches && name != 'parent' && name != 'root') {
 							var zProp = new zimoko.Property(property, optionPair[1].trim(), name);
 					
 							if(this.properties[property]) {
@@ -1099,7 +1100,8 @@
 					
 					for(var name in this.observable)
 					{
-						if(realPropertyString.indexOf(name) > -1 && name != 'parent' && name != 'root') {
+						var matches = realPropertyString.trim().match(new RegExp('^' + name + '$|\\s+' + name + '$|\\s+' + name + '\\s+|^' + name + '\\s+|\\s+' + name + '\\;|\\:' + name + '\\s+|\\:' + name + '$|.*[^.]' + name + '$|.*[^.]' + name + '\\s+|.*[^.]' + name + '.*', 'g'));
+						if(matches && name != 'parent' && name != 'root') {
 							var zProp = new zimoko.Property(property, realPropertyString.trim(), name);
 					
 							if(this.properties[property]) {

@@ -73,9 +73,9 @@
             </div>
         </div>-->
         <div class="dashcontent">
-            <div class="grid dashboard-planes-selector scrollable" data-bind="virtual: '.li-item'">
+            <div class="grid dashboard-planes-selector scrollable">
                 <div class="container">
-                    <ul id="dashboard-planes" class="vertical" data-bind="virtualForeach: items">
+                    <ul id="dashboard-planes" class="vertical" data-bind="foreach: items">
                         <li class="li-item"
                             data-bind="attr: {'data-id': _id }, tap: parent.itemTap, swipeRight: parent.itemSwipeRight, swipeLeft: parent.itemSwipeRight">
                             <div class="plane-icon"></div>
@@ -193,9 +193,9 @@
                     <p style="margin: 5px; padding: 8px;"><i class="icon icon-chevron-right"></i></p></div>
             </div>
             <div style="position: absolute; top: 46px; left: 0px; bottom: 0px; right: 0px; width: 100%">
-                <div class="grid checklist scrollable" data-bind="virtual: 'li'">
+                <div class="grid checklist scrollable">
                     <div class="container">
-                        <ul id="checklist-items" class="vertical" data-bind="virtualForeach: items">
+                        <ul id="checklist-items" class="vertical" data-bind="foreach: items">
                             <li data-bind="attr: {'data-id': _id}, tap: parent.itemTap, swipeRight: parent.itemSwipeRight, swipeLeft: parent.itemSwipeRight">
                                 <div class="holder">
                                     <div data-bind="visible: (check != ''), html: check, attr: {'class': (function() { if(response != '') {return 'check';} else {return 'check fullwidth';}})()}"></div>
@@ -290,7 +290,7 @@
 </article>
 
 <!-- Emergencies Section Selection -->
-<article id="emergencies-sections" data-bind="swipeRight: backTap" data-page-show="slideInRight"
+<article id="emergencies-sections" data-page-show="slideInRight"
          data-page-hide="slideOutRight" class="page">
     <div class="wrap">
         <div class="topbar">
@@ -323,7 +323,7 @@
 </article>
 
 <!-- Product Download Listing -->
-<article id="downloads" data-bind="swipeRight: backTap" data-page-show="slideInLeft" data-page-hide="slideOutLeft"
+<article id="downloads" data-page-show="slideInLeft" data-page-hide="slideOutLeft"
          class="page">
     <div class="wrap">
         <div class="topbar">
@@ -337,9 +337,9 @@
             </div>
         </div>
         <div class="content" style="bottom: 0px;">
-            <div class="grid downloads scrollable" data-bind="virtual: 'li'">
+            <div class="grid downloads scrollable">
                 <div class="container">
-                    <ul id="downloads-items" class="vertical" data-bind="virtualForeach: items">
+                    <ul id="downloads-items" class="vertical" data-bind="foreach: items">
                         <li data-bind="attr: {'data-id': _id}, tap: parent.itemTap">
                             <div class="plane-icon"></div>
                             <div class="holder">
@@ -398,7 +398,7 @@
 
 
 <!-- E6B Conversions -->
-<article id="e6b" data-bind="swipeRight: backTap" data-page-show="slideInLeft" data-page-hide="slideOutLeft"
+<article id="e6b" data-page-show="slideInLeft" data-page-hide="slideOutLeft"
          class="page">
     <div class="wrap">
         <div class="topbar">
@@ -422,12 +422,12 @@
         </div>
         <div class="utcTime"><p class="utcCurrent"></p> <i class="icon icon-time"></i></div>
         <div class="row" style="margin-top: 58px;">
-            <div class="topConversion" data-bind="html: topConversion">MPH</div>
+            <div class="topConversion" data-bind="html: topType">MPH</div>
             <input id="convertTop" type="number" class="textbox"
                    data-bind="value: topConversionValue, keyup: conversionTopKeyDown" style="" value="0"/>
         </div>
         <div class="row">
-            <div class="bottomConversion" data-bind="html: bottomConversion">KTS</div>
+            <div class="bottomConversion" data-bind="html: bottomType">KTS</div>
             <input id="convertBottom" data-bind="value: bottomConversionValue, keyup: conversionBottomKeyDown"
                    class="textbox" type="number" value="0"/>
         </div>
@@ -526,7 +526,7 @@
 </article>-->
 
 <!-- Product Details -->
-<article id="productdetails" data-bind="swipeRight: backTap" data-page-show="slideInRight"
+<article id="productdetails" data-page-show="slideInRight"
          data-page-hide="slideOutRight" class="page">
     <div class="wrap">
         <div class="topbar">
@@ -583,7 +583,7 @@
 </article>
 
 <!-- Edit Checklist / Add Checklist Item Screen -->
-<article id="editadd" data-bind="swipeRight: backTap" data-page-show="slideInLeft" data-page-hide="slideOutLeft"
+<article id="editadd" data-page-show="slideInLeft" data-page-hide="slideOutLeft"
          class="page">
     <div class="wrap">
         <div class="topbar">
@@ -618,7 +618,7 @@
 </article>
 
 <!-- Edit Tail Number Screen -->
-<article id="edittail" data-bind="swipeRight: backTap" data-page-show="slideInLeft" data-page-hide="slideOutLeft"
+<article id="edittail" data-page-show="slideInLeft" data-page-hide="slideOutLeft"
          style="display: none;" class="page">
     <div class="wrap">
         <div class="topbar">
@@ -647,7 +647,7 @@
 </article>
 
 <!-- Sign in Screen -->
-<article id="signin" data-bind="swipeRight: backTap" data-page-show="slideInLeft" data-page-hide="slideOutLeft"
+<article id="signin" data-page-show="slideInLeft" data-page-hide="slideOutLeft"
          class="page">
     <div class="wrap">
         <div class="topbar">
@@ -688,7 +688,7 @@
 </article>
 
 <!-- Password Recovery Screen -->
-<article id="passwordRecovery" data-bind="swipeRight: backTap" data-page-show="slideInRight"
+<article id="passwordRecovery" data-page-show="slideInRight"
          data-page-hide="slideOutRight" class="page">
     <div class="wrap">
         <div class="topbar">
@@ -717,7 +717,7 @@
 </article>
 
 <!-- Change Password Screen -->
-<article id="changePassword" data-bind="swipeRight: backTap" data-page-show="slideInRight"
+<article id="changePassword" data-page-show="slideInRight"
          data-page-hide="slideOutRight" class="page">
     <div class="wrap">
         <div class="topbar">
@@ -750,7 +750,7 @@
 </article>
 
 <!-- Register Area -->
-<article id="register" data-bind="swipeRight: backTap" data-page-show="slideInRight" data-page-hide="slideOutRight"
+<article id="register" data-page-show="slideInRight" data-page-hide="slideOutRight"
          class="page">
     <div class="wrap">
         <div class="topbar">
