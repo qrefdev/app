@@ -134,6 +134,7 @@
 .theme-light .topbar .item,
 .theme-light .topbar .item-large {
   font-size: 16px;
+  max-width: 100px;
 }
 .theme-light .grid .separator {
   background: #1f1f1f;

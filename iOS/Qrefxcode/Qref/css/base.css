@@ -168,7 +168,7 @@ ul li{cursor:pointer}
 .tablet .checklist .vertical li .add,.tablet .downloads .vertical li .add{top:7px}
 .tablet .checklist .vertical li .checkmark,.tablet .downloads .vertical li .checkmark{width:25px;height:25px;top:10px}.tablet .checklist .vertical li .checkmark .checker .icon,.tablet .downloads .vertical li .checkmark .checker .icon{left:-8px;top:-10px;margin:0}
 .tablet .downloads .plane-icon{top:0}
-.tablet .nav ul{margin:0}.tablet .nav ul .item .header{font-size:24px;top:19px}
+.tablet .nav ul{margin:0 auto}.tablet .nav ul .item .header{font-size:24px;top:19px}
 .tablet .dashboard-planes-selector .plane-icon{width:175px}
 .tablet .dashboard-planes-selector .vertical li ul li{padding:10px 40px 14px 0}
 .tablet .flyover{left:0;height:auto;right:0;width:100%}
