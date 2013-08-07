@@ -1,0 +1,1446 @@
+@font-face {
+    font-family: 'Myriad';
+    src: url('fonts/myriadpro.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'MyriadBold';
+    src: url('fonts/myriadprobold.ttf') format('truetype');
+}
+
+div, section, article, img {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none; /* Disable selection/Copy of UIWebView */
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: Myriad, Helvetica;
+}
+
+.wrapper {
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+}
+
+.wrap {
+    position: absolute;
+    float: left;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    overflow: hidden;
+}
+
+/** Text Boxes & Text Areas **/
+.textbox {
+    position: relative;
+    padding: 10px;
+    text-align: left;
+    width: 100%;
+    height: 50px;
+    font-size: 22px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    display: block;
+    font-family: Myriad;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.textbox.tailNumber {
+    padding: 16px 10px 10px 17px;
+    font-size: 50px;
+    height: 78px;
+}
+
+/** Page Wrapper **/
+
+.page-hidden-tap {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    overflow: visible;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    z-index: 100;
+}
+
+.page {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    overflow: visible;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    z-index: 100;
+    display: none;
+}
+
+/** Bottom Nav Bar **/
+.nav {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    z-index: 110;
+}
+
+.nav ul {
+    position: relative;
+    width: 100%;
+    height: auto;
+    list-style-type: none;
+    padding: 0 5px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    max-width: 766px;
+}
+
+.nav ul li {
+    float: left;
+    position: relative;
+    width: auto;
+    height: 60px;
+    padding: 3px;
+    margin: 0;
+    text-align: left;
+    cursor: pointer;
+    box-sizing: border-box;
+    opacity: .7;
+}
+
+.nav ul .item {
+    width: 49.95%;
+    margin: 0;
+    padding: 0;
+}
+
+.nav ul .item-25 {
+    width: 25%;
+    margin: 0;
+    padding: 0;
+    height: 65px;
+    max-width: 189px;
+}
+
+.nav ul .item-33 {
+    width: 32%;
+    margin: 0;
+    padding: 0;
+}
+
+.nav ul .item .header {
+    font-size: 16px;
+    position: absolute;
+    left: 53px;
+    top: 15px;
+}
+
+.nav ul .item .subheader {
+    font-size: 12px;
+    left: 53px;
+    top: 35px;
+    position: absolute;
+}
+
+.nav ul .item-25 .header {
+    font-size: 12px;
+    position: absolute;
+    left: 60px;
+    top: 15px;
+}
+
+.nav ul .item-25 .subheader {
+    font-size: 10px;
+    left: 60px;
+    top: 35px;
+    position: absolute;
+}
+
+.nav ul .item-33 .header {
+    font-size: 14px;
+    position: absolute;
+    left: 60px;
+    top: 15px;
+}
+
+.nav ul .item-33 .subheader {
+    font-size: 12px;
+    left: 60px;
+    top: 35px;
+    position: absolute;
+}
+
+.nav ul .item div:first-child {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    top: 0px;
+    width: 100%;
+    height: 80px;
+}
+
+.nav ul .item div .icon {
+    font-size: 34px;
+    position: absolute;
+    top: 15px;
+    left: 5px;
+    display: block;
+}
+
+.nav ul .item-25 div .icon {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding-top: 0px;
+    display: block;
+}
+
+.nav ul .item-25 div .icon img {
+    width: 50%;
+    max-width: 48px;
+}
+
+.nav ul .item-33 div .icon {
+    font-size: 24px;
+    float: left;
+    margin-top: 25px;
+    display: block;
+}
+
+.nav ul .header-only {
+    font-size: 16px;
+    position: absolute;
+    left: 60px;
+    top: 20px;
+}
+
+.nav.checklistnav ul {
+    height: 84px;
+}
+
+.nav.checklistnav ul .navLabel {
+    text-align: center;
+    width: 100%;
+    margin-top: 2px;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-family: MyriadBold;
+}
+
+/** Dashboard Top Bar **/
+.dashbar {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    width: 100%;
+    height: 80px;
+    font-size: 12px;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+}
+
+.dashbar .item {
+    float: left;
+    position: relative;
+    width: auto;
+    height: 32px;
+    margin: 0px;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.dashbar .item p {
+    margin: 0;
+    padding: 6px;
+}
+
+.dashbar .topmenu p {
+    padding-top: 8px;
+    margin: 0;
+}
+
+.dashbar .edit-check p {
+    padding-top: 7px;
+    margin: 0;
+}
+
+.dashbar .item-right {
+    float: right;
+    position: relative;
+    width: 20%;
+    height: 32px;
+    margin: 0px;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.dashbar .icon {
+    font-size: 18px;
+}
+
+.dashbar .header {
+    position: absolute;
+    width: 95%;
+    z-index: 1;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    height: 32px;
+    padding: 0;
+    margin: 0;
+    text-align: right;
+    font-family: Myriad;
+    font-size: 22px;
+    top: 23px;
+}
+
+.dashbar .icon {
+    font-size: 18px;
+}
+
+/** Top Bar for all other pages **/
+.topbar {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    width: 100%;
+    height: 36px;
+    font-size: 12px;
+    overflow: visible;
+    padding: 0;
+    margin: 0;
+    z-index: 1100;
+    line-height: 40px;
+    text-align: center;
+}
+
+.topbar .item {
+    float: left;
+    position: relative;
+    width: 18.25%;
+    height: 32px;
+    z-index: 5;
+    cursor: pointer;
+    text-align: center;
+}
+
+.topbar .item-middle-empty {
+    float: left;
+    position: relative;
+    width: 45%;
+    z-index: 10;
+    cursor: pointer;
+    text-align: center;
+    text-overflow: ellipsis;
+    height: 32px;
+}
+
+.topbar .item-middle {
+    float: left;
+    position: relative;
+    width: 45%;
+    z-index: 10;
+    cursor: pointer;
+    text-align: center;
+    text-overflow: ellipsis;
+}
+
+.topbar .item-middle-large {
+    float: left;
+    position: relative;
+    width: 50%;
+    z-index: 10;
+    cursor: pointer;
+    height: auto;
+    text-align: center;
+    text-overflow: ellipsis;
+}
+
+.topbar .item-middle-large p {
+    margin: 8px;
+    margin-top: 12px;
+    max-height: 24px;
+    white-space: nowrap;
+    width: 95%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.topbar .item-middle-large div {
+    float: left;
+    margin: 8px 0px 8px 0px;
+    max-height: 24px;
+    white-space: nowrap;
+    width: 85%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+}
+
+.topbar .item-middle-large i {
+    float: left;
+    position: relative;
+    margin-top: 3px;
+    margin-right: 5px;
+}
+
+.topbar .item-middle p {
+    margin: 8px;
+    margin-top: 12px;
+    white-space: nowrap;
+    width: 95%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 24px;
+}
+
+.topbar .item-middle div {
+    float: left;
+    max-height: 24px;
+    margin: 8px 0px 8px 0px;
+    white-space: nowrap;
+    width: 85%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+}
+
+.topbar .item-middle i {
+    float: left;
+    position: relative;
+    margin-right: 5px;
+    margin-top: 3px;
+}
+
+.topbar .item-large {
+    float: left;
+    position: relative;
+    width: 18%;
+    height: 35px;
+    z-index: 5;
+    cursor: pointer;
+    text-align: center;
+}
+
+.topbar .item p {
+    margin: 2px 0 0 0;
+    padding: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.topbar .item-large p {
+    margin: 0px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.topbar .back p {
+    margin-top: -1px;
+}
+
+.topbar .icon {
+    font-size: 18px;
+}
+
+/** Content Wrapper **/
+.content {
+    position: absolute;
+    top: 36px;
+    left: 0px;
+    right: 0px;
+    bottom: 90px;
+    width: 100%;
+    overflow: auto;
+    padding: 0;
+    margin: 0;
+}
+
+.content-full {
+    position: absolute;
+    top: 32px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 100%;
+    overflow: auto;
+    padding: 0;
+    margin: 0;
+}
+
+/** Grid System **/
+.grid {
+    float: left;
+    position: relative;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.grid .vertical {
+    float: left;
+    position: relative;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.grid .vertical li {
+    float: left;
+    position: relative;
+    width: 100%;
+}
+
+.grid .horizontal {
+    float: left;
+    position: relative;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.grid .horizontal li {
+    float: left;
+    position: relative;
+    width: auto;
+    margin-right: 2px;
+}
+
+.grid .horizontal li:last-child {
+    margin-right: 0;
+}
+
+.grid .full {
+    float: left;
+    position: relative;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.grid .full .span50 {
+    float: left;
+    position: relative;
+    width: 49%;
+    margin-right: 2px;
+    margin-bottom: 2px;
+}
+
+.grid .full .span50:nth-child(even) {
+    margin-right: 0;
+}
+
+.grid .full .span33 {
+    float: left;
+    position: relative;
+    width: 32%;
+    margin-right: 2px;
+    margin-bottom: 2px;
+}
+
+.grid .full .span33:nth-child(3n) {
+    margin-right: 0px;
+}
+
+.grid .full .span25 {
+    float: left;
+    position: relative;
+    width: 24%;
+    margin-right: 2px;
+    margin-bottom: 2px;
+}
+
+.grid .full .span25:nth-child(4n) {
+    margin-right: 0px;
+}
+
+.grid .separator {
+    width: 100%;
+    float: left;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    height: auto;
+}
+
+.grid .separator p {
+    padding: 5px;
+}
+
+/** Sign in and Register Button */
+.button-signin, .button-register {
+    font-size: 22px;
+    padding: 20px 0px 20px 0px;
+    width: 90%;
+}
+
+/** Dashboard Listing && Download Listing **/
+.dashboard-planes-selector, .downloads {
+    overflow: auto;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+.dashboard-planes-selector .plane-icon {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    top: 8px;
+    padding: 0;
+    margin: 0;
+    z-index: 0;
+    width: 125px;
+}
+
+.downloads .plane-icon {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    top: 5px;
+    padding: 0px;
+    margin: 0px;
+    z-index: 0;
+    width: 125px;
+}
+
+.dashboard-planes-selector .vertical li, .downloads .vertical li {
+    overflow: hidden;
+}
+
+.dashboard-planes-selector .plane-icon img, .downloads .plane-icon img {
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+.dashboard-planes-selector .vertical li .holder, .downloads .vertical li .holder {
+    float: left;
+    position: relative;
+    margin: 10px 0 0 10px;
+    padding: 0;
+    width: 100%;
+}
+
+.dashboard-planes-selector .vertical li .delete {
+    position: absolute;
+    left: 15px;
+    top: 35%;
+    display: none;
+}
+
+.dashboard-planes-selector .vertical li .handle {
+    position: absolute;
+    right: 0px;
+    width: 40px;
+    top: 25%;
+    display: none;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    z-index: 10;
+}
+
+.dashboard-planes-selector .vertical li .handle .item {
+    float: left;
+    position: relative;
+    width: 20px;
+    height: 5px;
+    margin-top: 3px;
+    margin-left: 12px;
+}
+
+.dashboard-planes-selector .heading, .downloads .header {
+    width: auto;
+    position: relative;
+    padding: 0px;
+    margin-left: 0px;
+    margin-top: 5px;
+    margin-bottom: 0px;
+    margin-right: 0px;
+}
+
+.dashboard-planes-selector .subheading, .downloads .subheading {
+    width: auto;
+    position: relative;
+    margin-left: 0px;
+}
+
+.dashboard-planes-selector .vertical li ul {
+    width: auto;
+    padding: 0;
+    position: relative;
+    list-style-type: none;
+    background: none;
+}
+
+.dashboard-planes-selector .vertical li ul li {
+    float: left;
+    width: auto;
+    font-size: 14px;
+    position: relative;
+    margin: 0px;
+    padding: 10px 10px 14px 0;
+    z-index: 999;
+}
+
+/** Checklist **/
+.checklist {
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    top: 0px;
+    height: 100%;
+    overflow: auto;
+}
+
+.vertical {
+    &:last-child li:last-child {
+        margin-bottom: 15px;
+    }
+
+    li {
+        overflow: hidden;
+
+        .icon {
+            font-size: 34px;
+            float: left;
+            position: relative;
+            margin-top: 15px;
+            margin-left: 5px;
+            display: block;
+        }
+
+        .holder {
+            float: left;
+            position: relative;
+            margin-top: 10px;
+            margin-left: 10px;
+            margin-bottom: 2px;
+            width: 98%;
+        }
+
+        .check {
+            position: relative;
+            width: auto;
+        }
+
+        .response {
+            margin-top: 2px;
+            margin-bottom: 7px;
+            position: relative;
+            width: auto;
+            text-transform: uppercase;
+        }
+
+        .delete {
+            position: absolute;
+            left: 15px;
+            top: 28%;
+            display: none;
+        }
+
+        .handle {
+            position: absolute;
+            right: 0px;
+            width: 40px;
+            top: 10px;
+            display: none;
+        }
+
+        .handle .item {
+            float: left;
+            position: relative;
+            width: 20px;
+            height: 5px;
+            margin-top: 3px;
+            margin-left: 12px;
+        }
+
+        .add {
+            position: absolute;
+            right: 60px;
+            top: 22px;
+            display: none;
+        }
+    }
+}
+
+.checklist .vertical li .checkmark,
+.downloads .vertical li .checkmark {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    right: 12px;
+    top: 12px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.checklist .vertical li .checkmark .checker,
+.downloads .vertical li .checkmark .checker {
+    width: 30px;
+    height: 30px;
+}
+
+.checklist .vertical li .checkmark .checker .icon,
+.downloads .vertical li .checkmark .checker .icon {
+    position: absolute;
+    left: -10px;
+    top: -24px;
+    font-size: 40px;
+}
+
+.downloads .vertical li .checkmark .checker .icon {
+    top: -5px;
+    left: -5px;
+}
+
+/** Checklist Sections Menu **/
+.check-sections {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: auto;
+    bottom: 0px;
+    z-index: 99999;
+    overflow: auto;
+}
+
+.check-sections-container {
+    position: absolute;
+    top: 88px;
+    overflow: hidden;
+}
+
+.check-sections .vertical {
+    float: left;
+    position: relative;
+    width: 100%;
+    margin: 0;
+    margin-top: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.check-sections .vertical li {
+    float: left;
+    position: relative;
+    width: 100%;
+}
+
+.shadow {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    height: 15px;
+    z-index: 999;
+    margin: 0px;
+    padding: 0px;
+}
+
+/** Loader and Info Boxes **/
+.loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    margin-left: -28.5px;
+    height: 100px;
+    margin-top: -28.5px;
+    z-index: 99999999;
+}
+
+.loader img {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.info {
+    position: absolute;
+    top: 25%;
+    left: 0%;
+    width: 100%;
+    margin-left: 0px;
+    height: auto;
+    margin-top: 0px;
+    z-index: 9999;
+}
+
+.info figcaption {
+    float: left;
+    position: relative;
+    margin: 0px;
+    padding: 20px;
+    width: 92%;
+    font-size: 24px;
+}
+
+/** Form Stuff **/
+form {
+    float: left;
+    position: relative;
+    width: 100%;
+    padding: 10px;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+form label {
+    position: relative;
+    margin: 10px auto;
+    padding: 5px;
+    text-align: left;
+    width: 90%;
+    height: 16px;
+    font-size: 12px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    display: block;
+}
+
+/** Container Wrapper for Scroll **/
+.container {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    top: 0px;
+    left: 0px;
+    overflow-x: hidden;
+}
+
+.dashcontent {
+    position: absolute;
+    width: 100%;
+    top: 96px;
+    bottom: 70px;
+    left: 0px;
+    right: 0px;
+    overflow-x: hidden;
+}
+
+/** Emergency Sub Listing **/
+/** Checklist **/
+.emergencies {
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    top: 0px;
+    height: 100%;
+    overflow: auto;
+    list-style-type: none;
+}
+
+.emergencies .icon {
+    float: left;
+    width: 100%;
+    position: relative;
+    text-align: center;
+}
+
+.emergencies .icon img {
+    width: 45%;
+}
+
+.emergencies .section-name {
+    float: left;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.emergencies ul {
+    position: relative;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+.emergencies ul li {
+    float: left;
+    position: relative;
+    width: 43%;
+    margin: 0 10px 10px 10px;
+    overflow: hidden;
+}
+
+.topbar .back {
+    float: left;
+}
+
+.topbar .topmenu {
+    float: right;
+}
+
+#emergency-items {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0 0 0;
+}
+
+/** Product Details **/
+.detailsHeading {
+    float: left;
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+}
+
+.productImage {
+    float: left;
+    position: relative;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    text-align: center;
+}
+
+.productImage img {
+    width: 100%;
+}
+
+.detailsHeading h1 {
+    float: left;
+    width: 100%;
+    position: relative;
+    padding: 5px;
+    margin: 5px;
+}
+
+.detailsHeading .buynow {
+    float: right;
+    margin: 5px;
+    padding: 10px;
+}
+
+.details {
+    float: left;
+    position: relative;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+.details p {
+    float: left;
+    position: relative;
+    width: 97%;
+    margin: 0px;
+    margin-left: 5px;
+    padding: 5px;
+}
+
+.detailsHeading .productModel {
+    float: left;
+    position: relative;
+    width: auto;
+    margin: 5px;
+    padding: 5px;
+}
+
+.details .modelYear {
+    width: 97%;
+    margin: 5px;
+    padding: 0px;
+    float: left;
+    position: relative;
+}
+
+.details .description {
+    float: left;
+    position: relative;
+    margin: 0px;
+    margin-left: 5px;
+    padding: 5px;
+    width: 97%;
+}
+
+.details .row {
+    float: left;
+    position: relative;
+    width: 100%;
+    margin: 0;
+
+}
+
+.productDetailsListing {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/** Currently Logged in User Display **/
+.currentLogin {
+    width: 92%;
+    height: auto;
+    font-size: 12px;
+    position: relative;
+    padding: 5px;
+    margin: 5px;
+    font-family: MyriadBold;
+}
+
+.currentLogin .icon {
+    font-size: 14px;
+    color: #f1f1f1;
+    float: left;
+}
+
+.currentLogin .user {
+    float: left;
+    position: relative;
+    width: auto;
+    height: auto;
+    margin-left: 5px;
+    text-wrap: unrestricted;
+}
+
+/** Version display **/
+.version {
+    position: absolute;
+    bottom: 5px;
+    left: 20px;
+    color: #d4d4d4;
+    font-size: 11px;
+}
+
+.username {
+    position: absolute;
+    left: 20px;
+    bottom: 18px;
+    font-family: MyriadBold;
+    font-size: 14px;
+}
+
+/** MISC **/
+.row {
+    float: left;
+    position: relative;
+    width: 100%;
+    padding-top: 5px;
+}
+
+/** iOS HTML Recreation Elements **/
+.flyover {
+    position: relative;
+    top: 20px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    width: 100%;
+    display: none;
+    overflow: auto;
+    z-index: 999999;
+
+    .inside {
+        position: relative;
+        overflow: auto;
+        width: 100%;
+        z-index: 999999;
+    }
+
+    ul {
+        float: left;
+        width: 100%;
+        list-style-type: none;
+        margin: 0px;
+        padding: 0px;
+        z-index: 999999;
+    }
+
+    ul li {
+        float: left;
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    ul li:last-child {
+        border-bottom: 0px;
+    }
+
+    ul li p {
+        padding: 10px 10px 10px 12px;
+        margin: 0px;
+        font-family: MyriadBold;
+        font-size: 22px;
+    }
+}
+
+/** Loading Symbol **/
+.ball {
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 5px solid rgba(255, 20, 20, 0.9);
+    opacity: .9;
+    border-top: 5px solid rgba(0, 0, 0, 0);
+    border-left: 5px solid rgba(0, 0, 0, 0);
+    border-radius: 50px;
+    box-shadow: 0 0 35px rgb(255, 20, 20);
+    width: 50px;
+    height: 50px;
+    -moz-animation: spin .5s infinite linear;
+    -webkit-animation: spin .5s infinite linear;
+}
+
+.ball1 {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 5px solid rgba(255, 20, 20, 0.9);
+    opacity: .9;
+    border-top: 5px solid rgba(0, 0, 0, 0);
+    border-left: 5px solid rgba(0, 0, 0, 0);
+    border-radius: 50px;
+    box-shadow: 0 0 15px rgb(255, 20, 20);
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    -moz-animation: spinoff .5s infinite linear;
+    -webkit-animation: spinoff .5s infinite linear;
+}
+
+@-moz-keyframes spin {
+    0% {
+        -moz-transform: rotate(0deg);
+    }
+    100% {
+        -moz-transform: rotate(360deg);
+    }
+}
+
+@-moz-keyframes spinoff {
+    0% {
+        -moz-transform: rotate(0deg);
+    }
+    100% {
+        -moz-transform: rotate(-360deg);
+    }
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes spinoff {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(-360deg);
+    }
+}
+
+/** Scrollbar **/
+.scrollbar {
+    position: absolute;
+    right: 5px;
+    width: 5px;
+    background: #f1f1f1;
+    opacity: 0.5;
+    height: 100px;
+    z-index: 9999999;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+}
+
+/** Global ul li **/
+ul li {
+    cursor: pointer;
+}
+
+/** Section Nav for Checklist **/
+.section-nav {
+    position: absolute;
+    top: 0px;
+    height: 46px;
+    left: 0px;
+    width: 100%;
+    overflow: hidden;
+    text-align: center;
+    z-index: 900;
+
+    .name {
+        position: absolute;
+        left: 46px;
+        right: 46px;
+        top: 0px;
+        height: 46px;
+    }
+
+    .name.name-emergencies {
+        left: 10px;
+        right: 10px;
+    }
+
+    .name p {
+        max-height: 46px;
+        white-space: nowrap;
+        width: 100%;
+        font-size: 22px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-top: 12px;
+    }
+
+    .nextSection {
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        width: 64px;
+        height: 46px;
+        overflow: hidden;
+        display: none;
+        text-align: center;
+    }
+
+    .nextSection .icon {
+        position: relative;
+        margin-top: 5px;
+        font-size: 26px;
+    }
+
+    .previousSection {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        width: 64px;
+        height: 46px;
+        overflow: hidden;
+        display: none;
+        text-align: center;
+    }
+
+    .previousSection .icon {
+        position: relative;
+        margin-top: 5px;
+        font-size: 26px;
+    }
+}
+
+.downloads {
+    .section-nav {
+        float: left;
+        position: relative;
+        height: 46px;
+        width: 100%;
+        overflow: hidden;
+        text-align: center;
+        z-index: 1;
+    }
+
+    .section-nav .nextSection {
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        width: 64px;
+        height: 46px;
+        overflow: hidden;
+        display: none;
+        text-align: center;
+    }
+
+    .section-nav .nextSection .icon {
+        position: relative;
+        font-size: 26px;
+    }
+}
+
+.back .icon {
+    font-size: 29px;
+    line-height: 13px;
+}
+
+.CProw {
+    display: table-row;
+}
+
+.CPcell {
+    display: table-cell;
+    padding-right: 10px;
+    text-align: right;
+}
+
+.CProw .CPcell:first-child {
+    text-align: left;
+}
+
+.CPspacer {
+    height: 10px;
+}
+
+/** Media Queries **/
+@media only screen and (orientation: portrait) {
+    .emergencies ul li {
+        width: 43%;
+    }
+
+    .CProw {
+        font-size: 13pt;
+    }
+}
+
+@media only screen and (orientation: landscape) {
+    .emergencies ul li {
+        width: 21%;
+    }
+
+    .CProw {
+        font-size: inherit;
+    }
+}

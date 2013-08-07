@@ -1,0 +1,817 @@
+html, body {
+    background: @colorBody;
+}
+
+a {
+    font-size: 16px;
+    font-weight: normal;
+    color: @colorLink;
+    font-family: MyriadBold, Myriad, Helvetica;
+    text-decoration: none;
+
+    &:visited {
+        font-size: 16px;
+        font-weight: normal;
+        color: @colorLink;
+        text-decoration: none;
+    }
+
+    &:hover {
+        font-size: 16px;
+        font-weight: normal;
+        color: @colorLinkHover;
+        text-decoration: none;
+    }
+}
+
+.active {
+    opacity: 1;
+}
+
+// Text Box
+.textbox {
+    border: 1px solid @colorInputBorder;
+    background: @colorInputBkg;
+    color: @colorInputText;
+    -webkit-appearance: none;
+}
+
+// Page Wrapper
+
+.wrap {
+    background: white;
+    background-size: 100% 100%;
+    -webkit-box-shadow: 5px 0px 10px 1px rgba(0, 0, 0, 0.5);
+    box-shadow: 5px 0px 10px 1px rgba(0, 0, 0, 0.5);
+}
+
+// Bottom Nav Bar
+
+.nav {
+    background: @colorBody;
+
+    .item div .icon {
+        color: @colorNavText;
+    }
+
+    ul li {
+        .item-25-inner {
+            width: 100%;
+            height: 100%;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        .nav-emergencies {
+            background: url('../images/@{skin}/stripe-pattern.png') top left repeat;
+        }
+    }
+
+    .active .icon {
+        background-color: @colorNavActive;
+    }
+
+    &.checklistnav .icon {
+        border: 1px solid @colorNavBorder;
+        border-radius: 10px;
+        -webkit-border-radius: 10px;
+        background-size: auto 200%;
+        background-repeat: repeat;
+        background-position: center center;
+
+        &.icon-preflight {
+            background-image: url('../images/@{skin}/tab-preflight@2x.png');
+        }
+
+        &.icon-takeoff {
+            background-image: url('../images/@{skin}/tab-takeoff@2x.png');
+        }
+
+        &.icon-landing {
+            background-image: url('../images/@{skin}/tab-landing@2x.png');
+        }
+
+        &.icon-emergencies {
+            background-image: url('../images/@{skin}/tab-emergencies@2x.png');
+        }
+    }
+
+    .navLabel {
+        color: @colorNavText;
+    }
+}
+
+// Dash-Specific Nav Theme
+.dashnav {
+    background: transparent;
+    border-top: none;
+
+    .header {
+        color: @colorDashNavHeader;
+        font-size: 18px;
+    }
+
+    .subheader {
+        color: @colorDashNavSubheader;
+        font-size: 18px;
+    }
+
+    ul li {
+        opacity: 1;
+    }
+
+}
+
+// Dash Top Bar
+.logoSection {
+    color: @colorTopText;
+    background-color: @colorSectionnav;
+    box-shadow: 0 5px 10px @colorDashShadow;
+    z-index: 9999;
+    position: absolute;
+    top: 36px;
+    width: 100%;
+    height: 60px;
+    border-bottom: 1px solid @colorSectionnavBorder;
+
+    p {
+        font-family: Myriad;
+        font-size: 30px;
+        text-align: left;
+        margin: 0;
+        padding: 14px 0 0 10px;
+        letter-spacing: -0.04em;
+        color: @colorDashHeading;
+    }
+
+    .logo {
+        background: url('../images/@{skin}/logo.png') 0 0 no-repeat;
+        background-size: auto 100%;
+        height: 60px; // resized from 84px to fit smaller area
+        width: 153px; // resized from 214px to fit smaller area
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+}
+
+// Top Bar for all other pages
+
+.topbar {
+    color: @colorTopText;
+    font-family: MyriadBold;
+    font-size: 18px;
+    background: @colorTopBackground;
+    border-bottom: 1px solid @colorTopBorder;
+
+    &.topbar-checklist {
+        font-family: Myriad;
+    }
+
+    .item,
+    .item-large {
+        font-size: 16px;
+    }
+}
+
+// Grid System
+.grid .separator {
+    background: #1f1f1f;
+    color: #84010;
+    font-size: 16px;
+}
+
+// Button Theme
+button,
+.button,
+.submit {
+    text-align: center;
+    border: none;
+    overflow: hidden;
+    display: block;
+    cursor: pointer;
+}
+
+// Menu Theme
+.menu {
+    position: absolute;
+    top: 0px;
+    right: -150px;
+    width: 250px;
+    bottom: 0px;
+    height: 100%;
+    background: @colorMenuBackground;
+    color: @colorMenuText;
+    margin: 0;
+    padding: 0;
+    z-index: 0;
+    display: none;
+
+    ul {
+        float: left;
+        position: relative;
+        width: 100%;
+        margin: 0;
+        margin-top: 5px;
+        padding: 0;
+        list-style-type: none;
+    }
+
+    ul li {
+        float: left;
+        position: relative;
+        width: 100%;
+        text-align: left;
+        overflow: hidden;
+        height: 50px;
+        border-top: 1px solid @colorMenuBorderTop;
+        border-bottom: 1px solid @colorMenuBorderBottom;
+    }
+
+    ul li:first-child {
+        border-top: none;
+    }
+
+    ul li:last-child {
+        border-bottom: none;
+    }
+
+    ul li .icon {
+        float: left;
+        position: relative;
+        font-size: 24px;
+        padding: 0px 0 0px 9px;
+    }
+
+    ul li p {
+        float: left;
+        position: relative;
+        width: auto;
+        margin: 0px;
+        padding: 16px;
+        font-size: 18px;
+        font-family: Myriad;
+    }
+}
+
+// Dashboard Listing
+
+#dashboard .topbar {
+    text-align: left;
+
+    span {
+        padding-left: 10px;
+    }
+}
+
+.dashboard-planes-selector,
+.downloads {
+    .heading {
+        color: @colorDashHeading;
+        font-size: 23px;
+        font-family: Myriad;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .subheading {
+        color: @colorDashSubheading;
+        font-size: 14px;
+        font-family: Myriad;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .tailNumber {
+        color: @colorDashTail;
+        font-family: MyriadBold;
+        display: block;
+        position: absolute;
+        right: -83px;
+        top: 5px;
+        padding: 3px 100px 3px 100px;
+        background: @colorDashTailBackground;
+        line-height: 12px;
+        border-radius: 5px 0 0 5px;
+        -webkit-border-radius: 5px 0 0 5px;
+        transform: rotate(30deg);
+        -webkit-transform: rotate(30deg);
+        font-size: 13px;
+    }
+
+    .vertical {
+        li {
+            color: @colorDashText;
+            border-top: 1px solid #ccc;
+
+            ul li {
+                color: #003edd;
+                border: none;
+                font-family: Myriad, Helvetica;
+                font-size: 14px;
+                min-width: 40px;
+                text-align: left;
+
+                &.last {
+                    margin: 0;
+                }
+            }
+
+            .delete {
+                padding: 8px;
+                font-family: MyriadBold, Helvetica;
+                .gradient(#a90329, #6d0019);
+                font-size: 12px;
+                border-radius: 5px;
+                -webkit-border-radius: 5px;
+            }
+
+        }
+
+        .active {
+            background: #eee;
+
+            ul .active {
+                background: transparent;
+                color: #6b737e;
+            }
+        }
+    }
+}
+
+.dashboard-planes-selector,
+.checklist {
+    .vertical li .handle {
+        .gradient(#003edd, #002ead);
+        border-radius: 25px 0px 0px 25px;
+        -webkit-border-radius: 25px 0px 0px 25px;
+        border: 2px solid #fff;
+        border-right: none;
+        padding-left: 5px;
+        padding-top: 9px;
+        padding-bottom: 10px;
+
+        .item {
+            background: #f8f8f8;
+        }
+    }
+}
+
+.downloads .vertical li {
+    padding-bottom: 8px;
+}
+
+.downloads .vertical .owns {
+    .gradient(#11467c, #001b36);
+    border-top: 1px solid #2b2f32;
+}
+
+// Checklist
+.checklist .vertical li {
+    color: #d6dbdf;
+    border-top: 1px solid @colorChecklistBorder;
+
+    .check {
+        color: @colorCheck;
+        font-family: Myriad, Helvetica;
+        font-size: 24px;
+
+        &.nextSection {
+            font-size: 20px;
+            color: @colorResponse;
+            text-align: right;
+            width: 100%;
+            right: 15px;
+        }
+    }
+
+    .response {
+        color: @colorResponse;
+        font-family: Myriad, Helvetica;
+        font-size: 16px;
+    }
+
+    .delete {
+        padding: 8px;
+        .gradient(#a90329, #6d0019);
+        font-size: 12px;
+        font-family: MyriadBold, Helvetica;
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+    }
+
+    .add {
+        padding: 5px;
+        padding-bottom: 0px;
+        color: #fff;
+        background: #2ad902;
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        border: 2px solid #fff;
+    }
+
+    .active {
+        .gradient(@colorBlue2, @colorBlue3);
+        color: #d6dbdf;
+    }
+}
+
+.checklist .vertical li .checkmark,
+.downloads .vertical li .checkmark {
+    background: @colorCheckmarkBackground;
+    border: 1px solid @colorCheckmarkBorder;
+}
+
+.checklist .vertical li .checkmark .checker .icon,
+.downloads .vertical li .checkmark .checker .icon {
+    color: @colorBlue1;
+}
+
+.shadow {
+    .gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+}
+
+.loader {
+    color: #d6dbdf;
+}
+
+.info {
+    color: #ddd;
+    font-family: Myriad;
+}
+
+form label {
+    color: #cc2200;
+    margin: -5px 0 10px;
+    padding: 0px;
+    font-size: 12px;
+    font-family: MyriadBold, Helvetica;
+}
+
+// Product Details
+#productDetailsListing {
+    color: #d6dbdf;
+}
+
+#productDetailsListing {
+    font-family: Myriad, Helvetica;
+    color: #6b737e;
+    font-weight: normal;
+    font-size: 20px;
+}
+
+.detailsHeading div {
+    font-size: 28px;
+    color: #333;
+    padding: 10px 10px 0;
+    letter-spacing: -.03em;
+}
+
+.detailsHeading p,
+.detailsHeading .modelDescription {
+    font-size: 14px;
+    color: #333;
+    margin: 0;
+    padding: 0 10px 0;
+}
+
+.detailsHeading p:first-child {
+    color: #999;
+}
+
+.productImage img {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+// E6B
+.e6b {
+
+    .textbox {
+        background: transparent;
+        text-align: left;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        float: left;
+        position: relative;
+        margin: 0px 10px;
+        padding: 6px 10px 0;
+        width: 195px;
+        font-size: 35px;
+        line-height: 35px;
+    }
+
+    .row {
+        float: left;
+        position: relative;
+        width: 100%;
+        height: auto;
+        padding: 0px;
+        margin: 3px 0px;
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+
+    .utcTime {
+        width: 100%;
+        position: absolute;
+        bottom: 0px;
+        text-align: left;
+        color: #999;
+        font-family: Myriad;
+        font-size: 25px;
+        overflow: hidden;
+        height: 40px;
+    }
+
+    .utcCurrent {
+        float: right;
+        position: relative;
+        width: auto;
+        padding: 0 10px 0 0;
+        margin: 0;
+    }
+
+    .e6bDate {
+        padding-right: 15px;
+    }
+
+    .utcTime .icon {
+        float: right;
+        color: #aaa;
+        text-align: center;
+        margin: 0 10px;
+        font-size: 26px;
+    }
+
+    .topConversion,
+    .bottomConversion {
+        float: left;
+        position: relative;
+        padding: 10px 0px 0px 17px;
+        font-size: 35px;
+        text-align: center;
+        color: #aaa;
+        font-family: Myriad, Helvetica;
+        width: 80px;
+        letter-spacing: -.04em;
+        line-height: 35px;
+    }
+}
+
+// Settings
+.settingsItems {
+    color: #f1f1f1;
+}
+
+.settingsItems h2 {
+    font-size: 18px;
+    font-weight: normal;
+    color: #f1f1f1;
+    margin-left: 10px;
+}
+
+.settingsItems .row {
+    padding: 0px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.buynow {
+    font-size: 22px;
+    font-family: MyriadBold, Myriad;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border: 1px solid #003edd;
+    position: absolute;
+    bottom: 10px;
+    padding: 10px;
+    margin-left: -50px;
+    width: 100px;
+    text-align: center;
+    left: 50%;
+    color: #003edd;
+    line-height: 22px;
+}
+
+// Current Login Info Display
+.currentLogin {
+    color: #d6dbdf;
+}
+
+// Special Buttons for when not signed in!
+.special {
+    width: 100%;
+    float: left;
+    position: relative;
+    text-align: right;
+    overflow: hidden;
+    height: 78px;
+
+    p {
+        color: @colorButtonText;
+        font-family: Myriad;
+        font-size: 45px;
+        float: right;
+        position: relative;
+        width: auto;
+        padding: 17px 0 0;
+        margin: 0;
+        letter-spacing: -.04em;
+    }
+
+    .icon {
+        float: right;
+        color: @colorButtonIcon;
+        text-align: center;
+        padding: 15px 0;
+        margin-top: 5px;
+        margin-right: 10px;
+        font-size: 37px;
+    }
+
+}
+
+.special2 {
+    width: 100%;
+    float: right;
+    position: relative;
+    text-align: left;
+    overflow: hidden;
+    height: 37px;
+
+    p {
+        color: @colorButton2Text;
+        font-family: Myriad;
+        font-size: 16px;
+        float: right;
+        position: relative;
+        width: auto;
+        text-indent: 5px;
+    }
+
+    .icon {
+        float: right;
+        color: @colorButton2Icon;
+        text-align: center;
+        padding: 8px 0;
+        margin-top: 6px;
+        font-size: 20px;
+    }
+}
+
+.special:last-child, .special2:last-child {
+    border-bottom: 0px;
+}
+
+// Modal
+.modal {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    display: none;
+    z-index: 99999999;
+    background: @colorModal;
+
+    .special {
+        p {
+            color: @colorButtonTextModal;
+        }
+
+        .icon {
+            color: @colorButtonIconModal;
+        }
+    }
+
+    .special2 {
+        p {
+            color: @colorButton2TextModal;
+        }
+
+        .special2 .icon {
+            color: @colorButton2IconModal;
+        }
+    }
+}
+
+// Emergencies
+.emergencies {
+    color: @colorNavText;
+
+    ul li .icon {
+
+        div {
+            height: 65px;
+            width: 100%;
+            border: none;
+            background-size: 50%;
+            background-repeat: no-repeat;
+            background-position-x: center;
+            background-position-y: center;
+        }
+
+        .electrical {
+            background-image: url("../images/@{skin}/electrical.png");
+        }
+
+        .fire {
+            background-image: url("../images/@{skin}/fire.png");
+        }
+
+        .flight-controls {
+            background-image: url("../images/@{skin}/flight-controls.png");
+        }
+
+        .flight-instruments {
+            background-image: url("../images/@{skin}/flight-instruments.png");
+        }
+
+        .forced-landing {
+            background-image: url("../images/@{skin}/forced-landing.png");
+        }
+
+        .nav-autopilot {
+            background-image: url("../images/@{skin}/nav-autopilot.png");
+        }
+
+        .other {
+            background-image: url("../images/@{skin}/other.png");
+        }
+
+        .propeller-engine {
+            background-image: url("../images/@{skin}/propeller-engine.png");
+        }
+    }
+}
+
+// Section nav for checklist
+.section-nav {
+    background: @colorSectionnav;
+    color: @colorSectionnavText;
+    font-family: MyriadBold;
+    border-bottom: 1px solid @colorSectionnavBorder;
+
+    .active {
+        color: #1f1f1f;
+    }
+
+}
+
+// Emergencies Section Selector
+.emergencies-sections {
+    ul li {
+        float: left;
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+        border-bottom: 1px solid #ccc;
+
+        p {
+            padding: 10px;
+            margin: 0;
+            font-size: 21px;
+        }
+
+        &:hover p {
+        }
+
+        &:last-child {
+            border-bottom: 0px;
+        }
+    }
+}
+
+.flyover {
+    background: @colorFlyover;
+
+    ul {
+
+        li {
+            border-top: 1px solid @colorFlyoverBorderTop;
+            border-bottom: 1px solid @colorFlyoverBorderBottom;
+
+            p {
+                color: @colorFlyoverText;
+            }
+
+            &:hover p {
+                color: @colorFlyoverText;
+            }
+        }
+
+        .active {
+            background: @colorFlyoverActive;
+
+            p {
+                color: @colorFlyoverText;
+            }
+        }
+    }
+}

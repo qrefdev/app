@@ -1,0 +1,18 @@
+// Light Theme Loader (for iphone AND iPad)
+
+// Setup
+@import 'palette.less';
+@import 'mixins.less';
+
+// Theme variable mapping
+@import 'theme-light-map.less';
+
+// Import the theme
+.theme-light {
+    @import 'theme-master.less';
+
+    // Import tablet overrides
+    .tablet {
+        @import 'theme-tablet.less';
+    }
+}
