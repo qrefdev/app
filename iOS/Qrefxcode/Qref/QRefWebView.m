@@ -780,32 +780,32 @@
                     //568
                     
                     if([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft || [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight) {
-                        button.frame = CGRectMake((bounds.size.height / 2) - (135 / 2), bounds.size.width - 155, 135, 45);
+                        button.frame = CGRectMake((bounds.size.height / 2) - (135 / 2), bounds.size.width - 155, 135, 42);
                         
                     }
                     else {
-                        button.frame = CGRectMake((bounds.size.width / 2) - (135 / 2), bounds.size.height - 155, 135, 45);
+                        button.frame = CGRectMake((bounds.size.width / 2) - (135 / 2), bounds.size.height - 155, 135, 42);
                     }
                 }
                 else {
                     //2x
                     if([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft || [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight) {
-                        button.frame = CGRectMake((bounds.size.height / 2) - (135 / 2), bounds.size.width - 115, 135, 45);
+                        button.frame = CGRectMake((bounds.size.height / 2) - (135 / 2), bounds.size.width - 115, 135, 42);
                         
                     }
                     else {
-                        button.frame = CGRectMake((bounds.size.width / 2) - (135 / 2), bounds.size.height - 115, 135, 45);
+                        button.frame = CGRectMake((bounds.size.width / 2) - (135 / 2), bounds.size.height - 115, 135, 42);
                     }
                 }
             }
             else {
                 //normal
                 if([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft || [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight) {
-                    button.frame = CGRectMake((bounds.size.height / 2) - (135 / 2), bounds.size.width - 115, 135, 45);
+                    button.frame = CGRectMake((bounds.size.height / 2) - (135 / 2), bounds.size.width - 115, 135, 42);
                     
                 }
                 else {
-                    button.frame = CGRectMake((bounds.size.width / 2) - (135 / 2), bounds.size.height - 115, 135, 45);
+                    button.frame = CGRectMake((bounds.size.width / 2) - (135 / 2), bounds.size.height - 115, 135, 42);
                 }
             }
         }
@@ -813,21 +813,21 @@
             if(screenScale > 1) {
                 //2x
                 if([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft || [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight) {
-                    button.frame = CGRectMake((bounds.size.height / 2) - (260 / 2), bounds.size.width - 235, 260, 90);
+                    button.frame = CGRectMake((bounds.size.height / 2) - (260 / 2), bounds.size.width - 235, 260, 81);
                     
                 }
                 else {
-                    button.frame = CGRectMake((bounds.size.width / 2) - (260 / 2), bounds.size.height - 335, 260, 90);
+                    button.frame = CGRectMake((bounds.size.width / 2) - (260 / 2), bounds.size.height - 335, 260, 81);
                 }
             }
             else {
                 //normal
                 if([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft || [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight) {
-                    button.frame = CGRectMake((bounds.size.height / 2) - (260 / 2), bounds.size.width - 235, 260, 90);
+                    button.frame = CGRectMake((bounds.size.height / 2) - (260 / 2), bounds.size.width - 235, 260, 81);
                     
                 }
                 else {
-                    button.frame = CGRectMake((bounds.size.width / 2) - (260 / 2), bounds.size.height - 335, 260, 90);
+                    button.frame = CGRectMake((bounds.size.width / 2) - (260 / 2), bounds.size.height - 335, 260, 81);
                 }
             }
         }

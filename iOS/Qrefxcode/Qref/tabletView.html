@@ -422,11 +422,11 @@
         <div class="row" style="margin-top: 58px;">
             <div class="topConversion" data-bind="html: topType">MPH</div>
             <input id="convertTop" type="number" class="textbox"
-                   data-bind="value: topConversionValue, keyup: conversionTopKeyDown" style="" value="0"/>
+                   data-bind="value: topConversionValue, keyup: conversionTopKeyUp, keydown: conversionTopKeyDown" style="" value="0"/>
         </div>
         <div class="row">
             <div class="bottomConversion" data-bind="html: bottomType">KTS</div>
-            <input id="convertBottom" data-bind="value: bottomConversionValue, keyup: conversionBottomKeyDown"
+            <input id="convertBottom" data-bind="value: bottomConversionValue, keyup: conversionBottomKeyUp, keydown: conversionBottomKeyDown"
                    class="textbox" type="number" value="0"/>
         </div>
         <div class="flyover" data-bind="slideVisible: showConversions" style="margin-top: 27px; z-index:800;">
@@ -598,7 +598,7 @@
             <div style="float: left; position: relative; width: 100%; margin-top: 5px;" data-bind="with: item">
                 <form id="editAddForm" method="post" action="javascript:void(null);">
                     <input class="textbox required" style="display: block;" data-bind="value: check" type="text"
-                           placeholder="check" autofocus="autofocus" id="editaddCheck" tabindex="0"/>
+                           placeholder="check" autofocus="autofocus" id="editAddCheck" tabindex="0"/>
                     <input class="textbox required" style="display: block;" data-bind="value: response" type="text"
                            placeholder="response" tabindex="1"/>
 
