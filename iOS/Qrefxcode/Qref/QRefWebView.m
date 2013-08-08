@@ -101,16 +101,16 @@
     
     if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft) {
         
-        self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 21, bounds.size.height, bounds.size.width - 21)];
+        self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 18, bounds.size.height, bounds.size.width - 18)];
     }
     else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeRight) {
-        self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 21, bounds.size.height, bounds.size.width - 21)];
+        self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 18, bounds.size.height, bounds.size.width - 18)];
     }
     else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortrait) {
-        self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 21, bounds.size.width, bounds.size.height - 21)];
+        self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 18, bounds.size.width, bounds.size.height - 18)];
     }
     else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortraitUpsideDown) {
-        self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 21, bounds.size.width, bounds.size.height - 21)];
+        self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 18, bounds.size.width, bounds.size.height - 18)];
     }
     
     self.webView.delegate = self;
@@ -879,16 +879,16 @@
     
     if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft) {
         
-        [self.webView setFrame:CGRectMake(0, 21, bounds.size.height, bounds.size.width - 21)];
+        [self.webView setFrame:CGRectMake(0, 18, bounds.size.height, bounds.size.width - 18)];
     }
     else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeRight) {
-        [self.webView setFrame:CGRectMake(0, 21, bounds.size.height, bounds.size.width - 21)];
+        [self.webView setFrame:CGRectMake(0, 18, bounds.size.height, bounds.size.width - 18)];
     }
     else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortrait) {
-        [self.webView setFrame: CGRectMake(0, 21, bounds.size.width, bounds.size.height - 21)];
+        [self.webView setFrame: CGRectMake(0, 18, bounds.size.width, bounds.size.height - 18)];
     }
     else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortraitUpsideDown) {
-        [self.webView setFrame: CGRectMake(0, 21, bounds.size.width, bounds.size.height - 21)];
+        [self.webView setFrame: CGRectMake(0, 18, bounds.size.width, bounds.size.height - 18)];
     }
 }
 
