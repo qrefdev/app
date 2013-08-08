@@ -916,24 +916,28 @@
 		
 		this.attach = function() {
 			this.parse();
+                                         
+                                         var _this = this;
 			
-			for(var key in this.properties) {
-				for(var name in this.properties[key]) {
-					this.render(this.properties[key][name], true);
+                                         setTimeout(function() {
+			for(var key in _this.properties) {
+				for(var name in _this.properties[key]) {
+					_this.render(_this.properties[key][name], true);
 				}
 			}
 			
-			for(var key in this.parentProperties) {
-				for(var name in this.parentProperties[key]) {
-					this.render(this.parentProperties[key][name], true);
+			for(var key in _this.parentProperties) {
+				for(var name in _this.parentProperties[key]) {
+					_this.render(_this.parentProperties[key][name], true);
 				}
 			}
 			
-			for(var key in this.rootProperties) {
-				for(var name in this.rootProperties[key]) {
-					this.render(this.rootProperties[key][name], true);
+			for(var key in _this.rootProperties) {
+				for(var name in _this.rootProperties[key]) {
+					_this.render(_this.rootProperties[key][name], true);
 				}
 			}
+                                                    }, 0);
 		};
 		
 		this._parsePairs = function(str) {
@@ -1035,8 +1039,8 @@
                                          
 					for(var name in this.observable)
 					{
-						var matches = optionPair[1].trim().match(new RegExp('^' + name + '$|\\s+' + name + '$|\\s+' + name + '\\s+|^' + name + '\\s+|\\s+' + name + '\\;|\\:' + name + '\\s+|\\:' + name + '$|.*[^.]' + name + '$|.*[^.]' + name + '\\s+|.*[^.]' + name + '.*', 'g'));
-						if(matches && name != 'parent' && name != 'root') {
+						//var matches = optionPair[1].trim().match(new RegExp('^' + name + '$|\\s+' + name + '$|\\s+' + name + '\\s+|^' + name + '\\s+|\\s+' + name + '\\;|\\:' + name + '\\s+|\\:' + name + '$|.*[^.]' + name + '$|.*[^.]' + name + '\\s+|.*[^.]' + name + '.*', 'g'));
+						if(optionPair[1].trim().indexOf(name) > -1 && name != 'parent' && name != 'root') {
 							var zProp = new zimoko.Property(property, optionPair[1].trim(), name);
 					
 							if(this.properties[property]) {
@@ -1100,8 +1104,8 @@
 					
 					for(var name in this.observable)
 					{
-						var matches = realPropertyString.trim().match(new RegExp('^' + name + '$|\\s+' + name + '$|\\s+' + name + '\\s+|^' + name + '\\s+|\\s+' + name + '\\;|\\:' + name + '\\s+|\\:' + name + '$|.*[^.]' + name + '$|.*[^.]' + name + '\\s+|.*[^.]' + name + '.*', 'g'));
-						if(matches && name != 'parent' && name != 'root') {
+						//var matches = realPropertyString.trim().match(new RegExp('^' + name + '$|\\s+' + name + '$|\\s+' + name + '\\s+|^' + name + '\\s+|\\s+' + name + '\\;|\\:' + name + '\\s+|\\:' + name + '$|.*[^.]' + name + '$|.*[^.]' + name + '\\s+|.*[^.]' + name + '.*', 'g'));
+						if(realPropertyString.indexOf(name) > -1 && name != 'parent' && name != 'root') {
 							var zProp = new zimoko.Property(property, realPropertyString.trim(), name);
 					
 							if(this.properties[property]) {
@@ -1635,7 +1639,7 @@
 				element.data('zimokoForeachValue', value);
 				
 				if(!element.data('zimokoForeachTemplate'))
-					element.data('zimokoForeachTemplate', element.html());
+					element.data('zimokoForeachTemplate', $(element.html()));
 				
 				element.html('');
 				
@@ -1643,12 +1647,13 @@
 					val.parent = parent;
 					var foreachListener = {
 						onItemsAdded: function(sender, items) {
-							for(var i = 0; i < items.length; i++) {
-								var item = items[i].item;
-								var index = items[i].index;
+ 							setTimeout(function() {
+                            zimoko.each(items, function(idx, itm) { //for(var i = 0; i < items.length; i++) {
+								var item = itm.item;
+								var index = itm.index;
 								var isObservable = (item instanceof zimoko.Observable);
 						
-								var itemTemplate = $(element.data('zimokoForeachTemplate'));
+								var itemTemplate = element.data('zimokoForeachTemplate').clone();
 						
 								//itemTemplate.css({visibility: 'hidden'});
 							
@@ -1667,7 +1672,8 @@
 								
 									//item.attach(itemTemplate);
 								}
-							}
+							});
+            				}, 0);
 							/*
 							for(var i = 0; i < items.length; i++) {
 								var item = items[i].item;
@@ -1695,9 +1701,10 @@
 							}*/
 						},
 						onItemsRemoved: function(sender, items) {
-							for(var i = 0; i < items.length; i++) {
-								var index = items[i].index;
-								var item = items[i].item;
+ 							setTimeout(function() {
+                            zimoko.each(items, function(idx, itm) { //for(var i = 0; i < items.length; i++) {
+								var index = itm.index;
+								var item = itm.item;
 				
 								var $ele = element.find('[data-observable="' + item.observableId + '"]');
 				
@@ -1707,10 +1714,10 @@
 				
 									$ele.remove();
 								}
-							}
+							});
+            				}, 0);
 						}
-					};	
-					
+					};
 					/*setTimeout(function() {
 						for(var i = 0; i < val.length; i++) {
 							var item = val.elementAt(i);
@@ -1732,10 +1739,11 @@
 					val.subscribe(foreachListener);
 				}
 				else if(val instanceof Array || val instanceof zimoko.SortableCollection) {
-					for(var i = 0; i < val.length; i++) {
-						var item = val[i];
+ setTimeout(function() {
+                    zimoko.each(val, function(index, item) { //for(var i = 0; i < val.length; i++) {
+						//var item = val[i];
 						var isObservable = (item instanceof zimoko.Observable);
-						var itemTemplate = $(element.data('zimokoForeachTemplate'));
+						var itemTemplate = element.data('zimokoForeachTemplate').clone();
 			
 						//itemTemplate.css({visibility: 'hidden'});
 								  
@@ -1747,7 +1755,8 @@
 							item.attach(itemTemplate);
 							//item.attach(itemTemplate);
 						}
-					}
+					});
+            }, 0);
 					
 					/*for(var i = 0; i < val.length; i++) {
 						var item = val[i];
@@ -1813,12 +1822,13 @@
 						val.parent = parent;
 						var foreachListener = {
 							onItemsAdded: function(sender, items) {
-								for(var i = 0; i < items.length; i++) {
-									var item = items[i].item;
-									var index = items[i].index;
+ setTimeout(function() {
+                                zimoko.each(items, function(idx, itm) { //for(var i = 0; i < items.length; i++) {
+									var item = itm.item;
+									var index = itm.index;
 									var isObservable = (item instanceof zimoko.Observable);
 						
-									var itemTemplate = $(element.data('zimokoForeachTemplate'));
+									var itemTemplate = element.data('zimokoForeachTemplate').clone();
 						
 									//itemTemplate.css({visibility: 'hidden'});
 											  
@@ -1836,7 +1846,8 @@
 										itemTemplate.attr('data-observable', item.observableId);
 										//item.attach(itemTemplate);
 									}
-								}
+								});
+            }, 0);
 								
 								/*
 								for(var i = 0; i < items.length; i++) {
@@ -1865,9 +1876,10 @@
 								}*/
 							},
 							onItemsRemoved: function(sender, items) {
-								for(var i = 0; i < items.length; i++) {
-									var index = items[i].index;
-									var item = items[i].item;
+ setTimeout(function() {
+                                zimoko.each(items, function(idx, itm) { //for(var i = 0; i < items.length; i++) {
+									var index = itm.index;
+									var item = itm.item;
 					
 									var $ele = element.find('[data-observable="' + item.observableId + '"]');
 					
@@ -1877,19 +1889,22 @@
 					
 										$ele.remove();
 									}
-								}
+								});
+            }, 0);
 							}
 						};	
 						
 						val.subscribe(foreachListener);
 						element.data('zimokoForeachListener', foreachListener);
 						var items = val.toArray();
-						
-						for(var i = 0; i < items.length; i++) {
-							var item = items[i];
+	
+ setTimeout(function() {
+						zimoko.each(items, function(index, item) { //for(var i = 0; i < items.length; i++) {
+							//var item = items[i];
+                            
 							var isObservable = (item instanceof zimoko.Observable);
 					
-							var itemTemplate = $(element.data('zimokoForeachTemplate'));
+							var itemTemplate = element.data('zimokoForeachTemplate').clone();
 					
 							//itemTemplate.css({visibility: 'hidden'});
 									  
@@ -1902,15 +1917,17 @@
 								itemTemplate.attr('data-observable', item.observableId);
 								//item.attach(itemTemplate);
 							}
-						}
+						});
+            }, 0);
 					}
 				}
 				
 				if(val instanceof Array || val instanceof zimoko.SortableCollection) {
-					for(var i = 0; i < val.length; i++) {
-						var item = val[i];
+ setTimeout(function() {
+                    zimoko.each(val, function(index, item) { //for(var i = 0; i < val.length; i++) {
+						//var item = val[i];
 						var isObservable = (item instanceof zimoko.Observable);
-						var itemTemplate = $(element.data('zimokoForeachTemplate'));
+						var itemTemplate = element.data('zimokoForeachTemplate').clone();
 				
 						//itemTemplate.css({visibility: 'hidden'});
 								  
@@ -1920,8 +1937,9 @@
 							item.parent = parent;
 						
 							item.attach(itemTemplate);
-						}	
-					}
+						}
+					});
+            }, 0);
 					/*for(var i = 0; i < val.length; i++) {
 						var item = val[i];
 						var isObservable = (item instanceof zimoko.Observable);

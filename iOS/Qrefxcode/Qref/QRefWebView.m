@@ -101,16 +101,16 @@
     
     if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft) {
         
-        self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 22, bounds.size.height, bounds.size.width - 22)];
+        self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 21, bounds.size.height, bounds.size.width - 21)];
     }
     else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeRight) {
-        self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 22, bounds.size.height, bounds.size.width - 22)];
+        self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 21, bounds.size.height, bounds.size.width - 21)];
     }
     else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortrait) {
-        self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 22, bounds.size.width, bounds.size.height - 22)];
+        self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 21, bounds.size.width, bounds.size.height - 21)];
     }
     else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortraitUpsideDown) {
-        self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 22, bounds.size.width, bounds.size.height - 22)];
+        self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 21, bounds.size.width, bounds.size.height - 21)];
     }
     
     self.webView.delegate = self;
@@ -644,8 +644,9 @@
     NSString *user = [self->preferences stringForKey:@"qrefUserId"];
     
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        NSLog(@"Checklist ID: %@", cId);
         NSString *checklist = [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat: @"AppObserver.getChecklist('%@');", cId]];
-        
+        NSLog(@"Checklist Length: %d", checklist.length);
         //NSLog(@"Checklist Item count: %d", items.count);
         
         if(checklist.length > 0) {
@@ -697,7 +698,7 @@
                 }
             
                 [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                   // NSLog(@"Saving checklist: %@", file);
+                    NSLog(@"Saving checklist: %@", file);
                     [encryptedData writeToFile:cachedFilePath atomically:YES];
                 }];
                 
@@ -878,16 +879,16 @@
     
     if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft) {
         
-        [self.webView setFrame:CGRectMake(0, 22, bounds.size.height, bounds.size.width - 22)];
+        [self.webView setFrame:CGRectMake(0, 21, bounds.size.height, bounds.size.width - 21)];
     }
     else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeRight) {
-        [self.webView setFrame:CGRectMake(0, 22, bounds.size.height, bounds.size.width - 22)];
+        [self.webView setFrame:CGRectMake(0, 21, bounds.size.height, bounds.size.width - 21)];
     }
     else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortrait) {
-        [self.webView setFrame: CGRectMake(0, 22, bounds.size.width, bounds.size.height - 22)];
+        [self.webView setFrame: CGRectMake(0, 21, bounds.size.width, bounds.size.height - 21)];
     }
     else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortraitUpsideDown) {
-        [self.webView setFrame: CGRectMake(0, 22, bounds.size.width, bounds.size.height - 22)];
+        [self.webView setFrame: CGRectMake(0, 21, bounds.size.width, bounds.size.height - 21)];
     }
 }
 

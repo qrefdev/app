@@ -86,11 +86,11 @@
                                 <span data-bind="html: tailNumber, visible: tailNumber" class="tailNumber"></span>
 
                                 <div class="heading" data-bind="html: manufacturer.name + ' ' + model.name"></div>
-                                <div style="width: 100%; position: relative" data-bind="with: model">
-                                    <div class="subheading" data-bind="html: description, visible: description"
+                                <div style="width: 100%; position: relative">
+                                    <div class="subheading" data-bind="html: model.description, visible: model.description"
                                      style="margin-top: 0px"></div>
                                     <div class="subheading">
-                                        <span data-bind="html: modelYear, visible: modelYear"></span>
+                                        <span data-bind="html: model.modelYear, visible: model.modelYear"></span>
                                     </div>
                                 </div>
                                 <ul>

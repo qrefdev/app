@@ -564,7 +564,7 @@ var AppObserver = new zimoko.Observable({
                                 Navigation.go("#checklist");
                             }
                         }
-                    }, 200);
+                    }, 10);
 
                     if (ChecklistObserver.list == ele.attr('data-link'))
                         ele.addClass('active');
@@ -572,7 +572,7 @@ var AppObserver = new zimoko.Observable({
                     setTimeout(function () {
                         ChecklistObserver.set('list', ele.attr('data-link'));
                     }, 10);
-                }, 200);
+                }, 10);
             })
         ], function (index, item) {
             item();
@@ -880,7 +880,6 @@ var AppObserver = new zimoko.Observable({
                                 var item = checklists[i];
 
                                 item.lastPosition = undefined;
-                                item.model = new zimoko.Observable(item.model);
                             }
 
                             //var temp = JSON.stringify(checklists);
@@ -909,8 +908,6 @@ var AppObserver = new zimoko.Observable({
 
                         if (!item.lastPosition)
                             item.lastPosition = undefined;
-
-                        item.model = new zimoko.Observable(item.model);
                     }
 
                     callback.call(self, true, checklists);
@@ -935,8 +932,6 @@ var AppObserver = new zimoko.Observable({
                                 var item = checklists[i];
 
                                 item.lastPosition = undefined;
-
-                                item.model = new zimoko.Observable(item.model);
                             }
 
                             callback.call(self, true, checklists);

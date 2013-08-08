@@ -83,8 +83,8 @@
                                 <span data-bind="html: tailNumber, visible: tailNumber" class="tailNumber"></span>
 
                                 <div class="heading" data-bind="html: manufacturer.name + ' ' + model.name"></div>
-                                <div class="subheading" data-bind="with: model">
-                                	<span data-bind="html: description, visible: description" style="margin-top: 0px"></span>, <span data-bind="html: modelYear, visible: modelYear"></span>
+                                <div class="subheading">
+                                	<span data-bind="html: model.description, visible: model.description" style="margin-top: 0px"></span>, <span data-bind="html: model.modelYear, visible: model.modelYear"></span>
                                 </div>
                                 <ul>
                                     <li class="product-subarea" data-bind="tap: parent.subItemTap"
