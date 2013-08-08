@@ -97,13 +97,28 @@
     
     self->imageView.userInteractionEnabled = YES;
     
-    self.webView = [[UIWebView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    //CGRect frame = [[UIScreen mainScreen] applicationFrame];
+    
+    if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft) {
+        
+        self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 22, bounds.size.height, bounds.size.width - 22)];
+    }
+    else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeRight) {
+        self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 22, bounds.size.height, bounds.size.width - 22)];
+    }
+    else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortrait) {
+        self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 22, bounds.size.width, bounds.size.height - 22)];
+    }
+    else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortraitUpsideDown) {
+        self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 22, bounds.size.width, bounds.size.height - 22)];
+    }
+    
     self.webView.delegate = self;
     
     [self.webView setBackgroundColor:[UIColor clearColor]];
     //[self setView:self.webView];
     
-    [self setView:self->imageView];
+    [self.view addSubview:self->imageView];
     
     self->preferences = [NSUserDefaults standardUserDefaults];
     self->purchaseManager = [[QrefInAppPurchaseManager alloc] init];
@@ -127,23 +142,9 @@
     if(self.mayAccept) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.webView stringByEvaluatingJavaScriptFromString:@"DataLoaded();"];
-            CGRect bounds = [[UIScreen mainScreen] bounds];
+           // CGRect bounds = [[UIScreen mainScreen] bounds];
             
-            [self setView:self.webView];
-            
-            if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft) {
-                
-                [self.webView setFrame:CGRectMake(22, 0, bounds.size.width - 22, bounds.size.height)];
-            }
-            else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeRight) {
-                [self.webView setFrame:CGRectMake(0, 0, bounds.size.width - 22, bounds.size.height)];
-            }
-            else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortrait) {
-                [self.webView setFrame: CGRectMake(0, 22, bounds.size.width, bounds.size.height - 22)];
-            }
-            else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortraitUpsideDown) {
-                [self.webView setFrame: CGRectMake(0, 22, bounds.size.width, bounds.size.height - 22)];
-            }
+            [self.view addSubview:self.webView];
             
             [[UIApplication sharedApplication] setStatusBarHidden:NO];
             
@@ -155,8 +156,6 @@
             if(self.delegate) {
                 [self.delegate webViewDidLoad];
             }
-            
-            [self.webView setNeedsLayout];
         });
     }
 }
@@ -192,28 +191,14 @@
     return UIInterfaceOrientationMaskPortraitUpsideDown | UIInterfaceOrientationMaskLandscapeRight | UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskPortrait;
 }
 
-- (UIInterfaceOrientation) preferredInterfaceOrientationForPresentation {
-    
-    if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft) {
-        
-        return UIInterfaceOrientationLandscapeLeft;
-    }
-    else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeRight) {
-        return UIInterfaceOrientationLandscapeRight;
-    }
-    else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortrait) {
-        return UIInterfaceOrientationPortrait;
-    }
-    else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortraitUpsideDown) {
-        return UIInterfaceOrientationPortraitUpsideDown;
-    }
-    
-    return UIInterfaceOrientationPortrait;
+-(void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     
     [self initialize];
     
@@ -268,10 +253,6 @@
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        [self.view setNeedsLayout];
-    }];
 }
 
 - (BOOL) canPerformAction:(SEL)action withSender:(id)sender
@@ -897,10 +878,10 @@
     
     if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft) {
         
-        [self.webView setFrame:CGRectMake(22, 0, bounds.size.width - 22, bounds.size.height)];
+        [self.webView setFrame:CGRectMake(0, 22, bounds.size.height, bounds.size.width - 22)];
     }
     else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeRight) {
-        [self.webView setFrame:CGRectMake(0, 22, bounds.size.width - 22, bounds.size.height)];
+        [self.webView setFrame:CGRectMake(0, 22, bounds.size.height, bounds.size.width - 22)];
     }
     else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortrait) {
         [self.webView setFrame: CGRectMake(0, 22, bounds.size.width, bounds.size.height - 22)];
