@@ -18,30 +18,7 @@
 @synthesize webView = _webView;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-    
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.webView = [[QRefWebView alloc] init];
-    
-    // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor blackColor];
-    [self.window makeKeyAndVisible];
-    
-    [self.window setRootViewController:self.webView];
-    
-    if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"phoneView" ofType:@"html"]];
-        NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    
-        [self.webView gotoURL:request];
-    }
-    else {
-        NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"tabletView" ofType:@"html"]];
-        NSURLRequest *request = [NSURLRequest requestWithURL:url];
-        
-        [self.webView gotoURL:request];
-    }
-    
+{    
     return YES;
 }
 
@@ -72,6 +49,10 @@
 {
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
+}
+
+-(NSUInteger) application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+    return UIInterfaceOrientationMaskPortraitUpsideDown | UIInterfaceOrientationMaskLandscapeRight | UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskPortrait;
 }
 
 - (void)saveContext

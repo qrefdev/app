@@ -10,107 +10,117 @@
 
 @implementation QRefWebView
 
+-(id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
+    if(self) {
         
-        self->server = @"https://my.qref.com/";
-        
-        self.mayAccept = NO;
-        
-        [self setWantsFullScreenLayout:YES];
-        
-        self.imageQueue = [[NSOperationQueue alloc] init];
-        self.savingQueue = [[NSOperationQueue alloc] init];
-        CGRect bounds = [[UIScreen mainScreen] bounds];
-        CGFloat screenScale = [[UIScreen mainScreen] scale];
-        
-        if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-            if(screenScale > 1) {
-                if(bounds.size.width * screenScale > 1000 || bounds.size.height * screenScale > 1000) {
-                    self->startUpImage = [UIImage imageNamed:@"Default-568h@2x.png"];
-                }
-                else {
-                    self->startUpImage = [UIImage imageNamed:@"Default@2x.png"];
-                }
-            }
-            else {
-                self->startUpImage = [UIImage imageNamed:@"Default.png"];
-            }
-        }
-        else if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-            if(screenScale > 1) {
-                if([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft || [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight) {
-                    self->startUpImage = [UIImage imageNamed:@"Default-Landscape@2x~ipad.png"];
-                }
-                else {
-                    self->startUpImage = [UIImage imageNamed:@"Default-Portrait@2x~ipad.png"];
-                }
-            }
-            else {
-                if([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft || [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight) {
-                    self->startUpImage = [UIImage imageNamed:@"Default-Landscape~ipad.png"];
-                }
-                else {
-                    self->startUpImage = [UIImage imageNamed:@"Default-Portrait~ipad.png"];
-                }
-            }
-        }
-        
-        if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-            self->imageView = [[UIImageView alloc] initWithFrame:bounds];
-        }
-        else if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-            if([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft || [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight) {
-                self->imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, bounds.size.height, bounds.size.width)];
-            }
-            else {
-                self->imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, bounds.size.width, bounds.size.height)];
-            }
-        }
-        
-        self->imageView.image = self->startUpImage;
-        
-        [self->imageView setContentMode:UIViewContentModeScaleAspectFill];
-        
-         UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(accepted:)];
-        
-        tap.numberOfTapsRequired = 1;
-        tap.delaysTouchesBegan = YES;
-        tap.cancelsTouchesInView = NO;
-        
-        [self->imageView addGestureRecognizer:tap];
-        
-        self->imageView.userInteractionEnabled = YES;
-        
-        self.webView = [[UIWebView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-        self.webView.delegate = self;
-        
-        [self.webView setBackgroundColor:[UIColor clearColor]];
-        //[self setView:self.webView];
-        
-        [self setView:self->imageView];
-        
-        self->preferences = [NSUserDefaults standardUserDefaults];
-        self->purchaseManager = [[QrefInAppPurchaseManager alloc] init];
-        [self->purchaseManager setDelegate:self];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShown:) name:UIKeyboardDidShowNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHidden:) name:UIKeyboardDidHideNotification object:nil];
-        
-        self->reach = [Reachability reachabilityWithHostname:@"my.qref.com"];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(reachabilityChanged:)
-                                                     name:kReachabilityChangedNotification
-                                                   object:nil];
-        [self->reach startNotifier];
-        
-        [[NSURLCache sharedURLCache] removeAllCachedResponses];
     }
-   return self;
+    return self;
+}
+
+-(void) initialize {
+    self->server = @"https://my.qref.com/";
+    
+    self.mayAccept = NO;
+    
+    [self setWantsFullScreenLayout:YES];
+    
+    self.imageQueue = [[NSOperationQueue alloc] init];
+    self.savingQueue = [[NSOperationQueue alloc] init];
+    CGRect bounds = [[UIScreen mainScreen] bounds];
+    CGFloat screenScale = [[UIScreen mainScreen] scale];
+    
+    if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        if(screenScale > 1) {
+            if(bounds.size.width * screenScale > 1000 || bounds.size.height * screenScale > 1000) {
+                self->startUpImage = [UIImage imageNamed:@"Default-568h@2x.png"];
+            }
+            else {
+                self->startUpImage = [UIImage imageNamed:@"Default@2x.png"];
+            }
+        }
+        else {
+            self->startUpImage = [UIImage imageNamed:@"Default.png"];
+        }
+    }
+    else if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        if(screenScale > 1) {
+            if([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft || [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight) {
+                self->startUpImage = [UIImage imageNamed:@"Default-Landscape@2x~ipad.png"];
+            }
+            else {
+                self->startUpImage = [UIImage imageNamed:@"Default-Portrait@2x~ipad.png"];
+            }
+        }
+        else {
+            if([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft || [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight) {
+                self->startUpImage = [UIImage imageNamed:@"Default-Landscape~ipad.png"];
+            }
+            else {
+                self->startUpImage = [UIImage imageNamed:@"Default-Portrait~ipad.png"];
+            }
+        }
+    }
+    
+    if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        self->imageView = [[UIImageView alloc] initWithFrame:bounds];
+    }
+    else if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        if([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft || [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight) {
+            self->imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, bounds.size.height, bounds.size.width)];
+        }
+        else {
+            self->imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, bounds.size.width, bounds.size.height)];
+        }
+    }
+    
+    self->imageView.image = self->startUpImage;
+    
+    [self->imageView setContentMode:UIViewContentModeScaleAspectFill];
+    
+    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(accepted:)];
+    
+    tap.numberOfTapsRequired = 1;
+    tap.delaysTouchesBegan = YES;
+    tap.cancelsTouchesInView = NO;
+    
+    [self->imageView addGestureRecognizer:tap];
+    
+    self->imageView.userInteractionEnabled = YES;
+    
+    self.webView = [[UIWebView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.webView.delegate = self;
+    
+    [self.webView setBackgroundColor:[UIColor clearColor]];
+    //[self setView:self.webView];
+    
+    [self setView:self->imageView];
+    
+    self->preferences = [NSUserDefaults standardUserDefaults];
+    self->purchaseManager = [[QrefInAppPurchaseManager alloc] init];
+    [self->purchaseManager setDelegate:self];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShown:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHidden:) name:UIKeyboardDidHideNotification object:nil];
+    
+    self->reach = [Reachability reachabilityWithHostname:@"my.qref.com"];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reachabilityChanged:)
+                                                 name:kReachabilityChangedNotification
+                                               object:nil];
+    [self->reach startNotifier];
+    
+    [[NSURLCache sharedURLCache] removeAllCachedResponses];
 }
 
 - (void) accepted: (UITapGestureRecognizer *) tap {
@@ -146,7 +156,7 @@
                 [self.delegate webViewDidLoad];
             }
             
-            [self.webView layoutSubviews];
+            [self.webView setNeedsLayout];
         });
     }
 }
@@ -178,10 +188,47 @@
     [self.webView stringByEvaluatingJavaScriptFromString:@"keyboardHidden();"];
 }
 
+- (NSUInteger) supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortraitUpsideDown | UIInterfaceOrientationMaskLandscapeRight | UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskPortrait;
+}
+
+- (UIInterfaceOrientation) preferredInterfaceOrientationForPresentation {
+    
+    if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft) {
+        
+        return UIInterfaceOrientationLandscapeLeft;
+    }
+    else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeRight) {
+        return UIInterfaceOrientationLandscapeRight;
+    }
+    else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortrait) {
+        return UIInterfaceOrientationPortrait;
+    }
+    else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortraitUpsideDown) {
+        return UIInterfaceOrientationPortraitUpsideDown;
+    }
+    
+    return UIInterfaceOrientationPortrait;
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self initialize];
+    
+    if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"phoneView" ofType:@"html"]];
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        
+        [self gotoURL:request];
+    }
+    else {
+        NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"tabletView" ofType:@"html"]];
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        
+        [self gotoURL:request];
+    }
     
 //    [self setNeedsStatusBarAppearanceUpdate];
 	// Do any additional setup after loading the view.
@@ -204,8 +251,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+-(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return YES;
 }
 
@@ -218,6 +264,14 @@
     {
         return;
     }
+}
+
+- (void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        [self.view setNeedsLayout];
+    }];
 }
 
 - (BOOL) canPerformAction:(SEL)action withSender:(id)sender
@@ -846,7 +900,7 @@
         [self.webView setFrame:CGRectMake(22, 0, bounds.size.width - 22, bounds.size.height)];
     }
     else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeRight) {
-        [self.webView setFrame:CGRectMake(0, 0, bounds.size.width - 22, bounds.size.height)];
+        [self.webView setFrame:CGRectMake(0, 22, bounds.size.width - 22, bounds.size.height)];
     }
     else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortrait) {
         [self.webView setFrame: CGRectMake(0, 22, bounds.size.width, bounds.size.height - 22)];
@@ -1065,13 +1119,18 @@
         [self.webView stringByEvaluatingJavaScriptFromString:@"reachability = false;"];
     }
     
-    [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"MenuObserver.set('version', '%@');", [QRefWebView build]]];
+    [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"MenuObserver.set('version', '%@ (%@)');", [QRefWebView appVersion], [QRefWebView build]]];
     
     self->refreshTimer = [NSTimer scheduledTimerWithTimeInterval:600.0 target:self selector:@selector(refreshToken:) userInfo:nil  repeats:YES];
 }
 
 - (void) refreshToken:(NSTimer *)timer {
     [self.webView stringByEvaluatingJavaScriptFromString:@"RefreshToken();"];
+}
+
++ (NSString *) appVersion
+{
+    return [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
 }
 
 + (NSString *) build

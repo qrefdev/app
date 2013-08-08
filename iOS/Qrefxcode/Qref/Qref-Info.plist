@@ -38,7 +38,9 @@
 	<key>CFBundleVersion</key>
 	<string>1.0R5.03</string>
 	<key>LSRequiresIPhoneOS</key>
-	<true/>
+	<false/>
+	<key>UIMainStoryboardFile</key>
+	<string>QrefIpad</string>
 	<key>UIPrerenderedIcon</key>
 	<true/>
 	<key>UIRequiredDeviceCapabilities</key>
