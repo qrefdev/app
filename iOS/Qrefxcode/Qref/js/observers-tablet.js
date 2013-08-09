@@ -1024,6 +1024,8 @@ var AppObserver = new zimoko.Observable({
         var self = this;
 
         $(window).tap(function (e) {
+                      e.stopPropagation();
+                      e.preventDefault();
             ChecklistObserver.set('showSections', false);
         });
 
@@ -1745,7 +1747,8 @@ var ChecklistObserver = new zimoko.Observable({
 
     },
     checkTap:function (element, e, data) {
-
+                                              e.stopPropagation();
+                                              e.preventDefault();
         ChecklistObserver.set('showSections', false);
 
         if (data.isChecked) {
@@ -2034,10 +2037,15 @@ var ChecklistObserver = new zimoko.Observable({
 
         ele.addClass('active');
 
-        ChecklistObserver.set('section', data.index);
         ChecklistObserver.set('showSections', false);
+                                              
+                                              setTimeout(function() {
+        ChecklistObserver.set('section', data.index);
+                                                         }, 300);
     },
     sectionsTap:function (element, e, data) {
+                                              e.stopPropagation();
+                                              e.preventDefault();
         ChecklistObserver.set('showSections', !ChecklistObserver.showSections);
     },
     backTap:function (element, e, data) {

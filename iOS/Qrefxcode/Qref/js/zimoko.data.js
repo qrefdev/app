@@ -2605,37 +2605,33 @@
             init: function(element, value) {
                 var val = value.get();
          
-                if(val) {
+                 if(val) {
                     element.css({'top': '-100%', 'display': 'block'});
-                    zimoko.ui.animate(element, 'slideInTop', function(e) {
-                           element.css({'top': '0px'});
+                    element.stop().animate({'top': '0%'}, 300);
+                 }
+                 else {
+                    element.stop().animate({'top': '-100%'}, 300, function() {
+                        element.hide();
                     });
-                }
-                else {
-                    zimoko.ui.animate(element, 'slideOutTop', function(e) {
-                           element.hide();
-                           });
-                }
+                 }
             },
             update: function(element, value) {
                 var val = value.get();
-         
+ 
                 if(val) {
                     element.css({'top': '-100%', 'display': 'block'});
-                    zimoko.ui.animate(element, 'slideInTop', function(e) {
-                            element.css({'top': '0px'});
+                    element.stop().animate({'top': '0%'}, 300);
+                 }
+                 else {
+                    element.stop().animate({'top': '-100%'}, 300, function() {
+                        element.hide();
                     });
- }
- else {
- zimoko.ui.animate(element, 'slideOutTop', function(e) {
-                   element.hide();
-                   });
- }
+                 }
             },
             remove: function(element, value) {
-            zimoko.ui.animate(element, 'slideOutTop', function(e) {
-                           element.hide();
-                           });
+                element.stop().animate({'top': '-100%'}, 300, function() {
+                                       element.hide();
+                });
             }
          },
 		'visible': {
