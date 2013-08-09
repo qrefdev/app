@@ -242,7 +242,7 @@
             </div>
             <div class="shadow">
             </div>
-            <div class="flyover" data-bind="slideVisible: showSections" style="top: 47px; z-index:800;">
+            <div class="flyover" data-bind="slideVisible: showSections">
                 <div class="grid check-sections scrollable">
                     <div class="container inside">
                         <ul id="check-sections-items" class="vertical" data-bind="foreach: sections">
@@ -672,7 +672,7 @@
                 <p><i class="icon icon-th-list"></i></p>
             </div>
         </div>
-        <div class="content">
+        <div class="content" style="bottom: 0px;">
             <div style="float: left; position: relative; width: 100%; margin-top: 5px;">
                 <form id="signinForm" method="post" action="javascript:void(null);">
                     <input class="textbox required" type="email" id="email" tabindex="1" data-bind="keyup: keyUp"
@@ -713,7 +713,7 @@
                 <p><i class="icon icon-th-list"></i></p>
             </div>
         </div>
-        <div class="content">
+        <div class="content" style="bottom: 0px;">
             <div style="float: left; position: relative; width: 100%; margin-top: 5px;">
                 <form id="passwordRecoveryForm" method="post" action="javascript:void(null);">
                     <input class="textbox required" type="email" id="recoveryEmail" data-bind="keyup: keyUp"
@@ -742,7 +742,7 @@
                 <p><i class="icon icon-th-list"></i></p>
             </div>
         </div>
-        <div class="content">
+        <div class="content" style="bottom: 0px;">
             <div style="float: left; position: relative; width: 100%; margin-top: 5px;">
                 <form id="changePasswordForm" method="post" action="javascript:void(null);">
                     <input class="textbox required" type="password" placeholder="old password" tabindex="1"
@@ -775,7 +775,7 @@
                 <p><i class="icon icon-th-list"></i></p>
             </div>
         </div>
-        <div class="content">
+        <div class="content" style="bottom: 0px;">
             <div style="float: left; position: relative; width: 100%; margin-top: 5px;">
                 <form id="registerForm" action="javascript:void(null);" method="post">
                     <input class="textbox required" type="email" id="emailRegister" tabindex="1"

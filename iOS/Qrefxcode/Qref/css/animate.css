@@ -3718,23 +3718,23 @@ body { /* Addresses a small issue in webkit: http://bit.ly/NEdoDq */
 
 
 @-webkit-keyframes slideInTop {
-	0% {-webkit-transform: translateY(-100%);}
-	100% {-webkit-transform: translateY(0px);}
+    0% {top: -100%;}
+	100% {top: 0px;}
 }
 
 @-moz-keyframes slideInTop {
-	0% {-moz-transform: translateY(-100%);}
-	100% {-moz-transform: translateY(0px);}
+    0% {top: -100%;}
+   	100% {top: 0px;}
 }
 
 @-o-keyframes slideInTop {
-	0% {-o-transform: translateY(-100%);}
-	100% {-o-transform: translateY(0px);}
+    0% {top: -100%;}
+   	100% {top: 0px;}
 }
 
 @keyframes slideInTop {
-	0% {transform: translateY(-100%);}
-	100% {transform: translateY(0px);}
+    0% {top: -100%;}
+   	100% {top: 0px;}
 }
 
 .slideInTop {
@@ -3745,30 +3745,30 @@ body { /* Addresses a small issue in webkit: http://bit.ly/NEdoDq */
 }
 
 .animated.slideInTop {
-	-webkit-animation-duration: 0.4s;
-    -moz-animation-duration: 0.4s;
-    -o-animation-duration: 0.4s;
-    animation-duration: 0.4s;
+	-webkit-animation-duration: 0.3s;
+    -moz-animation-duration: 0.3s;
+    -o-animation-duration: 0.3s;
+    animation-duration: 0.3s;
 }
 
 @-webkit-keyframes slideOutTop {
-	0% {-webkit-transform: translateY(0px);}
-	100% {-webkit-transform: translateY(-100%);}
+    0% {top: 0px;}
+   	100% {top: -100%;}
 }
 
 @-moz-keyframes slideOutTop {
-	0% {-moz-transform: translateY(0px);}
-	100% {-moz-transform: translateY(-100%);}
+    0% {top: 0px;}
+   	100% {top: -100%;}
 }
 
 @-o-keyframes slideOutTop {
-	0% {-o-transform: translateY(0px);}
-	100% {-o-transform: translateY(-100%);}
+    0% {top: 0px;}
+   	100% {top: -100%;}
 }
 
 @keyframes slideOutTop {
-	0% {transform: translateY(0px);}
-	100% {transform: translateY(-100%);}
+    0% {top: 0px;}
+   	100% {top: -100%;}
 }
 
 .slideOutTop {
@@ -3779,8 +3779,8 @@ body { /* Addresses a small issue in webkit: http://bit.ly/NEdoDq */
 }
 
 .animated.slideOutTop {
-	-webkit-animation-duration: 0.4s;
-    -moz-animation-duration: 0.4s;
-    -o-animation-duration: 0.4s;
-    animation-duration: 0.4s;
+	-webkit-animation-duration: 0.3s;
+    -moz-animation-duration: 0.3s;
+    -o-animation-duration: 0.3s;
+    animation-duration: 0.3s;
 }

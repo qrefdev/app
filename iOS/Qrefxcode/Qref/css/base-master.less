@@ -753,7 +753,7 @@ html, body {
             position: relative;
             margin-top: 10px;
             margin-left: 10px;
-            margin-bottom: 2px;
+            margin-bottom: 1px;
             width: 98%;
         }
 
@@ -953,7 +953,7 @@ form label {
     position: absolute;
     width: 100%;
     top: 96px;
-    bottom: 70px;
+    bottom: 60px;
     left: 0px;
     right: 0px;
     overflow-x: hidden;
@@ -1170,15 +1170,16 @@ form label {
 
 /** iOS HTML Recreation Elements **/
 .flyover {
-    position: relative;
-    top: 20px;
+    position: absolute;
+    top: 0px;
     left: 0px;
-    bottom: 0px;
     right: 0px;
     width: 100%;
+    height: auto;
     display: none;
     overflow: auto;
-    z-index: 999999;
+    z-index: 800;
+    margin-top: 47px;
 
     .inside {
         position: relative;
@@ -1205,6 +1206,7 @@ form label {
 
     ul li:last-child {
         border-bottom: 0px;
+        margin-bottom: 0px !important;
     }
 
     ul li p {
@@ -1442,5 +1444,9 @@ ul li {
 
     .CProw {
         font-size: inherit;
+    }
+
+    .vertical li .holder {
+        margin-bottom: 0px;
     }
 }

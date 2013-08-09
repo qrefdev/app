@@ -2606,10 +2606,10 @@
                 var val = value.get();
          
                 if(val) {
-                    element.css({'-webkit-transform': 'translateY(100%)', 'display': 'block'});
+                    element.css({'top': '-100%', 'display': 'block'});
                     zimoko.ui.animate(element, 'slideInTop', function(e) {
-                           element.css({'-webkit-transform': 'translateY(0px)'});
-                           });
+                           element.css({'top': '0px'});
+                    });
                 }
                 else {
                     zimoko.ui.animate(element, 'slideOutTop', function(e) {
@@ -2621,16 +2621,16 @@
                 var val = value.get();
          
                 if(val) {
-                    element.css({'-webkit-transform': 'translateY(100%)', 'display': 'block'});
+                    element.css({'top': '-100%', 'display': 'block'});
                     zimoko.ui.animate(element, 'slideInTop', function(e) {
-                           element.css({'-webkit-transform': 'translateY(0px)'});
-                           });
-                }
-                else {
-                zimoko.ui.animate(element, 'slideOutTop', function(e) {
-                           element.hide();
-                           });
-                }
+                            element.css({'top': '0px'});
+                    });
+ }
+ else {
+ zimoko.ui.animate(element, 'slideOutTop', function(e) {
+                   element.hide();
+                   });
+ }
             },
             remove: function(element, value) {
             zimoko.ui.animate(element, 'slideOutTop', function(e) {
