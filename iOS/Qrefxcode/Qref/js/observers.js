@@ -2034,9 +2034,9 @@ var ChecklistObserver = new zimoko.Observable({
 
         ele.addClass('active');
 
-        ChecklistObserver.set('section', data.index);
+        ChecklistObserver.set('showSections', false);
                                               setTimeout(function() {
-                                                         ChecklistObserver.set('section', data.index);
+        ChecklistObserver.set('section', data.index);
                                                          }, 300);
     },
     sectionsTap:function (element, e, data) {
