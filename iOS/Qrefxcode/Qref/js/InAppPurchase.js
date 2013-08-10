@@ -92,7 +92,7 @@ function SendReceipt(receiptData)
 		
 				dialog.show();
 				
-				Sync.sync();
+				Sync.sync(); 
            }
            else
            {
