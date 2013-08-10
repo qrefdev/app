@@ -7,7 +7,7 @@ var EditAddObserver = new zimoko.Observable({
     menuTap:function (element, e, data) {
         e.stopPropagation();
         e.preventDefault();
-        MenuObserver.toggler();
+        MenuObserver.toggle();
     },
     backTap:function (element, e, data) {
         e.stopPropagation();
