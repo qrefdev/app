@@ -41,8 +41,8 @@ a {
 .wrap {
     background: white;
     background-size: 100% 100%;
-    -webkit-box-shadow: 5px 0px 10px 1px rgba(0, 0, 0, 0.5);
-    box-shadow: 5px 0px 10px 1px rgba(0, 0, 0, 0.5);
+    //-webkit-box-shadow: 5px 0px 10px 1px rgba(0, 0, 0, 0.5);
+    //box-shadow: 5px 0px 10px 1px rgba(0, 0, 0, 0.5);
 }
 
 // Bottom Nav Bar
@@ -126,6 +126,7 @@ a {
 .logoSection {
     color: @colorTopText;
     background-color: @colorSectionnav;
+    -webkit-box-shadow: 0 5px 10px @colorDashShadow;
     box-shadow: 0 5px 10px @colorDashShadow;
     z-index: 9999;
     position: absolute;
@@ -373,6 +374,7 @@ button,
 .checklist .vertical li {
     color: #d6dbdf;
     border-top: 1px solid @colorChecklistBorder;
+    background-color: rgba(255,255,255,.85);
 
     .check {
         color: @colorCheck;
@@ -432,6 +434,10 @@ button,
 
 .shadow {
     .gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+}
+
+.shadowTop {
+    .gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
 }
 
 .loader {
@@ -790,9 +796,9 @@ form label {
 }
 
 .flyover {
-    background: @colorFlyover;
 
     ul {
+        background: @colorFlyover;
 
         li {
             border-top: 1px solid @colorFlyoverBorderTop;

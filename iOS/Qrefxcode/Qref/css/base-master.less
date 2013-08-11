@@ -91,7 +91,6 @@ html, body {
     width: 100%;
     margin: 0;
     padding: 0;
-    z-index: 100;
     display: none;
 }
 
@@ -106,7 +105,6 @@ html, body {
     overflow: hidden;
     margin: 0;
     padding: 0;
-    z-index: 110;
 }
 
 .nav ul {
@@ -835,13 +833,12 @@ html, body {
 
 /** Checklist Sections Menu **/
 .check-sections {
-    position: relative;
+    position: absolute;
     top: 0px;
     left: 0px;
     width: 100%;
     height: auto;
     bottom: 0px;
-    z-index: 99999;
     overflow: auto;
 }
 
@@ -867,15 +864,21 @@ html, body {
     width: 100%;
 }
 
-.shadow {
+.shadow,
+.shadowTop {
     position: absolute;
     bottom: 0px;
     right: 0px;
     left: 0px;
     height: 15px;
-    z-index: 999;
+    z-index: 799;
     margin: 0px;
     padding: 0px;
+}
+
+.shadowTop {
+    bottom: auto;
+    top:47px;
 }
 
 /** Loader and Info Boxes **/
@@ -1178,8 +1181,10 @@ form label {
     height: auto;
     display: none;
     overflow: auto;
-    z-index: 800;
-    margin-top: 47px;
+    z-index: 802;
+    margin-top: 82px;
+    overflow: auto;
+    bottom: 0;
 
     .inside {
         position: relative;
@@ -1307,6 +1312,14 @@ ul li {
 }
 
 /** Section Nav for Checklist **/
+#checklist-nav {
+    position: absolute;
+    height: auto;
+    bottom: 0;
+    width: 100%;
+    z-index: 800;
+}
+
 .section-nav {
     position: absolute;
     top: 0px;

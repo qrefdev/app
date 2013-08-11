@@ -33,8 +33,6 @@
 .theme-light .wrap {
   background: white;
   background-size: 100% 100%;
-  -webkit-box-shadow: 5px 0px 10px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 5px 0px 10px 1px rgba(0, 0, 0, 0.5);
 }
 .theme-light .nav {
   background: #ffffff;
@@ -95,6 +93,7 @@
 .theme-light .logoSection {
   color: #666e79;
   background-color: #cdd0d6;
+  -webkit-box-shadow: 0 5px 10px #ffffff;
   box-shadow: 0 5px 10px #ffffff;
   z-index: 9999;
   position: absolute;
@@ -321,6 +320,7 @@
 .theme-light .checklist .vertical li {
   color: #d6dbdf;
   border-top: 1px solid #cdd0d6;
+  background-color: rgba(255, 255, 255, 0.85);
 }
 .theme-light .checklist .vertical li .check {
   color: #343a43;
@@ -386,6 +386,14 @@
   background: -moz-linear-gradient(top, rgba(255, 255, 255, 0), #ffffff);
   background: -ms-linear-gradient(top, rgba(255, 255, 255, 0), #ffffff);
   background: -o-linear-gradient(top, rgba(255, 255, 255, 0), #ffffff);
+}
+.theme-light .shadowTop {
+  background-color: #ffffff;
+  background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(rgba(255, 255, 255, 0)));
+  background: -webkit-linear-gradient(top, #ffffff, rgba(255, 255, 255, 0));
+  background: -moz-linear-gradient(top, #ffffff, rgba(255, 255, 255, 0));
+  background: -ms-linear-gradient(top, #ffffff, rgba(255, 255, 255, 0));
+  background: -o-linear-gradient(top, #ffffff, rgba(255, 255, 255, 0));
 }
 .theme-light .loader {
   color: #d6dbdf;
@@ -669,7 +677,7 @@
 .theme-light .emergencies-sections ul li:last-child {
   border-bottom: 0px;
 }
-.theme-light .flyover {
+.theme-light .flyover ul {
   background: rgba(0, 0, 0, 0.8);
 }
 .theme-light .flyover ul li {
