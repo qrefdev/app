@@ -504,97 +504,97 @@ html, body {
     width: 100%;
     padding: 0;
     margin: 0;
-}
 
-.grid .vertical {
-    float: left;
-    position: relative;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-}
+    .vertical {
+        float: left;
+        position: relative;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+    }
 
-.grid .vertical li {
-    float: left;
-    position: relative;
-    width: 100%;
-}
+    .vertical li {
+        float: left;
+        position: relative;
+        width: 100%;
+    }
 
-.grid .horizontal {
-    float: left;
-    position: relative;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
+    .horizontal {
+        float: left;
+        position: relative;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
 
-.grid .horizontal li {
-    float: left;
-    position: relative;
-    width: auto;
-    margin-right: 2px;
-}
+    .horizontal li {
+        float: left;
+        position: relative;
+        width: auto;
+        margin-right: 2px;
+    }
 
-.grid .horizontal li:last-child {
-    margin-right: 0;
-}
+    .horizontal li:last-child {
+        margin-right: 0;
+    }
 
-.grid .full {
-    float: left;
-    position: relative;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
+    .full {
+        float: left;
+        position: relative;
+        width: 100%;
+        margin: 0;
+        padding: 0;
 
-.grid .full .span50 {
-    float: left;
-    position: relative;
-    width: 49%;
-    margin-right: 2px;
-    margin-bottom: 2px;
-}
+        .span50 {
+            float: left;
+            position: relative;
+            width: 49%;
+            margin-right: 2px;
+            margin-bottom: 2px;
+        }
 
-.grid .full .span50:nth-child(even) {
-    margin-right: 0;
-}
+        .span50:nth-child(even) {
+            margin-right: 0;
+        }
 
-.grid .full .span33 {
-    float: left;
-    position: relative;
-    width: 32%;
-    margin-right: 2px;
-    margin-bottom: 2px;
-}
+        .span33 {
+            float: left;
+            position: relative;
+            width: 32%;
+            margin-right: 2px;
+            margin-bottom: 2px;
+        }
 
-.grid .full .span33:nth-child(3n) {
-    margin-right: 0px;
-}
+        .span33:nth-child(3n) {
+            margin-right: 0px;
+        }
 
-.grid .full .span25 {
-    float: left;
-    position: relative;
-    width: 24%;
-    margin-right: 2px;
-    margin-bottom: 2px;
-}
+        .span25 {
+            float: left;
+            position: relative;
+            width: 24%;
+            margin-right: 2px;
+            margin-bottom: 2px;
+        }
 
-.grid .full .span25:nth-child(4n) {
-    margin-right: 0px;
-}
+        .span25:nth-child(4n) {
+            margin-right: 0px;
+        }
+    }
 
-.grid .separator {
-    width: 100%;
-    float: left;
-    position: relative;
-    margin: 0;
-    padding: 0;
-    height: auto;
-}
+    .separator {
+        width: 100%;
+        float: left;
+        position: relative;
+        margin: 0;
+        padding: 0;
+        height: auto;
 
-.grid .separator p {
-    padding: 5px;
+        p {
+            padding: 5px;
+        }
+    }
 }
 
 /** Sign in and Register Button */
@@ -605,7 +605,8 @@ html, body {
 }
 
 /** Dashboard Listing && Download Listing **/
-.dashboard-planes-selector, .downloads {
+.dashboard-planes-selector,
+.downloads {
     overflow: auto;
     position: absolute;
     top: 0px;
@@ -614,17 +615,105 @@ html, body {
     bottom: 0px;
     width: 100%;
     height: 100%;
+
+    .vertical li,
+    .vertical li {
+        overflow: hidden;
+    }
+
+    .plane-icon img,
+    .plane-icon img {
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .vertical li .holder,
+    .vertical li .holder {
+        float: left;
+        position: relative;
+        margin: 10px 0 0 10px;
+        padding: 0;
+        width: 100%;
+    }
+
+    .heading,
+    .header {
+        width: auto;
+        position: relative;
+        padding: 0px;
+        margin-left: 0px;
+        margin-top: 5px;
+        margin-bottom: 0px;
+        margin-right: 0px;
+    }
+
+    .subheading,
+    .subheading {
+        width: auto;
+        position: relative;
+        margin-left: 0px;
+    }
 }
 
-.dashboard-planes-selector .plane-icon {
-    position: absolute;
-    right: 0px;
-    bottom: 0px;
-    top: 8px;
-    padding: 0;
-    margin: 0;
-    z-index: 0;
-    width: 125px;
+.dashboard-planes-selector {
+    .plane-icon {
+        position: absolute;
+        right: 0px;
+        bottom: 0px;
+        top: 8px;
+        padding: 0;
+        margin: 0;
+        z-index: 0;
+        width: 125px;
+    }
+
+    .vertical li {
+        ul {
+            width: auto;
+            padding: 0;
+            position: relative;
+            list-style-type: none;
+            background: none;
+
+            li {
+                float: left;
+                width: auto;
+                font-size: 14px;
+                position: relative;
+                margin: 0px;
+                padding: 10px 10px 14px 0;
+                z-index: 999;
+            }
+        }
+
+        .delete {
+            position: absolute;
+            left: 15px;
+            top: 35%;
+            display: none;
+        }
+
+        .handle {
+            position: absolute;
+            right: 0px;
+            width: 40px;
+            top: 25%;
+            display: none;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            z-index: 10;
+
+            .item {
+                float: left;
+                position: relative;
+                width: 20px;
+                height: 5px;
+                margin-top: 3px;
+                margin-left: 12px;
+            }
+        }
+    }
 }
 
 .downloads .plane-icon {
@@ -636,85 +725,6 @@ html, body {
     margin: 0px;
     z-index: 0;
     width: 125px;
-}
-
-.dashboard-planes-selector .vertical li, .downloads .vertical li {
-    overflow: hidden;
-}
-
-.dashboard-planes-selector .plane-icon img, .downloads .plane-icon img {
-    width: 100%;
-    margin: 0px;
-    padding: 0px;
-}
-
-.dashboard-planes-selector .vertical li .holder, .downloads .vertical li .holder {
-    float: left;
-    position: relative;
-    margin: 10px 0 0 10px;
-    padding: 0;
-    width: 100%;
-}
-
-.dashboard-planes-selector .vertical li .delete {
-    position: absolute;
-    left: 15px;
-    top: 35%;
-    display: none;
-}
-
-.dashboard-planes-selector .vertical li .handle {
-    position: absolute;
-    right: 0px;
-    width: 40px;
-    top: 25%;
-    display: none;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    z-index: 10;
-}
-
-.dashboard-planes-selector .vertical li .handle .item {
-    float: left;
-    position: relative;
-    width: 20px;
-    height: 5px;
-    margin-top: 3px;
-    margin-left: 12px;
-}
-
-.dashboard-planes-selector .heading, .downloads .header {
-    width: auto;
-    position: relative;
-    padding: 0px;
-    margin-left: 0px;
-    margin-top: 5px;
-    margin-bottom: 0px;
-    margin-right: 0px;
-}
-
-.dashboard-planes-selector .subheading, .downloads .subheading {
-    width: auto;
-    position: relative;
-    margin-left: 0px;
-}
-
-.dashboard-planes-selector .vertical li ul {
-    width: auto;
-    padding: 0;
-    position: relative;
-    list-style-type: none;
-    background: none;
-}
-
-.dashboard-planes-selector .vertical li ul li {
-    float: left;
-    width: auto;
-    font-size: 14px;
-    position: relative;
-    margin: 0px;
-    padding: 10px 10px 14px 0;
-    z-index: 999;
 }
 
 /** Checklist **/
@@ -878,7 +888,7 @@ html, body {
 
 .shadowTop {
     bottom: auto;
-    top:47px;
+    top: 47px;
 }
 
 /** Loader and Info Boxes **/
@@ -1200,25 +1210,25 @@ form label {
         margin: 0px;
         padding: 0px;
         z-index: 999999;
-    }
 
-    ul li {
-        float: left;
-        width: 100%;
-        margin: 0px;
-        padding: 0px;
-    }
+        li {
+            float: left;
+            width: 100%;
+            margin: 0px;
+            padding: 0px;
 
-    ul li:last-child {
-        border-bottom: 0px;
-        margin-bottom: 0px !important;
-    }
+            &:last-child {
+                border-bottom: 0px;
+                margin-bottom: 0px !important;
+            }
 
-    ul li p {
-        padding: 10px 10px 10px 12px;
-        margin: 0px;
-        font-family: MyriadBold;
-        font-size: 22px;
+            p {
+                padding: 10px 10px 10px 12px;
+                margin: 0px;
+                font-family: MyriadBold;
+                font-size: 22px;
+            }
+        }
     }
 }
 
@@ -1336,21 +1346,21 @@ ul li {
         right: 46px;
         top: 0px;
         height: 46px;
-    }
 
-    .name.name-emergencies {
-        left: 10px;
-        right: 10px;
-    }
+        &.name-emergencies {
+            left: 10px;
+            right: 10px;
+        }
 
-    .name p {
-        max-height: 46px;
-        white-space: nowrap;
-        width: 100%;
-        font-size: 22px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        margin-top: 12px;
+        p {
+            max-height: 46px;
+            white-space: nowrap;
+            width: 100%;
+            font-size: 22px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-top: 12px;
+        }
     }
 
     .nextSection {
@@ -1362,12 +1372,12 @@ ul li {
         overflow: hidden;
         display: none;
         text-align: center;
-    }
 
-    .nextSection .icon {
-        position: relative;
-        margin-top: 5px;
-        font-size: 26px;
+        .icon {
+            position: relative;
+            margin-top: 5px;
+            font-size: 26px;
+        }
     }
 
     .previousSection {
@@ -1379,12 +1389,12 @@ ul li {
         overflow: hidden;
         display: none;
         text-align: center;
-    }
 
-    .previousSection .icon {
-        position: relative;
-        margin-top: 5px;
-        font-size: 26px;
+        .icon {
+            position: relative;
+            margin-top: 5px;
+            font-size: 26px;
+        }
     }
 }
 
@@ -1423,16 +1433,16 @@ ul li {
 
 .CProw {
     display: table-row;
+
+    .CPcell:first-child {
+        text-align: left;
+    }
 }
 
 .CPcell {
     display: table-cell;
     padding-right: 10px;
     text-align: right;
-}
-
-.CProw .CPcell:first-child {
-    text-align: left;
 }
 
 .CPspacer {

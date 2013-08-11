@@ -184,12 +184,6 @@
             <div class="item-large topmenu" data-bind="tap: clearTap, visible: canCheck">
                 <p><i class="icon icon-check-empty"></i></p>
             </div>
-
-
-            <!--<div class="item-middle sections" style="text-align: center;" data-bind="tap: sectionsTap">
-                <div><span id="area" style="margin-right: 2px;" data-bind="html: sectionName"></span></div><i class="icon icon-caret-down"></i>
-            </div>-->
-
         </div>
         <div class="content">
             <div class="section-nav sections" data-bind="tap: sectionsTap">
@@ -246,16 +240,16 @@
             <div class="shadow">
             </div>
         </div>
-            <div class="flyover" data-bind="slideVisible: showSections">
-                <div class="grid check-sections scrollable">
-                    <div class="container inside">
-                        <ul id="check-sections-items" class="vertical" data-bind="foreach: sections">
-                            <li data-bind="tap: parent.sectionTap, attr: {'class': (function() { if(index == parent.section) return 'active'; else return ''; })()}">
-                                <p data-bind="html: name"></p></li>
-                        </ul>
-                    </div>
+        <div class="flyover" data-bind="slideVisible: showSections">
+            <div class="grid check-sections scrollable">
+                <div class="container inside">
+                    <ul id="check-sections-items" class="vertical" data-bind="foreach: sections">
+                        <li data-bind="tap: parent.sectionTap, attr: {'class': (function() { if(index == parent.section) return 'active'; else return ''; })()}">
+                            <p data-bind="html: name"></p></li>
+                    </ul>
                 </div>
             </div>
+        </div>
     </div>
 </article>
 
@@ -279,20 +273,20 @@
                         <li data-link="checklist" data-bind="tap: parent.itemTap">
                             <div class="icon">
                                 <div data-bind="attr: {
-                                        'class': (function() {
+                                    'class': (function() {
                                         if(name) {
-                                        if(name.toLowerCase().indexOf('electric') > -1) return 'electrical';
-                                        else if(name.toLowerCase().indexOf('fire') > -1) return 'fire';
-                                        else if(name.toLowerCase().indexOf('control') > -1) return 'flight-controls';
-                                        else if(name.toLowerCase().indexOf('instrument') > -1) return 'flight-instruments';
-                                        else if(name.toLowerCase().indexOf('landing') > -1) return 'forced-landing';
-                                        else if(name.toLowerCase().indexOf('nav') > -1 || name.toLowerCase().indexOf('pilot') > -1) return 'nav-autopilot';
-                                        else if(name.toLowerCase().indexOf('propeller') > -1 || name.toLowerCase().indexOf('engine') > -1) return 'propeller-engine';
-                                        else if(name.toLowerCase().indexOf('other') > -1) return 'other';
-                                        else return 'other'; }
+                                            if(name.toLowerCase().indexOf('electric') > -1) return 'electrical';
+                                            else if(name.toLowerCase().indexOf('fire') > -1) return 'fire';
+                                            else if(name.toLowerCase().indexOf('control') > -1) return 'flight-controls';
+                                            else if(name.toLowerCase().indexOf('instrument') > -1) return 'flight-instruments';
+                                            else if(name.toLowerCase().indexOf('landing') > -1) return 'forced-landing';
+                                            else if(name.toLowerCase().indexOf('nav') > -1 || name.toLowerCase().indexOf('pilot') > -1) return 'nav-autopilot';
+                                            else if(name.toLowerCase().indexOf('propeller') > -1 || name.toLowerCase().indexOf('engine') > -1) return 'propeller-engine';
+                                            else if(name.toLowerCase().indexOf('other') > -1) return 'other';
+                                            else return 'other'; }
                                         else { return 'other'; }
-                                        })()}"
-                                        ></div>
+                                    })()}"
+                                ></div>
                             </div>
                             <div class="section-name" data-bind="html: name"></div>
                         </li>

@@ -158,8 +158,7 @@
 <article id="checklist" data-page-show="inVisible" data-page-hide="outVisible" class="page">
     <div class="wrap">
         <div class="topbar topbar-checklist">
-            <span data-bind="text: checklist.manufacturer.name"></span> <span
-                data-bind="text: checklist.model.name"></span>
+            <span data-bind="text: checklist.manufacturer.name"></span> <span data-bind="text: checklist.model.name"></span>
 
             <div class="item-large back" data-bind="tap: backTap">
                 <p><i class="icon icon-double-angle-left"></i></p>
@@ -229,14 +228,14 @@
             </div>
             <div class="shadow">
             </div>
-            <div class="flyover" data-bind="slideVisible: showSections">
-                <div class="grid check-sections">
-                    <div class="container inside scrollable">
-                        <ul id="check-sections-items" class="vertical" data-bind="foreach: sections">
-                            <li data-bind="tap: parent.sectionTap, attr: {'class': (function() { if(index == parent.section) return 'active'; else return ''; })()}">
-                                <p data-bind="html: name"></p></li>
-                        </ul>
-                    </div>
+        </div>
+        <div class="flyover" data-bind="slideVisible: showSections">
+            <div class="grid check-sections scrollable">
+                <div class="container inside">
+                    <ul id="check-sections-items" class="vertical" data-bind="foreach: sections">
+                        <li data-bind="tap: parent.sectionTap, attr: {'class': (function() { if(index == parent.section) return 'active'; else return ''; })()}">
+                            <p data-bind="html: name"></p></li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -263,20 +262,20 @@
                         <li data-link="checklist" data-bind="tap: parent.itemTap">
                             <div class="icon">
                                 <div data-bind="attr: {
-                                            'class': (function() {
-                                                if(name) {
-                                                    if(name.toLowerCase().indexOf('electric') > -1) return 'electrical';
-                                                    else if(name.toLowerCase().indexOf('fire') > -1) return 'fire';
-                                                    else if(name.toLowerCase().indexOf('control') > -1) return 'flight-controls';
-                                                    else if(name.toLowerCase().indexOf('instrument') > -1) return 'flight-instruments';
-                                                    else if(name.toLowerCase().indexOf('landing') > -1) return 'forced-landing'; 
-                                                    else if(name.toLowerCase().indexOf('nav') > -1 || name.toLowerCase().indexOf('pilot') > -1) return 'nav-autopilot';
-                                                    else if(name.toLowerCase().indexOf('propeller') > -1 || name.toLowerCase().indexOf('engine') > -1) return 'propeller-engine'; 
-                                                    else if(name.toLowerCase().indexOf('other') > -1) return 'other';
-                                                    else return 'other'; }
-                                                else { return 'other'; }
-                                            })()}"
-                                        ></div>
+                                    'class': (function() {
+                                        if(name) {
+                                            if(name.toLowerCase().indexOf('electric') > -1) return 'electrical';
+                                            else if(name.toLowerCase().indexOf('fire') > -1) return 'fire';
+                                            else if(name.toLowerCase().indexOf('control') > -1) return 'flight-controls';
+                                            else if(name.toLowerCase().indexOf('instrument') > -1) return 'flight-instruments';
+                                            else if(name.toLowerCase().indexOf('landing') > -1) return 'forced-landing';
+                                            else if(name.toLowerCase().indexOf('nav') > -1 || name.toLowerCase().indexOf('pilot') > -1) return 'nav-autopilot';
+                                            else if(name.toLowerCase().indexOf('propeller') > -1 || name.toLowerCase().indexOf('engine') > -1) return 'propeller-engine';
+                                            else if(name.toLowerCase().indexOf('other') > -1) return 'other';
+                                            else return 'other'; }
+                                        else { return 'other'; }
+                                    })()}"
+                                ></div>
                             </div>
                             <div class="section-name" data-bind="html: name"></div>
                         </li>
@@ -290,7 +289,7 @@
 </article>
 
 <!-- Emergencies Section Selection -->
-<article id="emergencies-sections" data-page-show="slideInRight"
+<article id="emergencies-sections" data-bind="swipeRight: backTap" data-page-show="slideInRight"
          data-page-hide="slideOutRight" class="page">
     <div class="wrap">
         <div class="topbar">
@@ -323,7 +322,7 @@
 </article>
 
 <!-- Product Download Listing -->
-<article id="downloads" data-page-show="slideInLeft" data-page-hide="slideOutLeft"
+<article id="downloads" data-bind="swipeRight: backTap" data-page-show="slideInLeft" data-page-hide="slideOutLeft"
          class="page">
     <div class="wrap">
         <div class="topbar">
