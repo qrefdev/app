@@ -35,8 +35,7 @@ html,body{margin:0;padding:0;width:100%;height:100%;font-family:Myriad,Helvetica
 .dashbar .icon{font-size:18px}
 .dashbar .header{position:absolute;width:95%;z-index:1;bottom:0;left:0;right:0;height:32px;padding:0;margin:0;text-align:right;font-family:Myriad;font-size:22px;top:23px}
 .dashbar .icon{font-size:18px}
-.topbar{position:absolute;top:0;left:0;right:0;width:100%;height:36px;font-size:12px;overflow:visible;padding:0;margin:0;z-index:1100;line-height:40px;text-align:center}
-.topbar .item{float:left;position:relative;width:18.25%;height:32px;z-index:5;cursor:pointer;text-align:center}
+.topbar{position:absolute;top:0;left:0;right:0;width:100%;height:36px;font-size:12px;overflow:visible;padding:0;margin:0;z-index:1100;line-height:40px;text-align:center}.topbar .item{float:left;position:relative;width:18.25%;height:32px;z-index:5;cursor:pointer;text-align:center}
 .topbar .item-middle-empty{float:left;position:relative;width:45%;z-index:10;cursor:pointer;text-align:center;text-overflow:ellipsis;height:32px}
 .topbar .item-middle{float:left;position:relative;width:45%;z-index:10;cursor:pointer;text-align:center;text-overflow:ellipsis}
 .topbar .item-middle-large{float:left;position:relative;width:50%;z-index:10;cursor:pointer;height:auto;text-align:center;text-overflow:ellipsis}
@@ -46,7 +45,7 @@ html,body{margin:0;padding:0;width:100%;height:100%;font-family:Myriad,Helvetica
 .topbar .item-middle p{margin:8px;margin-top:12px;white-space:nowrap;width:95%;overflow:hidden;text-overflow:ellipsis;max-height:24px}
 .topbar .item-middle div{float:left;max-height:24px;margin:8px 0 8px 0;white-space:nowrap;width:85%;overflow:hidden;text-overflow:ellipsis;position:relative}
 .topbar .item-middle i{float:left;position:relative;margin-right:5px;margin-top:3px}
-.topbar .item-large{float:left;position:relative;width:18%;height:35px;z-index:5;cursor:pointer;text-align:center}
+.topbar .item-large{float:left;position:relative;width:18%;height:36px;z-index:5;cursor:pointer;text-align:center}
 .topbar .item p{margin:2px 0 0 0;padding:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .topbar .item-large p{margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .topbar .back p{margin-top:-1px}
@@ -69,19 +68,19 @@ html,body{margin:0;padding:0;width:100%;height:100%;font-family:Myriad,Helvetica
 .dashboard-planes-selector,.downloads{overflow:auto;position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%}.dashboard-planes-selector .vertical li,.downloads .vertical li,.dashboard-planes-selector .vertical li,.downloads .vertical li{overflow:hidden}
 .dashboard-planes-selector .plane-icon img,.downloads .plane-icon img,.dashboard-planes-selector .plane-icon img,.downloads .plane-icon img{width:100%;margin:0;padding:0}
 .dashboard-planes-selector .vertical li .holder,.downloads .vertical li .holder,.dashboard-planes-selector .vertical li .holder,.downloads .vertical li .holder{float:left;position:relative;margin:10px 0 0 10px;padding:0;width:100%}
-.dashboard-planes-selector .heading,.downloads .heading,.dashboard-planes-selector .header,.downloads .header{width:auto;position:relative;padding:0;margin-left:0;margin-top:5px;margin-bottom:0;margin-right:0}
-.dashboard-planes-selector .subheading,.downloads .subheading,.dashboard-planes-selector .subheading,.downloads .subheading{width:auto;position:relative;margin-left:0}
+.dashboard-planes-selector .heading,.downloads .heading,.dashboard-planes-selector .header,.downloads .header{width:auto;position:relative;padding:0;margin-left:0;margin-top:5px;margin-bottom:0;margin-right:0;font-size:23px}
+.dashboard-planes-selector .subheading,.downloads .subheading,.dashboard-planes-selector .subheading,.downloads .subheading{width:auto;position:relative;margin-left:0;font-size:14px}
 .dashboard-planes-selector .plane-icon{position:absolute;right:0;bottom:0;top:8px;padding:0;margin:0;z-index:0;width:125px}
-.dashboard-planes-selector .vertical li ul{width:auto;padding:0;position:relative;list-style-type:none;background:none}.dashboard-planes-selector .vertical li ul li{float:left;width:auto;font-size:14px;position:relative;margin:0;padding:10px 10px 14px 0;z-index:999}
+.dashboard-planes-selector .vertical li ul{width:auto;padding:0;position:relative;list-style-type:none;background:none}.dashboard-planes-selector .vertical li ul li{float:left;width:auto;position:relative;margin:0;padding:10px 10px 14px 0;font-size:14px;min-width:40px}
 .dashboard-planes-selector .vertical li .delete{position:absolute;left:15px;top:35%;display:none}
 .dashboard-planes-selector .vertical li .handle{position:absolute;right:0;width:40px;top:25%;display:none;padding-top:5px;padding-bottom:5px;z-index:10}.dashboard-planes-selector .vertical li .handle .item{float:left;position:relative;width:20px;height:5px;margin-top:3px;margin-left:12px}
 .downloads .plane-icon{position:absolute;right:0;bottom:0;top:5px;padding:0;margin:0;z-index:0;width:125px}
 .checklist{position:absolute;width:100%;left:0;right:0;bottom:0;top:0;height:100%;overflow:auto}
 .vertical:last-child li:last-child{margin-bottom:15px}
 .vertical li{overflow:hidden}.vertical li .icon{font-size:34px;float:left;position:relative;margin-top:15px;margin-left:5px;display:block}
-.vertical li .holder{float:left;position:relative;margin-top:10px;margin-left:10px;margin-bottom:1px;width:98%}
+.vertical li .holder{float:left;position:relative;margin-top:9px;margin-left:10px;margin-bottom:1px;width:98%}
 .vertical li .check{position:relative;width:auto}
-.vertical li .response{margin-top:2px;margin-bottom:7px;position:relative;width:auto;text-transform:uppercase}
+.vertical li .response{margin-top:1px;margin-bottom:6px;position:relative;width:auto;text-transform:uppercase;font-size:16px}
 .vertical li .delete{position:absolute;left:15px;top:28%;display:none}
 .vertical li .handle{position:absolute;right:0;width:40px;top:10px;display:none}
 .vertical li .handle .item{float:left;position:relative;width:20px;height:5px;margin-top:3px;margin-left:12px}
@@ -89,7 +88,7 @@ html,body{margin:0;padding:0;width:100%;height:100%;font-family:Myriad,Helvetica
 .checklist .vertical li .checkmark,.downloads .vertical li .checkmark{position:absolute;width:30px;height:30px;right:12px;top:12px;border-radius:5px;-webkit-border-radius:5px}
 .checklist .vertical li .checkmark .checker,.downloads .vertical li .checkmark .checker{width:30px;height:30px}
 .checklist .vertical li .checkmark .checker .icon,.downloads .vertical li .checkmark .checker .icon{position:absolute;left:-10px;top:-24px;font-size:40px}
-.downloads .vertical li .checkmark .checker .icon{top:-5px;left:-5px}
+.downloads .vertical li .checkmark .checker .icon{top:-22px;left:-10px}
 .check-sections{position:absolute;top:0;left:0;width:100%;height:auto;bottom:0;overflow:auto}
 .check-sections-container{position:absolute;top:88px;overflow:hidden}
 .check-sections .vertical{float:left;position:relative;width:100%;margin:0;margin-top:0;padding:0;list-style-type:none}
@@ -104,12 +103,9 @@ form{float:left;position:relative;width:100%;padding:10px;margin:0;box-sizing:bo
 form label{position:relative;margin:10px auto;padding:5px;text-align:left;width:90%;height:16px;font-size:12px;-webkit-border-radius:10px;border-radius:10px;display:block}
 .container{position:absolute;width:100%;height:auto;top:0;left:0;overflow-x:hidden}
 .dashcontent{position:absolute;width:100%;top:96px;bottom:60px;left:0;right:0;overflow-x:hidden}
-.emergencies{position:absolute;width:100%;left:0;right:0;bottom:0;top:0;height:100%;overflow:auto;list-style-type:none}
-.emergencies .icon{float:left;width:100%;position:relative;text-align:center}
-.emergencies .icon img{width:45%}
+.emergencies{position:absolute;width:100%;left:0;right:0;bottom:0;top:0;height:100%;overflow:auto;list-style-type:none}.emergencies .icon{float:left;width:100%;position:relative;text-align:center;margin-bottom:10px}.emergencies .icon img{width:45%}
 .emergencies .section-name{float:left;position:relative;width:100%;text-align:center;font-size:14px;text-overflow:ellipsis;white-space:nowrap;overflow:hidden}
-.emergencies ul{position:relative;width:100%;margin:0;padding:0}
-.emergencies ul li{float:left;position:relative;width:43%;margin:0 10px 10px 10px;overflow:hidden}
+.emergencies ul{position:relative;width:100%;margin:0;padding:0}.emergencies ul li{float:left;position:relative;width:43%;margin:0 10px 10px 10px;overflow:hidden}
 .topbar .back{float:left}
 .topbar .topmenu{float:right}
 #emergency-items{list-style-type:none;padding:0;margin:10px 0 0 0}
@@ -126,17 +122,19 @@ form label{position:relative;margin:10px auto;padding:5px;text-align:left;width:
 .details .row{float:left;position:relative;width:100%;margin:0}
 .productDetailsListing{overflow-y:auto;overflow-x:hidden}
 .currentLogin{width:92%;height:auto;font-size:12px;position:relative;padding:5px;margin:5px;font-family:MyriadBold}
-.currentLogin .icon{font-size:14px;color:#f1f1f1;float:left}
+.currentLogin .icon{font-size:14px;float:left}
 .currentLogin .user{float:left;position:relative;width:auto;height:auto;margin-left:5px;text-wrap:unrestricted}
-.version{position:absolute;bottom:5px;left:20px;color:#d4d4d4;font-size:11px}
+.version{position:absolute;bottom:5px;left:20px;font-size:11px}
 .username{position:absolute;left:20px;bottom:18px;font-family:MyriadBold;font-size:14px}
 .row{float:left;position:relative;width:100%;padding-top:5px}
 .flyover{position:absolute;top:0;left:0;right:0;width:100%;height:auto;display:none;z-index:802;margin-top:82px;overflow:auto;bottom:0}.flyover .inside{position:relative;overflow:auto;width:100%;z-index:999999}
 .flyover ul{float:left;width:100%;list-style-type:none;margin:0;padding:0;z-index:999999}.flyover ul li{float:left;width:100%;margin:0;padding:0}.flyover ul li:last-child{border-bottom:0;margin-bottom:0 !important}
 .flyover ul li p{padding:10px 10px 10px 12px;margin:0;font-family:MyriadBold;font-size:22px}
+.flyover .vertical li .icon{float:none;margin-top:auto;top:5px;display:inline-block}
+.menu ul li .icon{padding:0 0 0 9px}
 .ball{top:0;left:0;position:absolute;background-color:rgba(0,0,0,0.5);border:5px solid rgba(255,20,20,0.9);opacity:.9;border-top:5px solid rgba(0,0,0,0);border-left:5px solid rgba(0,0,0,0);border-radius:50px;box-shadow:0 0 35px #ff1414;width:50px;height:50px;-moz-animation:spin .5s infinite linear;-webkit-animation:spin .5s infinite linear}
 .ball1{background-color:rgba(0,0,0,0.5);border:5px solid rgba(255,20,20,0.9);opacity:.9;border-top:5px solid rgba(0,0,0,0);border-left:5px solid rgba(0,0,0,0);border-radius:50px;box-shadow:0 0 15px #ff1414;width:30px;height:30px;position:absolute;top:10px;left:10px;-moz-animation:spinoff .5s infinite linear;-webkit-animation:spinoff .5s infinite linear}
-@-moz-keyframes spin{0%{-moz-transform:rotate(0deg)} 100%{-moz-transform:rotate(360deg)}}@-moz-keyframes spinoff{0%{-moz-transform:rotate(0deg)} 100%{-moz-transform:rotate(-360deg)}}@-webkit-keyframes spin{0%{-webkit-transform:rotate(0deg)} 100%{-webkit-transform:rotate(360deg)}}@-webkit-keyframes spinoff{0%{-webkit-transform:rotate(0deg)} 100%{-webkit-transform:rotate(-360deg)}}.scrollbar{position:absolute;right:5px;width:5px;background:#f1f1f1;opacity:.5;height:100px;z-index:9999999;border-radius:2px;-webkit-border-radius:2px}
+@-moz-keyframes spin{0%{-moz-transform:rotate(0deg)} 100%{-moz-transform:rotate(360deg)}}@-moz-keyframes spinoff{0%{-moz-transform:rotate(0deg)} 100%{-moz-transform:rotate(-360deg)}}@-webkit-keyframes spin{0%{-webkit-transform:rotate(0deg)} 100%{-webkit-transform:rotate(360deg)}}@-webkit-keyframes spinoff{0%{-webkit-transform:rotate(0deg)} 100%{-webkit-transform:rotate(-360deg)}}.scrollbar{position:absolute;right:5px;width:5px;background:#fff;opacity:.4;height:100px;z-index:9999999;border-radius:2px;-webkit-border-radius:2px}
 ul li{cursor:pointer}
 #checklist-nav{position:absolute;height:auto;bottom:0;width:100%;z-index:800}
 .section-nav{position:absolute;top:0;height:46px;left:0;width:100%;overflow:hidden;text-align:center;z-index:900}.section-nav .name{position:absolute;left:46px;right:46px;top:0;height:46px}.section-nav .name.name-emergencies{left:10px;right:10px}
@@ -150,8 +148,9 @@ ul li{cursor:pointer}
 .CProw{display:table-row}.CProw .CPcell:first-child{text-align:left}
 .CPcell{display:table-cell;padding-right:10px;text-align:right}
 .CPspacer{height:10px}
+.logoSection{z-index:9999;position:absolute;top:37px;width:100%;height:60px}.logoSection p{font-family:Myriad;font-size:30px;text-align:left;margin:0;padding:14px 0 0 10px;letter-spacing:-0.04em}
+.logoSection .logo{background-size:auto 100%;height:60px;width:153px;position:absolute;right:-1px;top:0}
 @media only screen and (orientation:portrait){.emergencies ul li{width:43%} .CProw{font-size:13pt}}@media only screen and (orientation:landscape){.emergencies ul li{width:21%} .CProw{font-size:inherit} .vertical li .holder{margin-bottom:0}}.tablet{}.tablet .dashcontent{top:120px}
-.tablet .logoSection{height:60px}
 .tablet .checklist .vertical li .check,.tablet .downloads .vertical li .check{float:left;width:49%}.tablet .checklist .vertical li .check.fullwidth,.tablet .downloads .vertical li .check.fullwidth{width:100%}
 .tablet .checklist .vertical li .response,.tablet .downloads .vertical li .response{float:right;width:49%}
 .tablet .checklist .vertical li .handle,.tablet .downloads .vertical li .handle{top:0}.tablet .checklist .vertical li .handle .item,.tablet .downloads .vertical li .handle .item{height:4px}
@@ -164,6 +163,17 @@ ul li{cursor:pointer}
 .tablet .dashboard-planes-selector .plane-icon{width:175px}
 .tablet .dashboard-planes-selector .vertical li ul li{padding:10px 40px 14px 0}
 .tablet .username{bottom:21px;font-size:17px}
-.tablet .flyover{bottom:auto}
+.tablet .flyover{bottom:auto;margin-top:82px}
 .tablet .check-sections{position:relative}
-@media only screen and (orientation:portrait){.tablet .emergencies ul li{width:22%} .tablet .CProw{font-size:inherit}.tablet .CProw .CPcell{padding-right:20px}}@media only screen and (orientation:landscape){.tablet .emergencies ul li{width:22%} .tablet .CProw{font-size:inherit}.tablet .CProw .CPcell{padding-right:20px}}
+.tablet .dashboard-planes-selector .vertical li ul li{font-size:20px;min-width:60px}
+.tablet .dashboard-planes-selector .heading,.tablet .dashboard-planes-selector .theme-light .downloads .heading{font-size:26px}
+.tablet .dashboard-planes-selector .subheading,.tablet .dashboard-planes-selector .theme-light .downloads .subheading{font-size:18px}
+.tablet .logoSection{height:84px}.tablet .logoSection p{font-size:45px;padding:19px 0 0 10px}
+.tablet .logoSection .logo{height:84px;width:214px}
+.tablet .menu ul li p{font-size:20px}
+.tablet .menu ul li .icon{padding:15px 0 15px 15px}
+.tablet .emergencies ul li .icon div{height:100px}
+.tablet .e6b .textbox{width:300px}
+.tablet .checklist .vertical li .check{margin-bottom:6px}
+.tablet .checklist .vertical li .response{font-size:21px}
+@media only screen and (orientation:portrait){.tablet .emergencies ul li{width:22%;margin-top:15px} .tablet .CProw{font-size:inherit}.tablet .CProw .CPcell{padding-right:20px}}@media only screen and (orientation:landscape){.tablet .emergencies ul li{width:22%;margin-top:15px} .tablet .CProw{font-size:inherit}.tablet .CProw .CPcell{padding-right:20px}}

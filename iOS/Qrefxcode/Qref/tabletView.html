@@ -46,6 +46,7 @@
     <div class="wrap">
         <div class="topbar">
             <span>Dashboard</span>
+
             <div class="item-large topmenu" data-bind="tap: menuTap">
                 <p><i class="icon icon-th-list"></i></p>
             </div>
@@ -56,6 +57,7 @@
         </div>
         <div class="logoSection">
             <p>My Aircraft</p>
+
             <div class="logo"></div>
         </div>
 
@@ -84,7 +86,9 @@
 
                                 <div class="heading" data-bind="html: manufacturer.name + ' ' + model.name"></div>
                                 <div class="subheading">
-                                	<span data-bind="html: model.description, visible: model.description" style="margin-top: 0px"></span>, <span data-bind="html: model.modelYear, visible: model.modelYear"></span>
+                                    <span data-bind="html: model.description, visible: model.description"
+                                          style="margin-top: 0px"></span>, <span
+                                        data-bind="html: model.modelYear, visible: model.modelYear"></span>
                                 </div>
                                 <ul>
                                     <li class="product-subarea" data-bind="tap: parent.subItemTap"
@@ -158,7 +162,8 @@
 <article id="checklist" data-page-show="inVisible" data-page-hide="outVisible" class="page">
     <div class="wrap">
         <div class="topbar topbar-checklist">
-            <span data-bind="text: checklist.manufacturer.name"></span> <span data-bind="text: checklist.model.name"></span>
+            <span data-bind="text: checklist.manufacturer.name"></span> <span
+                data-bind="text: checklist.model.name"></span>
 
             <div class="item-large back" data-bind="tap: backTap">
                 <p><i class="icon icon-double-angle-left"></i></p>
@@ -176,7 +181,7 @@
         </div>
         <div class="content">
             <div class="section-nav sections" data-bind="tap: sectionsTap">
-                <i class="icon icon-caret-down" style="position: absolute; left: 49%; bottom: -3px;"></i>
+                <i class="icon icon-caret-down" style="position: absolute; left: 50%; bottom: -3px; margin-left: -4px;"></i>
 
                 <div class="name"
                      data-bind="attr: {'class': (function() { if(list == 'emergencies') {return 'name name-emergencies';} else {return 'name';}})()}">
@@ -275,7 +280,7 @@
                                             else return 'other'; }
                                         else { return 'other'; }
                                     })()}"
-                                ></div>
+                                        ></div>
                             </div>
                             <div class="section-name" data-bind="html: name"></div>
                         </li>
@@ -423,37 +428,39 @@
         <div class="row" style="margin-top: 58px;">
             <div class="topConversion" data-bind="html: topType">MPH</div>
             <input id="convertTop" type="number" class="textbox"
-                   data-bind="value: topConversionValue, keyup: conversionTopKeyUp, keydown: conversionTopKeyDown" style="" value="0"/>
+                   data-bind="value: topConversionValue, keyup: conversionTopKeyUp, keydown: conversionTopKeyDown"
+                   style="" value="0"/>
         </div>
         <div class="row">
             <div class="bottomConversion" data-bind="html: bottomType">KTS</div>
-            <input id="convertBottom" data-bind="value: bottomConversionValue, keyup: conversionBottomKeyUp, keydown: conversionBottomKeyDown"
+            <input id="convertBottom"
+                   data-bind="value: bottomConversionValue, keyup: conversionBottomKeyUp, keydown: conversionBottomKeyDown"
                    class="textbox" type="number" value="0"/>
         </div>
-        <div class="flyover" data-bind="slideVisible: showConversions" style="margin-top: 27px; z-index:800;">
-            <div class="grid available-conversions">
-                <div class="container inside scrollable">
-                    <ul id="conversion-items" class="vertical">
-                        <li data-bind="tap: conversionTap" class="active" data-multiplier="0.868976242"
-                            data-inverse="1.150779448" data-top="MPH" data-bottom="KTS" data-value="0"><p>MPH <i
-                                class="icon icon-resize-horizontal"></i> KTS</p></li>
-                        <li data-bind="tap: conversionTap" data-multiplier="0.3048" data-inverse="3.280839895"
-                            data-top="FT" data-bottom="M" data-value="1"><p>FT <i
-                                class="icon icon-resize-horizontal"></i> M</p></li>
-                        <li data-bind="tap: conversionTap" data-multiplier="1.15077945" data-inverse="0.86897624"
-                            data-top="NM" data-bottom="SM" data-value="2"><p>NM <i
-                                class="icon icon-resize-horizontal"></i> SM</p></li>
-                        <li data-bind="tap: conversionTap" data-multiplier="1.852" data-inverse="0.539956803"
-                            data-top="NM" data-bottom="KM" data-value="3"><p>NM <i
-                                class="icon icon-resize-horizontal"></i> KM</p></li>
-                        <li data-bind="tap: conversionTap" data-multiplier="3.78541" data-inverse="0.264172177"
-                            data-top="GAL" data-bottom="LIT" data-value="4"><p>GAL <i
-                                class="icon icon-resize-horizontal"></i> LIT</p></li>
-                        <li data-bind="tap: conversionTap" data-multiplier="0.453592" data-inverse="2.20462442"
-                            data-top="LB" data-bottom="KG" data-value="5"><p>LB <i
-                                class="icon icon-resize-horizontal"></i> KG</p></li>
-                    </ul>
-                </div>
+    </div>
+    <div class="flyover" data-bind="slideVisible: showConversions">
+        <div class="grid available-conversions">
+            <div class="container inside scrollable">
+                <ul id="conversion-items" class="vertical">
+                    <li data-bind="tap: conversionTap" class="active" data-multiplier="0.868976242"
+                        data-inverse="1.150779448" data-top="MPH" data-bottom="KTS" data-value="0"><p>MPH <i
+                            class="icon icon-resize-horizontal"></i> KTS</p></li>
+                    <li data-bind="tap: conversionTap" data-multiplier="0.3048" data-inverse="3.280839895"
+                        data-top="FT" data-bottom="M" data-value="1"><p>FT <i
+                            class="icon icon-resize-horizontal"></i> M</p></li>
+                    <li data-bind="tap: conversionTap" data-multiplier="1.15077945" data-inverse="0.86897624"
+                        data-top="NM" data-bottom="SM" data-value="2"><p>NM <i
+                            class="icon icon-resize-horizontal"></i> SM</p></li>
+                    <li data-bind="tap: conversionTap" data-multiplier="1.852" data-inverse="0.539956803"
+                        data-top="NM" data-bottom="KM" data-value="3"><p>NM <i
+                            class="icon icon-resize-horizontal"></i> KM</p></li>
+                    <li data-bind="tap: conversionTap" data-multiplier="3.78541" data-inverse="0.264172177"
+                        data-top="GAL" data-bottom="LIT" data-value="4"><p>GAL <i
+                            class="icon icon-resize-horizontal"></i> LIT</p></li>
+                    <li data-bind="tap: conversionTap" data-multiplier="0.453592" data-inverse="2.20462442"
+                        data-top="LB" data-bottom="KG" data-value="5"><p>LB <i
+                            class="icon icon-resize-horizontal"></i> KG</p></li>
+                </ul>
             </div>
         </div>
     </div>
@@ -804,6 +811,16 @@
                     <input id="checkingCheckbox" type="checkbox"/>
                 </label>
             </li>
+            <!--
+            <li data-bind="visible: token">
+                <i class="icon icon-moon"></i>
+
+                <p>Night Theme</p>
+                <label style="position: absolute; top: 9px; right: 13px;" onclick="return false;">
+                    <input class="nightCheckbox" id="nightCheckbox" type="checkbox"/>
+                </label>
+            </li>
+            -->
             <li data-link="changePassword" data-bind="tap: menuNavTap, visible: token" id="changepassword-menu"><i
                     class="icon icon-lock"></i>
 
@@ -874,7 +891,7 @@
         <div class="ball"></div>
         <div class="ball1"></div>
     </figure>
-    <div style="width: 100%; color: #ffffff; text-align: center; font-size: 24px; position: absolute; bottom: 25%; left: 0px;">
+    <div class="modalText">
         <p>Loading</p>
     </div>
 </div>
@@ -884,7 +901,7 @@
         <div class="ball"></div>
         <div class="ball1"></div>
     </figure>
-    <div style="width: 100%; color: #ffffff; text-align: center; font-size: 24px; position: absolute; bottom: 25%; left: 0px;">
+    <div class="modalText">
         <p>Syncing</p>
     </div>
 </div>
@@ -894,11 +911,12 @@
         <div class="ball"></div>
         <div class="ball1"></div>
     </figure>
-    <div style="width: 100%; color: #ffffff; text-align: center; font-size: 24px; position: absolute; bottom: 25%; left: 0px;">
+    <div class="modalText">
         <p>Saving Changes</p>
     </div>
 </div>
 
+<!-- Modal Screens -->
 <div class="modal" id="savebox">
     <figure class="info">
         <figcaption class="data">Your changes have been saved.</figcaption>

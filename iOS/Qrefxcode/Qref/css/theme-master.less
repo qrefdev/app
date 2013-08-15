@@ -1,7 +1,3 @@
-html, body {
-    background: @colorBody;
-}
-
 a {
     font-size: 16px;
     font-weight: normal;
@@ -39,7 +35,7 @@ a {
 // Page Wrapper
 
 .wrap {
-    background: white;
+    background: @colorBody;
     background-size: 100% 100%;
     //-webkit-box-shadow: 5px 0px 10px 1px rgba(0, 0, 0, 0.5);
     //box-shadow: 5px 0px 10px 1px rgba(0, 0, 0, 0.5);
@@ -51,7 +47,7 @@ a {
     background: @colorBody;
 
     .item div .icon {
-        color: @colorNavText;
+        color: @colorNavIcon;
     }
 
     ul li {
@@ -126,33 +122,16 @@ a {
 .logoSection {
     color: @colorTopText;
     background-color: @colorSectionnav;
-    -webkit-box-shadow: 0 5px 10px @colorDashShadow;
-    box-shadow: 0 5px 10px @colorDashShadow;
-    z-index: 9999;
-    position: absolute;
-    top: 36px;
-    width: 100%;
-    height: 60px;
+    -webkit-box-shadow: 0 5px 10px @colorShadowOpaque;
+    box-shadow: 0 5px 10px @colorShadowOpaque;
     border-bottom: 1px solid @colorSectionnavBorder;
 
     p {
-        font-family: Myriad;
-        font-size: 30px;
-        text-align: left;
-        margin: 0;
-        padding: 14px 0 0 10px;
-        letter-spacing: -0.04em;
-        color: @colorDashHeading;
+        color: @colorDashHeader;
     }
 
     .logo {
         background: url('../images/@{skin}/logo.png') 0 0 no-repeat;
-        background-size: auto 100%;
-        height: 60px; // resized from 84px to fit smaller area
-        width: 153px; // resized from 214px to fit smaller area
-        position: absolute;
-        right: 0;
-        top: 0;
     }
 }
 
@@ -173,14 +152,12 @@ a {
     .item-large {
         font-size: 16px;
         max-width: 100px;
-    }
-}
 
-// Grid System
-.grid .separator {
-    background: #1f1f1f;
-    color: #84010;
-    font-size: 16px;
+        &.active {
+            color: @colorTopActiveText;
+            background-color: @colorTopActiveBackground;
+        }
+    }
 }
 
 // Button Theme
@@ -217,42 +194,42 @@ button,
         margin-top: 5px;
         padding: 0;
         list-style-type: none;
-    }
 
-    ul li {
-        float: left;
-        position: relative;
-        width: 100%;
-        text-align: left;
-        overflow: hidden;
-        height: 50px;
-        border-top: 1px solid @colorMenuBorderTop;
-        border-bottom: 1px solid @colorMenuBorderBottom;
-    }
-
-    ul li:first-child {
-        border-top: none;
-    }
-
-    ul li:last-child {
-        border-bottom: none;
-    }
-
-    ul li .icon {
-        float: left;
-        position: relative;
-        font-size: 24px;
-        padding: 0px 0 0px 9px;
-    }
-
-    ul li p {
-        float: left;
-        position: relative;
-        width: auto;
-        margin: 0px;
-        padding: 16px;
-        font-size: 18px;
-        font-family: Myriad;
+        li {
+            float: left;
+            position: relative;
+            width: 100%;
+            text-align: left;
+            overflow: hidden;
+            height: 50px;
+            border-top: 1px solid @colorMenuBorderTop;
+            border-bottom: 1px solid @colorMenuBorderBottom;
+        }
+    
+        li:first-child {
+            border-top: none;
+        }
+    
+        li:last-child {
+            border-bottom: none;
+        }
+    
+        li .icon {
+            float: left;
+            position: relative;
+            font-size: 24px;
+            width: 23px;
+        }
+    
+        li p {
+            float: left;
+            position: relative;
+            width: auto;
+            margin: 0px;
+            padding: 16px;
+            font-size: 18px;
+            font-family: Myriad;
+        }
     }
 }
 
@@ -270,7 +247,6 @@ button,
 .downloads {
     .heading {
         color: @colorDashHeading;
-        font-size: 23px;
         font-family: Myriad;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -279,7 +255,6 @@ button,
 
     .subheading {
         color: @colorDashSubheading;
-        font-size: 14px;
         font-family: Myriad;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -303,17 +278,20 @@ button,
         font-size: 13px;
     }
 
+    .plane-icon {
+        opacity: @colorDashPlaneOpacity;
+    }
+
     .vertical {
         li {
             color: @colorDashText;
-            border-top: 1px solid #ccc;
+            border-top: 1px solid @colorChecklistBorder;
+            border-bottom: 1px solid @colorChecklistBorder2;
 
             ul li {
-                color: #003edd;
+                color: @colorDashLink;
                 border: none;
                 font-family: Myriad, Helvetica;
-                font-size: 14px;
-                min-width: 40px;
                 text-align: left;
 
                 &.last {
@@ -324,7 +302,7 @@ button,
             .delete {
                 padding: 8px;
                 font-family: MyriadBold, Helvetica;
-                .gradient(#a90329, #6d0019);
+                .gradient(@colorRed1, @colorRed2);
                 font-size: 12px;
                 border-radius: 5px;
                 -webkit-border-radius: 5px;
@@ -333,12 +311,7 @@ button,
         }
 
         .active {
-            background: #eee;
-
-            ul .active {
-                background: transparent;
-                color: #6b737e;
-            }
+            background: @colorDashActiveBackground;
         }
     }
 }
@@ -346,17 +319,16 @@ button,
 .dashboard-planes-selector,
 .checklist {
     .vertical li .handle {
-        .gradient(#003edd, #002ead);
+        .gradient(@colorHandle1, @colorHandle2);
         border-radius: 25px 0px 0px 25px;
         -webkit-border-radius: 25px 0px 0px 25px;
-        border: 2px solid #fff;
         border-right: none;
         padding-left: 5px;
         padding-top: 9px;
         padding-bottom: 10px;
 
         .item {
-            background: #f8f8f8;
+            background: @colorHandleItem;
         }
     }
 }
@@ -365,16 +337,12 @@ button,
     padding-bottom: 8px;
 }
 
-.downloads .vertical .owns {
-    .gradient(#11467c, #001b36);
-    border-top: 1px solid #2b2f32;
-}
-
 // Checklist
 .checklist .vertical li {
-    color: #d6dbdf;
+    color: @colorCheck;
     border-top: 1px solid @colorChecklistBorder;
-    background-color: rgba(255,255,255,.85);
+    border-bottom: 1px solid @colorChecklistBorder2;
+    background-color: @colorCheckBackground;
 
     .check {
         color: @colorCheck;
@@ -393,12 +361,11 @@ button,
     .response {
         color: @colorResponse;
         font-family: Myriad, Helvetica;
-        font-size: 16px;
     }
 
     .delete {
         padding: 8px;
-        .gradient(#a90329, #6d0019);
+        .gradient(@colorRed1, @colorRed2);
         font-size: 12px;
         font-family: MyriadBold, Helvetica;
         border-radius: 5px;
@@ -408,16 +375,15 @@ button,
     .add {
         padding: 5px;
         padding-bottom: 0px;
-        color: #fff;
-        background: #2ad902;
+        color: @colorHandleItem;
+        background: @colorGreen;
         border-radius: 5px;
         -webkit-border-radius: 5px;
-        border: 2px solid #fff;
     }
 
     .active {
         .gradient(@colorBlue2, @colorBlue3);
-        color: #d6dbdf;
+        color: @colorLink;
     }
 }
 
@@ -425,32 +391,31 @@ button,
 .downloads .vertical li .checkmark {
     background: @colorCheckmarkBackground;
     border: 1px solid @colorCheckmarkBorder;
-}
 
-.checklist .vertical li .checkmark .checker .icon,
-.downloads .vertical li .checkmark .checker .icon {
-    color: @colorBlue1;
+    .checker .icon {
+       color: @colorBlue1;
+   }
 }
 
 .shadow {
-    .gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+    .gradient(@colorShadowTransparent, @colorShadowOpaque);
 }
 
 .shadowTop {
-    .gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+    .gradient(@colorShadowOpaque, @colorShadowTransparent);
 }
 
 .loader {
-    color: #d6dbdf;
+    color: @colorModalText;
 }
 
 .info {
-    color: #ddd;
+    color: @colorModalText;
     font-family: Myriad;
 }
 
 form label {
-    color: #cc2200;
+    color: @colorRed1;
     margin: -5px 0 10px;
     padding: 0px;
     font-size: 12px;
@@ -459,19 +424,15 @@ form label {
 
 // Product Details
 #productDetailsListing {
-    color: #d6dbdf;
-}
-
-#productDetailsListing {
     font-family: Myriad, Helvetica;
-    color: #6b737e;
+    color: @colorSecondary;
     font-weight: normal;
     font-size: 20px;
 }
 
 .detailsHeading div {
     font-size: 28px;
-    color: #333;
+    color: @colorPrimary;
     padding: 10px 10px 0;
     letter-spacing: -.03em;
 }
@@ -479,18 +440,18 @@ form label {
 .detailsHeading p,
 .detailsHeading .modelDescription {
     font-size: 14px;
-    color: #333;
+    color: @colorPrimary;
     margin: 0;
     padding: 0 10px 0;
 }
 
 .detailsHeading p:first-child {
-    color: #999;
+    color: @colorSecondary;
 }
 
 .productImage img {
-    border-top: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
+    border-top: 1px solid @colorChecklistBorder;
+    border-bottom: 1px solid @colorChecklistBorder;
 }
 
 // E6B
@@ -527,7 +488,7 @@ form label {
         position: absolute;
         bottom: 0px;
         text-align: left;
-        color: #999;
+        color: @colorSecondary;
         font-family: Myriad;
         font-size: 25px;
         overflow: hidden;
@@ -548,7 +509,7 @@ form label {
 
     .utcTime .icon {
         float: right;
-        color: #aaa;
+        color: @colorAccent;
         text-align: center;
         margin: 0 10px;
         font-size: 26px;
@@ -561,7 +522,7 @@ form label {
         padding: 10px 0px 0px 17px;
         font-size: 35px;
         text-align: center;
-        color: #aaa;
+        color: @colorAccent;
         font-family: Myriad, Helvetica;
         width: 80px;
         letter-spacing: -.04em;
@@ -571,13 +532,13 @@ form label {
 
 // Settings
 .settingsItems {
-    color: #f1f1f1;
+    color: @colorLinkHover;
 }
 
 .settingsItems h2 {
     font-size: 18px;
     font-weight: normal;
-    color: #f1f1f1;
+    color: @colorLinkHover;
     margin-left: 10px;
 }
 
@@ -592,7 +553,7 @@ form label {
     font-family: MyriadBold, Myriad;
     border-radius: 5px;
     -webkit-border-radius: 5px;
-    border: 1px solid #003edd;
+    border: 1px solid @colorBuy;
     position: absolute;
     bottom: 10px;
     padding: 10px;
@@ -600,13 +561,21 @@ form label {
     width: 100px;
     text-align: center;
     left: 50%;
-    color: #003edd;
+    color: @colorBuy;
     line-height: 22px;
 }
 
 // Current Login Info Display
 .currentLogin {
-    color: #d6dbdf;
+    color: @colorAccent;
+
+    .icon {
+        @colorSecondary;
+    }
+}
+
+.version {
+    color: @colorMenuText;
 }
 
 // Special Buttons for when not signed in!
@@ -687,6 +656,20 @@ form label {
     z-index: 99999999;
     background: @colorModal;
 
+    .modalText {
+        width: 100%;
+        color: #ffffff;
+        text-align: center;
+        font-size: 24px;
+        position: absolute;
+        bottom: 25%;
+        left: 0px;
+
+        p {
+            color: @colorModalText;
+        }
+    }
+
     .special {
         p {
             color: @colorButtonTextModal;
@@ -718,7 +701,7 @@ form label {
             height: 65px;
             width: 100%;
             border: none;
-            background-size: 50%;
+            background-size: auto 100%;
             background-repeat: no-repeat;
             background-position-x: center;
             background-position-y: center;
@@ -766,7 +749,7 @@ form label {
     border-bottom: 1px solid @colorSectionnavBorder;
 
     .active {
-        color: #1f1f1f;
+        color: @colorLinkHover;
     }
 
 }
@@ -778,12 +761,13 @@ form label {
         width: 100%;
         margin: 0px;
         padding: 0px;
-        border-bottom: 1px solid #ccc;
+        border-bottom: 1px solid @colorNavBorder;
 
         p {
             padding: 10px;
             margin: 0;
             font-size: 21px;
+            color: @colorCheck;
         }
 
         &:hover p {

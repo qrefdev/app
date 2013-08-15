@@ -1,7 +1,3 @@
-.theme-light html,
-.theme-light body {
-  background: #ffffff;
-}
 .theme-light a {
   font-size: 16px;
   font-weight: normal;
@@ -31,14 +27,14 @@
   -webkit-appearance: none;
 }
 .theme-light .wrap {
-  background: white;
+  background: #ffffff;
   background-size: 100% 100%;
 }
 .theme-light .nav {
   background: #ffffff;
 }
 .theme-light .nav .item div .icon {
-  color: #434a54;
+  color: #7c838e;
 }
 .theme-light .nav ul li .item-25-inner {
   width: 100%;
@@ -95,30 +91,13 @@
   background-color: #cdd0d6;
   -webkit-box-shadow: 0 5px 10px #ffffff;
   box-shadow: 0 5px 10px #ffffff;
-  z-index: 9999;
-  position: absolute;
-  top: 36px;
-  width: 100%;
-  height: 60px;
   border-bottom: 1px solid #9ba1aa;
 }
 .theme-light .logoSection p {
-  font-family: Myriad;
-  font-size: 30px;
-  text-align: left;
-  margin: 0;
-  padding: 14px 0 0 10px;
-  letter-spacing: -0.04em;
   color: #111418;
 }
 .theme-light .logoSection .logo {
   background: url('../images/light/logo.png') 0 0 no-repeat;
-  background-size: auto 100%;
-  height: 60px;
-  width: 153px;
-  position: absolute;
-  right: 0;
-  top: 0;
 }
 .theme-light .topbar {
   color: #666e79;
@@ -135,10 +114,10 @@
   font-size: 16px;
   max-width: 100px;
 }
-.theme-light .grid .separator {
-  background: #1f1f1f;
-  color: #84010;
-  font-size: 16px;
+.theme-light .topbar .item.active,
+.theme-light .topbar .item-large.active {
+  color: #003edd;
+  background-color: #dde0e4;
 }
 .theme-light button,
 .theme-light .button,
@@ -192,7 +171,7 @@
   float: left;
   position: relative;
   font-size: 24px;
-  padding: 0px 0 0px 9px;
+  width: 23px;
 }
 .theme-light .menu ul li p {
   float: left;
@@ -212,7 +191,6 @@
 .theme-light .dashboard-planes-selector .heading,
 .theme-light .downloads .heading {
   color: #111418;
-  font-size: 23px;
   font-family: Myriad;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -221,7 +199,6 @@
 .theme-light .dashboard-planes-selector .subheading,
 .theme-light .downloads .subheading {
   color: #666e79;
-  font-size: 14px;
   font-family: Myriad;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -244,18 +221,21 @@
   -webkit-transform: rotate(30deg);
   font-size: 13px;
 }
+.theme-light .dashboard-planes-selector .plane-icon,
+.theme-light .downloads .plane-icon {
+  opacity: 1;
+}
 .theme-light .dashboard-planes-selector .vertical li,
 .theme-light .downloads .vertical li {
   color: #d7dadf;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid #cdd0d6;
+  border-bottom: 1px solid transparent;
 }
 .theme-light .dashboard-planes-selector .vertical li ul li,
 .theme-light .downloads .vertical li ul li {
   color: #003edd;
   border: none;
   font-family: Myriad, Helvetica;
-  font-size: 14px;
-  min-width: 40px;
   text-align: left;
 }
 .theme-light .dashboard-planes-selector .vertical li ul li.last,
@@ -266,36 +246,30 @@
 .theme-light .downloads .vertical li .delete {
   padding: 8px;
   font-family: MyriadBold, Helvetica;
-  background-color: #a90329;
-  background: -webkit-gradient(linear, left top, left bottom, from(#a90329), to(#6d0019));
-  background: -webkit-linear-gradient(top, #a90329, #6d0019);
-  background: -moz-linear-gradient(top, #a90329, #6d0019);
-  background: -ms-linear-gradient(top, #a90329, #6d0019);
-  background: -o-linear-gradient(top, #a90329, #6d0019);
+  background-color: #a91e1e;
+  background: -webkit-gradient(linear, left top, left bottom, from(#a91e1e), to(#6b0d0e));
+  background: -webkit-linear-gradient(top, #a91e1e, #6b0d0e);
+  background: -moz-linear-gradient(top, #a91e1e, #6b0d0e);
+  background: -ms-linear-gradient(top, #a91e1e, #6b0d0e);
+  background: -o-linear-gradient(top, #a91e1e, #6b0d0e);
   font-size: 12px;
   border-radius: 5px;
   -webkit-border-radius: 5px;
 }
 .theme-light .dashboard-planes-selector .vertical .active,
 .theme-light .downloads .vertical .active {
-  background: #eee;
-}
-.theme-light .dashboard-planes-selector .vertical .active ul .active,
-.theme-light .downloads .vertical .active ul .active {
-  background: transparent;
-  color: #6b737e;
+  background: #eaecee;
 }
 .theme-light .dashboard-planes-selector .vertical li .handle,
 .theme-light .checklist .vertical li .handle {
   background-color: #003edd;
-  background: -webkit-gradient(linear, left top, left bottom, from(#003edd), to(#002ead));
-  background: -webkit-linear-gradient(top, #003edd, #002ead);
-  background: -moz-linear-gradient(top, #003edd, #002ead);
-  background: -ms-linear-gradient(top, #003edd, #002ead);
-  background: -o-linear-gradient(top, #003edd, #002ead);
+  background: -webkit-gradient(linear, left top, left bottom, from(#003edd), to(#001b36));
+  background: -webkit-linear-gradient(top, #003edd, #001b36);
+  background: -moz-linear-gradient(top, #003edd, #001b36);
+  background: -ms-linear-gradient(top, #003edd, #001b36);
+  background: -o-linear-gradient(top, #003edd, #001b36);
   border-radius: 25px 0px 0px 25px;
   -webkit-border-radius: 25px 0px 0px 25px;
-  border: 2px solid #fff;
   border-right: none;
   padding-left: 5px;
   padding-top: 9px;
@@ -303,23 +277,15 @@
 }
 .theme-light .dashboard-planes-selector .vertical li .handle .item,
 .theme-light .checklist .vertical li .handle .item {
-  background: #f8f8f8;
+  background: #ffffff;
 }
 .theme-light .downloads .vertical li {
   padding-bottom: 8px;
 }
-.theme-light .downloads .vertical .owns {
-  background-color: #11467c;
-  background: -webkit-gradient(linear, left top, left bottom, from(#11467c), to(#001b36));
-  background: -webkit-linear-gradient(top, #11467c, #001b36);
-  background: -moz-linear-gradient(top, #11467c, #001b36);
-  background: -ms-linear-gradient(top, #11467c, #001b36);
-  background: -o-linear-gradient(top, #11467c, #001b36);
-  border-top: 1px solid #2b2f32;
-}
 .theme-light .checklist .vertical li {
-  color: #d6dbdf;
+  color: #343a43;
   border-top: 1px solid #cdd0d6;
+  border-bottom: 1px solid transparent;
   background-color: rgba(255, 255, 255, 0.85);
 }
 .theme-light .checklist .vertical li .check {
@@ -337,16 +303,15 @@
 .theme-light .checklist .vertical li .response {
   color: #868d97;
   font-family: Myriad, Helvetica;
-  font-size: 16px;
 }
 .theme-light .checklist .vertical li .delete {
   padding: 8px;
-  background-color: #a90329;
-  background: -webkit-gradient(linear, left top, left bottom, from(#a90329), to(#6d0019));
-  background: -webkit-linear-gradient(top, #a90329, #6d0019);
-  background: -moz-linear-gradient(top, #a90329, #6d0019);
-  background: -ms-linear-gradient(top, #a90329, #6d0019);
-  background: -o-linear-gradient(top, #a90329, #6d0019);
+  background-color: #a91e1e;
+  background: -webkit-gradient(linear, left top, left bottom, from(#a91e1e), to(#6b0d0e));
+  background: -webkit-linear-gradient(top, #a91e1e, #6b0d0e);
+  background: -moz-linear-gradient(top, #a91e1e, #6b0d0e);
+  background: -ms-linear-gradient(top, #a91e1e, #6b0d0e);
+  background: -o-linear-gradient(top, #a91e1e, #6b0d0e);
   font-size: 12px;
   font-family: MyriadBold, Helvetica;
   border-radius: 5px;
@@ -355,11 +320,10 @@
 .theme-light .checklist .vertical li .add {
   padding: 5px;
   padding-bottom: 0px;
-  color: #fff;
+  color: #ffffff;
   background: #2ad902;
   border-radius: 5px;
   -webkit-border-radius: 5px;
-  border: 2px solid #fff;
 }
 .theme-light .checklist .vertical li .active {
   background-color: #11467c;
@@ -368,7 +332,7 @@
   background: -moz-linear-gradient(top, #11467c, #001b36);
   background: -ms-linear-gradient(top, #11467c, #001b36);
   background: -o-linear-gradient(top, #11467c, #001b36);
-  color: #d6dbdf;
+  color: #d7dadf;
 }
 .theme-light .checklist .vertical li .checkmark,
 .theme-light .downloads .vertical li .checkmark {
@@ -396,47 +360,44 @@
   background: -o-linear-gradient(top, #ffffff, rgba(255, 255, 255, 0));
 }
 .theme-light .loader {
-  color: #d6dbdf;
+  color: #d7dadf;
 }
 .theme-light .info {
-  color: #ddd;
+  color: #d7dadf;
   font-family: Myriad;
 }
 .theme-light form label {
-  color: #cc2200;
+  color: #a91e1e;
   margin: -5px 0 10px;
   padding: 0px;
   font-size: 12px;
   font-family: MyriadBold, Helvetica;
 }
 .theme-light #productDetailsListing {
-  color: #d6dbdf;
-}
-.theme-light #productDetailsListing {
   font-family: Myriad, Helvetica;
-  color: #6b737e;
+  color: #868d97;
   font-weight: normal;
   font-size: 20px;
 }
 .theme-light .detailsHeading div {
   font-size: 28px;
-  color: #333;
+  color: #343a43;
   padding: 10px 10px 0;
   letter-spacing: -0.03em;
 }
 .theme-light .detailsHeading p,
 .theme-light .detailsHeading .modelDescription {
   font-size: 14px;
-  color: #333;
+  color: #343a43;
   margin: 0;
   padding: 0 10px 0;
 }
 .theme-light .detailsHeading p:first-child {
-  color: #999;
+  color: #868d97;
 }
 .theme-light .productImage img {
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
+  border-top: 1px solid #cdd0d6;
+  border-bottom: 1px solid #cdd0d6;
 }
 .theme-light .e6b .textbox {
   background: transparent;
@@ -467,7 +428,7 @@
   position: absolute;
   bottom: 0px;
   text-align: left;
-  color: #999;
+  color: #868d97;
   font-family: Myriad;
   font-size: 25px;
   overflow: hidden;
@@ -485,7 +446,7 @@
 }
 .theme-light .e6b .utcTime .icon {
   float: right;
-  color: #aaa;
+  color: #abb1b9;
   text-align: center;
   margin: 0 10px;
   font-size: 26px;
@@ -497,19 +458,19 @@
   padding: 10px 0px 0px 17px;
   font-size: 35px;
   text-align: center;
-  color: #aaa;
+  color: #abb1b9;
   font-family: Myriad, Helvetica;
   width: 80px;
   letter-spacing: -0.04em;
   line-height: 35px;
 }
 .theme-light .settingsItems {
-  color: #f1f1f1;
+  color: #111418;
 }
 .theme-light .settingsItems h2 {
   font-size: 18px;
   font-weight: normal;
-  color: #f1f1f1;
+  color: #111418;
   margin-left: 10px;
 }
 .theme-light .settingsItems .row {
@@ -534,7 +495,11 @@
   line-height: 22px;
 }
 .theme-light .currentLogin {
-  color: #d6dbdf;
+  color: #abb1b9;
+}
+@color Secondary;
+.theme-light .version {
+  color: #dde0e4;
 }
 .theme-light .special {
   width: 100%;
@@ -605,6 +570,18 @@
   z-index: 99999999;
   background: rgba(0, 0, 0, 0.85);
 }
+.theme-light .modal .modalText {
+  width: 100%;
+  color: #ffffff;
+  text-align: center;
+  font-size: 24px;
+  position: absolute;
+  bottom: 25%;
+  left: 0px;
+}
+.theme-light .modal .modalText p {
+  color: #d7dadf;
+}
 .theme-light .modal .special p {
   color: #9ba1aa;
 }
@@ -624,7 +601,7 @@
   height: 65px;
   width: 100%;
   border: none;
-  background-size: 50%;
+  background-size: auto 100%;
   background-repeat: no-repeat;
   background-position-x: center;
   background-position-y: center;
@@ -660,19 +637,20 @@
   border-bottom: 1px solid #9ba1aa;
 }
 .theme-light .section-nav .active {
-  color: #1f1f1f;
+  color: #111418;
 }
 .theme-light .emergencies-sections ul li {
   float: left;
   width: 100%;
   margin: 0px;
   padding: 0px;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #cdd0d6;
 }
 .theme-light .emergencies-sections ul li p {
   padding: 10px;
   margin: 0;
   font-size: 21px;
+  color: #343a43;
 }
 .theme-light .emergencies-sections ul li:last-child {
   border-bottom: 0px;
@@ -695,45 +673,4 @@
 }
 .theme-light .flyover ul .active p {
   color: #ffffff;
-}
-.theme-light .tablet .dashboard-planes-selector .vertical li ul li {
-  font-size: 20px;
-  min-width: 60px;
-}
-.theme-light .tablet .dashboard-planes-selector .heading,
-.theme-light .tablet .dashboard-planes-selector .theme-light .downloads .heading {
-  font-size: 26px;
-}
-.theme-light .tablet .dashboard-planes-selector .subheading,
-.theme-light .tablet .dashboard-planes-selector .theme-light .downloads .subheading {
-  font-size: 18px;
-}
-.theme-light .tablet .logoSection {
-  height: 84px;
-}
-.theme-light .tablet .logoSection p {
-  font-size: 45px;
-  padding: 19px 0 0 10px;
-}
-.theme-light .tablet .logoSection .logo {
-  height: 84px;
-  width: 214px;
-}
-.theme-light .tablet .menu ul li p {
-  font-size: 20px;
-}
-.theme-light .tablet .menu ul li .icon {
-  padding: 15px 0 15px 15px;
-}
-.theme-light .tablet .emergencies ul li .icon div {
-  height: 100px;
-}
-.theme-light .tablet .e6b .textbox {
-  width: 300px;
-}
-.theme-light .tablet .checklist .vertical li .check {
-  margin-bottom: 6px;
-}
-.theme-light .tablet .checklist .vertical li .response {
-  font-size: 21px;
 }
