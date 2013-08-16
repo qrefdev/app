@@ -75,7 +75,7 @@ html,body{margin:0;padding:0;width:100%;height:100%;font-family:Myriad,Helvetica
 .dashboard-planes-selector .vertical li .delete{position:absolute;left:15px;top:35%;display:none}
 .dashboard-planes-selector .vertical li .handle{position:absolute;right:0;width:40px;top:25%;display:none;padding-top:5px;padding-bottom:5px;z-index:10}.dashboard-planes-selector .vertical li .handle .item{float:left;position:relative;width:20px;height:5px;margin-top:3px;margin-left:12px}
 .downloads .plane-icon{position:absolute;right:0;bottom:0;top:5px;padding:0;margin:0;z-index:0;width:125px}
-.checklist{position:absolute;width:100%;left:0;right:0;bottom:0;top:0;height:100%;overflow:auto}
+.checklist,.emergencies-sections{position:absolute;width:100%;left:0;right:0;bottom:0;top:0;height:100%;overflow:auto}
 .vertical:last-child li:last-child{margin-bottom:15px}
 .vertical li{overflow:hidden}.vertical li .icon{font-size:34px;float:left;position:relative;margin-top:15px;margin-left:5px;display:block}
 .vertical li .holder{float:left;position:relative;margin-top:9px;margin-left:10px;margin-bottom:1px;width:98%}
