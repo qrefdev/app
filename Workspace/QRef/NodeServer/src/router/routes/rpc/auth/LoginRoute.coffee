@@ -35,8 +35,19 @@ class LoginRoute extends RpcRoute
 				resp.failure('Forbidden', 403)
 				res.json(resp, 200)
 			else 
-				resp = new RpcResponse(token) 
-				res.json(resp, 200)
+				UserAuth.userFromToken(token, (err, user) ->
+					if err?
+						resp = new RpcResponse(null)
+						resp.failure(err, 500)
+						res.json(resp, 200)
+					else if user?
+						resp = new RpcResponse({token: token, user: user._id}) 
+						res.json(resp, 200)				
+					else
+						resp = new RpcResponse(null)
+						resp.failure(err, 500)
+						res.json(resp, 200)
+				)
 		)
 	isValidRequest: (req) ->
 		if req.body? and req.body?.mode? and req.body.mode == 'rpc' and req.body?.userName? and req.body?.password?

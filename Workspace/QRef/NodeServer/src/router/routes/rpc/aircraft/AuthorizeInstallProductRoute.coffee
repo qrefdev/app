@@ -72,29 +72,17 @@ class AuthorizeInstallProductRoute extends RpcRoute
 							res.json(resp, 200)
 							return
 						
-						if success		
-							uProduct = new db.UserProduct()
-							uProduct.user = user._id
-							uProduct.product = product._id
-										
-							uProduct.save((err) => 
-								if err? and not err.code == 11000
+						if success					
+							@.cloneChecklist(product.aircraftChecklist, product, user, tailNumber, (err, checklistId) =>
+								if err?
 									resp = new RpcResponse(null)
 									resp.failure('Internal Error', 500)
 									res.json(resp, 200)
 									return
-												
-								@.cloneChecklist(product.aircraftChecklist, user, tailNumber, (err, checklistId) =>
-									if err?
-										resp = new RpcResponse(null)
-										resp.failure('Internal Error', 500)
-										res.json(resp, 200)
-										return
-									else	
-										resp = new RpcResponse(checklistId)
-										res.json(resp, 200)
-										return
-								)
+								else	
+									resp = new RpcResponse(checklistId)
+									res.json(resp, 200)
+									return
 							)
 						else
 							resp = new RpcResponse(null)
@@ -118,7 +106,7 @@ class AuthorizeInstallProductRoute extends RpcRoute
 				return;
 		)
 	
-	cloneChecklist: (oChecklist, user, tailNumber, callback) ->
+	cloneChecklist: (oChecklist, product, user, tailNumber, callback) =>
 		db = QRefDatabase.instance()
 		nChecklist = new db.AircraftChecklist()
 		
@@ -137,14 +125,14 @@ class AuthorizeInstallProductRoute extends RpcRoute
 		
 		nChecklist.user = user._id
 		nChecklist.version = 1
-		nChecklist.productIcon = oChecklist.productIcon
+		nChecklist.productIcon = product.productIcon
 		nChecklist.preflight = oChecklist.preflight
 		nChecklist.takeoff = oChecklist.takeoff
 		nChecklist.landing = oChecklist.landing
 		nChecklist.emergencies = oChecklist.emergencies
 		nChecklist.isDeleted = false
 		
-		nChecklist.save((err) -> 
+		nChecklist.save((err) => 
 			if err?
 				callback(err, null)
 				return

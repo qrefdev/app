@@ -1497,7 +1497,10 @@ function checkIn() {
 		return;
 	}
 	
+	var newCheckedInList = [];
 	var checkedInList = [];
+	var checkedInListCount = 0;
+	var newCheckedInListCount = 0;
 	
 	loader.show();
 	
@@ -1531,7 +1534,7 @@ function checkIn() {
 				}
 			}
 			
-			checkedInList.push(product._id);
+			newCheckedInList.push(product._id);
 			
 			$.ajax
 			({
@@ -1546,16 +1549,16 @@ function checkIn() {
 										
 					if(response.success == true)
 					{
-						if(checkedInList.length != 0) {
-							checkedInList.splice(checkedInList.indexOf(response.records[0]._id),1);
-							if(checkedInList.length == 0) {
-								getProducts(token, function() {
-									loader.hide();
-									var dialog = new Dialog("#infobox2","Uploaded Successfully");
-									dialog.show();
-								});
-							}
-						}							
+						newCheckedInListCount++;
+						
+						if(newCheckedInListCount >= newCheckedInList.length) {
+							productList = [];
+							getProducts(token, function() {
+								loader.hide();
+								var dialog = new Dialog("#infobox2","Uploaded Successfully");
+								dialog.show();
+							});
+						}						
 					}
 					else
 					{
@@ -1621,15 +1624,14 @@ function checkIn() {
 									
 				if(response.success == true)
 				{
-					if(checkedInList.length != 0) {
-						checkedInList.splice(checkedInList.indexOf(response.records[0]._id),1);
-						if(checkedInList.length == 0) {
-							getProducts(token, function() {
-								loader.hide();
-								var dialog = new Dialog("#infobox2","Uploaded Successfully");
-								dialog.show();
-							});
-						}
+					checkedInListCount++;
+					if(checkedInListCount >= checkedInList.length) {
+						productList = [];
+						getProducts(token, function() {
+							loader.hide();
+							var dialog = new Dialog("#infobox2","Uploaded Successfully");
+							dialog.show();
+						});
 					}						
 				}
 				else

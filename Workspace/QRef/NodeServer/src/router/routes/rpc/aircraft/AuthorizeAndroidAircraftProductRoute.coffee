@@ -145,7 +145,7 @@ class AuthorizeAndroidAircraftProductRoute extends RpcRoute
 											res.json(resp, 200)
 											return
 											
-										@.cloneChecklist(product.aircraftChecklist, user, tailNumber, (err, checklistId) =>
+										@.cloneChecklist(product.aircraftChecklist, product, user, tailNumber, (err, checklistId) =>
 											if err?
 												console.log('AuthorizeAndroidAircraftProductRoute::post() - Clone Checklist Error')
 												resp = new RpcResponse(null)
@@ -195,7 +195,7 @@ class AuthorizeAndroidAircraftProductRoute extends RpcRoute
 				)
 			)
 		)
-	cloneChecklist: (oChecklist, user, tailNumber, callback) ->
+	cloneChecklist: (oChecklist, product, user, tailNumber, callback) ->
 		db = QRefDatabase.instance()
 		nChecklist = new db.AircraftChecklist()
 		
@@ -214,7 +214,7 @@ class AuthorizeAndroidAircraftProductRoute extends RpcRoute
 		
 		nChecklist.user = user._id
 		nChecklist.version = 1
-		nChecklist.productIcon = oChecklist.productIcon
+		nChecklist.productIcon = product.productIcon
 		nChecklist.preflight = oChecklist.preflight
 		nChecklist.takeoff = oChecklist.takeoff
 		nChecklist.landing = oChecklist.landing
