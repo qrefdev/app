@@ -127,10 +127,16 @@ function SyncProcessor() {
 		var self = this;
 		window.location.href = 'qref://nlog=ListCount:' + lists.length;
 		if(lists != undefined)
-		{   
-            setTimeout(function() {
-            	process(0, lists[0]);
-            }, 20);
+		{
+            if(lists.length > 0) {
+                setTimeout(function() {
+                    process(0, lists[0]);
+                }, 20);
+            }
+            else {
+                AppObserver.set('syncing', false);
+                AppObserver.set('saving', false);
+            }
             
             function process(index, item) {
 				//var stringifiedJson = JSON.stringify(item);
@@ -143,7 +149,7 @@ function SyncProcessor() {
 				
 				window.location.href = 'qref://sc=' + item._id;
 				
-				if(index == lists.length - 1) {
+				if(index >= lists.length - 1) {
 		
 					if(AppObserver.syncing)
 						AppObserver.set('syncing', false);
