@@ -239,80 +239,73 @@ class AuthorizeAppleAircraftProductRoute extends RpcRoute
 			path: "/verifyReceipt"
 			method: "POST"
 	
+			
+		request =
+			"receipt-data": receiptData
 		
-		async.waterfall([
-			(cb) ->
-				UserAuth.isInRole(token, 'Administrators', (err, isMember) ->
-					if err?
-						cb(err, false)
-						return
+		requestData = JSON.stringify(request)
+		
+		data = ""
+		
+		req = https.request(options, (res) -> 
+			res.setEncoding('ascii')
+			
+			res.on('data', (buff) ->
+				data += buff
+			)
+			
+			res.on('end', () ->
+				if data? 
+					response = JSON.parse(data)
 					
-					if isMember
-						options =
-							hostname: "sandbox.itunes.apple.com"
-							port: 443
-							path: "/verifyReceipt"
-							method: "POST"
-						cb(null, false)
+					if not response?
+						callback(new Error('Invalid JSON data received from server.'), null)
 					else
-						cb(null, true)
-				)
-			, (shouldExecute, cb) ->
-				if not shouldExecute
-					cb(null)
-					return
-				
-				options =
-					hostname: "buy.itunes.apple.com"
-					port: 443
-					path: "/verifyReceipt"
-					method: "POST"
-				
-				cb(null)
-		], (err) ->
-			
-			if err?
-				callback(err, null)
-				return
-			
-			request =
-				"receipt-data": receiptData
-			
-			requestData = JSON.stringify(request)
-			
-			data = ""
-			
-			req = https.request(options, (res) -> 
-					res.setEncoding('ascii')
-					
-					res.on('data', (buff) ->
-						data += buff
-					)
-					
-					res.on('end', () ->
-						if data? 
-							response = JSON.parse(data)
+						if response.status == 21007
+							options = 
+								hostname: "sandbox.itunes.apple.com"
+								port: 443
+								path: "/verifyReceipt"
+								method: "POST"
+								
+							data = ""
 							
-							if not response?
-								callback(new Error('Invalid JSON data received from server.'), null)
-							else
-								callback(null, response)
+							req = https.request(options, (res) ->
+								res.setEncoding('ascii')
+								
+								res.on('data', (buff) ->
+									data += buff
+								)
+								
+								res.on('end', () ->
+									if data?
+										response = JSON.parse(data)
+										
+										if not response?
+											callback(new Error('Invalid JSON data received from server.'), null)
+										else
+											callback(null, response)
+								)
+							)
+								
+							req.on('error', (err) ->
+								callback(err, null)
+							)
+							
+							req.write(requestData)
+							req.end()
 						else
-							callback(new Error('No data received from the server.'), null)
-					)
+							callback(null, response)
 			)
+		)
 			
-			req.on('error', (err) ->
-				callback(err, null)
-			)
-			
-			req.write(requestData)
-			req.end()
+		req.on('error', (err) ->
+			callback(err, null)
 		)
 		
+		req.write(requestData)
+		req.end()
 		
-		
-			
 		
 	isValidRequest: (req) ->
 		if req.body? and req.body?.mode? and req.body.mode == 'rpc' and req.body?.product? and req.body?.receipt?
