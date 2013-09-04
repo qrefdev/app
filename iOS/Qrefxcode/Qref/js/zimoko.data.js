@@ -60,6 +60,12 @@
 		return null;
 	};
 	
+	Array.prototype.remove = function(obj) {
+		var index = this.indexOf(obj);
+		
+		return this.removeAt(index);
+	};
+	
 	zimoko.Property = zimoko.Class.extend(function() {
 		this.init = function(key, value, name) {	
 			this.key = key;
@@ -122,254 +128,6 @@
 				else
 					return 1;
 			});
-		};
-	});
-	
-	zimoko.SortableCollection = zimoko.Class.extend(function() {		
-		this.init = function(arr) {
-			this.length = 0;
-			
-			if(arr instanceof Array)
-			{
-				for(var i = 0; i < arr.length; i++)
-				{
-					this.push(arr[i]);
-				}
-			}
-		}
-		
-		this.sortBy = function(keys, direction) {
-			var results = undefined;
-			
-			if(keys.length > 1)
-			{
-				results = this.sort(function(item,item2) {
-					var lastValue = 0;
-					
-					for(var i = 0; i < keys.length; i++)
-					{
-						if(lastValue == 0)
-						{
-							var key = keys[i];
-							var object = undefined;
-							var object2 = undefined;
-							
-							if(key.indexOf(".") > -1)
-							{
-								subKeys = key.split(".");
-								
-								object = item[subKeys[0]];
-								object2 = item2[subKeys[0]];
-								
-								for(var j = 1; j < subKeys.length; j++)
-								{
-									object = object[subKeys[j]];
-									object2 = object2[subKeys[j]];
-								}
-								
-							}
-							else
-							{
-								object = item[key];
-								object2 = item2[key];
-							}
-							
-							if(direction == 'asc' || direction == 0) {
-								if(object < object2)
-									lastValue = -1;
-								else if(object == object2)
-									lastValue = 0;
-								else
-									lastValue = 1;
-							}
-							else if(direction == 'desc' || direction == 1) {
-								if(object < object2)
-									lastValue = 1;
-								else if(object == object2)
-									lastValue = 0;
-								else
-									lastValue = -1;
-							}
-						}
-						else
-						{
-							break;
-						}
-					}
-				
-					return lastValue;
-				});
-			}
-			else if (keys.length == 1)
-			{
-				if(direction == 'asc' || direction == 0) {
-					results = this.sort(function(item,item2) {
-						if(item[keys[0]] < item2[keys[0]])
-							return -1;
-						else if(item[keys[0]] == item2[keys[0]])
-							return 0;
-						else
-							return 1;
-					});
-				}
-				else if(direction == 'desc' || direction == 1) {
-					results = this.sort(function(item,item2) {
-						if(item[keys[0]] < item2[keys[0]])
-							return 1;
-						else if(item[keys[0]] == item2[keys[0]])
-							return 0;
-						else
-							return -1;
-					});
-				}
-			}
-			else
-			{
-				results = this;
-			}
-			
-			return results;
-		};
-		
-		this.shift = function() {
-			var firstItem = this[0];
-			
-			for(var i = 0; i < this.length - 1; i++)
-			{
-				this[i] = this[i + 1];
-			}
-			
-			this[this.length - 1] = undefined;
-			this.length--;
-			
-			return firstItem;
-		};
-		
-		this.sort = function(comparator) {
-			var mArray = this.toArray();
-			
-			mArray = mArray.sort(comparator);
-			
-			return new zimoko.SortableCollection(mArray);
-		};
-		
-		this.slice = function(offset, end) {
-			
-			if(!offset)
-				offset = 0;
-				
-			if(!end)
-				end = this.length;
-				
-			var arr = new zimoko.SortableCollection();
-			
-			if(end > this.length)
-				end = this.length;
-			if(offset < 0)
-				offset = 0;
-			
-			for(var i = offset; i < end; i++)
-			{
-				arr.push(this[i]);
-			}		
-			
-			return arr;
-		};
-		
-		this.splice = function(index, howMany /*,elements to add*/) {
-			var elementsToAdd = [];
-			
-			if(arguments.length > 2)
-			{
-				for(var i = 2; i < arguments.length; i++)
-				{
-					elementsToAdd.push(arguments[i]);
-				}
-			}
-			
-			var elementsRemoved = [];
-			
-			if(howMany > this.length) howMany = this.length;
-			if(howMany < 0) howMany = 0;
-			
-			for(var i = 0; i < howMany; i++)
-			{
-				elementsRemoved.push(this[index + i]);
-			}
-
-			for(var i = 0; i < elementsRemoved.length; i++)
-			{
-				this.removeAt(index);
-			}
-			
-			for(var j = 0; j < elementsToAdd.length; j++)
-			{
-				 this.insert(index + j, elementsToAdd[j]);
-			}
-			
-			return elementsRemoved;
-		};
-		
-		this.removeAt = function(index) {
-			for(var i = index; i < this.length - 1; i++)
-			{
-				this[i] = this[i + 1];
-			}
-			
-			this[this.length - 1] = undefined;
-			this.length--;
-		};
-		
-		this.insert = function(index, item) {
-			for(var i = this.length; i > index; i--)
-			{
-				this[i] = this[i - 1];
-			}
-			
-			this[index] = item;
-			this.length++;
-		};
-		
-		this.toArray = function() {
-			var array = new Array();
-			
-			for(var i = 0; i < this.length; i++)
-			{
-				array.push(this[i]);
-			}
-			
-			return array;
-		};
-		
-		this.copy = function() {
-			var arr = new zimoko.SortableCollection();
-			
-			for(var i = 0; i < this.length; i++)
-			{
-				arr.push(this[i]);
-			}
-			
-			return arr;
-		};
-		
-		this.push = function(element) {
-			this[this.length] = element;
-			this.length++;
-		};
-		
-		this.pop = function() {
-			var object = this[this.length - 1];
-			this[this.length - 1] = undefined;
-			this.length--;
-			return object;
-		};
-		
-		this.reverse = function() {
-			var array = this.toArray();
-			
-			for(var i = 0; i < this.length; i++) {
-				this[i] = array[array.length - i - 1];
-			}
 		};
 	});
 	
@@ -547,210 +305,6 @@
 					});
 				}
 			}
-		};
-	});
-		
-	zimoko.ObservableCollection = zimoko.Class.extend(function() {
-		var self = this;
-		
-		this.init = function(arr) {
-			this.length = 0;
-			this._internalCollection = [];
-		
-			this.parent = undefined;
-		
-			this.listeners = [];
-			
-			self = this;
-			
-			if(arr instanceof Array || arr instanceof zimoko.SortableCollection)
-			{
-				var added = [];
-				for(var i = 0; i < arr.length; i++)
-				{
-					this._internalCollection.push(arr[i]);
-					added.push({item: arr[i], index: i});
-				}
-				
-				this.length = this._internalCollection.length;
-				_itemsAdded.call(this,added);
-			}
-		}
-		
-		this.subscribe = function(listener) {
-			this.listeners.push(listener);
-		};
-		
-		this.unsubscribe = function(listener) {
-			this.listeners.removeAt(this.listeners.indexOf(listener));
-		};
-		
-		this.unsubscribeAll = function() {
-			this.listeners = [];
-		};
-		
-		this.elementAt = function(index) {
-			if(index >= 0 && index < this._internalCollection.length)
-				return this._internalCollection[index];
-			
-			return undefined;
-		};
-		
-		this.toArray = function() {
-			var arr = [];
-			
-			for(var i = 0; i < this._internalCollection.length; i++)
-			{
-				arr.push(this._internalCollection[i]);
-			}
-			
-			return arr;
-		};
-		
-		this.push = function(items) {
-			if(items instanceof Array || items instanceof zimoko.SortableCollection) {
-				var added = [];
-				
-				for(var i = 0; i < items.length; i++)
-				{
-					this._internalCollection.push(items[i]);
-					added.push({item: items[i], index: this._internalCollection.length - 1});
-				}
-			
-				_itemsAdded.call(this,added);
-			}
-			else if(items instanceof zimoko.ObservableCollection) {
-				var added = [];
-				
-				for(var i = 0; i < items.length; i++)
-				{
-					this._internalCollection.push(items.elementAt(i));
-					added.push({item: items.elementAt(i), index: this._internalCollection.length - 1});
-				}
-				
-				_itemsAdded.call(this,added);
-			}
-			else
-			{
-				this._internalCollection.push(items);
-				_itemsAdded.call(this,[{item: items, index: this._internalCollection.length - 1}]);
-			}
-			
-			this.length = this._internalCollection.length;
-		};
-		
-		this.indexOf = function(item) {
-			return this._internalCollection.indexOf(item);
-		};
-		
-		this.removeAt = function(index) {
-			var removedItems = [];
-		
-			if(index >= 0 && index < this._internalCollection.length)
-			{
-				removedItems.push({item: this._internalCollection[index], index: index});
-				this._internalCollection.removeAt(index);
-			}
-				
-			this.length = this._internalCollection.length;
-			
-			_itemsRemoved.call(this,removedItems);
-		};
-		
-		this.clear = function() {
-			var removedItems = [];
-			
-			for(var i = 0; i < this._internalCollection.length; i++) {
-				removedItems.push({item: this._internalCollection[i], index: i});
-			}
-			
-			this._internalCollection = [];
-			this.length = 0;
-			_itemsRemoved.call(this,removedItems);
-		};
-		
-		this.insertAt = function(item, index) {
-			var added = [];
-			
-			added.push({item: item, index: index});
-			
-			this._internalCollection.splice(index,0,item);
-			this.length = this._internalCollection.length;
-			
-			_itemsAdded.call(this,added);
-		};
-		
-		this.pop = function() {
-			var index = this._internalCollection.length - 1;
-			var item = this._internalCollection.pop();
-			
-			
-			_itemsRemoved.call(this,[{item: item, index: index}]);
-			this.length = this._internalCollection.length;
-			return item;
-		};
-		
-		this.remove = function(items) {
-			var removedItems = [];
-			if(items instanceof Array || items instanceof zimoko.SortableCollection) {
-				
-				for(var i = 0; i < items.length; i++)
-				{
-					if(this._internalCollection.indexOf(items[i]) > -1) {
-						removedItems.push({item: items[i], index: this._internalCollection.indexOf(items[i])});
-						this._internalCollection.removeAt(this._internalCollection.indexOf(items[i]));
-					}
-				}
-			
-				_itemsRemoved.call(this,removedItems);
-			}
-			else if(items instanceof zimoko.ObservableCollection) {
-				for(var i = 0; i < items.length; i++)
-				{
-					if(this._internalCollection.indexOf(items.elementAt(i)) > -1) {
-						removedItems.push({item: items[i], index: this._internalCollection.indexOf(items.elementAt(i))});
-						this._internalCollection.removeAt(this._internalCollection.indexOf(items.elementAt(i)));
-					}
-				}
-				
-				_itemsRemoved.call(this,removedItems);
-			}
-			else
-			{
-				if(this._internalCollection.indexOf(items) > -1) {
-					removedItems.push({item: items, index: this._internalCollection.indexOf(items)});
-					this._internalCollection.removeAt(this._internalCollection.indexOf(items));
-					_itemsRemoved.call(this,removedItems);
-				}
-			}
-			
-			this.length = this._internalCollection.length;
-		};
-		
-		var _itemsAdded = function(items) {
-			var observer = this;
-			
-			setTimeout(function() {
-				zimoko.each(observer.listeners, function(index, listener) {
-					var it = items;
-					if(listener.onItemsAdded != undefined && typeof(listener.onItemsAdded) == 'function') {
-						listener.onItemsAdded.call(listener, observer, it);
-					}
-				});
-			}, 0);
-		};
-		
-		var _itemsRemoved = function(items) {
-			var observer = this;
-			
-			setTimeout(function() {
-				zimoko.each(observer.listeners, function(index, listener) {
-					var it = items;
-					if(listener.onItemsRemoved != undefined && typeof(listener.onItemsRemoved) == 'function') {
-						listener.onItemsRemoved.call(listener, observer, it);
-					}
-				});
-			}, 0);
 		};
 	});
 		
@@ -1647,7 +1201,7 @@
 					val.parent = parent;
 					var foreachListener = {
 						onItemsAdded: function(sender, items) {
- 							setTimeout(function() {
+                        
                             zimoko.each(items, function(idx, itm) { //for(var i = 0; i < items.length; i++) {
 								var item = itm.item;
 								var index = itm.index;
@@ -1673,7 +1227,7 @@
 									//item.attach(itemTemplate);
 								}
 							});
-            				}, 0);
+                
 							/*
 							for(var i = 0; i < items.length; i++) {
 								var item = items[i].item;
@@ -1701,7 +1255,6 @@
 							}*/
 						},
 						onItemsRemoved: function(sender, items) {
- 							setTimeout(function() {
                             zimoko.each(items, function(idx, itm) { //for(var i = 0; i < items.length; i++) {
 								var index = itm.index;
 								var item = itm.item;
@@ -1715,7 +1268,6 @@
 									$ele.remove();
 								}
 							});
-            				}, 0);
 						}
 					};
 					/*setTimeout(function() {
@@ -1739,7 +1291,6 @@
 					val.subscribe(foreachListener);
 				}
 				else if(val instanceof Array || val instanceof zimoko.SortableCollection) {
- setTimeout(function() {
                     zimoko.each(val, function(index, item) { //for(var i = 0; i < val.length; i++) {
 						//var item = val[i];
 						var isObservable = (item instanceof zimoko.Observable);
@@ -1756,7 +1307,6 @@
 							//item.attach(itemTemplate);
 						}
 					});
-            }, 0);
 					
 					/*for(var i = 0; i < val.length; i++) {
 						var item = val[i];
@@ -1822,7 +1372,7 @@
 						val.parent = parent;
 						var foreachListener = {
 							onItemsAdded: function(sender, items) {
- setTimeout(function() {
+ 
                                 zimoko.each(items, function(idx, itm) { //for(var i = 0; i < items.length; i++) {
 									var item = itm.item;
 									var index = itm.index;
@@ -1847,7 +1397,6 @@
 										//item.attach(itemTemplate);
 									}
 								});
-            }, 0);
 								
 								/*
 								for(var i = 0; i < items.length; i++) {
@@ -1876,7 +1425,6 @@
 								}*/
 							},
 							onItemsRemoved: function(sender, items) {
- setTimeout(function() {
                                 zimoko.each(items, function(idx, itm) { //for(var i = 0; i < items.length; i++) {
 									var index = itm.index;
 									var item = itm.item;
@@ -1890,15 +1438,13 @@
 										$ele.remove();
 									}
 								});
-            }, 0);
 							}
 						};	
 						
 						val.subscribe(foreachListener);
 						element.data('zimokoForeachListener', foreachListener);
 						var items = val.toArray();
-	
- setTimeout(function() {
+ 
 						zimoko.each(items, function(index, item) { //for(var i = 0; i < items.length; i++) {
 							//var item = items[i];
                             
@@ -1918,7 +1464,6 @@
 								//item.attach(itemTemplate);
 							}
 						});
-            }, 0);
 					}
 				}
 				

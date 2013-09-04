@@ -210,4 +210,47 @@
 		
 		return !isNaN(parseFloat(value)) && isFinite(value);
 	};
+	
+	if(!document.documentMode) {
+		window.addEventListener('message', function(event) {	
+			if(event.data == 'queue') {
+				zimoko.queue.dequeue();
+			}
+		}, false);
+	}
+	else if(document.documentMode < 9) {
+		window.attachEvent('message', function(event) {
+			if(event.data == 'queue') {
+				zimoko.queue.dequeue();
+			}
+		});
+	}
+	
+	zimoko.queue = {
+		_timer: null,
+		_queue: [],
+		add: function(fn, context) {
+			if(!document.documentMode) {
+				zimoko.queue._queue.push({fn: fn, context: context});
+				window.postMessage('queue', window.location.href);
+			}
+			else {
+				zimoko.queue._queue.push({fn: fn, context: context});
+				setTimeout(function() {
+					zimoko.queue.dequeue();
+				}, 1);
+			}
+		},
+		dequeue: function() {
+			if(zimoko.queue._queue.length > 0) {
+				var item = zimoko.queue._queue.splice(0,1);
+				
+				if(item && item.length > 0)
+					item[0].fn.call(item[0].context || window);
+			}
+		},
+		clear: function() {
+			zimoko.queue._queue = [];
+		}
+	};
 })();

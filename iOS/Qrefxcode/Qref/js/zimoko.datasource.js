@@ -1,167 +1,4 @@
 (function() {
-	zimoko.operators = {
-		'gte': '>=',
-		'lte': '<=',
-		'lt': '<',
-		'gt': '>',
-		'eq': '==',
-		'ne': '!=',
-		'>': '>',
-		'<': '<',
-		'<=': '<=',
-		'==': '==',
-		'>=': '>=',
-		'!=': '!=',
-		'&&': '&&',
-		'and': '&&',
-		'||': '||',
-		'or': '||',
-		'startswith': function(object, value, caseSensitive) {
-			var obj = object;
-			var val = value;
-			
-			if(typeof(object) == 'string') {
-				
-				if(!caseSensitive) { 
-					obj = object.toLowerCase();
-				
-					if(typeof(value) == 'string') 
-						val = value.toLowerCase();
-				}
-				
-				return obj.indexOf(val) == 0;
-			}
-			
-			return false;
-		}, 
-		'endswith': function(object, value, caseSensitive) {
-			var obj = object;
-			var val = value;
-			
-			if(typeof(object) == 'string') {
-				if(!caseSensitive) { 
-					obj = object.toLowerCase();
-				
-					if(typeof(value) == 'string') 
-						val = value.toLowerCase();
-				}
-				
-				return obj.indexOf(val) == obj.length - val.length;
-			}
-			
-			return false;
-		},
-		'contains': function(object, value, caseSensitive) {
-			var obj = object;
-			var val = value;
-			
-			if(typeof(object) == 'string' && !caseSensitive) 
-				obj = object.toLowerCase();
-				
-			if(typeof(value) == 'string' && !caseSensitive) 
-				val = value.toLowerCase();
-			
-			return obj.indexOf(val) > -1;
-		}
-	};
-	
-	zimoko.Sort = function(fields, direction) {
-		this.fields = fields;
-		this.direction = direction;
-		
-		this.results = function(items) {
-			var sortableCollection = undefined;
-			
-			if(items instanceof Array) {
-				sortableCollection = new zimoko.SortableCollection(items);
-			}
-			else if(items instanceof zimoko.SortableCollection) {
-				sortableCollection = items;
-			}
-			else if(items instanceof zimoko.ObservableCollection) {
-				sortableCollection = new zimoko.SortableCollection(items.toArray());
-			}
-			
-			if(this.fields.length >= 1) {
-				
-				if(this.direction == 'asc' || this.direction == 'desc' || this.direction == 0 || this.direction == 1)
-					return sortableCollection.sortBy(this.fields, this.direction)
-				else
-					return sortableCollection.sortBy(this.fields, 'asc');
-			}
-			
-			return sortableCollection;
-		}
-	};
-	
-	zimoko.FilterSet = function(logic, filters) {
-		this.logic = logic;
-		this.filters = filters;
-		
-		this.expression = function(object) {
-			var expression = '(';
-			var parsedLogic = zimoko.operators[this.logic];
-			
-			if(!parsedLogic) parsedLogic = '&&';
-			
-			parsedLogic = ' ' + parsedLogic + ' ';
-			var logicLength = parsedLogic.length;
-			
-			if(this.filters instanceof zimoko.FilterSet) {
-				expression += this.filters.expression(object) + parsedLogic;
-			}
-			else if(this.filters instanceof Array || this.filters instanceof zimoko.SortableCollection) {			
-				for(var i = 0; i < this.filters.length; i++) {
-					var filter = this.filters[i];
-					
-					if(filter instanceof zimoko.FilterSet) {
-						expression += filter.expression(object) + parsedLogic;
-					}
-					else if(filter instanceof zimoko.Filter) {
-						expression += filter.result(object) + parsedLogic;
-					}
-				}
-			}
-			
-			expression = expression.substring(0, expression.length - logicLength) + ')';
-			
-			return expression;
-		};
-	};
-	
-	zimoko.Filter = function(operator, field, value, caseSensitive) {
-		this.operator = operator;
-		this.field = field;
-		this.value = value;
-		
-		this.caseSensitive = caseSensitive;
-		
-		this.result = function(object) {
-			var operator = zimoko.operators[this.operator];
-			
-			if(typeof(operator) == 'function') {
-				var property = zimoko.parsePropertyString(object, this.field);
-				var propertyValue = zimoko.getPropertyValue(object,property);
-				
-				return operator(propertyValue, this.value, this.caseSensitive);
-			}
-			else {
-				if(typeof(this.value) == 'string' && !this.caseSensitive) {
-					this.value = this.value.toLowerCase();
-				}
-				
-				var property = zimoko.parsePropertyString(object, this.field);
-				var propertyValue = zimoko.getPropertyValue(object,property);
-				
-				if(typeof(propertyValue) == 'string' && !this.caseSensitive) {
-					propertyValue = propertyValue.toLowerCase();
-				}
-				
-				return new Function('field','value','return (field ' + zimoko.operators[this.operator] + ' value);').apply(object, [propertyValue, this.value]); 
-			}
-		};
-	};
-	
 	zimoko.Transport = zimoko.Class.extend(function() {
 		this.init = function(object) {
 			this.schema = new zimoko.Schema();
@@ -185,15 +22,22 @@
 			options.success({data: []});
 		};
 		
-		this.delete = function(options) {
+		this.destroy = function(options) {
 			options.success({data: []});
 		};
 	});
 	
-	zimoko.Schema = function(object) {
-		this.model = undefined;
-		
-		this.type = 'json';
+	zimoko.Schema = zimoko.Class.extend(function() {
+		this.init = function(object) {
+			this.model = undefined;
+			this.type = 'json';
+			
+			if(object && typeof(object) == 'object') {
+				for(var name in object) {
+					this[name] = object[name];
+				}
+			}
+		};
 		
 		this.errors = function(response) {
 			return response.errors;
@@ -210,13 +54,7 @@
 		this.total = function(response) {
 			return response.total;
 		};
-		
-		if(object && typeof(object) == 'object') {
-			for(var name in object) {
-				this[name] = object[name];
-			}
-		}
-	};
+	});
 	
 	zimoko.Schema.Model = zimoko.Class.extend(function() { 
 		this.init = function(object) { 
@@ -230,13 +68,12 @@
 	
 	
 	zimoko.Transport.Restful = zimoko.Transport.extend(function() {
-		
 		this.init = function(object) {
 			this.schema = new zimoko.Schema();
 			this.updateUrl = '';
 			this.readUrl = '';
 			this.createUrl = '';
-			this.deleteUrl = '';
+			this.destroyUrl = '';
 			this.extraOptions = {};
 			
 			if(object && typeof(object) == 'object') {
@@ -248,7 +85,7 @@
 						this.schema[name] = object[name];
 					}
 					else if (name == 'delete') {
-						this.deleteUrl = object[name];
+						this.destroyUrl = object[name];
 					}
 					else if (name == 'update') {
 						this.updateUrl = object[name];
@@ -312,16 +149,16 @@
 			}
 		};
 		
-		this.delete = function(options) {
+		this.destroy = function(options) {
 			var self = this;
 			
 			for(var name in self.extraOptions) {
 				options[name] = self.extraOptions[name];
 			}
 			
-			if(self.deleteUrl) {
+			if(self.destroyUrl) {
 				$.ajax({
-					url: self.deleteUrl,
+					url: self.destroyUrl,
 					type: 'DELETE',
 					data: 'data=' + JSON.stringify(options),
 					dataType: self.schema.type,
@@ -361,16 +198,16 @@
 	
 	zimoko.DataSource = zimoko.Class.extend(function() {
 		this.init = function(object) {
-			this._data = new zimoko.ObservableCollection();
+			this._view = new zimoko.ObservableCollection();
 			this._filter = new zimoko.FilterSet('and', []);
 			this._sorting = new zimoko.Sort([], 'asc');
-			this._lastFilter = [];
-			this._sources = [];
+			this._source = [];
 			this.listeners = [];
 			this.serverFilter = false;
 			this.serverPaging = false;
-			this.serverSort = false;
+			this.serverSorting = false;
 			this.preventRead = false;
+			this.id = zimoko.createGuid();
 			
 			this.reading = false;
 			
@@ -378,42 +215,7 @@
 			this.total = 0;
 			this._page = 1;
 			
-			var datasource = this;
-			
-			this.listeners.push({
-				onDataSourceRead: function(event) {
-					if(!datasource.preventRead) {
-						addObjects.call(datasource,event.data,event.append);
-					}
-					
-					datasource.reading = false;
-				},
-				onDataSourceUpdate: function(event) {
-					updateObject.call(datasource,event.original, event.data);
-				},
-				onDataSourceDelete: function(event) {
-					removeObject.call(datasource,event.data);
-				},
-				onDataSourceCreate: function(event) {
-					addObjects.call(datasource,event.data);
-				},
-				onDataSourceError: function(event) {
-					var errors = '';
-					datasource.reading = false;
-					for(var i = 0; i < event.errors.length; i++) {
-						if(typeof(event.errors[i]) == 'object') {
-							errors += event.errors[i].toString() + ', ';
-						}
-						else {
-							errors += event.errors[i] + ', ';
-						}
-					}
-					
-					errors = errors.substring(0,errors.length - 2);
-					
-					throw new Error(errors);
-				}
-			});
+			this.transport = new zimoko.Transport();
 			
 			if(object && typeof(object) == 'object') {
 				for(var name in object) {
@@ -421,7 +223,242 @@
 				}
 			}
 		};
+		
+		this.subscribe = function(object) {
+			this.listeners.push(object);
+		};
+		
+		this.unsubscribe = function(object) {
+			this.listeners.removeAt(this.listeners.indexOf(object));
+		};
+		
+		this._filterSource = function() {
+			var items = [];
 			
+			if(this._filter && !this._filter.cached) {
+				for(var i = 0 ; i < this._source.length; i++) {
+					if(!this._shouldItemBeFiltered(this._source[i])) {
+						items.push(this._source[i]);
+					}
+				}
+				
+				this._filter.cached = items;
+				
+				return items;
+			}
+			else if(this._filter && this._filter.cached) {
+				return this._filter.cached;
+			}
+			else {
+				return this._source;
+			}
+		};
+		
+		this._paginate = function() {
+			var items = this._filterSource();
+			this.total = items.length;
+		
+			var skip = (this._page - 1) * this.pageSize;
+			
+			var limit = skip + this.pageSize;
+			
+			if(limit > items.length)
+				limit = items.length;
+			
+			if(skip >= items.length)
+				return [];
+			
+			var finalItems = items.slice(skip, limit);
+			
+			return finalItems;
+		};
+		
+		
+		this.view = function() {
+			return this._view;
+		};
+		
+		this.data = function(objects) {
+			if(objects) {
+			
+				var items = [];
+				
+				if(objects instanceof Array) {
+					items = objects.toObservableObjects();
+				}
+				else if(objects instanceof zimoko.ObservableCollection) {
+					for(var i = 0; i < objects.length; i++) {
+						items.push(objects.elementAt(i));
+					}
+				}
+				
+				if(this._filter)
+					this._filter.cached = null;
+				
+				this._source = items;
+				this._page = 1;
+				this.sort();
+			}
+			else {
+				return this._source;
+			}
+			
+			return this;
+		};
+		
+		this.pages = function() {
+			return Math.ceil(this.total / this.pageSize);
+		};
+		
+		this.sort = function(sort) {
+			//this._getTotalWithFiltered();
+			
+			if(sort) {
+				this._sorting = sort;
+			
+				if(!this.serverSorting && !this._filter) {
+					this._source = sort.apply(this._source).toArray();
+					//this._view.sort(sort);
+					this._view.clear();
+					this._view.push(this._paginate());
+				}
+				else if(!this.serverSorting && this._filter) {
+					var items = this._paginate();
+					
+					items = sort.apply(items).toArray();
+					
+					this._view.clear();
+					this._view.push(items);
+				}
+				else {
+					this.read();
+				}
+			}
+			else {
+				if(!this.serverSorting && !this._filter) {
+					if(this._sorting) {
+						this._source = this._sorting.apply(this._source).toArray();
+					}
+					
+					this._view.clear();
+					this._view.push(this._paginate());
+					//this._view.sort(sort);
+				}
+				else if(!this.serverSorting && this._filter) {
+					var items = this._paginate();
+					
+					if(this._sorting) {
+						items = this._sorting.apply(items).toArray();
+					}
+					
+					this._view.clear();
+					this._view.push(items);
+				}
+				else {
+					this.read();
+				}
+			}
+			
+			return this;
+		};
+		
+		this._shouldItemBeFiltered = function(item) {
+			if(this._filter && (this._filter.filters.length > 0 || this._filter.filters instanceof zimoko.FilterSet)){
+				if(!this._filter.result(item)) {
+					return true;
+				}
+			}
+			
+			return false;
+		};
+		
+		this.page = function(page) {
+			if(page != undefined && zimoko.isNumber(page)) {
+				this._page = parseInt(page);
+				
+				if(this.serverPaging) {
+					this.read();
+				}
+				else {
+					//reset view and add page splice
+					this._view.clear();
+					this.sort();
+				}
+			}
+			else {
+				return this._page;
+			}
+		};
+		
+		this.pageAndAppend = function(page) {
+			if(page != undefined && zimoko.isNumber(page)) {
+				this._page = parseInt(page);
+				
+				if(this.serverPaging) {
+					this.read(true);
+				}
+				else {
+					this._view.push(this._paginate());
+				}
+			}
+			
+			return this;
+		};
+		
+		this.filter = function(filterSet) {
+			this._filter = filterSet;
+			
+			if(!this.serverFilter) {
+				this.sort();
+			}
+			else {
+				this.read();
+			}
+			
+			return this;
+		};
+		
+		this.add = function(object) {			
+			obs = object;
+			
+			this._source.push(obs);
+			this._view.push(obs);
+			
+			return this;
+		};
+		
+		this.insertAt = function(object, index) {
+			var item = object;
+			
+			this._source.splice(index, 0, item);
+			this._view.insertAt(item, index);
+			this._getTotalWithFiltered();
+			
+			return this;
+		};
+		
+		this.remove = function(object) {
+			this._source.remove(object);
+			this._view.remove(object);
+			this.total = this._source.length;
+			
+			return this;
+		};
+		
+		this.clear = function() {
+			this._source = [];
+			this._view.clear();
+			
+			return this;
+		};
+		
+		this.get = function(index) {
+			if(index < this._source.length && index >= 0)
+				return this._source[index];
+			
+			return undefined;
+		};
+		
 		var _dataSourceError = function(event) {
 			var datasource = this;
 			
@@ -482,477 +519,57 @@
 			});
 		};
 		
-		var _apply = function(append) {
-			var filtered = _filter.call(this);
-	
-			var changes = [];
-			var removal = [];
-			
-			if(!append) {
-				for(var i = 0; i < this._data.length; i++) {
-					var item = this._data.elementAt(i);
-				
-					if(filtered.indexOf(item) == -1)
-						removal.push(item);
-				}
-			
-				for(var i = 0; i < filtered.length; i++) {
-					var item = filtered[i];
-	
-					var oldIndex = this._data.indexOf(item);
-				
-					if(oldIndex > -1 && oldIndex != i) {
-						changes.push({item: item, newIndex: i});
-					}
-					else if(oldIndex == -1) {
-						changes.push({item: item, newIndex: i});
-					}
-				}
-			
-				for(var i = 0; i < changes.length; i++) {
-					var change = changes[i];
-				
-					var index = this._data.indexOf(change.item);
-				
-					if(index > -1) {
-                        this._data.removeAt(index);
-						this._data.insertAt(change.item, change.newIndex);
-					}
-					else {
-						this._data.insertAt(change.item, change.newIndex);
-					}
-				}
-			
-				for(var i = 0; i < removal.length; i++) {
-					var item = removal[i];
-				
-					this._data.removeAt(this._data.indexOf(item));
-				}
-			}
-			else {
-				this._data.push(filtered);
-			}
-			
-			this._lastFilter = filtered;
-		};
-		
-		this.subscribe = function(object) {
-			this.listeners.push(object);
-		};
-		
-		this.unsubscribe = function(object) {
-			this.listeners.removeAt(this.listeners.indexOf(object));
-			var datasource = this;
-			
-			if(this.listeners.length == 0) {
-				this.listeners.push({
-					onDataSourceRead: function(event) {
-						if(!datasource.preventRead) {
-							addObjects.call(datasource,event.data,event.append);
-						}
-						
-						datasource.reading = false;
-					},
-					onDataSourceUpdate: function(event) {
-						updateObject.call(datasource,event.original, event.data);
-					},
-					onDataSourceDelete: function(event) {
-						removeObject.call(datasource,event.data);
-					},
-					onDataSourceCreate: function(event) {
-						addObjects.call(datasource,event.data);
-					},
-					onDataSourceError: function(event) {
-						var errors = '';
-						datasource.reading = false;
-						for(var i = 0; i < event.errors.length; i++) {
-							if(typeof(event.errors[i]) == 'object') {
-								errors += event.errors[i].toString() + ', ';
-							}
-							else {
-								errors += event.errors[i] + ', ';
-							}
-						}
-						
-						errors = errors.substring(0,errors.length - 2);
-						
-						throw new Error(errors);
-					}
-				});
-			}
-		};
-		
-		this.unsubscribeAll = function() {
-			this.listeners = [];
-			var datasource = this;
-			
-			this.listeners.push({
-				onDataSourceRead: function(event) {
-					if(!datasource.preventRead) {
-						addObjects.call(datasource,event.data,event.append);
-					}
-					
-					datasource.reading = false;
-				},
-				onDataSourceUpdate: function(event) {
-					updateObject.call(datasource,event.original, event.data);
-				},
-				onDataSourceDelete: function(event) {
-					removeObject.call(datasource,event.data);
-				},
-				onDataSourceCreate: function(event) {
-					addObjects.call(datasource,event.data);
-				},
-				onDataSourceError: function(event) {
-					var errors = '';
-					datasource.reading = false;
-					for(var i = 0; i < event.errors.length; i++) {
-						if(typeof(event.errors[i]) == 'object') {
-							errors += event.errors[i].toString() + ', ';
-						}
-						else {
-							errors += event.errors[i] + ', ';
-						}
-					}
-					
-					errors = errors.substring(0,errors.length - 2);
-					
-					throw new Error(errors);
-				}
-			});
-		};
-		
-		this.view = function() {
-			return this._data;
-		};
-		
-		this.data = function(objects) {
-			if(objects) {
-				this.clear();
-				this._page = 1;
-				this.total = 0;
-				this.preventRead = true;
-				addObjects.call(this,objects);
-				_apply.call(this);
-			}
-			else {
-				return this._sources;
-			}
-		};
-		
-		function addObjects(objects,append) {
-			if(objects instanceof Array || objects instanceof zimoko.SortableCollection) {
-				var observableObjects = [];
-				
-				for(var i = 0; i < objects.length; i++) {
-					if(objects[i] instanceof zimoko.Observable) {
-						observableObjects.push(objects[i])
-					}
-					else if(typeof(objects[i]) == 'number' || typeof(objects[i]) == 'string') {
-						var item = new zimoko.Observable();
-						
-						item.set('text', objects[i]);
-						item.set('value', objects[i]);
-						item.set('_original', objects[i]);
-						observableObjects.push(item);
-					}
-					else if(typeof(objects[i]) == 'object') {
-						var item = new zimoko.Observable(objects[i]);
-						observableObjects.push(item);
-					}
-				}
-				
-				this._sources = this._sources.concat(observableObjects);
-					
-				_sort.call(this);
-				_apply.call(this,append);
-				_dataSourceChange.call(this,{sender: self, items: observableObjects});
-			}
-			else if(objects instanceof zimoko.Observable) {
-				this._sources.push(objects);
-				
-				_sort.call(this);
-				_apply.call(this,append);
-				_dataSourceChange.call(this,{sender: self, items: [item]});
-			}
-			else if(typeof(objects) == 'number' || typeof(objects) == 'string') {
-				var item = zimoko.Observable();
-				
-				item.set('text', objects);
-				item.set('value', objects);
-				item.set('_original', objects);
-				this._sources.push(item);
-				
-				_sort.call(this);
-				_apply.call(this,append);
-				_dataSourceChange.call(this,{sender: self, items: [item]});
-			}
-			else if(typeof(objects) == 'object') {
-				var item = new zimoko.Observable(objects);
-				this._sources.push(item);
-				
-				_sort.call(this);
-				_apply.call(this,append);
-				_dataSourceChange.call(this,{sender: self, items: [item]});
-			}
-			
-			if(this.preventRead)
-				this.total = this._sources.length;
-		}
-		
-		function updateObject(original, object) {
-			if(original && original instanceof zimoko.Observable) {
-				for(var name in object) {
-					item._original[name] = object[name];
-					item.set(name, object[name]);
-				}
-			}
-		}
-		
-		function removeObject(object) {
-			
-			if(this._data.indexOf(object) > -1)
-				this._data.removeAt(this._data.indexOf(object));
-			
-			if(this._sources.indexOf(object) > -1)
-				this._sources.removeAt(this._sources.indexOf(object));
-				
-			_dataSourceChange.call(this,{sender: self, items: [object]});
-		}
-		
-		function compare(dataSet1, dataSet2) {
-			var data1, data2;
-			
-			if(dataSet1 instanceof Array || dataSet1 instanceof zimoko.ObservableCollection) {
-				data1 = dataSet1
-				
-				if(dataSet1 instanceof zimoko.ObservableCollection) 
-					data1 = dataSet1.toArray();
-			}
-			else {
-				data1 = [dataSet1];
-			} 
-			
-			if(dataSet2 instanceof Array) {
-				data2 = dataSet2;
-			}
-			else {
-				data2 = [dataSet2];
-			}
-			
-			if(data1.length != data2.length && data2.length > 0) {
-				return false;
-			}
-			
-			var foundCount = 0;
-			for(var i = 0; i < data1.length; i++) {		
-				for(var j = 0; j < data2.length; j++) {
-					if (zimoko.objectEquals(data1[i]._original, data2[j])) {
-						foundCount++;
-						break;
-					}
-				}
-			}
-			
-			if(foundCount == data1.length)
-				return true;
-			else
-				return false;
-		}
-		
-		function _sort() {
-			if(this._sorting && this._sorting instanceof zimoko.Sort && !this.serverSort) {
-				var sortedData = this._sorting.results(this._sources);
-				
-				this._sources = sortedData.toArray();
-			}
-		}
-		
-		function _filter() {
-			var filteredData = [];
-			
-			if(!this.serverPaging) {
-				var start = Math.floor((this._page - 1) * this.pageSize);
-				var end = Math.ceil(this._page * this.pageSize);
-				
-				if(start > this._sources.length) start = 0;
-				
-				if(end > this._sources.length) end = this._sources.length;
-				
-				for(var i = start; i < end; i++) {
-					var item = this._sources[i];
-					
-					if(this._filter && !this.serverFilter && (this._filter.filters.length > 0 || this._filter.filters instanceof zimoko.FilterSet)){
-						var notFiltered = zimoko.isFiltered(this._filter.expression(item));
-						
-						if(notFiltered) {
-							filteredData.push(item);
-						}
-					}
-					else {
-						filteredData.push(item);
-					}
-				}
-			}
-			else {
-				filteredData = this._sources;
-			}
-			
-			return filteredData;
-		}
-		
-		this.totalPages = function() {
-			return Math.ceil(this.total / this.pageSize);
-		};
-		
-		this.sort = function(sort) {
-			if(sort && sort instanceof zimoko.Sort) {
-				this._sorting = sort;
-				
-				if(this.serverSort) {
-					this.read();
-				}
-				else {
-					_sort.call(this);
-					_apply.call(this);
-				}
-			}
-			else {
-				return this._sorting;
-			}
-		};
-		
-		this.page = function(page) {
-			if(page != undefined && zimoko.isNumber(page)) {
-				this._page = page;
-				
-				if(this.serverPaging) {
-					this.read();
-				}
-				else {
-					_apply.call(this);
-				}
-			}
-			else {
-				return this._page;
-			}
-		};
-		
-		this.pageAndAppend = function(page) {
-			if(page != undefined && zimoko.isNumber(page)) {
-				this._page = parseInt(page);
-				
-				if(this.serverPaging) {
-					this.read(true);
-				}
-				else {
-					_apply.call(this,true);
-				}
-			}
-		};
-		
-		this.transport = new zimoko.Transport();
-		
-		this.filter = function(filterSet) {
-			if(filterSet && filterSet instanceof zimoko.FilterSet) {
-				this._filter = filterSet;
-				
-				if(this.serverFilter) {
-					this.read();
-				}
-				else {
-					_apply.call(this);
-				}
-			}
-			else if(!filterSet) {
-				return this._filter;
-			}
-		};
-		
-		this.add = function(object) {
-			addObjects.call(this,object);
-		};
-		
-		this.insertAt = function(object, index) {
-			var item = new zimoko.Observable(object);
-			this._sources.splice(index, 0, item);
-			_sort.call(this);
-			this._data.insertAt(item, index);
-			_dataSourceChange.call(this,{sender: self, items: [item]});
-		};
-		
-		this.remove = function(object) {
-			removeObject.call(this,object);
-		};
-		
-		this.refresh = function() {
-			_sort.call(this);
-			_apply.call(this);
-		};
-		
-		this.removeAt = function(index) {
-			var object = this._sources[i];
-			
-			if(object) {
-				this._sources.splice(index,1);
-			
-				if(this._data.indexOf(object) > -1)
-					this._data.removeAt(this._data.indexOf(object));
-				
-				_dataSourceChange.call(this,{sender: self, items: [object]});
-			}
-		};
-		
-		this.clear = function() {
-			this._sources = [];
-			this._data.clear();
-		};
-		
-		this.get = function(index) {
-			if(index < this._sources.length && index >= 0)
-				return this._sources[index];
-			
-			return undefined;
-		};
-		
 		this.read = function(append) {
-			var datasource = this;
+			var _this = this;
 		
 			var options = {
-				filters: JSON.stringify(datasource._filter),
-				pageSize: datasource.pageSize,
-				page: datasource._page,
-				sorting: JSON.stringify(datasource._sorting),
+				filters: _this._filter,
+				pageSize: _this.pageSize,
+				page: _this._page,
+				sorting: _this._sorting,
 				success: function(response) {
-					if(!datasource.preventRead)
-						datasource.total = parseInt(datasource.transport.schema.total(response));
+					if(!_this.preventRead)
+						_this.total = parseInt(_this.transport.schema.total(response));
 					
-					var data = datasource.transport.schema.data(datasource.transport.schema.parse(response));
+					var data = _this.transport.schema.data(_this.transport.schema.parse(response));
 					
-					var errors = datasource.transport.schema.errors(response);
+					var errors = _this.transport.schema.errors(response);
 					
 					if(errors) {
-						_dataSourceError.call(datasource,{sender: datasource, data: undefined, errors: errors});
+						_dataSourceError.call(_this, errors);
 					}
 					else {
-						if(!compare(datasource._sources, data) && !datasource.preventRead) {
-							datasource._sources = [];
-							_dataSourceRead.call(datasource,{sender: datasource, data: data, append: append});
+						_this._source = data.toObservableObjects();
+						
+						if(_this._filter)
+							_this._filter.cached = null;
+						
+						if(_this.serverPaging) {
+							if(append) {
+								_this._view.push(_this._source);
+							}
+							else {
+								_this._view.clear();
+								_this._view.push(_this.source);
+							}
 						}
 						else {
-							_dataSourceRead.call(datasource,{sender: datasource, data: [], append: append});
+							_this._view.clear();
+							_this.sort();
 						}
+							
+						_dataSourceRead.call(_this, _this);
 					}
 				},
 				error: function(errors) {
-					_dataSourceError.call(datasource,{sender: datasource, data: undefined, errors: errors});
+					_dataSourceError.call(_this, errors);
 				}
 			};	
 			
-			if(!this.reading) {
+			if(!this.reading && !this.preventRead) {
 				this.reading = true;
 				
-				datasource.transport.read(options);
+				this.transport.read(options);
 			}
 		};
 		
@@ -960,112 +577,10 @@
 		this.create = function(object) {
 			var realData = {};
 			var originalObject = object;
-			var datasource = this;
+			var _this = this;
 			
-			if(this.transport.schema.model) {
-				for(var name in this.transport.schema.model) {
-					var modelSetting = this.transport.schema.model[name];
-					
-					if(name != 'init' && name != '_original') {
-						if(modelSetting) {
-							if(!modelSetting.nullable) {
-								if(!originalObject[name]) {
-									_dataSourceError.call(this,{sender: this, data: originalObject, errors: [name + ' is non nullable']}); 
-									return;
-								}
-							}
-							
-							if(modelSetting.required) {
-								if(!originalObject[name]) {
-									_dataSourceError.call(this,{sender: this, data: originalObject, errors: [name + ' is required']});
-									return;
-								}
-							}
-							
-							realData[name] = originalObject[name];
-						}
-						else {
-							realData[name] = originalObject[name];
-						}
-					}
-				}
-			}
-			else {
-				realData = originalObject;
-			}
-			
-			var options = {
-				data: realData,
-				filters: JSON.stringify(datasource._filter),
-				pageSize: datasource.pageSize,
-				page: datasource._page,
-				sorting: JSON.stringify(datasource._sorting),
-				success: function(response) {
-					var data = datasource.transport.schema.data(datasource.transport.schema.parse(response));
-					
-					var errors = datasource.transport.schema.errors(response);
-					
-					if(errors) {
-						_dataSourceError.call(datasource,{sender: datasource, data: object, errors: errors});
-					}
-					else {
-						_dataSourceCreate.call(datasource,{sender: datasource, data: data, original: object});
-					}
-				},
-				error: function(errors) {
-					_dataSourceError.call(datasource,{sender: datasource, data: object, errors: errors});
-				}
-			}; 
-
-			datasource.transport.create(options);
-		};
-		
-		this.delete = function(object) {
-			var originalObject = undefined;
-			var datasource = this;
-			
-			if(object instanceof zimoko.Observable) {
-				originalObject = object._original;
-				
-				for(var name in originalObject) {
-					originalObject[name] = object[name];
-				}
-			}
-			else {
-				originalObject = object;
-			}
-		
-			var options = {
-				data: originalObject,
-				filters: JSON.stringify(datasource._filter),
-				pageSize: datasource.pageSize,
-				page: datasource._page,
-				sorting: JSON.stringify(datasource._sorting),
-				success: function(response) {
-					var errors = datasource.transport.schema.errors(response);
-					
-					if(errors) {
-						_dataSourceError.call(datasource,{sender: datasource, data: object, errors: errors});
-					}
-					else {
-						_dataSourceDelete.call(datasource,{sender: datasource, data: object, original: object});
-					}
-				},
-				error: function(errors) {
-					_dataSourceError.call(datasource,{sender: datasource, data: object, errors: errors});
-				}
-			}; 
-			
-            datasource.transport.delete(options);
-		};
-		
-		this.update = function(object) {
-			var realData = {};
-			
-			var originalObject = object;
-			var datasource = this;
-			
-				if(datasource.transport.schema.model) {
+			zimoko.queue.add(function() {
+				if(this.transport.schema.model) {
 					for(var name in this.transport.schema.model) {
 						var modelSetting = this.transport.schema.model[name];
 					
@@ -1073,14 +588,116 @@
 							if(modelSetting) {
 								if(!modelSetting.nullable) {
 									if(!originalObject[name]) {
-										_dataSourceError.call(datasource,{sender: datasource, data: original, errors: [name + ' is non nullable']}); 
+									
 										return;
 									}
 								}
 							
 								if(modelSetting.required) {
 									if(!originalObject[name]) {
-										_dataSourceError.call(datasource,{sender: datasource, data: original, errors: [name + ' is required']});
+								
+										return;
+									}
+								}
+							
+								realData[name] = originalObject[name];
+							}
+							else {
+								realData[name] = originalObject[name];
+							}
+						}
+					}
+				}
+				else {
+					realData = originalObject;
+				}
+			
+				var options = {
+					data: realData,
+					success: function(response) {
+						var data = _this.transport.schema.data(_this.transport.schema.parse(response));
+					
+						var errors = datasource.transport.schema.errors(response);
+					
+						if(errors) {
+							_dataSourceError.call(_this, errors);
+						}
+						else {
+							var item = new zimoko.Observable(data);
+							
+							_this._source.push(item);
+							_this._view.push(item);
+							_this._view.sort(_this._sorting);
+							_dataSourceCreate.call(_this, item);							
+						}
+					},
+					error: function(errors) {
+						_dataSourceError.call(_this, errors);
+					}
+				}; 
+
+				this.transport.create(options);
+			}, this);
+		};
+		
+		this.destroy = function(object) {
+			var originalObject = undefined;
+			var _this = this;
+			
+			if(object instanceof zimoko.Observable) {
+				originalObject = object.toObject();
+			}
+			else {
+				originalObject = object;
+			}
+		
+			var options = {
+				data: originalObject,
+				success: function(response) {
+					var errors = _this.transport.schema.errors(response);
+					
+					if(errors) {
+						_dataSourceError.call(_this, errors);
+					}
+					else {
+						_this._source.remove(object);
+						_this._view.remove(object);
+						
+						_dataSourceDelete.call(_this,object);
+					}
+				},
+				error: function(errors) {
+					_dataSourceError.call(_this, errors);
+				}
+			}; 
+			
+            _this.transport.destroy(options);
+		};
+		
+		this.update = function(object) {
+			var realData = {};
+			
+			var originalObject = object;
+			var _this = this;
+			
+			if(originalObject instanceof zimoko.Observable)
+				originalObject = originalObject.toObject();
+			
+			zimoko.queue.add(function() {
+				if(this.transport.schema.model) {
+					for(var name in this.transport.schema.model) {
+						var modelSetting = this.transport.schema.model[name];
+					
+						if(name != 'init' && name != '_original') {
+							if(modelSetting) {
+								if(!modelSetting.nullable) {
+									if(!originalObject[name]) { 
+										return;
+									}
+								}
+							
+								if(modelSetting.required) {
+									if(!originalObject[name]) {
 										return;
 									}
 								}
@@ -1101,28 +718,23 @@
 			
 				var options = {
 					data: realData,
-					filters: JSON.stringify(datasource._filter),
-					pageSize: datasource.pageSize,
-					page: datasource._page,
-					sorting: JSON.stringify(datasource._sorting),
-					success: function(response) {
-						var data = datasource.transport.schema.data(datasource.transport.schema.parse(response));
-					
-						var errors = datasource.transport.schema.errors(response);
+					success: function(response) {				
+						var errors = _this.transport.schema.errors(response);
 					
 						if(errors) {
-							_dataSourceError.call(datasource,{sender: datasource, data: object, errors: errors});
+							_dataSourceError.call(_this, errors);
 						}
 						else {
-							_dataSourceUpdate.call(datasource,{sender: datasource, data: data, original: object});
+							_dataSourceUpate.call(_this,object);
 						}
 					},
 					error: function(errors) {
-						_dataSourceError.call(datasource,{sender: datasource, data: object, errors: errors});			
+						_dataSourceError.call(_this, errors);
 					}
 				};
 
-					datasource.transport.update(options);
+				this.transport.update(options);
+			}, this);
 		};
 	});
 })();

@@ -99,7 +99,7 @@ function SyncProcessor() {
                                     items[i].lastPosition = undefined;
 									
                                     checklists.push(items[i]);
-									DashboardDataSource.add(items[i]);
+									DashboardDataSource.add(new zimoko.Observable(items[i]));
                                 }
                                 
     							currentItem = undefined;
@@ -108,7 +108,7 @@ function SyncProcessor() {
                             if(DashboardObserver.dataSource != DashboardDataSource)
         						DashboardObserver.set('dataSource', DashboardDataSource);
         					else
-                            	DashboardObserver.dataSource.read();
+                            	DashboardObserver.onDataSourceRead();
                              
                             self.syncToPhone(checklists);
                         }, 20);
