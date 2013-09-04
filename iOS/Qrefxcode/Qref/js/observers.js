@@ -1261,6 +1261,7 @@ var DashboardDataSource = new zimoko.DataSource({pageSize:10});
 
 var DashboardObserver = new zimoko.Observable({
     items:new zimoko.ObservableCollection(),
+    showHelp: true,
     itemTap:function (element, e, data) {
         var ele = $(element);
 
@@ -1453,6 +1454,9 @@ var DashboardObserver = new zimoko.Observable({
 
                 this.dataSource.unsubscribe(this);
                 this.dataSource.subscribe(this);
+
+				if(this.dataSource.view().length > 0)
+					this.set('showHelp', false);
 
                 var _this = this;
 

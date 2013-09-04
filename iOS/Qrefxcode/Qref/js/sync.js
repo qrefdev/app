@@ -110,6 +110,9 @@ function SyncProcessor() {
         					else
                             	DashboardObserver.onDataSourceRead();
                              
+                            if(DashboardObserver.dataSource.view().length > 0)
+								DashboardObserver.set('showHelp', false);
+                             
                             self.syncToPhone(checklists);
                         }, 20);
                     }

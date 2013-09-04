@@ -80,6 +80,9 @@
         <div class="dashcontent">
             <div class="grid dashboard-planes-selector scrollable">
                 <div class="container">
+                	<div style="position: absolute; top: 35%; left: 10px; right: 10px;" data-bind="visible: (token && showHelp)">
+                		<h1 style="color: #1f1f1f;">Don't have a checklist?<br>Use the download button below!</h1>
+                	</div>
                     <ul id="dashboard-planes" class="vertical" data-bind="foreach: items">
                         <li class="li-item"
                             data-bind="attr: {'data-id': _id }, tap: parent.itemTap, swipeRight: parent.itemSwipeRight, swipeLeft: parent.itemSwipeRight">
