@@ -2,6 +2,8 @@
 html,body{margin:0;padding:0;width:100%;height:100%;font-family:Myriad,Helvetica}
 .wrapper{overflow:hidden;position:absolute;width:100%;height:100%;top:0;bottom:0;left:0;right:0}
 .wrap{position:absolute;float:left;width:100%;height:100%;top:0;bottom:0;left:0;right:0;overflow:hidden}
+#dashboard{z-index:2}
+#checklist{z-index:1}
 .textbox{position:relative;padding:10px;text-align:left;width:100%;height:50px;font-size:22px;-webkit-border-radius:5px;border-radius:5px;display:block;font-family:Myriad;box-sizing:border-box;margin-bottom:10px}
 .textbox.tailNumber{padding:16px 10px 10px 17px;font-size:50px;height:78px}
 .page-hidden-tap{position:absolute;bottom:0;left:0;right:0;top:0;overflow:visible;width:100%;margin:0;padding:0;z-index:100}

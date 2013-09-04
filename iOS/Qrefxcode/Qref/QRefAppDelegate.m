@@ -3,7 +3,7 @@
 //  Qref
 //
 //  Created by Aaron Klick on 7/25/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2013 Qref Quick Reference Media dba Javas Ventures, Inc. All rights reserved.
 //
 
 #import "QRefAppDelegate.h"
