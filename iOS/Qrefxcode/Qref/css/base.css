@@ -152,6 +152,7 @@ ul li{cursor:pointer}
 .CPspacer{height:10px}
 .logoSection{z-index:9999;position:absolute;top:37px;width:100%;height:60px}.logoSection p{font-family:Myriad;font-size:30px;text-align:left;margin:0;padding:14px 0 0 10px;letter-spacing:-0.04em}
 .logoSection .logo{background-size:auto 100%;height:60px;width:153px;position:absolute;right:-1px;top:0}
+.getStarted{position:relative;padding:15px;font-size:30px;letter-spacing:-0.04em}.getStarted span{font-family:MyriadBold}
 @media only screen and (orientation:portrait){.emergencies ul li{width:43%} .CProw{font-size:13pt}}@media only screen and (orientation:landscape){.emergencies ul li{width:21%} .CProw{font-size:inherit} .vertical li .holder{margin-bottom:0}}.tablet{}.tablet .dashcontent{top:120px}
 .tablet .checklist .vertical li .check,.tablet .downloads .vertical li .check{float:left;width:49%}.tablet .checklist .vertical li .check.fullwidth,.tablet .downloads .vertical li .check.fullwidth{width:100%}
 .tablet .checklist .vertical li .response,.tablet .downloads .vertical li .response{float:right;width:49%}
