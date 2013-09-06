@@ -1459,7 +1459,9 @@ var DashboardObserver = new zimoko.Observable({
 
 				if(this.dataSource.view().length > 0)
 					this.set('showHelp', false);
-
+                else
+                    this.set('showHelp', true);
+                                              
                 var _this = this;
 
                 setTimeout(function () {
