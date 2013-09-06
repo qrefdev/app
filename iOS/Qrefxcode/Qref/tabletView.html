@@ -723,6 +723,42 @@
                     </div>
                 </form>
             </div>
+            <div style="float: left; position: relative; width: 98%; margin: 5px;">
+            	<div class="button" data-bind="tap: passwordAuthCodeTap">
+            		<div class="special2"><p>I have a Auth Code</p><i class="icon icon-arrow-right"></i></div>
+            	</div>
+            </div>
+        </div>
+    </div>
+</article>
+
+<article id="passwordAuthCode" data-page-show="slideInRight" data-page-hide="slideOutRight" class="page">
+	<div class="wrap">
+        <div class="topbar">
+            <span>Enter Auth Code</span>
+
+            <div class="item-large back" data-bind="tap: backTap">
+                <p><i class="icon icon-double-angle-left"></i></p>
+            </div>
+            <div class="item-large topmenu" data-bind="tap: menuTap">
+                <p><i class="icon icon-th-list"></i></p>
+            </div>
+        </div>
+        <div class="content" style="bottom: 0px;">
+        	<div style="float: left; position: relative; width: 99%; margin: 5px;">
+				<form id="passwordAuthCodeForm" method="post" action="javascript:void(null)">
+					<input class="textbox required" type="number" id="authCode" data-bind="keyup: keyUp"
+							   name="authCode" placeholder="Auth Code" autofocus/>
+					<input class="textbox required" type="password" placeholder="new password" tabindex="2"
+							   data-bind="keyup: keyUp" id="authPassword" name="authPassword"/>
+					<input class="textbox required" type="password" placeholder="confirm password" tabindex="3"
+							   data-bind="keyup: keyUp" id="authPasswordConfirm" name="authPasswordConfirm"/>
+
+					<div class="submit">
+						<div class="special"><p>Change</p><i class="icon icon-arrow-right"></i></div>
+					</div>
+				</form>
+        	</div>
         </div>
     </div>
 </article>
@@ -794,7 +830,6 @@
 </article>
 
 <article id="hiddenTapSpace" data-bind="tap: pageTap, visible: menuOpen" class="page-hidden-tap" style="z-index: 100">
-
 </article>
 
 <!-- Menu -->

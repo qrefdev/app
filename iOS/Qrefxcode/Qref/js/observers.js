@@ -1034,6 +1034,8 @@ var AppObserver = new zimoko.Observable({
         var self = this;
 
         $(window).tap(function (e) {
+                      e.stopPropagation();
+                      e.preventDefault();
             ChecklistObserver.set('showSections', false);
         });
 
@@ -1565,7 +1567,13 @@ var ChecklistObserver = new zimoko.Observable({
                 this.set('category', 0);
                 this.set('section', 0);
 
-				 this.itemsDataSource.clear();
+				for(var i = 0; i < this.items.length; i++) {
+					var item = this.items.elementAt(i);
+					
+					item.detach();
+				}
+
+				this.itemsDataSource.clear();
 
                 for (var i = 0; i < this.checklist[this.list][this.section].items.length; i++) {
                     var item = this.checklist[this.list][this.section].items[i];
@@ -1725,6 +1733,12 @@ var ChecklistObserver = new zimoko.Observable({
     	if(!checklistArea.data('template')) 
     		checklistArea.data('template', $(checklistArea.html()));
     		
+    	for(var i = 0; i < this.items.length; i++) {
+			var item = this.items.elementAt(i);
+			
+			item.detach();
+		}
+				
     	checklistArea.html('');
     	
     	for(var i = 0; i < this.items.length; i++) {
