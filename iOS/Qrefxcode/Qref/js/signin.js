@@ -157,7 +157,9 @@ function passwordRecovery() {
                     
                     $("#recoveryEmail").val("");
                     
-                    dialog.show();		
+                    dialog.show();	
+                    
+                    Navigation.go('#passwordAuthCode');
                 }
                 else
                 {
@@ -178,4 +180,63 @@ function passwordRecovery() {
         var dialog = new Dialog("#infobox", "No Connection Available");
         dialog.show();
     }
+}
+
+function passwordAuthCode() {
+	var data = {"mode":"rpc", "code":$('#authCode').val()};
+	
+	if(reachability) {
+		if($('#authCode').val() != '' && $('#authPassword').val() != '' && $('#authPasswordConfirm').val() != '') {
+			if($('#authPassword').val() == $('#authPasswordConfirm').val()) {
+				AppObserver.set('loading', true);
+				
+				window.location.href = "qref://clearCache";
+				
+				data.password = $('#authPassword').val();
+				
+				 $.ajax({
+					type: "post",
+					data: data,
+					dataType: "json",
+					url: host + "services/rpc/auth/passwordRecovery",
+					success: function(response) {
+						if(response.success) {
+							$('#authCode').val('');
+							$('#authPassword').val('');
+							$('#authPasswordConfirm').val('');
+							
+							var dialog = new Dialog("#infobox", "Password successfully updated!");
+            				dialog.show();
+            				
+            				Navigation.go('#dashboard');
+						}
+						else {
+							var dialog = new Dialog("#infobox", "Invalid Auth Code!");
+            				dialog.show();
+						}
+						
+						AppObserver.set('loading', false);
+					},
+					error: function() {
+						var dialog = new Dialog("#infobox", "No internet connection!");
+            			dialog.show();
+            			
+            			AppObserver.set('loading', false);
+					}
+				});
+			}
+			else {
+				var dialog = new Dialog("#infobox", "New Password and Confirm Password must match");
+            	dialog.show();
+			}
+		}
+		else {
+			var dialog = new Dialog("#infobox", "All fields are required!");
+            dialog.show();
+		}
+	}
+	else {
+		var dialog = new Dialog("#infobox", "No internet connection!");
+		dialog.show();
+	}
 }

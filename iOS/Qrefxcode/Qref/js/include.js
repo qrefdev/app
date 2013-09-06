@@ -158,6 +158,13 @@ function DataLoaded() {
 			changePassword();
 		}
 	});
+	
+	$('#passwordAuthCodeForm').validate({
+		submitHandler: function() {
+			passwordAuthCode();
+		}
+	});
+	
 	//AppObserver.set('loading', false);
 	AppObserver.load();
 	Navigation.go("dashboard");

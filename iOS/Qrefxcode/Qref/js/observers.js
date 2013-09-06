@@ -607,6 +607,12 @@ var AppObserver = new zimoko.Observable({
 
         Navigation.go('#' + ele.attr('data-link'));
     },
+    passwordAuthCodeTap: function(element, e, data) {
+    	e.stopPropagation();
+    	e.preventDefault();
+    	
+    	Navigation.go('#passwordAuthCode');
+    },
     onPropertyChanged:function (sender, property) {
         if (property == 'token') {
             MenuObserver.set('token', this.token);
