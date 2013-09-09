@@ -2080,6 +2080,10 @@ var ChecklistObserver = new zimoko.Observable({
 
                     ChecklistObserver.itemsDataSource.remove(data);
 
+					$('#checklist li[data-id="' + data._id + '"]').remove();
+					
+					data.detach();
+
                     if (index > -1) {
                         ChecklistObserver.set('modified', true);
                         ChecklistObserver.checklist[ChecklistObserver.list][ChecklistObserver.section].items.removeAt(index);
