@@ -46,7 +46,7 @@ class ChangePasswordRoute extends RpcRoute
 						if data?
 							console.log(data)		
 							transport = Mailer.createTransport("SMTP", {
-								host: '10.1.224.10',
+								host: '10.1.224.110',
 								port: 25,
 							})
 										

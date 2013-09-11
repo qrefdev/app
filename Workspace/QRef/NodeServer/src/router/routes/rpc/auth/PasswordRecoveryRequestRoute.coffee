@@ -17,7 +17,7 @@ class PasswordRecoveryRequestRoute extends RpcRoute
 			res.json(resp, 200)
 			return
 			
-		UserAuth.createPasswordRecoveryToken(req.body.userName, (err, tk) =>
+		UserAuth.createPasswordAuthCode(req.body.userName, (err, tk) =>
 			if err?
 				resp = new RpcResponse(null)
 				resp.failure('Internal Error', 500)
@@ -33,9 +33,9 @@ class PasswordRecoveryRequestRoute extends RpcRoute
 				@.getEmailTemplate('passwordRecoveryRequest.html', (data) ->
 					if data?
 						console.log(data)
-						data = data.replace(/\{recoveryUrl\}/g, 'http://my.qref.com/?passwordRecovery=' + tk.token)
+						data = data.replace(/\{recoveryCode\}/g, tk.code)
 						transport = Mailer.createTransport("SMTP", {
-							host: '10.1.224.10',
+							host: '10.1.224.110',
 							port: 25,
 						})
 					

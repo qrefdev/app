@@ -32,6 +32,10 @@ class QRefDatabase
 	###
 	AuthToken: null
 	###
+	@property [AuthCodeSchemaInternal] a reference to AuthCode model
+	###
+	AuthCode: null
+	###
 	@property [RoleSchemaInternal] A reference to the Role model.
 	###
 	Role: null
@@ -85,6 +89,8 @@ class QRefDatabase
 		@User = @connection.model('users', UserSchema)
 		AuthTokenSchema = require('../schema/AuthTokenSchema')
 		@AuthToken = @connection.model('user.tokens', AuthTokenSchema)
+		AuthCodeSchema = require('../schema/AuthCodeSchema')
+		@AuthCode = @connection.model('user.auth.codes', AuthCodeSchema)
 		AircraftManufacturerSchema = require('../schema/AircraftManufacturerSchema')
 		@AircraftManufacturer = @connection.model('aircraft.manufacturers', AircraftManufacturerSchema)
 		AircraftModelSchema = require('../schema/AircraftModelSchema')

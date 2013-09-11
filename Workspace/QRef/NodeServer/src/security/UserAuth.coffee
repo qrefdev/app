@@ -80,6 +80,20 @@ class UserAuth
 					 	else
 					 		callback(null, false)
 					 )
+					 
+	validateAuthCode: (code, callback) ->
+		db = QRefDatabase.instance()
+		db.AuthCode.where('code')
+					 .equals(code)
+					 .findOne((err, obj) =>
+					 	if err?
+					 		callback(err, false)
+					 		return
+					 	if obj?
+					 		callback(null, Date.now() < obj.expiresOn)
+					 	else
+					 		callback(null, false)
+					 )
 	###
 	Validates a set of user credentials against the database and issues a valid token if the credentials are valid.
 	@param userName [String] The username to validate.
@@ -225,76 +239,128 @@ class UserAuth
 					callback(null, tk.user)
 		
 				)
-	
-	createPasswordRecoveryToken: (userName, callback) =>
-		db = QRefDatabase.instance()
-		db.User.where('userName')
-		.equals(userName)
-		.findOne((err, user) =>
-			if err?
-				callback(err, null);
-				return
 				
-			if user?
-				expiry = new Date()
-				expiry.setHours(expiry.getHours() + 24)
-				tk = new db.AuthToken()
-				tk.token = @.secureToken(user._id, user.passwordSalt)
-				tk.expiresOn = expiry
-				tk.user = user
-				tk.save((error) ->
-					if error?
-						callback(error, null);
+	userFromAuthCode: (code, callback) =>
+		db = QRefDatabase.instance()
+		db.AuthCode.where('code')
+				.equals(code)
+				.populate('user')
+				.findOne((err, tk) ->
+					
+					if err?
+						callback(err, null)
 						return
-					db.AuthToken.findById(tk._id)
-					.populate('user')
-					.exec((err, tk) ->
-						callback(err, tk);
+					if not tk?
+						callback(true, null)
 						return
-					)
-				) 
-			else
-				callback(null, null)
+					
+					callback(null, tk.user)
+		
+				)
+	
+	createPasswordAuthCode: (userName, callback) =>
+		creating = true
+		token = null
+		
+		async.whilst(
+			() => 
+				return creating
+			,
+			(cb) =>
+				db = QRefDatabase.instance()
+				db.User.where('userName')
+				.equals(userName)
+				.findOne((err, user) =>
+					if err?
+						cb(err);
+						return
+				
+					if user?
+						expiry = new Date()
+						expiry.setMinutes(expiry.getMinutes() + 30)
+						tk = new db.AuthCode()
+						tk.code = @.createAuthCode();
+						tk.expiresOn = expiry
+						tk.user = user
+						tk.save((error) ->
+							if error?
+								cb(null);
+								return
+								
+							db.AuthCode.findById(tk._id)
+							.populate('user')
+							.exec((err, tk) ->
+								if err?
+									cb(err);
+									return
+								
+								creating = false
+								token = tk
+								cb(null)
+								return
+							)
+						) 
+					else
+						cb(new Error('No user found'))
+				)
+			,
+			(err) =>
+				if err?
+					callback(err, null)
+				
+				callback(null, token)
 		)
 	
-	applyPasswordRecovery: (token, callback) =>
-		@.validateToken(token, (err, success) =>
+	createAuthCode: () =>
+		code = ''
+		maxLength = 6
+		i = 0
+		
+		while i < maxLength
+			code += Math.floor(Math.random() * 10)
+			i++
+			
+		return code
+		
+	
+	applyPasswordRecovery: (code, password, callback) =>
+		@.validateAuthCode(code, (err, success) =>
 			if err?
-				callback(err, null, null);
+				callback(err)
 				return
+				
 			if success?
-				@.userFromToken(token, (error, user) =>
+				@.userFromAuthCode(code, (error, user) =>
 					if error?
-						callback(error, null, null);
+						callback(error)
 						return
 		
 					if user?
-						newPassword = @.randomPassword(13)
-						user.passwordHash = @.securePassword(user._id, user.passwordSalt, newPassword)
+						user.passwordHash = @.securePassword(user._id, user.passwordSalt, password)
 						
 						user.save((err) ->
 							if err?
-								callback(err, null, null);
+								callback(err)
 								return
 							
 							db = QRefDatabase.instance()
-							db.AuthToken.where('token')
-							.equals(token)
+							db.AuthCode.where('code')
+							.equals(code)
 							.findOne((err, tk) ->
 								if not err?
 									if tk?
 										tk.remove()
 							)
 							
-							callback(null, user, newPassword);
+							callback(null)
 							return
 						)
 					else			
-						callback(null, null, null);
+						callback(new Error('No user found'))
 						return
 				)
 			else	
-				callback(null, null, null);
+				callback(new Error('Invalid AuthCode'));
 				return
 		)
 				

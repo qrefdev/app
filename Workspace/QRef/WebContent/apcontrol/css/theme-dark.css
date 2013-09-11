@@ -20,8 +20,9 @@ a:visited {
 /** Page Wrapper **/
 
 .theme-dark .page {
-	background: transparent url("../images/leatherbg.jpg") top left repeat;
-	background-size: 100% 100%;
+	/**background: transparent url("../images/leatherbg.jpg") top left repeat;
+	background-size: 100% 100%;**/
+    background-color: #000813;
 }
 
 /** Bottom Nav Bar **/

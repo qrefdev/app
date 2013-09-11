@@ -6,6 +6,21 @@ var AddNewItem_SectionList = "";
 var SectionList = new Array();
 var FileContents = "";
 
+$(document).ready(function() {
+	$(window).click(function(e) {
+		if($('.move-emergency-items').css('display') == 'block') {
+			$('.move-emergency-items').hide();
+		}
+	});
+	
+	$('#MoveEmergencyItems').click(function(e) {
+		e.stopPropagation();
+		e.preventDefault();
+		
+		moveEmergencyItems();
+	});
+});
+
 function show_prompt(question)
 {
 	var uInput = "";
@@ -486,6 +501,50 @@ function AddOptions(list, category, target) {
 * Emeregency Area Functions
 *
 **/
+
+function moveEmergencyItems() {
+	var $uls = $('#s4 ul');
+	
+	if($('.move-emergency-items').css('display') == 'none') {
+		$('.move-emergency-items .sections').html('');
+		$uls.each(function() {
+			var $ul = $(this);
+			var item = $('<li>' + $ul.attr('data-id') + '</li>');
+		
+			item.click(function(e) {
+				e.stopPropagation();
+				var $moveTo = $('#s4 ul[data-id="' + $(this).html() + '"]');
+			
+				var items = $('#s4 .ui-selected');
+			
+				$moveTo.append(items);
+			
+				$('.move-emergency-items').hide();
+			});
+	
+			$('.move-emergency-items .sections').append(item);
+		});
+	
+		var $newAndMove = $('<li>New</li>');
+		$newAndMove.click(function(e) {
+			e.stopPropagation();
+			AddNewEmergencyCategory();
+		
+			var $ul = $('#s4 ul').last();
+			var items = $('#s4 .ui-selected');
+			$ul.append(items);
+		});
+	
+		$('.move-emergency-items .sections').append($newAndMove);
+	
+		$('.move-emergency-items').show();
+	}
+	else {
+		$('.move-emergency-items').hide();
+	}
+}
+
+
 function removeEmergencyCategory(element) {
 	$removed = element.detach();
 	
@@ -503,14 +562,19 @@ function removeEmergencyCategory(element) {
 function AddEmergencyCategory(section){
 	var subSectionScroller = $('#EmergencyCategoryTemplate').html();
 	
-	$subSection = $(subSectionScroller);
+	var $subSection = $(subSectionScroller);
 	$subSection.find('.categoryName').html(section.name);
 	$subSection.find('ul').attr('data-id',section.name);
 	
 	$('#s4').append($subSection);
 	
-	$ulSubSection = $('#s4 ul[data-id="' + section.name + '"]');
-	$buttonSubSection = $ulSubSection.prev();
+	var $ulSubSection = $('#s4 ul[data-id="' + section.name + '"]');
+	var $buttonSubSection = $ulSubSection.prev().prev();
+	var $editButton = $ulSubSection.prev();
+	
+	$editButton.tap(function(e) {
+		EditEmergencyCategory(this);
+	});
 	
 	$buttonSubSection.tap(function(e) {
 		removeEmergencyCategory($(this).parent());
@@ -546,6 +610,31 @@ function AddEmergencyCategory(section){
 	}
 }
 
+function EditEmergencyCategory(element) {
+	var newitem = show_prompt("Please Enter a new Category");
+	if(newitem == "")
+	{
+		return;
+	}
+	else
+	{
+		var emergencyCategory = $(element).parent();
+		
+		var $uls = $('#s4 ul');
+		
+		for(var i = 0; i < $uls.length; i++) {
+			var $ul = $($uls.get(i));
+			
+			if($ul.attr('data-id') == newitem) {
+				alert("Cannot add category, as one already exists with that name");
+				return;
+			}
+		}
+		
+		emergencyCategory.find('.categoryName').html(newitem);
+		emergencyCategory.find('ul').attr('data-id',newitem);
+	}
+}
 
 function AddNewEmergencyCategory() {
 	var newitem = show_prompt("Please Enter a new Category");
@@ -555,12 +644,12 @@ function AddNewEmergencyCategory() {
 	}
 	else
 	{
-		$uls = $('#s4 ul');
+		var $uls = $('#s4 ul');
 		
 		for(var i = 0; i < $uls.length; i++) {
-			$ul = $($uls.get(i));
+			var $ul = $($uls.get(i));
 			
-			if($ul.attr('id') == newitem) {
+			if($ul.attr('data-id') == newitem) {
 				alert("Cannot add category, as one already exists with that name");
 				return;
 			}
@@ -575,12 +664,20 @@ function AddNewEmergencyCategory() {
 }
 
 function CheckIn_CycleEmergencies(datalist, uls) {
+	var emergenciesSectionExistsAndEmpty = (uls.first().attr('data-id') == 'Emergencies' && uls.first().children().length == 0);
+	
 	for(var i = 0; i < uls.length; i++) {
 		var $ul = $(uls.get(i));
 		
 		if($ul.children().length > 0) {
-			var category = createCategoryFromList(i,$ul.attr('data-id'), $ul.children());
-			datalist.push(category);
+			if(!emergenciesSectionExistsAndEmpty) {
+				var category = createCategoryFromList(i,$ul.attr('data-id'), $ul.children());
+				datalist.push(category);
+			}
+			else {
+				var category = createCategoryFromList(i - 1,$ul.attr('data-id'), $ul.children());
+				datalist.push(category);
+			}
 		}
 	}
 	
@@ -598,7 +695,7 @@ function createCategoryFromList(index, name, lis) {
 	var uniqueSectionCount = 0;
 	
 	for(var i = 0; i < lis.length; i++) {
-		$li = $(lis.get(i));
+		var $li = $(lis.get(i));
 		
 		var SectionIndex = $li.data("SectionIndex");
 		var Section = $li.data("Section");
@@ -1109,29 +1206,11 @@ function ShowAddNewItemForm()
 	}
 }
 
-function RemoveFromList(e)
+function RemoveFromList(id)
 {
 	HaveMadeChanges = true;
 	
-	var target = e;
-	
-	var Parent = target.parentNode.parentNode.parentNode;
-	
-	if(Parent.id == "")
-		Parent = Parent.parentNode;
-	
-	list = document.getElementById("s" + Parent.id);
-	
-	for(var i = 0; i < $(".ui-selected").length; i++)
-	{
-		var item = $(".ui-selected")[i];
-		
-		if(item.parentNode.id == list.id)
-		{
-			list.removeChild(item);
-			i--;
-		}
-	}
+	$('#' + id).find('.ui-selected').remove();
 	
 	CalculateItemInputVisibility();
 }
@@ -1192,7 +1271,7 @@ function AcceptNewCheckListItem()
 	}
 	else {
 		$newitem.data("SectionIndex",0);
-		$newitem.data("Index", $('#s4 ul').first().childrent().length + 1);
+		$newitem.data("Index", $('#s4 ul').first().children().length + 1);
 		$newitem.data("Check",check);
 		$newitem.data("Response",response);
 		var currentSection = $('#Section_AddNew').val();

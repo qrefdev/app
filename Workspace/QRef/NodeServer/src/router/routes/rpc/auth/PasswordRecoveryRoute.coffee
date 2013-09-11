@@ -17,48 +17,40 @@ class PasswordRecoveryRoute extends RpcRoute
 			res.json(resp, 200)
 			return	
 			
-		UserAuth.applyPasswordRecovery(req.body.token, (err, user, password) =>
+		UserAuth.applyPasswordRecovery(req.body.code, req.body.password, (err) =>
 			if err?
 				resp = new RpcResponse(null)
-				resp.failure('Internal Error', 500)
+				resp.failure('Invalid Auth Code', 500)
 				res.json(resp, 200)
 				return
 				
-			if user? and password?
-				resp = new RpcResponse(null)
-				res.json(resp, 200)
-				
-				@.getEmailTemplate('passwordReset.html', (data) ->
-					if data?
-						console.log(data)
-						data = data.replace(/\{password\}/g, password)
-					
-						transport = Mailer.createTransport("SMTP", {
-							host: '10.1.224.10',
-							port: 25,
-						})
-					
-						transport.sendMail({
-							to: user.userName,
-							from: 'admin@qref.com',
-							subject: 'QRef Mobile - Password Reset',
-							html: data
-						}, (err, result) ->
-							if err?
-								console.log(JSON.stringify(err))
-						)
-					else
-						console.log("No email template found")
-				)
-				
-				return
-			else
-				resp = new RpcResponse(null)
-				resp.failure('Failed to generate new password', 500)
-				res.json(resp, 200)
-				return
+			resp = new RpcResponse(null)
+			res.json(resp, 200)
+			
+			@.getEmailTemplate('passwordChanged.html', (data) ->
+						if data?
+							console.log(data)		
+							transport = Mailer.createTransport("SMTP", {
+								host: '10.1.224.110',
+								port: 25,
+							})
+										
+							transport.sendMail({
+								to: user.userName,
+								from: 'admin@qref.com',
+								subject: 'QRef Mobile - Password Changed',
+								html: data
+							}, (err, result) ->
+								if err?
+									console.log(JSON.stringify(err))
+							)
+						else
+							console.log("No email template found")
+					)
+			
+			return
 		)
-	
+		
 	getEmailTemplate: (file, callback) ->
 		fs.readFile('../WebContent/email/' + file, 'utf8', (err, data) ->
 			if err?
@@ -75,7 +67,7 @@ class PasswordRecoveryRoute extends RpcRoute
 		)
 		
 	isValidRequest: (req) ->
-		if req.body? and req.body?.mode? and req.body.mode == 'rpc' and req.body?.token?
+		if req.body? and req.body?.mode? and req.body.mode == 'rpc' and req.body?.code? and req.body?.password?
 			true
 		else
 			false 
