@@ -17,6 +17,9 @@ var EditAddObserver = new zimoko.Observable({
 
         EditAddObserver.item.unsubscribe('check', EditAddObserver);
         EditAddObserver.item.unsubscribe('response', EditAddObserver);
+                                            
+        ChecklistObserver.render();
+                                            
         Navigation.back();
     },
     edit:function (element, e, data) {
@@ -50,11 +53,11 @@ var EditAddObserver = new zimoko.Observable({
             sectionItems.splice(index + 1, 0, EditAddObserver.item._original);
 
             ChecklistObserver.set('modified', true);
-            ChecklistObserver.itemsDataSource.insertAt(EditAddObserver.item._original, index + 1);
+            ChecklistObserver.itemsDataSource.insertAt(new zimoko.Observable(EditAddObserver.item._original), index + 1);
         }
-        
-        ChecklistObserver.render();
 
+        ChecklistObserver.render();
+                                            
         setTimeout(function () {
             Navigation.back();
         }, 100);
@@ -1562,6 +1565,7 @@ var ChecklistObserver = new zimoko.Observable({
         if (property == 'checklist') {
             if (this.checklist != undefined) {
                 var _this = this;
+                this.itemsDataSource.sort(new zimoko.Sort(['index'], 'asc'));
                 this.items = this.itemsDataSource.view();
                 this.set('list', 'preflight');
                 this.set('category', 0);
@@ -1696,6 +1700,8 @@ var ChecklistObserver = new zimoko.Observable({
    		var _this = this;
     	var checklistArea = $('#checklist-items');
     	
+        this.itemsDataSource.sortView();
+                                              
     	if(!checklistArea.data('template')) 
     		checklistArea.data('template', $(checklistArea.html()));
     	
@@ -1730,13 +1736,15 @@ var ChecklistObserver = new zimoko.Observable({
     	var _this = this;
     	var checklistArea = $('#checklist-items');
     	
+        this.itemsDataSource.sortView();
+                                              
     	if(!checklistArea.data('template')) 
     		checklistArea.data('template', $(checklistArea.html()));
     		
     	for(var i = 0; i < this.items.length; i++) {
 			var item = this.items.elementAt(i);
 			
-			item.detach();
+            item.detach();
 		}
 				
     	checklistArea.html('');
@@ -2081,7 +2089,7 @@ var ChecklistObserver = new zimoko.Observable({
                     ChecklistObserver.itemsDataSource.remove(data);
 
 					$('#checklist li[data-id="' + data._id + '"]').remove();
-					
+
 					data.detach();
 
                     if (index > -1) {

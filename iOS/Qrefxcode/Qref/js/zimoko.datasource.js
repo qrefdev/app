@@ -310,6 +310,10 @@
 			return Math.ceil(this.total / this.pageSize);
 		};
 		
+        this.sortView = function() {
+        	this._view.sort(this._sorting);
+        };
+                                            
 		this.sort = function(sort) {
 			//this._getTotalWithFiltered();
 			
@@ -432,7 +436,6 @@
 			
 			this._source.splice(index, 0, item);
 			this._view.insertAt(item, index);
-			this._getTotalWithFiltered();
 			
 			return this;
 		};
