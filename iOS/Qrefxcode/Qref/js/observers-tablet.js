@@ -408,6 +408,11 @@ var MenuObserver = new zimoko.Observable({
     },
     orderPrintedTap:function (element, e, data) {
         window.location = 'http://www.qref.com';
+        this.close();
+    },
+    helpTap:function (element, e, data) {
+        window.location = 'http://www.qref.com/mobilehelp';
+        this.close();
     },
     /*downloadTap: function(element, e, data) {
      if(AppObserver.navHash != '#downloads') {
