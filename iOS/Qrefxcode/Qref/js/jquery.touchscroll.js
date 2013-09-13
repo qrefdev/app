@@ -184,13 +184,15 @@
 	  		}
 	  		else
 	  		{
-	  			if(direction == "vertical")
-	  			{
-	  				scrollVerticalAuto();
-	  			}
-	  			else
-	  			{
-	  				scrollHorizontalAuto();
+	  			if(getDuration() < 500) {
+					if(direction == "vertical")
+					{
+						scrollVerticalAuto();
+					}
+					else
+					{
+						scrollHorizontalAuto();
+					}
 	  			}
 	  				
 	  			if(afterScrollHandler) {
