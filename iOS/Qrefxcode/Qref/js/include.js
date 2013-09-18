@@ -47,11 +47,6 @@ function keyboardHidden() {
 	$(".flyover").css({bottom: "8px"});
 }
 
-//601 - Moved cache pack to AppObserver
-function BeginChecklistPackets() {
-    AppObserver.cachePack = "";
-}
-
 function AppendChecklist(data) {
     if(data) {
         if(AppObserver.cachePack == undefined)

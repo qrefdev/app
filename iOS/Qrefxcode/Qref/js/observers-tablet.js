@@ -475,6 +475,7 @@ var MenuObserver = new zimoko.Observable({
                 window.location.href = "qref://clearToken&clearUser";
                 AppObserver.cachePack = undefined;
                 checklists = undefined;
+                DashboardDataSource.clear();
                 ChecklistObserver.set('checklist', undefined);
                 DashboardObserver.set('dataSource', undefined);
 

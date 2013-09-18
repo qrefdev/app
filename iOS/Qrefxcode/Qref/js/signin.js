@@ -23,11 +23,10 @@ function Signin() {
                
                     AppObserver.set('loading', true);
                     setTimeout(function() {
-                        window.location.href = "qref://hasChecklists";
-                               
-                       setTimeout(function() {
-                            window.location.href = "qref://setLogin=" + signin.userName + "(QREFUPS)" + response.returnValue.user + "(QREFUPS)" + Whirlpool(signin.password);
-                       }, 1000);
+                          window.location.href = "qref://setLogin=" + signin.userName + "(QREFUPS)" + response.returnValue.user + "(QREFUPS)" + Whirlpool(signin.password);
+                            setTimeout(function() {
+                                window.location.href = "qref://hasChecklists";
+                            }, 1000);
                     }, 1000);
                 }
                 else
