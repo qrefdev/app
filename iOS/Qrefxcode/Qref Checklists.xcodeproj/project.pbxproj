@@ -283,6 +283,11 @@
 			attributes = {
 				CLASSPREFIX = Qref;
 				LastUpgradeCheck = 0460;
+				TargetAttributes = {
+					46B2665215C054B1002E9931 = {
+						DevelopmentTeam = VDWQ7XM3KH;
+					};
+				};
 			};
 			buildConfigurationList = 46B2664D15C054B0002E9931 /* Build configuration list for PBXProject "Qref Checklists" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -437,8 +442,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = Qref/Qref.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jason Clemens (HB677Y9PN9)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jason Clemens (HB677Y9PN9)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Qref/Qref-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -464,8 +469,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = Qref/Qref.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jason Clemens (HB677Y9PN9)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jason Clemens (HB677Y9PN9)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Qref/Qref-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;

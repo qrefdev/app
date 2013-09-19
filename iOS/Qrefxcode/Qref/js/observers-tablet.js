@@ -204,13 +204,13 @@ var E6BObserver = new zimoko.Observable({
 
     },
     conversionTopKeyDown:function (element, e, data) {
-        if ($(element).val().length >= 8) {
+        if ($(element).val().length >= 8 && e.which != 8 && e.which != 46) {
             e.stopPropagation();
             e.preventDefault();
         }
     },
     conversionBottomKeyDown:function (element, e, data) {
-        if ($(element).val().length >= 8) {
+        if ($(element).val().length >= 8 && e.which != 8 && e.which != 46) {
             e.stopPropagation();
             e.preventDefault();
         }
@@ -239,37 +239,6 @@ var E6BObserver = new zimoko.Observable({
                 this.set('bottomConversionValue', finalVal.toFixed(5));
             }
         }
-        //It is time based
-        else {
-            //Check to make sure it is a valid 24 hour time format
-            var timeMatches = /0[0-9]:[0-5][0-9]:[0-5][0-9]|1[0-9]:[0-5][0-9]:[0-5][0-9]|2[0-3]:[0-5][0-9]:[0-5][0-9]/.test(this.topConversionValue);
-            if (timeMatches) {
-                var splitText = this.topConversionValue.split(":");
-
-                if (splitText.length == 3) {
-                    var hours = parseInt(splitText[0]);
-                    var minutes = parseInt(splitText[1]);
-                    var seconds = parseInt(splitText[2]);
-
-                    if (minutes < 60 && seconds < 60) {
-                        seconds += minutes * 60;
-
-                        var decimal = seconds / 60 / 60
-
-                        var deciString = ('' + decimal).split(".")[1];
-
-                        var decimalString = '';
-
-                        if (deciString)
-                            decimalString = ('' + parseInt(deciString));
-                        else
-                            decimalString = '00';
-
-                        this.set('bottomConversionValue', hours + "." + decimalString);
-                    }
-                }
-            }
-        }
     },
     convertBottomToTop:function () {
         if (parseInt(this.conversionSelected.attr('data-value')) != 6) {
@@ -278,30 +247,6 @@ var E6BObserver = new zimoko.Observable({
 
                 var finalVal = bottomValue * this.conversionInverse;
                 this.set('topConversionValue', finalVal.toFixed(5));
-            }
-        }
-        //It is time based
-        else {
-            if (zimoko.isNumber(this.bottomConversionValue)) {
-                var splitNumber = parseFloat(this.bottomConversionValue);
-
-                var splitText = this.bottomConversionValue.split('.');
-
-                if (splitText.length == 2) {
-                    var hours = parseInt(splitText[0]);
-                    var decimal = parseFloat('0.' + splitText[1]);
-
-                    var minutes = decimal * 60;
-                    var seconds = minutes - parseInt(minutes);
-                    seconds = seconds * 60;
-
-                    this.set('topConversionValue', (hours + ':' + Math.round(minutes) + ':' + Math.round(seconds)));
-                }
-                else if (splitText.length == 1) {
-                    if (splitNumber >= 0 && splitNumber <= 23) {
-                        this.set('topConversionValue', splitNumber + ':00:00');
-                    }
-                }
             }
         }
     },

@@ -726,6 +726,7 @@
     NSString *user = [pref stringForKey:@"qrefUserId"];
     
     if(user != nil) {
+        
         NSMutableArray *ids = [NSMutableArray arrayWithArray:[pref arrayForKey:[user stringByAppendingString:@"userChecklistIds"]]];
         
         if([manager fileExistsAtPath:[cachePath stringByAppendingString:@"/qref"]] == YES) {
@@ -739,6 +740,8 @@
                     [cached addObject:filename];
                 }
             }
+            
+            NSLog(@"Found Cached Count: %d", cached.count);
             
             for(int i = 0; i < cached.count; i++) {
                 NSData * content = [manager contentsAtPath:[cachePath stringByAppendingString:[NSString stringWithFormat:@"/qref/%@", [cached objectAtIndex:i]]]];
@@ -767,6 +770,7 @@
     NSString *user = [pref stringForKey:@"qrefUserId"];
     
     if(user != nil) {
+        
         NSMutableArray *ids = [NSMutableArray arrayWithArray:[pref arrayForKey:[user stringByAppendingString:@"userChecklistIds"]]];
         
         if([manager fileExistsAtPath:[cachePath stringByAppendingString:@"/qref"]] == YES) {
@@ -780,6 +784,8 @@
                     [cached addObject:filename];
                 }
             }
+            
+            NSLog(@"Found Cached Count: %d", cached.count);
             
             for(int i = 0; i < cached.count; i++) {
                 NSData * content = [manager contentsAtPath:[cachePath stringByAppendingString:[NSString stringWithFormat:@"/qref/%@", [cached objectAtIndex:i]]]];
@@ -1128,6 +1134,8 @@
     
     NSString * storedPass = [SSKeychain passwordForService:@"com.qref.qrefChecklists" account:user];
     
+    NSLog(@"Local Login User: %@", user);
+    
     if([pass isEqualToString:storedPass]) {
         NSString * token = [SSKeychain passwordForService:@"com.qref.qrefChecklists" account:[user stringByAppendingString:@"-Token"]];
         
@@ -1149,12 +1157,15 @@
             [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"AppObserver.set('token', '%@');", token]];
         }
         
+        [self->preferences synchronize];
+        
+        NSLog(@"Local Login Valid");
+        
         //Try and get cached checklists
         NSThread  * thread = [[NSThread alloc] initWithTarget:self selector:@selector(signinFindCachedChecklists) object:nil];
         
         [thread start];
         
-        [self->preferences synchronize];
     }
     else {
         [self.webView stringByEvaluatingJavaScriptFromString:@"InvalidSignin();"];
@@ -1169,7 +1180,7 @@
     NSString * pass = [details objectAtIndex:2];
     
     [SSKeychain setPassword:pass forService:@"com.qref.qrefChecklists" account:user];
-    [SSKeychain setPassword:userId forService:@"com.qref.qreChecklists" account:[user stringByAppendingString:@"-ID"]];
+    [SSKeychain setPassword:userId forService:@"com.qref.qrefChecklists" account:[user stringByAppendingString:@"-ID"]];
 }
 
 //BKing API Additions
