@@ -327,6 +327,7 @@
 					this._view.push(this._paginate());
 				}
 				else if(!this.serverSorting && this._filter) {
+                    this._source = sort.apply(this._source).toArray();
 					var items = this._paginate();
 					
 					items = sort.apply(items).toArray();
@@ -349,6 +350,10 @@
 					//this._view.sort(sort);
 				}
 				else if(!this.serverSorting && this._filter) {
+                    if(this._sorting) {
+                        this._source = this._sorting.apply(this._source).toArray();
+                    }
+                                            
 					var items = this._paginate();
 					
 					if(this._sorting) {
