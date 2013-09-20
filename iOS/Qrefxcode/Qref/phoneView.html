@@ -439,13 +439,13 @@
             <div class="topConversion" data-bind="html: topType">MPH</div>
             <input id="convertTop" type="number" class="textbox"
                    data-bind="value: topConversionValue, keyup: conversionTopKeyUp, keydown: conversionTopKeyDown"
-                   value="0" maxlength="8"/>
+                   value="0"/>
         </div>
         <div class="row">
             <div class="bottomConversion" data-bind="html: bottomType">KTS</div>
             <input id="convertBottom"
                    data-bind="value: bottomConversionValue, keyup: conversionBottomKeyUp, keydown: conversionBottomKeyDown"
-                   class="textbox" type="number" value="0" maxlength="8"/>
+                   class="textbox" type="number" value="0"/>
         </div>
     </div>
     <div class="flyover" data-bind="slideVisible: showConversions">
@@ -567,6 +567,9 @@
                     </div>
                     <div class="details">
                         <div class="row detailsHeading">
+                            <p class="serial productModelYear">Digital checklist data</p>
+                        </div>
+                        <div class="row detailsHeading">
                             <p>Model Year(s)</p>
 
                             <p class="serial productModelYear" data-bind="html: model.modelYear"></p>
@@ -580,11 +583,6 @@
                             <p>Description</p>
 
                             <p class="description" data-bind="html: description"></p>
-                        </div>
-                        <div class="row detailsHeading" data-bind="visible: manufacturer.description">
-                            <p>Manufacturer Information</p>
-
-                            <p class="serial manufacturerDescription" data-bind="html: manufacturer.description"></p>
                         </div>
                     </div>
                 </div>

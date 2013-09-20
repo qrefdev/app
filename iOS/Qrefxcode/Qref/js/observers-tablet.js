@@ -356,7 +356,7 @@ var MenuObserver = new zimoko.Observable({
         this.close();
     },
     helpTap:function (element, e, data) {
-        window.location = 'http://www.qref.com/mobilehelp';
+        window.location = 'http://my.qref.com/help';
         this.close();
     },
     /*downloadTap: function(element, e, data) {
