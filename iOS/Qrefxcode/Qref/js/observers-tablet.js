@@ -1577,11 +1577,13 @@ var ChecklistObserver = new zimoko.Observable({
                 this.section = 0;
                 this.category = 0;
                 
-                if(this.list != 'emergencies') {
-               		this.set('sections', this.checklist[this.list].toObservableObjects());
-               	}
-            	else {
-            		this.set('sections', this.checklist[this.list][this.category].items.toObservableObjects());
+                if(this.checklist) {
+					if(this.list != 'emergencies') {
+						this.set('sections', this.checklist[this.list].toObservableObjects());
+					}
+					else {
+						this.set('sections', this.checklist[this.list][this.category].items.toObservableObjects());
+					}
             	}
             }
 
@@ -1593,35 +1595,38 @@ var ChecklistObserver = new zimoko.Observable({
                 //console.log("Category Index: " + this.category);
                 this.itemsDataSource.clear();
 
+				if(this.checklist) {
+					for (var i = 0; i < this.checklist[this.list][this.category].items[this.section].items.length; i++) {
+						var item = this.checklist[this.list][this.category].items[this.section].items[i];
 
-                for (var i = 0; i < this.checklist[this.list][this.category].items[this.section].items.length; i++) {
-                    var item = this.checklist[this.list][this.category].items[this.section].items[i];
+						if (item.isChecked == undefined)
+							item.isChecked = false;
+					}
 
-                    if (item.isChecked == undefined)
-                        item.isChecked = false;
+					this.itemsDataSource.data(this.checklist[this.list][this.category].items[this.section].items);
+
+					this.set('sectionName', this.checklist[this.list][this.category].items[this.section].name);
                 }
-
-                this.itemsDataSource.data(this.checklist[this.list][this.category].items[this.section].items);
                 
                 this.render();
-
-                this.set('sectionName', this.checklist[this.list][this.category].items[this.section].name);
             }
             else {
                 this.itemsDataSource.clear();
 
-                for (var i = 0; i < this.checklist[this.list][this.section].items.length; i++) {
-                    var item = this.checklist[this.list][this.section].items[i];
+				if(this.checklist) {
+					for (var i = 0; i < this.checklist[this.list][this.section].items.length; i++) {
+						var item = this.checklist[this.list][this.section].items[i];
 
-                    if (item.isChecked == undefined)
-                        item.isChecked = false;
+						if (item.isChecked == undefined)
+							item.isChecked = false;
+					}
+
+					this.itemsDataSource.data(this.checklist[this.list][this.section].items);
+
+					this.set('sectionName', this.checklist[this.list][this.section].name);
                 }
-
-                this.itemsDataSource.data(this.checklist[this.list][this.section].items);
-
+                
                 this.render();
-
-                this.set('sectionName', this.checklist[this.list][this.section].name);
             }
 
             $('.scrollable').stop().scrollTop(0);
@@ -1629,7 +1634,8 @@ var ChecklistObserver = new zimoko.Observable({
             $('#checklist-nav li').removeClass('active');
             $('#checklist-nav li[data-link="' + this.list + '"]').addClass('active');
 
-            this.checklist.set('lastPosition', {section:this.section, category:this.category, list:this.list, scroll:0});
+			if(this.checklist)
+            	this.checklist.set('lastPosition', {section:this.section, category:this.category, list:this.list, scroll:0});
 
             /*setTimeout(function() {
              ChecklistObserver.previousSectionTextGenerate();
