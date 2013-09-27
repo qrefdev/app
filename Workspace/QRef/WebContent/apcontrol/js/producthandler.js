@@ -178,7 +178,7 @@ function ProductDetails() {
 	var self = this;
 	
 	//Do whatever necessary to start the purchase
-	this.details.find(".buynow").tap(function(e) {
+	this.details.find(".buynow").click(function(e) {
         loader.show();
 	});
 	

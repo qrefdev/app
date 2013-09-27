@@ -32,7 +32,7 @@ class PasswordRecoveryRequestRoute extends RpcRoute
 				
 				@.getEmailTemplate('passwordRecoveryRequest.html', (data) ->
 					if data?
-						console.log(data)
+						data = data.replace(/\{COPYDATE\}/gi, (new Date()).getFullYear());
 						data = data.replace(/\{recoveryCode\}/g, tk.code)
 						transport = Mailer.createTransport("SMTP", {
 							host: '10.1.224.110',

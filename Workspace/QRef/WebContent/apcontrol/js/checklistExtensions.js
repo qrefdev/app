@@ -519,6 +519,8 @@ function moveEmergencyItems() {
 			
 				$moveTo.append(items);
 			
+				items.removeClass('ui-selected');
+			
 				$('.move-emergency-items').hide();
 			});
 	
@@ -533,6 +535,7 @@ function moveEmergencyItems() {
 			var $ul = $('#s4 ul').last();
 			var items = $('#s4 .ui-selected');
 			$ul.append(items);
+			items.removeClass('ui-selected');
 		});
 	
 		$('.move-emergency-items .sections').append($newAndMove);
@@ -572,11 +575,11 @@ function AddEmergencyCategory(section){
 	var $buttonSubSection = $ulSubSection.prev().prev();
 	var $editButton = $ulSubSection.prev();
 	
-	$editButton.tap(function(e) {
+	$editButton.click(function(e) {
 		EditEmergencyCategory(this);
 	});
 	
-	$buttonSubSection.tap(function(e) {
+	$buttonSubSection.click(function(e) {
 		removeEmergencyCategory($(this).parent());
 	});
 	
@@ -600,7 +603,7 @@ function AddEmergencyCategory(section){
 				
 				option.innerHTML = SetCheckListItemHTML(item.name,item.items[j].check,item.items[j].response);
 				
-				$option.tap(function(event) {
+				$option.click(function(event) {
 					AddMultiSelect($(this));
 				});
 				
@@ -805,7 +808,7 @@ function SetItemOptions(item, index, target)
 		
 		target.append($option);
 		
-		$option.tap(function(event) {
+		$option.click(function(event) {
 			AddMultiSelect($(this));
 		});
 	}
@@ -1265,7 +1268,7 @@ function AcceptNewCheckListItem()
 		$newitem.addClass("ui-widget-content");
 		AddNewItem_SectionList.appendChild($newitem.get(0));
 		
-		$newitem.tap(function(event) {
+		$newitem.click(function(event) {
 			AddMultiSelect($(this));
 		});
 	}
@@ -1281,7 +1284,7 @@ function AcceptNewCheckListItem()
 		$newitem.addClass("ui-widget-content");
 		$('#s4 ul').first().append($newitem);
 		
-		$newitem.tap(function(event) {
+		$newitem.click(function(event) {
 			AddMultiSelect($(this));
 		});
 	}
@@ -1430,7 +1433,7 @@ function ApplyItemChanges()
 		$("#Item_Section").val("--Select--");
 	}
 	
-	$(".ui-selected").toggleClass("ui-selected")
+	$(".ui-selected").removeClass("ui-selected")
 	CalculateItemInputVisibility();
 }
 

@@ -44,7 +44,7 @@ class ChangePasswordRoute extends RpcRoute
 					
 					@.getEmailTemplate('passwordChanged.html', (data) ->
 						if data?
-							console.log(data)		
+							data = data.replace(/\{COPYDATE\}/gi, (new Date()).getFullYear());
 							transport = Mailer.createTransport("SMTP", {
 								host: '10.1.224.110',
 								port: 25,

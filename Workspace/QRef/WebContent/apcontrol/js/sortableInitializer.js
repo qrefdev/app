@@ -1,5 +1,5 @@
-var shifted = false;
-var alted = false;
+var shiftKey = false;
+var altKey = false;
 var firstSelectedIndex = -1;
 var globalMouseMoveListener = undefined;
 
@@ -7,30 +7,20 @@ $(window).load(function() {
 
 	//Start Shift-MultiSelect Functionality
 	$(window).keydown(function(e) {
-		if(e.which == 16)
-		{
-			shifted = true;
+		if(e.which == 16) {
+			shiftKey = true;
+		}
+		else if(e.which == 18) {
+			altKey = true;
 		}
 	});
 	
 	$(window).keyup(function(e) {
-		if(e.which == 16)
-		{
-			shifted = false;
+		if(e.which == 16) {
+			shiftKey = false;
 		}
-	});
-	
-	$(window).keydown(function(e) {
-		if(e.altKey == true)
-		{
-			alted = true;
-		}
-	});
-	
-	$(window).keyup(function(e) {
-		if(e.altKey == true)
-		{
-			alted = false;
+		else if(e.which == 18) {
+			altKey = false;
 		}
 	});
 });
@@ -38,62 +28,35 @@ $(window).load(function() {
 function AddMultiSelect(item)
 {
 	var children = item.parent().children();
-	item.toggleClass('ui-selected');
-	
-	if(alted) {
-		item.removeClass("ui-selected");
-		var currentIndex = index(item[0].parentNode, item[0]);
-		
-		if(currentIndex < firstSelectedIndex)
-		{
-			for(var i = firstSelectedIndex; i > currentIndex; i--)
-			{
-				
-				$(children[i]).removeClass("ui-selected");
-			}
-		}
-		else
-		{
-			for(var i = firstSelectedIndex; i < currentIndex; i++)
-			{
-				$(children[i]).removeClass("ui-selected");
-			}
-		}
-		
-		firstSelectedIndex = currentIndex;
-		alted = false;
+
+	if(altKey) {
+		item.toggleClass('ui-selected');
+		firstSelectedIndex = item.index();
 	}
-	
+	else if(shiftKey) {
+		var current = item.index();
+		
+		if(current < firstSelectedIndex) {
+			for(var i = current; i < firstSelectedIndex; i++) {
+				var selItem = $(children.get(i));
+				
+				selItem.toggleClass('ui-selected');
+			}
+		}
+		else if(current > firstSelectedIndex) {
+			for(var i = firstSelectedIndex + 1; i <= current; i++) {
+				var selItem = $(children.get(i));
+				
+				selItem.toggleClass('ui-selected');
+			}
+		}
+
+		firstSelectedIndex = current;
+	}
 	else {
-		if(shifted)
-		{
-			if(!item.hasClass("ui-selected"))
-				item.addClass("ui-selected");
-			var currentIndex = index(item[0].parentNode, item[0]);
-			
-			
-			if(currentIndex < firstSelectedIndex)
-			{
-				for(var i = firstSelectedIndex; i > currentIndex; i--)
-				{
-					
-					$(children[i]).addClass("ui-selected");
-				}
-			}
-			else
-			{
-				for(var i = firstSelectedIndex; i < currentIndex; i++)
-				{
-					$(children[i]).addClass("ui-selected");
-				}
-			}
-			
-			firstSelectedIndex = currentIndex;
-		}
-		else
-		{					
-			firstSelectedIndex = index(item[0].parentNode, item[0]);
-		}
+		children.removeClass('ui-selected');
+		item.addClass('ui-selected');
+		firstSelectedIndex = item.index();
 	}
 	
 	CalculateItemInputVisibility();
@@ -193,9 +156,13 @@ function initSortable(list) {
 		stop: function(event, info) {
 			//$(".dashboard-planes-selector").touchScroll("enableScroll");
 			if(!info.sender) {
+				var previous = info.item;
 				$(this).find(".ui-selected").each(function(index, item) {
-						if(item != info.item[0]) 
-							info.item.after($(item));
+						if(item != info.item[0]) { 
+							var current = $(item);
+							previous.after(current);
+							previous = current;
+						}
 				});
 			}
 			
