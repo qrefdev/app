@@ -23,7 +23,7 @@
 .theme-light .menu{position:absolute;top:0;right:-150px;width:250px;bottom:0;height:100%;background:#1e2329;color:#dde0e4;margin:0;padding:0;z-index:0;display:none}.theme-light .menu ul{float:left;position:relative;width:100%;margin:0;margin-top:5px;padding:0;list-style-type:none}.theme-light .menu ul li{float:left;position:relative;width:100%;text-align:left;overflow:hidden;height:50px;border-top:1px solid #343a43;border-bottom:1px solid #000}
 .theme-light .menu ul li:first-child{border-top:none}
 .theme-light .menu ul li:last-child{border-bottom:none}
-.theme-light .menu ul li .icon{float:left;position:relative;font-size:24px;width:23px}.theme-light .menu ul li .icon p{color:#bcc1c8}
+.theme-light .menu ul li .icon{float:left;position:relative;font-size:24px;width:23px;color:#8b929c}
 .theme-light .menu ul li p{float:left;position:relative;width:auto;margin:0;padding:16px;font-size:18px;font-family:Myriad}
 .theme-light .menu ul a,.theme-light .menu ul a:hover{color:#dde0e4}
 .theme-light #dashboard .topbar{text-align:left}.theme-light #dashboard .topbar span{padding-left:10px}
@@ -91,3 +91,4 @@
 .theme-light .flyover ul li:hover p{color:#fff}
 .theme-light .flyover ul .active{background:rgba(1,77,154,0.85)}.theme-light .flyover ul .active p{color:#fff}
 .theme-light .getStarted{color:#abb1b9}
+.theme-light .tablet .logoSection .logo{background:url('../images/light/logo-tablet.png') 0 0 no-repeat}

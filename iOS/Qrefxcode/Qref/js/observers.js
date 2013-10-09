@@ -236,7 +236,7 @@ var E6BObserver = new zimoko.Observable({
                 var topValue = parseFloat(this.topConversionValue);
 
                 var finalVal = topValue * this.conversionMultiplier;
-                this.set('bottomConversionValue', finalVal.toFixed(5));
+                this.set('bottomConversionValue', finalVal.toFixed(2));
             }
         }
     },
@@ -246,7 +246,7 @@ var E6BObserver = new zimoko.Observable({
                 var bottomValue = parseFloat(this.bottomConversionValue);
 
                 var finalVal = bottomValue * this.conversionInverse;
-                this.set('topConversionValue', finalVal.toFixed(5));
+                this.set('topConversionValue', finalVal.toFixed(2));
             }
         }
     },
