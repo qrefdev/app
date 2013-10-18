@@ -39,7 +39,7 @@
 
 @property (nonatomic, strong) NSOperationQueue *imageQueue;
 @property (nonatomic, strong) NSOperationQueue *savingQueue;
-@property (nonatomic, strong) UIWebView *webView;
+@property (nonatomic, weak) IBOutlet UIWebView *webView;
 @property (nonatomic, strong) id<QRefWebViewProtocol> delegate;
 @property (nonatomic) BOOL mayAccept;
 

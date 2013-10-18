@@ -99,18 +99,21 @@
     
     //CGRect frame = [[UIScreen mainScreen] applicationFrame];
     
-    if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft) {
-        
-        self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 18, bounds.size.height, bounds.size.width - 18)];
-    }
-    else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeRight) {
-        self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 18, bounds.size.height, bounds.size.width - 18)];
-    }
-    else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortrait) {
-        self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 18, bounds.size.width, bounds.size.height - 18)];
-    }
-    else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortraitUpsideDown) {
-        self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 18, bounds.size.width, bounds.size.height - 18)];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 6.0 && [[[UIDevice currentDevice] systemVersion] floatValue] < 7.0)
+    {
+        if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft) {
+            
+            self.webView.frame = CGRectMake(0, 18, bounds.size.height, bounds.size.width - 18);
+        }
+        else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeRight) {
+            self.webView.frame = CGRectMake(0, 18, bounds.size.height, bounds.size.width - 18);
+        }
+        else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortrait) {
+            self.webView.frame = CGRectMake(0, 18, bounds.size.width, bounds.size.height - 18);
+        }
+        else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortraitUpsideDown) {
+            self.webView.frame = CGRectMake(0, 18, bounds.size.width, bounds.size.height - 18);
+        }
     }
     
     self.webView.delegate = self;
@@ -226,7 +229,6 @@
 }
 
 - (void) dealloc {
-    self.webView = nil;
     self->preferences = nil;
     self->purchaseManager = nil;
     self->startUpImage = nil;
@@ -883,18 +885,21 @@
 - (void) viewDidLayoutSubviews {
     CGRect bounds = [[UIScreen mainScreen] bounds];
     
-    if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft) {
-        
-        [self.webView setFrame:CGRectMake(0, 18, bounds.size.height, bounds.size.width - 18)];
-    }
-    else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeRight) {
-        [self.webView setFrame:CGRectMake(0, 18, bounds.size.height, bounds.size.width - 18)];
-    }
-    else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortrait) {
-        [self.webView setFrame: CGRectMake(0, 18, bounds.size.width, bounds.size.height - 18)];
-    }
-    else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortraitUpsideDown) {
-        [self.webView setFrame: CGRectMake(0, 18, bounds.size.width, bounds.size.height - 18)];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 6.0 && [[[UIDevice currentDevice] systemVersion] floatValue] < 7.0)
+    {
+        if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft) {
+            
+            [self.webView setFrame:CGRectMake(0, 18, bounds.size.height, bounds.size.width - 18)];
+        }
+        else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeRight) {
+            [self.webView setFrame:CGRectMake(0, 18, bounds.size.height, bounds.size.width - 18)];
+        }
+        else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortrait) {
+            [self.webView setFrame: CGRectMake(0, 18, bounds.size.width, bounds.size.height - 18)];
+        }
+        else if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortraitUpsideDown) {
+            [self.webView setFrame: CGRectMake(0, 18, bounds.size.width, bounds.size.height - 18)];
+        }
     }
 }
 
