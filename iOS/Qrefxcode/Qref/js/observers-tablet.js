@@ -1,5 +1,54 @@
 //602 - Removed Sync from all editing, and instead just lets sync auto sync and let the user sync.
 
+var MarketingObserver = new zimoko.Observable({
+	signupTap: function(element, e, data) {
+		e.stopPropagation();
+		e.preventDefault();
+		Navigation.go('#register');
+	},
+	sampleTap: function(element, e, data) {
+		e.stopPropagation();
+		e.preventDefault();
+		
+		//Load Sample Data
+		//Then goto checklist
+        $.ajax({
+			type:"get",
+			dataType:"json",
+			url:host + "services/ajax/aircraft/checklist-sample?timestamp=" + Date.now(),
+			success:function (data) {
+				var response = data;
+
+				if (response.success == true) {
+					if(response.records.length > 0) {
+						var checklist = new zimoko.Observable(response.records[0]);
+
+						ChecklistObserver.set('checklist', checklist);
+						Navigation.go('#checklist');
+					}
+					else {
+						var dialog = new Dialog('#infobox', 'Failed to get sample checklist!');
+     					dialog.show();
+					}
+				}
+				else {
+					var dialog = new Dialog('#infobox', 'Failed to get sample checklist!');
+     				dialog.show();
+				}
+			},
+			error:function () {
+				var dialog = new Dialog('#infobox', 'Internet connection required to view sample checklist.');
+     			dialog.show();
+			}
+		});
+	},
+	signinTap: function(element, e, data) {
+		e.stopPropagation();
+		e.preventDefault();
+		Navigation.go('#signin');
+	}
+});
+
 var EditAddObserver = new zimoko.Observable({
     item:new zimoko.Observable({check:'', response:'', icon:null, _id:zimoko.createGuid()}),
     adding:false,
@@ -133,7 +182,13 @@ var EmergenciesObserver = new zimoko.Observable({
     backTap:function (element, e, data) {
         e.stopPropagation();
         e.preventDefault();
-        Navigation.go("dashboard");
+        
+        if(AppObserver.token) {
+			Navigation.go("dashboard");
+		}
+		else {
+			Navigation.go('#marketing');
+		}
     }
 });
 
@@ -1146,6 +1201,36 @@ var AppObserver = new zimoko.Observable({
                 DashboardDataSource.data(items);
                 DashboardObserver.set('dataSource', DashboardDataSource);
 
+				if(items.length == 0) {
+				   AppObserver.set('loading', true);
+				   StoreObserver.set('displayRequestModel', false);
+				   if (reachability) {
+						AppObserver.getAllProducts(function (success, items) {
+							AppObserver.set('storeHasItems', success);
+
+							if (success) {
+								AppObserver.set('loading', false);
+								Navigation.go('#downloads');
+							}
+							else {
+								AppObserver.set('loading', false);
+								if (AppObserver.token) {
+									var dialog = new Dialog('#infobox', 'Cannot connect to the Qref Store, or there are no items currently available');
+									dialog.show();
+								}
+								else {
+									var dialog = new Dialog('#infobox', 'You must be signed in to access the store');
+									dialog.show();
+								}
+							}	
+						});
+				   }
+				   else {
+						AppObserver.set('loading', false);
+						var dialog = new Dialog('#infobox', 'No  Connection Available');
+						dialog.show();
+				   }
+				}
             }
 
             self.set('loading', false);
@@ -2100,8 +2185,8 @@ var ChecklistObserver = new zimoko.Observable({
                                                          }, 300);
     },
     sectionsTap:function (element, e, data) {
-                                              e.stopPropagation();
-                                              e.preventDefault();
+        e.stopPropagation();
+    	e.preventDefault();
         ChecklistObserver.set('showSections', !ChecklistObserver.showSections);
     },
     backTap:function (element, e, data) {
@@ -2111,7 +2196,12 @@ var ChecklistObserver = new zimoko.Observable({
 
         setTimeout(function () {
             if (ChecklistObserver.list != "emergencies") {
-                Navigation.go("dashboard");
+            	if(AppObserver.token) {
+                	Navigation.go("dashboard");
+                }
+                else {
+                	Navigation.go('#marketing');
+                }
             }
             else {
                 Navigation.go("emergencies");

@@ -205,15 +205,15 @@ button,
             border-top: 1px solid @colorMenuBorderTop;
             border-bottom: 1px solid @colorMenuBorderBottom;
         }
-    
+
         li:first-child {
             border-top: none;
         }
-    
+
         li:last-child {
             border-bottom: none;
         }
-    
+
         li .icon {
             float: left;
             position: relative;
@@ -224,7 +224,7 @@ button,
             p {
             }
         }
-    
+
         li p {
             float: left;
             position: relative;
@@ -817,4 +817,202 @@ form label {
 
 .getStarted {
     color: @colorGetStarted;
+}
+
+
+#marketing .wrap {
+    background-color: #252a31;
+    background-image: url(../images/marketing/accent.png), url(../images/marketing/background.png);
+    background-position: center bottom, left bottom;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+    -webkit-background-size: 320px auto, 100%;
+    background-size: 320px auto, 100%;
+
+    @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+        background-image: url(../images/marketing/accent@2x.png), url(../images/marketing/background@2x.png);
+    }
+
+    .wrap {
+        background-color: transparent;
+    }
+
+    .checklistImage {
+        background: transparent url('../images/marketing/checklist_small.png') no-repeat left bottom;
+        width: 167px;
+        height: 297px;
+        position: absolute;
+        top: 250px;
+        -webkit-background-size: auto 297px;
+        background-size: auto 297px;
+
+        @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+            background-image: url(../images/marketing/checklist_small@2x.png);
+        }
+    }
+
+    .salesContent {
+        margin: 0 25px;
+
+        .header {
+            margin: 10px 0 12px;
+            color: @colorea;
+            font-size: 38px;
+            font-family: MyriadLight;
+            letter-spacing: -2px;
+
+            span {
+                display: block;
+                font-size: 25px;
+                letter-spacing: -1px;
+            }
+        }
+
+        .salesText {
+            padding: 0;
+            width: 50%;
+
+            & > p {
+                font-size: 13px;
+                font-family: MyriadLight;
+                color: @colora0;
+                line-height: 16px;
+
+                b {
+                    color: white;
+                    font-family: MyriadBold;
+                    font-weight: normal;
+                }
+
+                .highlight {
+                    color: #ffd000;
+                }
+            }
+
+            &.left {
+                float: left;
+
+                & > p, .special {
+                    margin-right: 10px;
+                    margin-left: 0;
+                }
+
+            }
+
+            &.right {
+                float: right;
+
+                & > p, .special {
+                    margin-left: 10px;
+                    margin-right: 0;
+                }
+            }
+
+            .special {
+                text-align: left;
+                border: 2px solid #484f59;
+                border-radius: 10px;
+                -webkit-border-radius: 10px;
+                height: 42px;
+                width: 126px;
+                margin-bottom: 12px;
+
+                p, i {
+                    font-size: 29px;
+                    margin: 0;
+                    padding: 6px 7px 0 0;
+                    color: @color9b;
+                    letter-spacing: -1px;
+                }
+
+                i {
+                    color: @color66;
+                    font-size: 25px;
+                    padding: 7px 0 0 6px;
+                    position: absolute;
+                    display: block;
+                }
+            }
+
+            .spacer {
+                height: 2px;
+                display: block;
+            }
+        }
+    }
+
+    .signin {
+        font-size: 15px;
+        font-family: MyriadLight;
+        color: @colora0;
+        bottom: 8px;
+        right: 20px;
+        position: absolute;
+        line-height: 21px;
+        text-align: right;
+
+        span {
+            color: white;
+            font-family: MyriadBold;
+            font-size: 18px;
+            display: block;
+        }
+    }
+
+    @media only screen and (orientation: landscape) {
+        background-image: url(../images/marketing/background.png);
+        background-position: left bottom;
+        background-repeat: no-repeat;
+        -webkit-background-size: 100%;
+        background-size: 100%;
+
+        @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+            background-image: url(../images/marketing/background@2x.png);
+        }
+
+        .checklistImage {
+            top: 10px;
+            left: -60px;
+        }
+
+        .salesContent {
+            margin-left: 100px;
+
+            .header {
+                font-size: 25px;
+                margin-bottom: 10px;
+
+                span {
+                    font-size: 25px;
+                    display: inline-block
+                }
+            }
+
+            .salesText {
+                &.right {
+                    float: left;
+
+                    & > p, .special {
+                        margin-right: 10px;
+                        margin-left: 0;
+                    }
+
+                }
+
+                &.left {
+                    float: right;
+
+                    & > p, .special {
+                        margin-left: 10px;
+                        margin-right: 0;
+                    }
+                }
+
+                .special {
+                    float: none;
+                }
+            }
+        }
+    }
 }

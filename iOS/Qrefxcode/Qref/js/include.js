@@ -29,6 +29,7 @@ $(document).ready(function() {
     EmergenciesSectionsObserver.attach('#emergencies-sections');
 	ChecklistObserver.attach('#checklist');
 	DashboardObserver.attach('#dashboard');
+    MarketingObserver.attach('#marketing');
 	AppObserver.attach('body');
 	
 	window.addEventListener("touchmove", function(e) {
@@ -61,6 +62,11 @@ function AppendChecklist(data) {
             
         }
     }
+}
+
+function ShowMarketingPage() {
+    window.location.href = "qref://nlog=MarketingHo!";
+    Navigation.go('#marketing');
 }
 
 function LoadChecklistPacket(data) {

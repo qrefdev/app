@@ -3,7 +3,7 @@
 <head>
     <title>Qref</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, max-scale=1.0">
     <meta name="format-detection" content="telephone=no"/>
     <meta name="format-detection" content="email=no"/>
     <meta name="format-detection" content="address=no"/>
@@ -832,6 +832,34 @@
         </div>
     </div>
 </article>
+
+<!-- Marketing Page -->
+<article id="marketing" class="page" data-page-show="slideInLeft" data-page-hide="slideOutLeft">
+       <div class="wrap">
+           <div class="content" style="bottom: 0px; top: 0px;">
+               <div class="checklistImage"></div>
+               <div class="salesContent">
+                   <div class="header">Need a checklist? <span>Let's Get Started!</span></div>
+                   <div class="salesText left">
+                       <div data-bind="tap: sampleTap">
+                           <div class="special"><p>Sample</p><i class="icon icon-arrow-right"></i></div>
+                       </div>
+                       <p><b>Take a tour.</b> Qref is all about accurate data. But a great app helps, too! Tap to tour a sample checklist.</p>
+                   </div>
+                   <div class="salesText right">
+                       <div data-bind="tap: signupTap">
+                           <div class="special"><p>Sign Up</p><i class="icon icon-arrow-right"></i></div>
+                       </div>
+                       <p><b>Create your <span class="highlight">free</span> Qref login.</b> Your login keeps your checklists organized, backed up and synced on every device you use.</p>
+                       <p><b>Select your aircraft model.</b> Purchase and download from our extensive library, written by aviation professionals. You can <b>customize</b> your checklist, right on this device.</p>
+                   </div>
+               </div>
+               <div data-bind="tap: signinTap" class="signin">
+                   Already a user? <span>Sign in here</span>
+               </div>
+           </div>
+       </div>
+   </article>
 
 <article id="hiddenTapSpace" data-bind="tap: pageTap, visible: menuOpen" class="page-hidden-tap" style="z-index: 100">
 </article>

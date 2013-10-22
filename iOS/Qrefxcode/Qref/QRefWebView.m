@@ -159,6 +159,12 @@
             if(self.delegate) {
                 [self.delegate webViewDidLoad];
             }
+            
+            NSString *user = [self->preferences stringForKey:@"qrefUser"];
+            NSString *token = [self->preferences stringForKey:@"qrefToken"];
+            
+            if(![self hasCachedChecklists] && !user && !token)
+                [self.webView stringByEvaluatingJavaScriptFromString:@"ShowMarketingPage();"];
         });
     }
 }
@@ -719,6 +725,19 @@
     }];
 }
 
+- (BOOL) hasCachedChecklists {
+    NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSFileManager *manager = [NSFileManager defaultManager];
+    
+    if([manager fileExistsAtPath:[cachePath stringByAppendingString:@"/qref"]] == YES) {
+        NSArray * contents = [manager contentsOfDirectoryAtPath:[cachePath stringByAppendingString:@"/qref"] error:nil];
+        
+        return contents.count > 0;
+    }
+    
+    return false;
+}
+
 - (void) signinFindCachedChecklists {
     NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     NSFileManager *manager = [NSFileManager defaultManager];
@@ -1048,7 +1067,7 @@
     
     NSString * jsCallBack = @"window.getSelection().removeAllRanges();";
     [self.webView stringByEvaluatingJavaScriptFromString:jsCallBack];
-    
+        
     if(UID == nil)
     {
         CFUUIDRef ref = CFUUIDCreate(CFAllocatorGetDefault());
