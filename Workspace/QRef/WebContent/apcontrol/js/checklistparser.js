@@ -39,7 +39,6 @@ var TAG_BODY = "@Body";
 var TAG_BODY_INDENT = "@Body Indent";
 var TAG_BODY_CHART = "@Body CHART";
 var TAG_NOTE = "@Note";
-var TAG_XNOTE= "x@Note";
 var TAG_TOC = "@TOC 1";
 var TAG_TOC_SECONDARY = "@TOC";
 var BULLET = '\u2022';
@@ -150,82 +149,27 @@ function WriteToJSON(rawdata)
 	for(var i = 1; i < splitLines.length; i++)
 	{
 		var line = splitLines[i];	
-		
 		line = RewriteTags(line);
-		
-		if(line.startsWith("<" + TAG_XNOTE)) {
-			
-			line = line.replace(TAG_XNOTE, TAG_NOTE);
-			
-			var temp = line.substring(0, line.indexOf(">") + 1);
-			var temp2 = line.substring(line.indexOf(">") + 1, line.length);
-			
-			temp = temp.replace(/\<|\>/g, '');
-			
-			line = temp + ' ' + temp2;
-			
-			line = StripTags(line);
-				
+		line = StripTags(line);
+		while(IsStartingTag(line))
+		{
 			var CapturedTag = GetStartingTag(line);
-				docTags.push(CapturedTag);
-		}
-		else if(line.startsWith("<" + TAG_HEADER)) {
-			var sub = line.substring(TAG_HEADER.length + 1, TAG_HEADER.length + 2);
 			
-			if(sub != ">") {
-				var temp = line.substring(0, line.indexOf(">") + 1);
-				var temp2 = line.substring(line.indexOf(">") + 1, line.length);
-				
-				temp = temp.replace(/\<|\>/g, '');
-				
-				line = temp + ' ' + temp2;
-				
-				line = StripTags(line);
-				
-				var CapturedTag = GetStartingTag(line);
-				docTags.push(CapturedTag);
-			}
-		}
-		else if(line.startsWith("<" + TAG_HEADER_SECONDARY)) {
-			var sub = line.substring(TAG_HEADER_SECONDARY.length + 1, TAG_HEADER_SECONDARY.length + 2);
-			
-			if(sub != ">") {
-				var temp = line.substring(0, line.indexOf(">") + 1);
-				var temp2 = line.substring(line.indexOf(">") + 1, line.length);
-				
-				temp = temp.replace(/\<|\>/g, '');
-				
-				line = temp + ' ' + temp2;
-				
-				line = StripTags(line);
-				
-				var CapturedTag = GetStartingTag(line);
-				docTags.push(CapturedTag);
-			}
-		}
-		else {
-			line = StripTags(line);
-			while(IsStartingTag(line))
+			if(CapturedTag == null || CapturedTag == "")
 			{
-				var CapturedTag = GetStartingTag(line);
-				
-				if(CapturedTag == null || CapturedTag == "")
-				{
-					i++;
-					line = splitLines[i];
-					line = RewriteTags(line);
-					continue;
-				}
-				
-				docTags.push(CapturedTag);
-				
 				i++;
-				
 				line = splitLines[i];
 				line = RewriteTags(line);
+				continue;
 			}
+			
+			docTags.push(CapturedTag);
+			
+			i++;
+			
+			line = splitLines[i];
+			line = RewriteTags(line);
 		}
-		
 		Document = Document + line +"\r"
 	}
 	var qd = new QrefDictionary();
@@ -254,11 +198,6 @@ function WriteToJSON(rawdata)
 		
 		if(CurrentValue == "")
 			continue;
-		
-		if(CurrentValue.toLowerCase().contains("forced landing")) {
-			console.log("found forced landing");
-		}	
-		
 		if(Tag.contains(TAG_HEADER))
 		{
 			if(Section_N.Name != "")
@@ -307,7 +246,7 @@ function WriteToJSON(rawdata)
 		}
 		if(Tag.contains(TAG_BODY) || Tag.contains(TAG_EMPTY))
 		{
-			var currentSplit = CreateList(CurrentValue);
+			var splitlines = CreateList(CurrentValue);
 			
 			if(Tag.contains(TAG_BODY_INDENT))
 			{
@@ -315,14 +254,14 @@ function WriteToJSON(rawdata)
 				//If It Starts with a Bullet
 				if(CurrentValue.startsWith(BULLET))
 				{
-					if(currentSplit.length > 1)
+					if(splitlines.length > 1)
 					{
 						if(Section_N.Items.length >= 1){
 							try{
-								Section_N.Items[Section_N.Items.length - 1].Response = "See the next " + currentSplit.length + " items.";
+								Section_N.Items[Section_N.Items.length - 1].Response = "See the next " + splitlines.length + " items.";
 							}
 							catch(err){
-								Item_N = new Item("","","","See the next " + currentSplit.length + " items.");
+								Item_N = new Item("","","","See the next " + splitlines.length + " items.");
 								Section_N.Items.push(Item_N);
 							}
 						}
@@ -330,51 +269,11 @@ function WriteToJSON(rawdata)
 						Item_N = new Item("","","","");
 						//Item_N.Response = HTML_TAG_OPN_UL;
 						Item_N.Response = "";
-						for(var j = 0; j < currentSplit.length; j++)
+						for(var j = 0; j < splitlines.length; j++)
 						{
-							var removal = BULLET + "\t";
-							var temp = currentSplit[j].replace(removal, '');
-							
-							if(Section_N.Items.length > 0 ){
-								Item_N = new Item(Section_N.Items[Section_N.Items.length - 1].Index,"","","");
-							
-								for(var k = 0; k < SplitByTab(temp).length; k++)
-								{
-									var element = SplitByTab(temp)[k];
-									
-									switch(k)
-									{
-										case 0:
-											Item_N.Check = element;
-											break;
-										case 1:
-											Item_N.Response = element;
-											break;
-									}
-									
-								}
-							}
-							else {
-								Item_N = new Item(0,"","","");
-								for(var k = 0; k < SplitByTab(temp).length; k++)
-								{
-									var element = SplitByTab(temp)[k];
-									
-									switch(k)
-									{
-										case 0:
-											Item_N.Check = element;
-											break;
-										case 1:
-											Item_N.Response = element;
-											break;
-									}
-									
-								}
-							}
-							
+							Item_N = new Item(Section_N.Items[Section_N.Items.length - 1].Index,Section_N.Items[Section_N.Items.length - 1].Check, splitlines[j], Section_N.Items[Section_N.Items.length - 1].Note);
 							Section_N.Items.push(Item_N);
-							//var bulletitem = currentSplit[j];
+							//var bulletitem = splitlines[j];
 							//Item_N.Response = Item_N.Response + HTML_TAG_OPN_LI + bulletitem.replace(BULLET,"") + HTML_TAG_CLS_LI;
 						}
 						//Item_N.Response = Item_N.Response + HTML_TAG_CLS_UL;
@@ -386,14 +285,14 @@ function WriteToJSON(rawdata)
 								Section_N.Items[Section_N.Items.length - 1].Response = "See the next item.";
 							}
 							catch(err){
-								Item_N = new Item("","","","See the next " + currentSplit.length + " items.");
+								Item_N = new Item("","","","See the next " + splitlines.length + " items.");
 								Section_N.Items.push(Item_N);
 							}
 						}
 						
-						Item_N = new Item(Section_N.Items[Section_N.Items.length - 1].Index,Section_N.Items[Section_N.Items.length - 1].Check, currentSplit[j] ,Section_N.Items[Section_N.Items.length - 1].Note);
+						Item_N = new Item(Section_N.Items[Section_N.Items.length - 1].Index,Section_N.Items[Section_N.Items.length - 1].Check, splitlines[j] ,Section_N.Items[Section_N.Items.length - 1].Note);
 						Section_N.Items.push(Item_N);
-						//Item_N.Response =  HTML_TAG_OPN_UL + HTML_TAG_OPN_LI + currentSplit[0] + HTML_TAG_CLS_LI + HTML_TAG_CLS_UL;
+						//Item_N.Response =  HTML_TAG_OPN_UL + HTML_TAG_OPN_LI + splitlines[0] + HTML_TAG_CLS_LI + HTML_TAG_CLS_UL;
 					}
 					
 					//Section_N.Items.push(Item_N);
@@ -403,11 +302,11 @@ function WriteToJSON(rawdata)
 				else
 				{
 					//It does Not Start with a bullet
-					if(GetTabularElementCount(currentSplit[0]) == 3)
+					if(GetTabularElementCount(splitlines[0]) == 3)
 					{
-						for(var k = 0; k < currentSplit.length; k++)
+						for(var k = 0; k < splitlines.length; k++)
 						{
-							var s = currentSplit[k];
+							var s = splitlines[k];
 							var Item_N = new Item("","","","");
 							
 							for(var j = 0; j < SplitByTab(s).length; j++)
@@ -437,9 +336,9 @@ function WriteToJSON(rawdata)
 						
 						Item_N = new Item("","","","");
 						
-						for(var j = 0; j < currentSplit.length; j++)
+						for(var j = 0; j < splitlines.length; j++)
 						{
-							var element = currentSplit[j];
+							var element = splitlines[j];
 							Item_N.Note = Item_N.Note + element;
 						}
 						
@@ -456,18 +355,18 @@ function WriteToJSON(rawdata)
 					
 					var Headers = new Array();
 					
-					var TabSplit = SplitByTab(currentSplit[0]);
+					var TabSplit = SplitByTab(splitlines[0]);
 					
 					for(var j = 0; j < TabSplit.length; j++)
 					{
 						Headers.push(TabSplit[j]);
 					}
 					
-					for(var j = 0; j < currentSplit.length; j++)
+					for(var j = 0; j < splitlines.length; j++)
 					{
 						Row_N = new Row();
 						
-						var TabSplit = SplitByTab(currentSplit[j]);
+						var TabSplit = SplitByTab(splitlines[j]);
 						
 						for(var k = 0; k < TabSplit.length; k++)
 						{
@@ -491,9 +390,9 @@ function WriteToJSON(rawdata)
 				else
 				{
 					//Nothing Special. Probably Index Check and Response
-					for(var k = 0; k < currentSplit.length; k++)
+					for(var k = 0; k < splitlines.length; k++)
 					{
-						var s = currentSplit[k];
+						var s = splitlines[k];
 						var Item_N = new Item("","","","");
 						
 						for(var j = 0; j < SplitByTab(s).length; j++)
@@ -513,11 +412,8 @@ function WriteToJSON(rawdata)
 									break;
 							}
 						}
-						
-						if(Item_N.Check != "" && Item_N.Response != "") {
-							Section_N.Items.push(Item_N);
-							break;
-						}
+						Section_N.Items.push(Item_N);
+						continue;
 					}
 				}
 			}
@@ -525,19 +421,19 @@ function WriteToJSON(rawdata)
 		
 		if(Tag.contains(TAG_TOC) || Tag.contains(TAG_TOC_SECONDARY))
 		{
-			var currentSplit = CreateList(CurrentValue);
+			var splitlines = CreateList(CurrentValue);
 			
 			if(Tag.contains(TAG_TOC) && LookAhead(qd.Tag,i).contains(TAG_TOC_SECONDARY))
 			{
-				TOC_N = new TOC(currentSplit[0]);
+				TOC_N = new TOC(splitlines[0]);
 			}
 			else
 			{
 				TOC_N.Items = new Array();
 				
-				for(var j = 0; j < currentSplit.length; j++)
+				for(var j = 0; j < splitlines.length; j++)
 				{
-					var s = currentSplit[j];
+					var s = splitlines[j];
 					TOCItem_N = new TOCItem("","");
 					TOCItem_N.Index = GetTOCIndex(s).replace("\t","");
 					TOCItem_N.Text = s.replace(GetTOCIndex(s),"").replace("\t","").trim();
@@ -552,57 +448,37 @@ function WriteToJSON(rawdata)
 		}
 		if (Tag.contains(TAG_NOTE))
 		{
-			var currentSplit = CreateList(CurrentValue);
+			var splitlines = CreateList(CurrentValue);
 			var nextData = LookAhead(qd.Tag,i);
 			if(nextData != undefined && nextData.contains(TAG_BODY_INDENT))
 			{
 				// We have a note Item
 				var NextValue = qd.Value[i + 1];
-				var nextcurrentSplit = CreateList(NextValue);
+				var nextSplitLines = CreateList(NextValue);
 				
-				if(nextcurrentSplit.length > 1){ //We have Multiple Notes
-					Item_N = new Item("",CurrentValue,"See the next " + nextcurrentSplit.length + " items.","");
-					Section_N.Items.push(Item_N);
+				if(nextSplitLines.length > 1){ //We have Multiple Notes
+					Item_N = new Item("",CurrentValue,"See the next " + nextSplitLines.length + " items.","");
 				}
-				else if (nextcurrentSplit.length == 1){ // We have 1 note
+				else if (nextSplitLines.length == 1){ // We have 1 note
 					Item_N = new Item("",CurrentValue,"See the next item.","");
+				}
+				else{ // We don't have notes, or it is at the bottom of the page.
+					Item_N = new Item("",CurrentValue,"","");
+				}
+				Section_N.Items.push(Item_N);
+				
+				for(var j = 0; j < nextSplitLines.length; j++){
+					Item_N = new Item(Section_N.Items[Section_N.Items.length - 1].Index,Section_N.Items[Section_N.Items.length - 1].Check, nextSplitLines[j], Section_N.Items[Section_N.Items.length - 1].Note);
 					Section_N.Items.push(Item_N);
 				}
-				
-				for(var j = 0; j < nextcurrentSplit.length; j++){
-					if(nextcurrentSplit[j].contains(TAG_BODY_INDENT)) {
-						Item_N = new Item(Section_N.Items[Section_N.Items.length - 1].Index,"","","");
-						
-						for(var k = 0; k < SplitByTab(nextcurrentSplit[j]).length; k++)
-						{
-								var element = SplitByTab(nextcurrentSplit[j])[k];
-								
-								switch(k)
-								{
-									case 0:
-										Item_N.Index = element;
-										break;
-									case 1:
-										Item_N.Check = element;
-										break;
-									case 2:
-										Item_N.Response = element;
-										break;
-								}
-						}
-						
-						Section_N.Items.push(Item_N);
-						i++;
-					}
-					else {
-						break;
-					}
-				}
+				i++;
 			}
-			else if(nextData != undefined) {
+			else{
+				// We have reached the bottom of the page
 				Item_N = new Item("",CurrentValue,"","");
 				Section_N.Items.push(Item_N);
 			}
+			continue;
 		}
 	}
 	
@@ -611,19 +487,19 @@ function WriteToJSON(rawdata)
 	
 	postingChecklist = true;
 	//DEBUG ENVIRONMENT
-	return CreateJSON(rawdata);
-	//return CreateJSON();
+	//return CreateJSON(rawdata);
+	return CreateJSON();
 	
 	
 }
 //DEBUG ENVIRONMENT
-function CreateJSON(rawData)
-//function CreateJSON()
+//function CreateJSON(rawData)
+function CreateJSON()
 {
 	
 	var chkList = new ChecklistDev();
 	//DEBUG ENVIRONMENT
-	chkList.raw = rawData;
+	//chkList.raw = rawData;
 	
 	
 	for(var i = 0; i < Qref_N.preflight.length; i++)
@@ -806,7 +682,7 @@ function CreateJSON(rawData)
 function ChecklistDev()
 {
 	//DEBUG ENVIRONMENT
-	this.raw = "";
+	//this.raw = "";
 	this.manufacturer = "";
 	this.model= "";
 	this.serialNumber="000-00-001";
@@ -1048,10 +924,7 @@ function ContainsAny(Tags,line)
 
 function IsStartingTag(s)
 {
-	/*
-	return s.startsWith("@") && (s.contains("=[") || s.contains("=<"));*/
-	
-	return (s.startsWith("@") || s.contains("=<"));
+	return s.contains("@") && (s.contains("=[") || s.contains("=<"));
 }
 
 function GetStartingTag(s)

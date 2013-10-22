@@ -230,7 +230,7 @@ body .ui-tooltip { border-width: 2px; }
 .ui-widget { font-family: Segoe UI,Arial,sans-serif; font-size: 1.1em; }
 .ui-widget .ui-widget { font-size: 1em; }
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: Segoe UI,Arial,sans-serif; font-size: 1em; }
-.ui-widget-content { border: 1px solid #666666; }
+.ui-widget-content {  }
 .ui-widget-content a { color: #ffffff; }
 .ui-widget-header { border: 1px solid #333333;font-weight: bold; }
 .ui-widget-header a { color: #ffffff; }

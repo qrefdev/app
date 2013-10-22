@@ -29,6 +29,10 @@ class UserProductSchemaInternal
 		type: ObjectId
 		required: true
 		ref: 'products'
+	timestamp:
+		type: Date
+		required: false
+		default: new Date()
 	
 	
 UserProductSchema = new Schema(new UserProductSchemaInternal())

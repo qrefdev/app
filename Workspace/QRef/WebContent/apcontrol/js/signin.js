@@ -15,7 +15,7 @@ function Signin() {
 			
 			if(response.success == true)
 			{
-				token = response.returnValue;
+				token = response.returnValue.token;
 				Authentication.verify();
 				$.cookie.setCookie("QrefAuth", token);
                 setTimeout(function() {

@@ -70,6 +70,10 @@ class UserSchemaInternal
 	recoveryAnswer:
 		type: String
 		required: false
+	timestamp:
+		type: Date
+		required: false
+		default: new Date()
 
 UserSchema = new Schema(new UserSchemaInternal())
 module.exports = UserSchema

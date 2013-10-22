@@ -97,7 +97,11 @@ class AircraftChecklistSchemaInternal
 	isDeleted:
 		type: Boolean
 		required: true
-		default: false 
+		default: false
+	timestamp:
+		type: Date
+		required: false
+		default: new Date()
 
 AircraftChecklistSchema = new Schema(new AircraftChecklistSchemaInternal())
 AircraftChecklistSchema.index({ manufacturer: 1, model: 1, version: 1, tailNumber: 1, user: 1 }, { unique: true })

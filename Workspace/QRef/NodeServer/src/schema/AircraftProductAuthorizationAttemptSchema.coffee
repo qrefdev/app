@@ -54,6 +54,10 @@ class AircraftProductAuthorizationAttemptSchemaInternal
 		required: false
 		default: null
 		ref: 'aircraft.checklists'
+	timestamp:
+		type: Date
+		required: false
+		default: new Date()
 
 AircraftProductAuthorizationAttemptSchema = new Schema(new AircraftProductAuthorizationAttemptSchemaInternal())
 AircraftProductAuthorizationAttemptSchema.index({ user: 1, product: 1 })

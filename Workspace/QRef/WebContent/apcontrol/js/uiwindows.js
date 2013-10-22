@@ -398,14 +398,11 @@ function ConfirmationDialog(element, callback) {
 	});
 	
 	this.close = function(confirm) {
-		var closeSelf = this;
-		
-		this.element.fadeOut(function() {
-			if(closeSelf.callback)
+		this.element.fadeOut();
+			if(self.callback)
 			{
-				closeSelf.callback(confirm);
+				self.callback(confirm);
 			}
-		});
 	};
 	
 	this.show = function() {

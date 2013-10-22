@@ -278,11 +278,6 @@ function QuarkParser(contents) {
 			
 			if(tag != undefined) {
 				if(tag.type == 0 && tag.name.contains(TAG_HEADER)) {
-					//Check indents!					
-					applyIndent(item, indentLineCount);
-						
-					indentLineCount = 0;
-					
 					//Preventative measure!
 					//Keeps the header from duplicating into the actual list items
 					inToc = false;
@@ -352,7 +347,6 @@ function QuarkParser(contents) {
 					inBody = true;
 					
 					if(tag.name.contains('Indent')) {
-						indentLineCount = 0;
 						inIndent = true;
 					}
 					else if(tag.name.contains('CHART')) {
@@ -361,35 +355,29 @@ function QuarkParser(contents) {
 						inToc = false;
 						inIndent = false;
 						
-						applyIndent(item, indentLineCount);
-						
-						indentLineCount = 0;
-						
 						//Start of Chart Capture!
 						var data = getLineData(line).trim();
 						data = data.replace(/\t/g, ' ');
+						var dataItems = data.split(' ');
 						
-						item = new Item(section.Items.length,'<br>' + data + '<br><br>',"");
+						var formattedData = '';
+						for(var it = 0; it < dataItems.length; it++) {
+							formattedData += '<div class="CPcell">' + dataItems[it] + '</div>'; 
+						}
+						
+						item = new Item(section.Items.length,'<div class="CProw">' + formattedData + '</div>',"");
 						section.Items.push(item);
 						this.position++;
 						continue;
 					}
 					else {
 						inIndent = false;
-						
-						applyIndent(item, indentLineCount);
-						
-						indentLineCount = 0;
 					}
 				}
 				else if(tag.type == 0 && tag.name.contains(TAG_NOTE)) {
 					inBody = true;
 					inToc = false;
 					inChart = false;
-					
-					applyIndent(item, indentLineCount);
-						
-					indentLineCount = 0;
 					
 					inIndent = false;
 				}
@@ -398,18 +386,10 @@ function QuarkParser(contents) {
 					inToc = true;
 					inChart = false;
 					
-					applyIndent(item, indentLineCount);
-						
-					indentLineCount = 0;
-					
 					inIndent = false;
 				}
 				else if(tag.type == 1) {
 					inBody = false;
-					
-					applyIndent(item, indentLineCount);
-						
-					indentLineCount = 0;
 					
 					//Preventative measure!
 					inToc = true;
@@ -458,13 +438,17 @@ function QuarkParser(contents) {
 						var data = getLineData(line).trim();
 					
 						if(data) {
-							indentLineCount++;
-							section.Items.push(parseLine(data, section.Items.length));
+							var itm = parseLine(data, section.Items.length);
+							itm.Check = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + itm.Check;
+							itm.Response = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + itm.Response;
+							section.Items.push(itm);
 						}	
 					}
 					else {
-						indentLineCount++;
-						section.Items.push(parseLine(line, section.Items.length));
+						var itm = parseLine(line, section.Items.length);
+						itm.Check = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + itm.Check;
+						itm.Response = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + itm.Response;
+						section.Items.push(itm);
 					}
 				}
 			}
@@ -481,15 +465,29 @@ function QuarkParser(contents) {
 					var data = getLineData(line).trim();
 					
 					if(data) {
-						indentLineCount++;
-						section.Items.push(parseLine(data, section.Items.length));
+						var itm = parseLine(data, section.Items.length);
+						itm.Check = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + itm.Check;
+						itm.Response = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + itm.Response;
+						section.Items.push(itm);
 					}
 				}
 			}
 			else if(!inBody && tag == undefined && inChart && !inToc) {
 				var data = line;
-				data = data.replace(/\t/g, ' ') + '<br>'
-				item.Check += data;
+				data = data.replace(/\t/g, ' ');
+				var dataItems = data.split(' ');
+						
+				var formattedData = '';
+				for(var it = 0; it < dataItems.length; it++) {
+					formattedData += '<div class="CPcell">' + dataItems[it] + '</div>'; 
+				}
+				
+				if(data == '') {
+					item.Check += '<div class="CPspacer"></div>';
+				}
+				else {
+					item.Check += '<div class="CProw">' + formattedData + '</div>';
+				}
 			}
 			
 			this.position++;
@@ -497,17 +495,6 @@ function QuarkParser(contents) {
 		
 		this.parsed.emergencies[0].Items.push(section);
 	};
-	
-	function applyIndent(item, count) {
-		if(count > 0) {
-			if(count > 1) {
-				item.Response = "See next " + count + " items";
-			}
-			else {
-				item.Response = "See next item";
-			}
-		}
-	}
 	
 	this.getJson = function() {
 		var chkList = new ChecklistDev();

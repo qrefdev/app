@@ -52,9 +52,10 @@ function ManufacturersEditor() {
 	
 	this.generateManufacturerHtml = function(manufacturer) {
 		var html =  '<li data-id="' + manufacturer._id + '"><div class="holder" style="width: 95%;">' +
-						'Name: <input type="text" class="name" style="width: 50%;" value="' + manufacturer.name + '" /><br>' +
-						'Description:<br><textarea class="description" style="width: 100%;">' + manufacturer.description + '</textarea>' +
-					'</div></li>';
+						'<table width="100%" border="0">' +
+						'<tr><td width="100">Name: </td><td><input type="text" class="name" style="width: 200px;" maxlength="17" value="' + manufacturer.name + '" /></td></tr>' +
+						'<tr><td>Description:</td><td><input type="text" class="description" style="width: 200px;" maxlength="25" value="' + manufacturer.description + '" /></td></tr>' +
+					'</table></div></li>';
 					
 		return html;
 	};

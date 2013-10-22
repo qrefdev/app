@@ -52,10 +52,11 @@ function ModelsEditor() {
 	
 	this.generateModelHtml = function(model) {
 		var html =  '<li data-id="' + model._id + '"><div class="holder" style="width: 95%;">' +
-						'Name: <input type="text" class="name" style="width: 50%;" value="' + model.name + '" /><br>' +
-						'Years: <input type="text" class="year" style="width: 50%;" value="' + model.modelYear + '"/><br>' +
-						'Description:<br><textarea class="description" style="width: 100%;">' + model.description + '</textarea>' +
-					'</div></li>';
+						'<table width="100%" border="0">' +
+						'<tr><td width="100">Name: </td><td><input type="text" class="name" style="width: 200px;" maxlength="17" value="' + model.name + '" /></td></tr>' +
+						'<tr><td>Description:</td><td><input type="text" class="description" style="width: 200px;" maxlength="25" value="' + model.description + '" /></td></tr>' +
+						'<tr><td>Years: </td><td><input type="text" class="year" style="width: 200px;" maxlength="19" value="' + model.modelYear + '"/></td></tr>' +
+					'</table></div></li>';
 					
 		return html;
 	};

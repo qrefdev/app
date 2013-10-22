@@ -263,7 +263,7 @@ function resetNewProduct() {
 	$('#addNewProductDescription').val("");
 	$('#addNewProductAppleId').val("");
 	$('#addNewProductAndroidId').val("");
-	$('#addNewProductRetailPrice').val("0");
+	$('#addNewProductRetailPrice').val("9.99");
 	$('#addNewProductSerialNumber').val("");
 	
 	$('#addNewProductIsPublished').attr('checked',false);
@@ -905,19 +905,19 @@ function uploadPicture(imageType, product, callback) {
 		
 			if(data.success)
 			{
-				alert("Picture Uploaded SuccessFully");
+				alert("Image uploaded Successfully");
 				loader.hide();
 				if(callback)
 					callback(data);
 			}
 			else
 			{
-				alert("Picture Upload Failed");
+				alert("Picture Upload: FAILED");
 				loader.hide();
 			}				
 		},
 		error: function(){
-			alert("Error in Picture Upload");
+			alert("ERROR in Picture Upload");
 			loader.hide();
 		}		
 	});

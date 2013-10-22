@@ -816,7 +816,7 @@ function SetItemOptions(item, index, target)
 
 function SetCheckListItemHTML(Section, Check, Response)
 {
-	return '<div class="CheckListItem_Section">Section: <span class="CheckListItem_Values">' + Section + '</span></div><div class="CheckListItem_Check">Check: <span class="CheckListItem_Values">' + Check + '</span></div><div class="CheckListItem_Response">' + 'Response: <span class="CheckListItem_Values">' + Response + '</span></div>';
+	return '<div class="CheckListItem_Section"><span class="CheckListItem_Values">' + Section + '</span></div><div class="CheckListItem_Check"><span class="CheckListItem_Values">' + Check + '</span></div><div class="CheckListItem_Response">' + '<span class="CheckListItem_Values">' + Response + '</span></div>';
 }
 
 function LoadObjects(records)
@@ -827,7 +827,7 @@ function LoadObjects(records)
 	var modelName = ((selectedmodel !== undefined && selectedmodel !== null && selectedmodel.name !== undefined && selectedmodel.name !== null) ? selectedmodel.name : "");
 	var version = ((g_checklist !== undefined && g_checklist !== null && g_checklist.version !== undefined && g_checklist.version !== null) ? g_checklist.version : "");
 	
-	$("#ChecklistName").html(mfgName + " " + modelName + " (Version: " + version + ")");
+	$("#ChecklistName").html(mfgName + " " + modelName + " <span>" + version + "</span>");
 	
 	var preflight = document.getElementById('s1');
 	var takeOffCruise = document.getElementById('s2');
