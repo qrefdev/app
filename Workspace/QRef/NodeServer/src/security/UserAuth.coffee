@@ -184,7 +184,7 @@ class UserAuth
 			.findOne((err, role) ->
 				
 				if err?
-					console.log(JSON.stringify(err))
+					process.stdout.write(err.stack + "\n");
 					callback(err, false, 4)
 					return
 				
