@@ -74,7 +74,7 @@ html,body{margin:0;padding:0;width:100%;height:100%;font-family:Myriad,Helvetica
 .dashboard-planes-selector .subheading,.downloads .subheading,.dashboard-planes-selector .subheading,.downloads .subheading{width:auto;position:relative;margin-left:0;font-size:14px}
 .dashboard-planes-selector .plane-icon{position:absolute;right:0;bottom:0;top:8px;padding:0;margin:0;z-index:0;width:125px}
 .dashboard-planes-selector .vertical li ul{width:auto;padding:0;position:relative;list-style-type:none;background:none}.dashboard-planes-selector .vertical li ul li{float:left;width:auto;position:relative;margin:0;padding:10px 10px 14px 0;font-size:14px;min-width:40px}
-.dashboard-planes-selector .vertical li .delete{position:absolute;left:15px;top:35%;display:none}
+.dashboard-planes-selector .vertical li .delete{display:none}
 .dashboard-planes-selector .vertical li .handle{position:absolute;right:0;width:40px;top:25%;display:none;padding-top:5px;padding-bottom:5px;z-index:10}.dashboard-planes-selector .vertical li .handle .item{float:left;position:relative;width:20px;height:5px;margin-top:3px;margin-left:12px}
 .downloads .plane-icon{position:absolute;right:0;bottom:0;top:5px;padding:0;margin:0;z-index:0;width:125px}
 .checklist,.emergencies-sections{position:absolute;width:100%;left:0;right:0;bottom:0;top:0;height:100%;overflow:auto}
@@ -83,10 +83,10 @@ html,body{margin:0;padding:0;width:100%;height:100%;font-family:Myriad,Helvetica
 .vertical li .holder{float:left;position:relative;margin-top:9px;margin-left:10px;margin-bottom:1px;width:98%}
 .vertical li .check{position:relative;width:auto}
 .vertical li .response{margin-top:1px;margin-bottom:6px;position:relative;width:auto;text-transform:uppercase;font-size:16px}
-.vertical li .delete{position:absolute;left:15px;top:28%;display:none}
+.vertical li .delete{position:absolute;left:0;bottom:0;top:0;width:40px;display:none}.vertical li .delete .deleteLabel{position:absolute;left:0;right:0;top:50%;height:25px;line-height:25px;margin:-12px 0 0 0;text-align:center}
 .vertical li .handle{position:absolute;right:0;width:40px;top:10px;display:none}
 .vertical li .handle .item{float:left;position:relative;width:20px;height:5px;margin-top:3px;margin-left:12px}
-.vertical li .add{position:absolute;right:60px;top:22px;display:none}
+.vertical li .add{position:absolute;right:60px;top:20px;display:none}
 .checklist .vertical li .checkmark,.downloads .vertical li .checkmark{position:absolute;width:30px;height:30px;right:12px;top:12px;border-radius:5px;-webkit-border-radius:5px}
 .checklist .vertical li .checkmark .checker,.downloads .vertical li .checkmark .checker{width:30px;height:30px}
 .checklist .vertical li .checkmark .checker .icon,.downloads .vertical li .checkmark .checker .icon{position:absolute;left:-10px;top:-24px;font-size:40px}

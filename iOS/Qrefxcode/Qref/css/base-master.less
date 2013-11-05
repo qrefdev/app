@@ -705,9 +705,6 @@ html, body {
         }
 
         .delete {
-            position: absolute;
-            left: 15px;
-            top: 35%;
             display: none;
         }
 
@@ -799,9 +796,22 @@ html, body {
 
         .delete {
             position: absolute;
-            left: 15px;
-            top: 28%;
+            left: 0px;
+            bottom: 0px;
+            top: 0px;
+            width: 40px;
             display: none;
+
+            .deleteLabel {
+                position: absolute;
+                left: 0px;
+                right: 0px;
+                top: 50%;
+                height: 25px;
+                line-height: 25px;
+                margin: -12px 0 0 0;
+                text-align: center;
+            }
         }
 
         .handle {
@@ -824,7 +834,7 @@ html, body {
         .add {
             position: absolute;
             right: 60px;
-            top: 22px;
+            top: 20px;
             display: none;
         }
     }

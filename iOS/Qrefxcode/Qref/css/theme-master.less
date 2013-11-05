@@ -294,7 +294,7 @@ button,
         li {
             color: @colorDashText;
             border-top: 1px solid @colorChecklistBorder;
-            border-bottom: 1px solid @colorChecklistBorder2;
+//            border-bottom: 1px solid @colorChecklistBorder2;
 
             ul li {
                 color: @colorDashLink;
@@ -308,12 +308,11 @@ button,
             }
 
             .delete {
-                padding: 8px;
+                padding: 14px 12px;
                 font-family: MyriadBold, Helvetica;
-                .gradient(@colorRed1, @colorRed2);
-                font-size: 12px;
-                border-radius: 5px;
-                -webkit-border-radius: 5px;
+                background-color: @colorRed1;
+                font-size: 16px;
+                color: white;
             }
 
         }
@@ -327,7 +326,7 @@ button,
 .dashboard-planes-selector,
 .checklist {
     .vertical li .handle {
-        .gradient(@colorHandle1, @colorHandle2);
+        background-color: @colorHandle1;
         border-radius: 25px 0px 0px 25px;
         -webkit-border-radius: 25px 0px 0px 25px;
         border-right: none;
@@ -372,12 +371,11 @@ button,
     }
 
     .delete {
-        padding: 8px;
-        .gradient(@colorRed1, @colorRed2);
-        font-size: 12px;
+        padding: 14px 12px;
         font-family: MyriadBold, Helvetica;
-        border-radius: 5px;
-        -webkit-border-radius: 5px;
+        background-color: @colorRed1;
+        font-size: 16px;
+        color: white;
     }
 
     .add {
