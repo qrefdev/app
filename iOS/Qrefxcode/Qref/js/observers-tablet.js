@@ -339,6 +339,42 @@ var StoreObserver = new zimoko.Observable({
             $(element).addClass('active');
         }
     },
+    sampleTap: function(element, e, data) {
+		e.stopPropagation();
+		e.preventDefault();
+		
+		//Load Sample Data
+		//Then goto checklist
+        $.ajax({
+			type:"get",
+			dataType:"json",
+			url:host + "services/ajax/aircraft/checklist-sample?timestamp=" + Date.now(),
+			success:function (data) {
+				var response = data;
+
+				if (response.success == true) {
+					if(response.records.length > 0) {
+						var checklist = new zimoko.Observable(response.records[0]);
+
+						ChecklistObserver.set('checklist', checklist);
+						Navigation.go('#checklist');
+					}
+					else {
+						var dialog = new Dialog('#infobox', 'Failed to get sample checklist!');
+     					dialog.show();
+					}
+				}
+				else {
+					var dialog = new Dialog('#infobox', 'Failed to get sample checklist!');
+     				dialog.show();
+				}
+			},
+			error:function () {
+				var dialog = new Dialog('#infobox', 'Internet connection required to view sample checklist.');
+     			dialog.show();
+			}
+		});
+	},
     onDataSourceRead:function (event) {
         var imageProcessor = new ImageProcessor(StoreObserver.items.toArray(), "productListing", true);
         imageProcessor.init();
@@ -548,7 +584,8 @@ var AppObserver = new zimoko.Observable({
         var ele = $(element);
 
         if (ChecklistObserver.editing && ChecklistObserver.modified) {
-            Sync.syncOneLocal(ChecklistObserver.checklist._original);
+            if(ChecklistObserver.checklist._original._id != '5252fe02b2325732290016ed')
+                Sync.syncOneLocal(ChecklistObserver.checklist._original);
         }
 
         $('.scrollable').stop();
@@ -1281,7 +1318,8 @@ var AppObserver = new zimoko.Observable({
             }
             else {
                 if (ChecklistObserver.editing && ChecklistObserver.modified) {
-                    Sync.syncOneLocal(ChecklistObserver.checklist._original);
+                    if(ChecklistObserver.checklist._original._id != '5252fe02b2325732290016ed')
+                         Sync.syncOneLocal(ChecklistObserver.checklist._original);
                 }
 
                 ChecklistObserver.set('editing', false);
@@ -2065,7 +2103,8 @@ var ChecklistObserver = new zimoko.Observable({
         e.preventDefault();
 
         if (ChecklistObserver.editing && ChecklistObserver.modified) {
-            Sync.syncOneLocal(ChecklistObserver.checklist._original);
+            if(ChecklistObserver.checklist._original._id != '5252fe02b2325732290016ed')
+                Sync.syncOneLocal(ChecklistObserver.checklist._original);
         }
 
         setTimeout(function () {
