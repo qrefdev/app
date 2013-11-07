@@ -1,5 +1,6 @@
 .theme-light a{font-size:16px;font-weight:normal;color:#d7dadf;font-family:MyriadBold,Myriad,Helvetica;text-decoration:none}.theme-light a:visited{font-size:16px;font-weight:normal;color:#d7dadf;text-decoration:none}
 .theme-light a:hover{font-size:16px;font-weight:normal;color:#111418;text-decoration:none}
+.theme-light b,.theme-light strong{font-family:MyriadBold,Myriad,Helvetica;font-weight:normal}
 .theme-light .active{opacity:1}
 .theme-light .textbox{border:1px solid #dde0e4;background:#eaecee;color:#343a43;-webkit-appearance:none}
 .theme-light .wrap{background:#fff;background-size:100% 100%}
