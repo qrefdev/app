@@ -1848,6 +1848,11 @@ var ChecklistObserver = new zimoko.Observable({
     		
     		checklistArea.append(template);
     	}
+                                              
+    	if(this.items.length == 0)
+    		$('.checklist .add-single').show();
+    	else
+    		$('.checklist .add-single').hide();
     	
     	setTimeout(function() {
     		for(var i = 0; i < _this.items.length; i++) {
@@ -2120,7 +2125,10 @@ var ChecklistObserver = new zimoko.Observable({
         ChecklistObserver.set('showSections', false);
     },
     addTap:function (element, e, data) {
-        var index = data.index;
+        var index = -1;
+        
+        if(data.index)
+        	index = data.index;
 
         e.stopPropagation();
         e.preventDefault();
@@ -2177,6 +2185,11 @@ var ChecklistObserver = new zimoko.Observable({
                         ChecklistObserver.set('modified', true);
                         ChecklistObserver.checklist[ChecklistObserver.list][ChecklistObserver.section].items.removeAt(index);
                     }
+                    
+                    if(ChecklistObserver.items.length == 0)
+                    	$('.checklist .add-single').show();
+                    else
+                    	$('.checklist .add-single').hide();
                 });
             });
         }
