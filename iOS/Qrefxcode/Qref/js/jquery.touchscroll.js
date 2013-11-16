@@ -194,7 +194,7 @@
 						scrollHorizontalAuto();
 					}
 	  			}
-	  				
+	
 	  			if(afterScrollHandler) {
 	  				setTimeout(function() {
 	  					afterScrollHandler.call($element);
@@ -210,10 +210,12 @@
 			var momentum = 0.01 * velocity;
 			
 			var deltaY = (endPosition.y - previousPosition.y) + momentum;
-			
-			var scrollHeight = $element[0].scrollHeight;
+            var deltaYNoMomentum = (endPosition.y - previousPosition.y);
+ 
+            var scrollHeight = $element[0].scrollHeight - $element.innerHeight();
 			var scrollTop = $element.scrollTop();
-			
+            var top = $element.position().top;
+ 
 			$element.stop(true);
 			
 	  		if(deltaDirection.y < 0)
@@ -224,6 +226,8 @@
 				}
 				else {
 					$element.scrollTop(scrollHeight);
+					
+					$element.css({top: (top + (deltaYNoMomentum - momentum)) + 'px'});
 					
 					if(bottomReachedHandler) {
 						setTimeout(function() {
@@ -239,6 +243,7 @@
 				}
 				else {
 					$element.scrollTop(0);
+					$element.css({top: (top + (deltaYNoMomentum - momentum)) + 'px'});
 				}
 			}
 			
@@ -253,16 +258,19 @@
 			
 			var deltaY = (endPosition.y - previousPosition.y) + momentum;;
 			
-			var scrollHeight = $element[0].scrollHeight;
+			var scrollHeight = $element[0].scrollHeight - $element.innerHeight();
 			var scrollTop = $element.scrollTop();
 			
 	  		if(deltaDirection.y < 0)
 			{
 				if(scrollTop - deltaY < scrollHeight)
 				{
+                    $element.css({top: '0px'});
 					$element.animate({scrollTop: scrollTop - deltaY}, 850, 'easeOutCirc');
 				}
 				else {
+                    $element.animate({top: '0px'}, "slow", "easeOutBounce");
+ 
 					$element.animate({scrollTop: scrollHeight},850, 'easeOutCirc', function() {
 						if(bottomReachedHandler) {
 							setTimeout(function() {
@@ -275,9 +283,11 @@
 			else if(deltaDirection.y > 0)
 			{
 				if(scrollTop - deltaY > 0) {
+                    $element.css({top: '0px'});
 					$element.animate({scrollTop: scrollTop - deltaY}, 850, 'easeOutCirc');
 				}
 				else {
+                    $element.animate({top: '0px'}, "slow", "easeOutBounce");
 					$element.animate({scrollTop: 0}, 850, 'easeOutCirc');
 				}
 			}
