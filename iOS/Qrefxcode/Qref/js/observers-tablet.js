@@ -1108,10 +1108,10 @@ var AppObserver = new zimoko.Observable({
             threshold:25,
             onBeforeScroll:function (e) {
                 if (AppObserver.isSorting) {
-                    $(this).touchScroll("disableScroll");
+                    $(this).touchScroll("disable");
                 }
                 else {
-                    $(this).touchScroll("enableScroll");
+                    $(this).touchScroll("enable");
                 }
             }
         });
