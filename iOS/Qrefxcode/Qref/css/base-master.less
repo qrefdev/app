@@ -708,23 +708,23 @@ html, body {
             display: none;
         }
 
-        .handle {
+        .editTools {
             position: absolute;
             right: 0px;
-            width: 40px;
-            top: 25%;
-            display: none;
-            padding-top: 5px;
-            padding-bottom: 5px;
-            z-index: 10;
+            bottom: 0px;
+            top: 0px;
+            width: 80px;
+            z-index: 9999;
 
-            .item {
-                float: left;
-                position: relative;
-                width: 20px;
-                height: 5px;
-                margin-top: 3px;
-                margin-left: 12px;
+            .handle {
+                position: absolute;
+                right: 0;
+                top: 50%;
+                height: 24px;
+                width: 35px;
+                margin-top: -21px;
+                display: none;
+                z-index: 9999;
             }
         }
     }
@@ -769,6 +769,7 @@ html, body {
             margin-left: 10px;
             margin-bottom: 1px;
             width: 98%;
+            min-height: 35px;
         }
 
         .check {
@@ -792,6 +793,7 @@ html, body {
             top: 0px;
             width: 40px;
             display: none;
+            z-index: 9999;
 
             .deleteLabel {
                 position: absolute;
@@ -805,28 +807,35 @@ html, body {
             }
         }
 
-        .handle {
+        .editTools {
             position: absolute;
             right: 0px;
-            width: 40px;
-            top: 10px;
-            display: none;
-        }
+            bottom: 0px;
+            top: 0px;
+            width: 80px;
+            z-index: 9999;
 
-        .handle .item {
-            float: left;
-            position: relative;
-            width: 20px;
-            height: 5px;
-            margin-top: 3px;
-            margin-left: 12px;
-        }
+            .handle {
+                position: absolute;
+                right: 0;
+                top: 50%;
+                height: 24px;
+                width: 35px;
+                margin-top: -21px;
+                display: none;
+                z-index: 9999;
+            }
 
-        .add {
-            position: absolute;
-            right: 60px;
-            top: 20px;
-            display: none;
+            .add {
+                position: absolute;
+                right: 55px;
+                top: 50%;
+                height: 18px;
+                width: 20px;
+                margin-top:-13px;
+                text-align:center;
+                display: none;
+            }
         }
     }
 }

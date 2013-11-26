@@ -137,6 +137,12 @@ b, strong {
 
     .logo {
         background: url('../images/@{skin}/logo.png') 0 0 no-repeat;
+
+        @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+            background-image: url('../images/@{skin}/logo@2x.png');
+            background-size: 153px 60px;
+        }
+
     }
 }
 
@@ -174,6 +180,10 @@ button,
     overflow: hidden;
     display: block;
     cursor: pointer;
+
+    &.active i {
+        -webkit-transform:translate(8px,0); // PRESS STATE
+    }
 }
 
 // Menu Theme
@@ -225,9 +235,7 @@ button,
             font-size: 24px;
             width: 23px;
             color: @colorMenuIcon;
-
-            p {
-            }
+            margin: 12px 0 0 8px;
         }
 
         li p {
@@ -332,16 +340,11 @@ button,
 .checklist {
     .vertical li .handle {
         background-color: @colorHandle1;
+        color: @colorHandleItem;
         border-radius: 25px 0px 0px 25px;
         -webkit-border-radius: 25px 0px 0px 25px;
         border-right: none;
-        padding-left: 5px;
-        padding-top: 9px;
-        padding-bottom: 10px;
-
-        .item {
-            background: @colorHandleItem;
-        }
+        padding: 14px 5px 5px 10px;
     }
 }
 
@@ -349,22 +352,11 @@ button,
     padding-bottom: 8px;
 }
 
-.checklist {
-    .add {
-        padding: 5px;
-        padding-bottom: 0px;
-        color: @colorHandleItem;
-        background: @colorGreen;
-        border-radius: 5px;
-        -webkit-border-radius: 5px;
-    }
-}
-
 // Checklist
 .checklist .vertical li {
     color: @colorCheck;
     border-top: 1px solid @colorChecklistBorder;
-    border-bottom: 1px solid @colorChecklistBorder2;
+//    border-bottom: 1px solid @colorChecklistBorder2;
     background-color: @colorCheckBackground;
 
     .check {
@@ -375,9 +367,15 @@ button,
         &.nextSection {
             font-size: 20px;
             color: @colorResponse;
-            text-align: right;
-            width: 100%;
+            text-align: center;
+            width: auto;
             right: 15px;
+            float:right;
+            border: 1px solid #cdd0d6;
+            border-radius: 5px;
+            margin-bottom:10px;
+            padding: 10px 17px 8px;
+            line-height:20px;
         }
     }
 
@@ -396,11 +394,12 @@ button,
 
     .add {
         padding: 5px;
-        padding-bottom: 0px;
+        padding-top: 7px;
         color: @colorHandleItem;
         background: @colorGreen;
         border-radius: 5px;
         -webkit-border-radius: 5px;
+        font-size: 16px;
     }
 
     .active {
@@ -648,7 +647,7 @@ form label {
         float: right;
         position: relative;
         width: auto;
-        text-indent: 5px;
+        text-indent: 7px;
     }
 
     .icon {
@@ -954,6 +953,12 @@ form label {
                 display: block;
             }
         }
+
+        .active {
+            .special {
+                background: #484f59; // PRESS STATE
+            }
+        }
     }
 
     .signin {
@@ -971,6 +976,10 @@ form label {
             font-family: MyriadBold;
             font-size: 18px;
             display: block;
+        }
+
+        &.active {
+            -webkit-transform:scale(.9,.9); // PRESS STATE
         }
     }
 

@@ -2,6 +2,19 @@
 .logoSection {
     .logo {
         background: url('../images/@{skin}/logo-tablet.png') 0 0 no-repeat;
+
+        @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+            background-image: url('../images/@{skin}/logo@2x.png');
+            background-size: 214px 84px;
+        }
+    }
+}
+
+.checklist .vertical li {
+
+    .check.nextSection {
+        right: 4px;
+        margin-bottom: 20px;
     }
 }
 
