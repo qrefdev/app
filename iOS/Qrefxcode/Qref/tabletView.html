@@ -209,8 +209,6 @@
                                     <div class="response" data-bind="visible: (response != '')"></div>
                                 </div>
                                 <div class="delete" data-bind="tap: parent.deleteTap"><div class="deleteLabel">Delete</div></div>
-                                <div class="add" data-bind="tap: parent.addTap, visible: parent.editing"><i
-                                        class="icon-plus"></i></div>
                                 <div class="editTools">
                                     <div class="add" data-bind="tap: parent.addTap, visible: parent.editing"><i class="icon-plus"></i></div>
                                     <div class="handle" data-bind="visible: parent.editing"><i class="icon-reorder"></i></div>
@@ -612,9 +610,9 @@
             <div style="float: left; position: relative; width: 100%; margin-top: 5px;" data-bind="with: item">
                 <form id="editAddForm" method="post" action="javascript:void(null);">
                     <input class="textbox required" style="display: block;" data-bind="value: check" type="text"
-                           placeholder="Check" autofocus="autofocus" id="editAddCheck" tabindex="0"/>
+                           placeholder="check" autofocus id="editAddCheck" />
                     <input class="textbox required" style="display: block;" data-bind="value: response" type="text"
-                           placeholder="Response" tabindex="1"/>
+                           placeholder="response" />
 
                     <div class="button" data-bind="visible: root.adding, tap: root.edit">
                         <div class="special"><p>Save</p><i class="icon icon-arrow-right"></i></div>
@@ -675,9 +673,9 @@
         <div class="content" style="bottom: 0px;">
             <div style="float: left; position: relative; width: 100%; margin-top: 5px;">
                 <form id="signinForm" method="post" action="javascript:void(null);">
-                    <input class="textbox required" type="email" id="email" tabindex="1" data-bind="keyup: keyUp"
-                           name="email" placeholder="email" autofocus="autofocus"/>
-                    <input class="textbox required" type="password" id="password" tabindex="2" data-bind="keyup: keyUp"
+                    <input class="textbox required" type="email" id="email" data-bind="keyup: keyUp"
+                           name="email" placeholder="email" autofocus />
+                    <input class="textbox required" type="password" id="password" data-bind="keyup: keyUp"
                            name="password" placeholder="password"/>
 
                     <div class="submit">
@@ -717,7 +715,7 @@
             <div style="float: left; position: relative; width: 100%; margin-top: 5px;">
                 <form id="passwordRecoveryForm" method="post" action="javascript:void(null);">
                     <input class="textbox required" type="email" id="recoveryEmail"
-                           name="recoveryEmail" placeholder="email" autofocus="autofocus"/>
+                           name="recoveryEmail" placeholder="email" autofocus />
 
                     <div class="submit">
                         <div class="special"><p>Send Email</p><i class="icon icon-arrow-right"></i></div>
@@ -749,10 +747,10 @@
         	<div style="float: left; position: relative; width: 99%; margin: 5px;">
 				<form id="passwordAuthCodeForm" method="post" action="javascript:void(null)">
 					<input class="textbox required" type="number" id="authCode"
-							   name="authCode" placeholder="Auth Code" autofocus/>
-					<input class="textbox required" type="password" placeholder="new password" tabindex="2"
+							   name="authCode" placeholder="Auth Code" autofocus />
+					<input class="textbox required" type="password" placeholder="new password"
 							    id="authPassword" name="authPassword"/>
-					<input class="textbox required" type="password" placeholder="confirm password" tabindex="3"
+					<input class="textbox required" type="password" placeholder="confirm password"
 							    id="authPasswordConfirm" name="authPasswordConfirm"/>
 
 					<div class="submit">
@@ -781,11 +779,11 @@
         <div class="content" style="bottom: 0px;">
             <div style="float: left; position: relative; width: 100%; margin-top: 5px;">
                 <form id="changePasswordForm" method="post" action="javascript:void(null);">
-                    <input class="textbox required" type="password" placeholder="old password" tabindex="1"
-                           data-bind="keyup: keyUp" id="oldPassword" name="oldPassword" autofocus="autofocus"/>
-                    <input class="textbox required" type="password" placeholder="new password" tabindex="2"
+                    <input class="textbox required" type="password" placeholder="old password"
+                           data-bind="keyup: keyUp" id="oldPassword" name="oldPassword" autofocus />
+                    <input class="textbox required" type="password" placeholder="new password"
                            data-bind="keyup: keyUp" id="newPassword" name="newPassword"/>
-                    <input class="textbox required" type="password" placeholder="confirm password" tabindex="3"
+                    <input class="textbox required" type="password" placeholder="confirm password"
                            data-bind="keyup: keyUp" id="newPasswordConfirm" name="newPasswordConfirm"/>
 
                     <div style="margin: 10px auto; width: 90%" class="submit">
@@ -814,11 +812,11 @@
         <div class="content" style="bottom: 0px;">
             <div style="float: left; position: relative; width: 100%; margin-top: 5px;">
                 <form id="registerForm" action="javascript:void(null);" method="post">
-                    <input class="textbox required" type="email" id="emailRegister" tabindex="1"
-                           data-bind="keyup: keyUp" name="emailRegister" placeholder="email" autofocus="autofocus"/>
-                    <input class="textbox required" type="password" id="passwordRegister" tabindex="2"
+                    <input class="textbox required" type="email" id="emailRegister"
+                           data-bind="keyup: keyUp" name="emailRegister" placeholder="email" autofocus />
+                    <input class="textbox required" type="password" id="passwordRegister"
                            data-bind="keyup: keyUp" name="passwordRegister" placeholder="password"/>
-                    <input class="textbox required" type="password" id="confirmPassword" tabindex="3"
+                    <input class="textbox required" type="password" id="confirmPassword"
                            data-bind="keyup: keyUp" name="confirmPassword" placeholder="confirm password"/>
 
                     <div style="margin: 10px auto; width: 90%" class="submit">
@@ -845,7 +843,7 @@
                    </div>
                    <div class="salesText right">
                        <div data-bind="tap: signupTap">
-                           <div class="special"><p>Register</p><i class="icon icon-arrow-right"></i></div>
+                           <div class="special"><p>Sign Up</p><i class="icon icon-arrow-right"></i></div>
                        </div>
                        <p><b>Create your <span class="highlight">free</span> Qref login.</b> Your login keeps your checklists organized, backed up and synced on every device you use.</p>
                        <p><b>Select your aircraft model.</b> Purchase and download from our extensive library, written by aviation professionals. You can <b>customize</b> your checklist, right on this device.</p>
@@ -902,9 +900,9 @@
                     class="icon icon-pencil"></i>
 
                 <p>Register</p></li>
-            <li data-link="e6b" data-bind="tap: menuNavTap"><i class="icon icon-table"></i>
+            <li data-link="download" data-bind="tap: downloadTap, visible: token"><i class="icon icon-download"></i>
 
-                <p>Conversions</p></li>
+                <p>Download</p></li>
             <li data-bind="tap: orderPrintedTap, visible: token"><i class="icon icon-print"></i>
 
                 <p>Buy Printed Version</p></li>
@@ -1006,6 +1004,18 @@
         </div>
         <div class="button okay no" style="width: 90%; margin: 20px auto;">
             <div class="special"><p>Cancel</p><i class="icon icon-ban-circle"></i></div>
+        </div>
+    </figure>
+</div>
+
+<div class="modal" id="clearchecks">
+    <figure class="info">
+        <figcaption class="data">Clear checks on items?</figcaption>
+        <div class="button okay yes" style="width: 90%; margin: 20px auto;">
+            <div class="special"><p>Yes</p><i class="icon icon-ok"></i></div>
+        </div>
+        <div class="button okay no" style="width: 90%; margin: 20px auto;">
+            <div class="special2"><p>No</p><i class="icon icon-ban-circle"></i></div>
         </div>
     </figure>
 </div>

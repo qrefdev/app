@@ -44,11 +44,11 @@
   
   function TouchScroll(element, options) { 
   	  this.disableScroll = function() {
-  	  	this.disableScroll = true;
+  	  	this.canScroll = false;
   	  };
   	  
   	  this.enableScroll = function() {
-  	     this.disableScroll = false;
+  	     this.canScroll = true;
   	  };
       
       this.init = function(element, options) {
@@ -63,9 +63,9 @@
           this.startTime = 0; 
           this.endTime = 0;
         
-          this.disableScroll = false;
+          this.canScroll = true;
         
-          this.threshold = 250;
+          this.threshold = 50;
           this.pullToRefreshThreshold = 50;
           this.direction = 'vertical'
           this.deltaDirection = {x: 0, y: 0};
@@ -177,7 +177,13 @@
                 
                 this.calculateDirection();
                 
-                if(duration > this.threshold && !this.disableScroll) {
+                if(duration > this.threshold && this.canScroll) {
+                	if(this.beforeScrollHandler) {
+						setTimeout(function() {
+							_this.beforeScrollHandler.call(_this.element, event);
+						}, 1);
+					}
+					
                     this.scroll();	
                 }
           }
@@ -191,7 +197,7 @@
                 this.calculateDirection();
                 this.touched = false;
                 
-                if(duration > this.threshold && !this.disableScroll) {
+                if(duration > this.threshold && this.canScroll) {
                     this.scroll();
                 }
             }
@@ -199,27 +205,50 @@
 	  
 	  this.scroll = function() {
             var _this = this;
-            this.element.stop();
             if(this.touched)
             {   
                 if(this.direction == 'vertical')
                 {
                     setTimeout(function() {
                         _this.scrollVertical();
+                        
+                        if(this.afterScrollHandler) {
+							setTimeout(function() {
+								_this.afterScrollHandler.call(_this.element);
+							}, 1);
+						}
                     }, 1);
                 }
                 else if(this.direction == 'horizontal')
                 {
                     setTimeout(function() {
                         _this.scrollHorizontal();
+                        
+                        if(this.afterScrollHandler) {
+							setTimeout(function() {
+								_this.afterScrollHandler.call(_this.element);
+							}, 1);
+						}
                     }, 1);
                 }
                 else {
                     setTimeout(function() {
                         _this.scrollVertical();
+                        
+                        if(this.afterScrollHandler) {
+							setTimeout(function() {
+								_this.afterScrollHandler.call(_this.element);
+							}, 1);
+						}
                     }, 1);
                     setTimeout(function() {
                         _this.scrollHorizontal();
+                        
+                        if(this.afterScrollHandler) {
+							setTimeout(function() {
+								_this.afterScrollHandler.call(_this.element);
+							}, 1);
+						}
                     }, 1);
                 }
             }
@@ -228,22 +257,34 @@
                 if(this.direction == 'vertical') {
                     setTimeout(function() {
                         _this.scrollVerticalAuto();
+                        
+                        if(this.afterScrollHandler) {
+							setTimeout(function() {
+								_this.afterScrollHandler.call(_this.element);
+							}, 1);
+						}
                     }, 1);
                 }
                 else if(this.direction == 'horizontal') {
                     setTimeout(function() {
                         _this.scrollHorizontalAuto();
+                        
+                        if(this.afterScrollHandler) {
+							setTimeout(function() {
+								_this.afterScrollHandler.call(_this.element);
+							}, 1);
+						}
                     }, 1);
                 }
                 else {
                     setTimeout(function() {
                         _this.scrollBothAuto();
-                    }, 1);
-                }
-            
-                if(this.afterScrollHandler) {
-                    setTimeout(function() {
-                        _this.afterScrollHandler.call(_this.element);
+                        
+                         if(this.afterScrollHandler) {
+							setTimeout(function() {
+								_this.afterScrollHandler.call(_this.element);
+							}, 1);
+						}
                     }, 1);
                 }
             }
@@ -316,7 +357,7 @@
                     this.element.css({top: '0px'});
                     
                     if(this.getDuration() < 500)
-					   this.element.stop().animate({scrollTop: this.originalScrollTop + Math.abs(deltaY)}, 350);
+					   this.element.stop().animate({scrollTop: this.originalScrollTop + Math.abs(deltaY)}, 500, 'easeOutCirc');
 				}
 				else {
                     if(this.getDuration() < 500) {
@@ -340,7 +381,7 @@
                         if(this.bounceVertical)
                             this.element.stop().animate({top: '0px'}, 250, 'easeOutBounce');
                         else 
-                            this.element.stop().animate({top: '0px'});
+                            this.element.stop().animate({top: '0px'}, 200);
                     }
 				}
 			}
@@ -363,21 +404,21 @@
                                         if(_this.bounceVertical)
                                             _this.element.stop().animate({top: '0px'}, 250, 'easeOutBounce');
                                         else 
-                                            _this.element.stop().animate({top: '0px'});
+                                            _this.element.stop().animate({top: '0px'}, 200);
                                     });
                                 }
                                 else {
                                     if(this.bounceVertical)
                                         this.element.stop().animate({top: '0px'}, 250, 'easeOutBounce');
                                     else 
-                                        this.element.stop().animate({top: '0px'});
+                                        this.element.stop().animate({top: '0px'}, 200);
                                 }
                         }
                         else {
                             if(this.bounceVertical)
                                 this.element.stop().animate({top: '0px'}, 250, 'easeOutBounce');
                             else 
-                                this.element.stop().animate({top: '0px'});
+                                this.element.stop().animate({top: '0px'}, 200);
                         }
                     }
 				}
@@ -450,11 +491,11 @@
                     this.element.css({left: '0px'});
                     
                     if(this.getDuration() < 500)
-					   this.element.animate({scrollLeft: this.originalScrollLeft + Math.abs(deltaX)}, 250);
+					   this.element.stop().animate({scrollLeft: this.originalScrollLeft + Math.abs(deltaX)}, 500, 'easeOutCirc');
 				}
 				else {
                     if(this.getDuration() < 500) {
-                        this.element.animate({scrollLeft: scrollLeft},250, 'easeOutCirc', function() {
+                        this.element.stop().animate({scrollLeft: scrollLeft}, 500, 'easeOutCirc', function() {
                             if(_this.bottomReachedHandler) {
                                 setTimeout(function() {
                                     _this.bottomReachedHandler.call(_this.element, 'right');
@@ -470,10 +511,12 @@
                         }
                     }
                     
-                    if(this.bounceHorizontal)
-                        this.element.animate({left: '0px'}, 250, 'easeOutBounce');
-                    else 
-                        this.element.animate({left: '0px'});
+                    if(this.element.position().left < 0) {
+                    	if(this.bounceHorizontal)
+                        	this.element.stop().animate({left: '0px'}, 250, 'easeOutBounce');
+                    	else 
+                        	this.element.stop().animate({left: '0px'}, 200);
+                    }
 				}
 			}
 			else if(this.deltaDirection.x > 0)
@@ -482,33 +525,35 @@
                     this.element.css({left: '0px'});
                     
                     if(this.getDuration() < 500)
-					   this.element.animate({scrollLeft: this.originalScrollLeft - deltaX}, 250, 'easeOutCirc');
+					   this.element.stop().animate({scrollLeft: this.originalScrollLeft - deltaX}, 500, 'easeOutCirc');
 				}
 				else {
                     if(this.getDuration() < 500)
-                        this.element.animate({scrollLeft: 0}, 350);
+                        this.element.stop().animate({scrollLeft: 0}, 500, 'easeOutCirce');
                     
-                    if(this.pullToRefresh) {
-                        if(this.element.position().left >= this.pullToRefreshThreshold) {
-                            this.pullToRefresh.call(this, function() {
-                                if(_this.bounceHorizontal)
-                                    _this.element.animate({left: '0px'}, 250, 'easeOutBounce');
-                                else 
-                                    _this.element.animate({left: '0px'});
-                            });
-                        }
-                        else {
-                            if(this.bounceHorizontal)
-                                this.element.animate({left: '0px'}, 250, 'easeOutBounce');
-                            else 
-                                this.element.animate({left: '0px'});
-                        }
-                    }
-                    else {
-                        if(this.bounceHorizontal)
-                            this.element.animate({left: '0px'}, 'slow', 'easeOutBounce');
-                        else 
-                            this.element.animate({left: '0px'});
+                    if(this.element.position().left > 0) {
+						if(this.pullToRefresh) {
+							if(this.element.position().left >= this.pullToRefreshThreshold) {
+								this.pullToRefresh.call(this, function() {
+									if(_this.bounceHorizontal)
+										_this.stop().element.animate({left: '0px'}, 250, 'easeOutBounce');
+									else 
+										_this.stop().element.animate({left: '0px'}, 200);
+								});
+							}
+							else {
+								if(this.bounceHorizontal)
+									this.element.stop().animate({left: '0px'}, 250, 'easeOutBounce');
+								else 
+									this.element.stop().animate({left: '0px'}, 200);
+							}
+						}
+						else {
+							if(this.bounceHorizontal)
+								this.element.stop().animate({left: '0px'}, 250, 'easeOutBounce');
+							else 
+								this.element.stop().animate({left: '0px'}, 200);
+						}
                     }
 				}
 			}
@@ -576,8 +621,13 @@
                 }
             }
           
-            this.element.animate({scrollLeft: finalLeft, scrollTop: finalTop}, 250, 'easeOutCirc');
-            this.element.animate({top: '0px', left: '0px'}, 250, 'easeOutBounce');
+            this.element.stop().animate({scrollLeft: finalLeft, scrollTop: finalTop}, 500, 'easeOutCirc');
+            
+            var position = this.element.position();
+            
+            if(position.left > 0 || position.left < 0 || position.top < 0 || position.top > 0) {
+            	this.element.stop().animate({top: '0px', left: '0px'}, 250, 'easeOutBounce');
+            }
       };
 	  
 	  this.getDistance = function() {

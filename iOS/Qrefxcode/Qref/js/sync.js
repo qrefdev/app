@@ -251,6 +251,8 @@ function SyncProcessor() {
     };*/
     
 	this.sendChecklistToServer = function(item, callback) {
+		item.version += 0.01;
+		
 		var request = {
 			manufacturer: item.manufacturer._id,
 			model: item.model._id,

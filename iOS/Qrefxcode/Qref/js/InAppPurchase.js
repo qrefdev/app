@@ -8,7 +8,7 @@ function PurchaseFailed() {
 function InvalidProduct() {
    	AppObserver.set('loading', false);
     
-    var dialog = new Dialog('#infobox', 'You cannot purchase a non-existant product silly!');
+    var dialog = new Dialog('#infobox', 'In-app purchase setup error: You cannot purchase a non-existant product.');
     dialog.show();
 }
 

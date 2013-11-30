@@ -169,6 +169,12 @@ function DataLoaded() {
 	//AppObserver.set('loading', false);
 	AppObserver.load();
 	Navigation.go("dashboard");
+    
+    $('input').tap(function(e) {
+    	e.stopPropagation();
+    	
+    	$(this).focus();
+    });
 }
 
 /* Whirlpool Hashing Function v3.0 ~ Sean Catchpole - Copyright 2009 Public Domain */

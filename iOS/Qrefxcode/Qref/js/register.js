@@ -37,7 +37,40 @@ function Register() {
                 if(response.success == true)
                 {
                     var dialog = new Dialog("#infobox", "Registration Successful!", function() {
-                        Navigation.go("signin");
+                        $.ajax({
+							type: "post",
+							data: register,
+							dataType: "json",
+							url: host + "services/rpc/auth/login",
+							success: function(data) {
+								var response = data;
+				
+								if(response.success == true)
+								{
+									AppObserver.set('token', response.returnValue.token);
+									AppObserver.set('email', register.userName);
+
+							   		window.location.href = "qref://setUser=" + register.userName + "&setToken=" + response.returnValue.token + '&setUserId=' + response.returnValue.user;
+			   
+									AppObserver.set('loading', true);
+									setTimeout(function() {
+										  window.location.href = "qref://setLogin=" + register.userName + "(QREFUPS)" + response.returnValue.user + "(QREFUPS)" + Whirlpool(register.password);
+											setTimeout(function() {
+												window.location.href = "qref://hasChecklists";
+											}, 1000);
+									}, 1000);
+								}
+								else
+								{
+                                    AppObserver.set('loading', false);
+									Navigation.go('signin');
+								}	
+							},
+							error: function() {
+                                AppObserver.set('loading', false);
+								Navigation.go('signin');
+							}
+						});
                     });
                     
                     dialog.show();

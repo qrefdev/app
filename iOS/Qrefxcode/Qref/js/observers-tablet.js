@@ -437,7 +437,17 @@ var MenuObserver = new zimoko.Observable({
         e.preventDefault();
 
         if (AppObserver.navHash != '#' + ele.attr('data-link')) {
-            Navigation.go('#' + ele.attr('data-link'));
+        	if (ele.attr('data-link') == 'dashboard') {
+            	if(AppObserver.token && checklists.length > 0) {
+            		Navigation.go('#' + ele.attr('data-link'));
+            	}
+            	else {
+            		Navigation.go('#marketing');
+            	}
+			}
+            else {
+            	Navigation.go('#' + ele.attr('data-link'));
+            }
         }
 
         MenuObserver.close();
@@ -450,39 +460,39 @@ var MenuObserver = new zimoko.Observable({
         window.location = 'http://my.qref.com/help';
         this.close();
     },
-    /*downloadTap: function(element, e, data) {
-     if(AppObserver.navHash != '#downloads') {
-     AppObserver.set('loading', true);
-     StoreObserver.set('displayRequestModel', false);
-     if(reachability) {
-     AppObserver.getAllProducts(function(success, items) {
-     AppObserver.set('storeHasItems', success);
+    downloadTap: function(element, e, data) {
+    	if(AppObserver.navHash != '#downloads') {
+			AppObserver.set('loading', true);
+			StoreObserver.set('displayRequestModel', false);
+			if(reachability) {
+				AppObserver.getAllProducts(function(success, items) {
+					AppObserver.set('storeHasItems', success);
 
-     if(success) {
-     AppObserver.set('loading', false);
-     Navigation.go('#downloads');
-     }
-     else {
-     AppObserver.set('loading', false);
-     if(AppObserver.token) {
-     var dialog = new Dialog('#infobox', 'Cannot connect to the Qref Store, or there are no items currently available');
-     dialog.show();
-     }
-     else {
-     var dialog = new Dialog('#infobox', 'You must be signed in to access the store');
-     dialog.show();
-     }
-     }
-     });
-     }
-     else {
-     var dialog = new Dialog('#infobox', 'An internet connection is required to access the store');
-     dialog.show();
-     }
-     }
+					if(success) {
+						AppObserver.set('loading', false);
+						Navigation.go('#downloads');
+					}
+					else {
+						AppObserver.set('loading', false);
+						if(AppObserver.token) {
+							var dialog = new Dialog('#infobox', 'Cannot connect to the Qref Store, or there are no items currently available');
+							dialog.show();
+						}
+						else {
+							var dialog = new Dialog('#infobox', 'You must be signed in to access the store');
+							dialog.show();
+						}
+					}
+				});
+			}
+			else {
+				var dialog = new Dialog('#infobox', 'An internet connection is required to access the store');
+				dialog.show();
+			}
+		}
 
-     MenuObserver.close();
-     },*/
+		MenuObserver.close();
+     },
     checkingTap:function (element, e, data) {
         var checkbox = $(element).find('input').get(0);
 
@@ -1897,56 +1907,61 @@ var ChecklistObserver = new zimoko.Observable({
         var landing = checklist.landing;
         var emergencies = checklist.emergencies;
 
-        ChecklistObserver.set('showSections', false);
+        var dialog = new ConfirmationDialog("#clearchecks", function (result) {
+            if (result) {
+				ChecklistObserver.set('showSections', false);
 
-        setTimeout(function () {
-            for (var i = 0; i < ChecklistObserver.items.length; i++) {
-                ChecklistObserver.items.elementAt(i).set('isChecked', false);
-            }
-        }, 100);
+				setTimeout(function () {
+					for (var i = 0; i < ChecklistObserver.items.length; i++) {
+						ChecklistObserver.items.elementAt(i).set('isChecked', false);
+					}
+				}, 100);
 
-        setTimeout(function () {
-            for (var i = 0; i < preflight.length; i++) {
-                var section = preflight[i];
-                var items = section.items;
+				setTimeout(function () {
+					for (var i = 0; i < preflight.length; i++) {
+						var section = preflight[i];
+						var items = section.items;
 
-                for (var j = 0; j < items.length; j++) {
-                    items[j].isChecked = false;
-                }
-            }
+						for (var j = 0; j < items.length; j++) {
+							items[j].isChecked = false;
+						}
+					}
 
-            for (var i = 0; i < takeoff.length; i++) {
-                var section = takeoff[i];
-                var items = section.items;
+					for (var i = 0; i < takeoff.length; i++) {
+						var section = takeoff[i];
+						var items = section.items;
 
-                for (var j = 0; j < items.length; j++) {
-                    items[j].isChecked = false;
-                }
-            }
+						for (var j = 0; j < items.length; j++) {
+							items[j].isChecked = false;
+						}
+					}
 
-            for (var i = 0; i < landing.length; i++) {
-                var section = landing[i];
-                var items = section.items;
+					for (var i = 0; i < landing.length; i++) {
+						var section = landing[i];
+						var items = section.items;
 
-                for (var j = 0; j < items.length; j++) {
-                    items[j].isChecked = false;
-                }
-            }
+						for (var j = 0; j < items.length; j++) {
+							items[j].isChecked = false;
+						}
+					}
 
-            for (var i = 0; i < emergencies.length; i++) {
-                var category = emergencies[i].items;
+					for (var i = 0; i < emergencies.length; i++) {
+						var category = emergencies[i].items;
 
-                for (var j = 0; j < category.length; j++) {
-                    var section = category[j].items;
+						for (var j = 0; j < category.length; j++) {
+							var section = category[j].items;
 
-                    for (s = 0; s < section.length; s++) {
-                        section[s].isChecked = false;
-                    }
-                }
-            }
+							for (s = 0; s < section.length; s++) {
+								section[s].isChecked = false;
+							}
+						}
+					}
 
-        }, 100);
+				}, 100);
+			}
+		});
 
+        dialog.show();
     },
     checkTap:function (element, e, data) {
                                               e.stopPropagation();
