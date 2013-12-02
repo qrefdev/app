@@ -127,8 +127,7 @@ b, strong {
 .logoSection {
     color: @colorTopText;
     background-color: @colorSectionnav;
-    -webkit-box-shadow: 0 5px 10px @colorShadowOpaque;
-    box-shadow: 0 5px 10px @colorShadowOpaque;
+    .box-shadow(0 5px 10px @colorShadowOpaque);
     border-bottom: 1px solid @colorSectionnavBorder;
 
     p {
@@ -182,7 +181,7 @@ button,
     cursor: pointer;
 
     &.active i {
-        -webkit-transform:translate(8px,0); // PRESS STATE
+        -webkit-transform: translate(8px, 0); // PRESS STATE
     }
 }
 
@@ -307,7 +306,7 @@ button,
         li {
             color: @colorDashText;
             border-top: 1px solid @colorChecklistBorder;
-//            border-bottom: 1px solid @colorChecklistBorder2;
+            //            border-bottom: 1px solid @colorChecklistBorder2;
 
             ul li {
                 color: @colorDashLink;
@@ -319,15 +318,6 @@ button,
                     margin: 0;
                 }
             }
-
-            .delete {
-                padding: 14px 12px;
-                font-family: MyriadBold, Helvetica;
-                background-color: @colorRed1;
-                font-size: 16px;
-                color: white;
-            }
-
         }
 
         .active {
@@ -336,52 +326,17 @@ button,
     }
 }
 
+// Edit tools
 .dashboard-planes-selector,
 .checklist {
-    .vertical li .handle {
-        background-color: @colorHandle1;
+    .handle {
+        .gradient(@colorHandle1, @colorHandle2);
         color: @colorHandleItem;
+        .box-shadow(0 0px 10px @colorShadowOpaque);
         border-radius: 25px 0px 0px 25px;
         -webkit-border-radius: 25px 0px 0px 25px;
         border-right: none;
         padding: 14px 5px 5px 10px;
-    }
-}
-
-.downloads .vertical li {
-    padding-bottom: 8px;
-}
-
-// Checklist
-.checklist .vertical li {
-    color: @colorCheck;
-    border-top: 1px solid @colorChecklistBorder;
-//    border-bottom: 1px solid @colorChecklistBorder2;
-    background-color: @colorCheckBackground;
-
-    .check {
-        color: @colorCheck;
-        font-family: Myriad, Helvetica;
-        font-size: 24px;
-
-        &.nextSection {
-            font-size: 20px;
-            color: @colorResponse;
-            text-align: center;
-            width: auto;
-            right: 15px;
-            float:right;
-            border: 1px solid #cdd0d6;
-            border-radius: 5px;
-            margin-bottom:10px;
-            padding: 10px 17px 8px;
-            line-height:20px;
-        }
-    }
-
-    .response {
-        color: @colorResponse;
-        font-family: Myriad, Helvetica;
     }
 
     .delete {
@@ -401,6 +356,43 @@ button,
         -webkit-border-radius: 5px;
         font-size: 16px;
     }
+}
+
+.downloads .vertical li {
+    padding-bottom: 8px;
+}
+
+// Checklist
+.checklist .vertical li {
+    color: @colorCheck;
+    border-top: 1px solid @colorChecklistBorder;
+    //    border-bottom: 1px solid @colorChecklistBorder2;
+    background-color: @colorCheckBackground;
+
+    .check {
+        color: @colorCheck;
+        font-family: Myriad, Helvetica;
+        font-size: 24px;
+
+        &.nextSection {
+            font-size: 20px;
+            color: @colorResponse;
+            text-align: center;
+            width: auto;
+            right: 15px;
+            float: right;
+            border: 1px solid #cdd0d6;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            padding: 10px 17px 8px;
+            line-height: 20px;
+        }
+    }
+
+    .response {
+        color: @colorResponse;
+        font-family: Myriad, Helvetica;
+    }
 
     .active {
         .gradient(@colorBlue2, @colorBlue3);
@@ -414,8 +406,8 @@ button,
     border: 1px solid @colorCheckmarkBorder;
 
     .checker .icon {
-       color: @colorBlue1;
-   }
+        color: @colorBlue1;
+    }
 }
 
 .shadow {
@@ -591,7 +583,7 @@ form label {
     color: @colorAccent;
 
     .icon {
-        @colorSecondary;
+    @colorSecondary;
     }
 }
 
@@ -832,7 +824,6 @@ form label {
     color: @colorGetStarted;
 }
 
-
 #marketing .wrap {
     background-color: #252a31;
     background-image: url(../images/marketing/accent.png), url(../images/marketing/background.png);
@@ -979,7 +970,7 @@ form label {
         }
 
         &.active {
-            -webkit-transform:scale(.9,.9); // PRESS STATE
+            -webkit-transform: scale(.9, .9); // PRESS STATE
         }
     }
 
@@ -1039,4 +1030,3 @@ form label {
         }
     }
 }
- 

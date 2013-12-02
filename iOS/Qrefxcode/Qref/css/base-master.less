@@ -672,6 +672,51 @@ html, body {
     }
 }
 
+
+// Edit tools
+.dashboard-planes-selector,
+.checklist {
+    .editTools {
+        position: absolute;
+        right: 0px;
+        bottom: 0px;
+        top: 0px;
+        width: 80px;
+        z-index: 9999;
+
+        .handle {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            height: 24px;
+            width: 35px;
+            margin-top: -21px;
+            display: none;
+            z-index: 9999;
+        }
+
+        .add {
+            position: absolute;
+            right: 55px;
+            top: 50%;
+            height: 18px;
+            width: 20px;
+            margin-top:-14px;
+            text-align:center;
+            display: none;
+        }
+    }
+
+    .add-single {
+        position: absolute;
+        left: 10px;
+        top: 13px;
+        height: 18px;
+        width: 20px;
+        text-align:center;
+    }
+}
+
 .dashboard-planes-selector {
     .plane-icon {
         position: absolute;
@@ -707,26 +752,6 @@ html, body {
         .delete {
             display: none;
         }
-
-        .editTools {
-            position: absolute;
-            right: 0px;
-            bottom: 0px;
-            top: 0px;
-            width: 80px;
-            z-index: 9999;
-
-            .handle {
-                position: absolute;
-                right: 0;
-                top: 50%;
-                height: 24px;
-                width: 35px;
-                margin-top: -21px;
-                display: none;
-                z-index: 9999;
-            }
-        }
     }
 }
 
@@ -752,93 +777,63 @@ html, body {
     top: 0px;
     height: 100%;
     overflow: auto;
-}
 
-.vertical {
-    &:last-child li:last-child {
-        margin-bottom: 15px;
-    }
-
-    li {
-        overflow: hidden;
-
-        .holder {
-            float: left;
-            position: relative;
-            margin-top: 9px;
-            margin-left: 10px;
-            margin-bottom: 1px;
-            width: 98%;
-            min-height: 35px;
+    .vertical {
+        &:last-child li:last-child {
+            margin-bottom: 15px;
         }
 
-        .check {
-            position: relative;
-            width: auto;
-        }
+        li {
+            overflow: hidden;
 
-        .response {
-            margin-top: 1px;
-            margin-bottom: 6px;
-            position: relative;
-            width: auto;
-            text-transform: uppercase;
-            font-size: 16px;
-        }
+            .holder {
+                float: left;
+                position: relative;
+                margin-top: 9px;
+                margin-left: 10px;
+                margin-bottom: 1px;
+                width: 98%;
+                min-height: 35px;
+            }
 
-        .delete {
-            position: absolute;
-            left: 0px;
-            bottom: 0px;
-            top: 0px;
-            width: 40px;
-            display: none;
-            z-index: 9999;
+            .check {
+                position: relative;
+                width: auto;
+            }
 
-            .deleteLabel {
+            .response {
+                margin-top: 1px;
+                margin-bottom: 6px;
+                position: relative;
+                width: auto;
+                text-transform: uppercase;
+                font-size: 16px;
+            }
+
+            .delete {
                 position: absolute;
                 left: 0px;
-                right: 0px;
-                top: 50%;
-                height: 25px;
-                line-height: 25px;
-                margin: -12px 0 0 0;
-                text-align: center;
-            }
-        }
-
-        .editTools {
-            position: absolute;
-            right: 0px;
-            bottom: 0px;
-            top: 0px;
-            width: 80px;
-            z-index: 9999;
-
-            .handle {
-                position: absolute;
-                right: 0;
-                top: 50%;
-                height: 24px;
-                width: 35px;
-                margin-top: -21px;
+                bottom: 0px;
+                top: 0px;
+                width: 40px;
                 display: none;
                 z-index: 9999;
-            }
 
-            .add {
-                position: absolute;
-                right: 55px;
-                top: 50%;
-                height: 18px;
-                width: 20px;
-                margin-top:-13px;
-                text-align:center;
-                display: none;
+                .deleteLabel {
+                    position: absolute;
+                    left: 0px;
+                    right: 0px;
+                    top: 50%;
+                    height: 25px;
+                    line-height: 25px;
+                    margin: -12px 0 0 0;
+                    text-align: center;
+                }
             }
         }
     }
 }
+
 
 .checklist .vertical li .checkmark,
 .downloads .vertical li .checkmark {

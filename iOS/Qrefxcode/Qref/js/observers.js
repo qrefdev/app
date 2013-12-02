@@ -1643,7 +1643,7 @@ var ChecklistObserver = new zimoko.Observable({
     modified:false,
     sectionName:'',
     list:'preflight',
-    displayNext:false,
+    displayNext:true,
     editing:false,
     canCheck:false,
     nextSectionText:'Next Section',
