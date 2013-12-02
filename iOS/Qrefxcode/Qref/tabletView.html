@@ -194,7 +194,7 @@
                      data-bind="tap: previousSectionTap, visible: (function() { if(list == 'preflight') {return section > 0;} else if(list != 'emergencies') {return true;}})()">
                     <p style="margin: 5px; padding: 8px;"><i class="icon icon-chevron-left"></i></p></div>
                 <div class="nextSection"
-                     data-bind="tap: nextSectionTap, visible: (function() { if(((list == 'preflight' || list == 'takeoff') && checklist && displayNext) || (list == 'landing' && checklist && section < checklist.landing.length - 1 && displayNext)) {return true; } else {return false;}})()">
+                     data-bind="tap: nextSectionTap, visible: (function() { if(((list == 'preflight' || list == 'takeoff') && checklist) || (list == 'landing' && checklist && section < checklist.landing.length - 1)) {return true; } else {return false;}})()">
                     <p style="margin: 5px; padding: 8px;"><i class="icon icon-chevron-right"></i></p></div>
             </div>
             <div class="shadowTop">
@@ -435,7 +435,7 @@
             <div class="topConversion" data-bind="html: topType">MPH</div>
             <input id="convertTop" type="number" class="textbox"
                    data-bind="value: topConversionValue, keyup: conversionTopKeyUp, keydown: conversionTopKeyDown"
-                   style="" value="0"/>
+                   value="0"/>
         </div>
         <div class="row">
             <div class="bottomConversion" data-bind="html: bottomType">KTS</div>

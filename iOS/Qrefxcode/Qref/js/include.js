@@ -170,9 +170,8 @@ function DataLoaded() {
 	AppObserver.load();
 	Navigation.go("dashboard");
     
-    $('input').tap(function(e) {
-    	e.stopPropagation();
-    	
+    $('input[type="text"],input[type="number"],input[type="email"],input[type="password"]').tap(function(e) {
+        e.stopPropagation();
     	$(this).focus();
     });
 }

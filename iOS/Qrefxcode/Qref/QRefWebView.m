@@ -431,6 +431,7 @@
                 else if([key isEqualToString:@"clearUser"])
                 {
                     [self->preferences setValue:@"" forKey:@"qrefUser"];
+                    [self->preferences setValue:@"" forKey:@"qrefUserId"];
                     [self->preferences setValue:@"" forKey:@"Checklists"];
                 }
                 else if([key isEqualToString:@"purchase"])
@@ -746,7 +747,7 @@
     NSUserDefaults * pref = [NSUserDefaults standardUserDefaults];
     NSString *user = [pref stringForKey:@"qrefUserId"];
     
-    if(user != nil) {
+    if(user != nil && user.length > 0) {
         
         NSMutableArray *ids = [NSMutableArray arrayWithArray:[pref arrayForKey:[user stringByAppendingString:@"userChecklistIds"]]];
         
@@ -790,7 +791,7 @@
     NSUserDefaults * pref = [NSUserDefaults standardUserDefaults];
     NSString *user = [pref stringForKey:@"qrefUserId"];
     
-    if(user != nil) {
+    if(user != nil && user.length > 0) {
         
         NSMutableArray *ids = [NSMutableArray arrayWithArray:[pref arrayForKey:[user stringByAppendingString:@"userChecklistIds"]]];
         

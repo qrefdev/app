@@ -1643,7 +1643,7 @@ var ChecklistObserver = new zimoko.Observable({
     modified:false,
     sectionName:'',
     list:'preflight',
-    displayNext:true,
+    displayNext:false,
     editing:false,
     canCheck:false,
     nextSectionText:'Next Section',
@@ -1881,7 +1881,7 @@ var ChecklistObserver = new zimoko.Observable({
     		checklistArea.append(template);
     	}
                                               
-    	if(this.items.length == 0)
+    	if(this.items.length == 0 && this.editing)
     		$('.checklist .add-single').show();
     	else
     		$('.checklist .add-single').hide();
@@ -2089,6 +2089,8 @@ var ChecklistObserver = new zimoko.Observable({
 
         setTimeout(function () {
             ChecklistObserver.set('editing', !ChecklistObserver.editing);
+                   
+            if(ChecklistObserver.editing && ChecklistObserver.items.length == 0) $('.checklist .add-single').show();
         }, 60);
 
         ChecklistObserver.set('showSections', false);
