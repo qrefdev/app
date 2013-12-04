@@ -1643,7 +1643,7 @@ var ChecklistObserver = new zimoko.Observable({
     modified:false,
     sectionName:'',
     list:'preflight',
-    displayNext:true,
+    displayNext:false,
     editing:false,
     canCheck:false,
     nextSectionText:'Next Section',
@@ -1684,7 +1684,14 @@ var ChecklistObserver = new zimoko.Observable({
                 this.itemsDataSource.data(this.checklist[this.list][this.section].items);
 
                 this.render();
-
+                                              
+                if (this.itemsDataSource.page() < this.itemsDataSource.pages()) {
+                        this.set('displayNext', false);
+                }
+                else {
+                        this.set('displayNext', true);
+                }
+                                              
                 this.set('sectionName', this.checklist[this.list][this.section].name);
 
                 EmergenciesObserver.set('emergencies', this.checklist.emergencies.toObservableObjects());
@@ -1780,6 +1787,13 @@ var ChecklistObserver = new zimoko.Observable({
                 }
                 
                 this.render();
+            }
+                                              
+            if (this.itemsDataSource.page() < this.itemsDataSource.pages()) {
+                this.set('displayNext', false);
+            }
+            else {
+                this.set('displayNext', true);
             }
 
             $('.scrollable').stop().scrollTop(0);
