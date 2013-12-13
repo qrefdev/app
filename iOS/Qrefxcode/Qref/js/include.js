@@ -30,22 +30,23 @@ $(document).ready(function() {
 	ChecklistObserver.attach('#checklist');
 	DashboardObserver.attach('#dashboard');
     MarketingObserver.attach('#marketing');
+    HelpObserver.attach('#help');
 	AppObserver.attach('body');
 	
-	window.addEventListener("touchmove", function(e) {
+	/*window.addEventListener("touchmove", function(e) {
 			e.preventDefault();
-	}, true);
+	}, true);*/
 	
 	window.location.href = "qref://onload";
     //DataLoaded();
 });
 
 function keyboardShown(keyboardHeight, viewHeight) {
-	$(".flyover").css({bottom: (keyboardHeight + 8) + "px"});
+	$(".flyover").css({bottom:keyboardHeight + "px"});
 }
 
 function keyboardHidden() {
-	$(".flyover").css({bottom: "8px"});
+	$(".flyover").css({bottom: "82px"});
 }
 
 function AppendChecklist(data) {

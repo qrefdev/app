@@ -77,7 +77,7 @@
             </div>
         </div>-->
         <div class="dashcontent">
-            <div class="grid dashboard-planes-selector scrollable">
+            <div class="grid dashboard-planes-selector scrollable" style="overflow-y: scroll; overflow-x:hidden; -webkit-overflow-scrolling: touch;">
                 <div class="container">
                     <div class="getStarted" data-bind="visible: (token && showHelp)">
                    		To get started, tap <span>Download</span> below and select a checklist.
@@ -126,7 +126,7 @@
             </div>
         </div>
         <div class="dashcontent" style="z-index: 99999;" data-bind="visible: !token">
-            <div class="grid dashboard-planes-selector scrollable">
+            <div class="grid dashboard-planes-selector scrollable" style="overflow-y: scroll; overflow-x:hidden; -webkit-overflow-scrolling: touch;">
                 <div class="container">
                     <ul class="vertical">
                         <li data-link="signin" data-bind="tap: navTap">
@@ -200,7 +200,7 @@
             <div class="shadowTop">
             </div>
             <div style="position: absolute; top: 46px; left: 0px; bottom: 0px; right: 0px; width: 100%">
-                <div class="grid checklist scrollable">
+                <div class="grid checklist scrollable" style="overflow-y: scroll; overflow-x:hidden; -webkit-overflow-scrolling: touch;">
                     <div class="container">
                         <ul id="checklist-items" class="vertical">
                             <li class="list-item" data-bind="tap: parent.itemTap, swipeRight: parent.itemSwipeRight, swipeLeft: parent.itemSwipeRight">
@@ -235,14 +235,12 @@
             <div class="shadow">
             </div>
         </div>
-        <div class="flyover" data-bind="slideVisible: showSections">
-            <div class="grid check-sections scrollable">
-                <div class="container inside">
+        <div class="flyover" data-bind="slideVisible: showSections" style="overflow-y: scroll; overflow-x:hidden; -webkit-overflow-scrolling: touch;">
+            <div class="grid">
                     <ul id="check-sections-items" class="vertical" data-bind="foreach: sections">
                         <li data-bind="tap: parent.sectionTap, attr: {'class': (function() { if(index == parent.section) return 'active'; else return ''; })()}">
                             <p data-bind="html: name"></p></li>
                     </ul>
-                </div>
             </div>
         </div>
     </div>
@@ -262,7 +260,7 @@
             </div>
         </div>
         <div class="content">
-            <div class="grid emergencies scrollable">
+            <div class="grid emergencies scrollable" style="overflow-y: scroll; overflow-x:hidden; -webkit-overflow-scrolling: touch;">
                 <div class="container">
                     <ul id="emergency-items" class="full" data-bind="foreach: emergencies">
                         <li data-link="checklist" data-bind="tap: parent.itemTap">
@@ -315,7 +313,7 @@
                 </div>
             </div>
             <div style="position: absolute; top: 46px; left: 0px; bottom: 0px; right: 0px; width: 100%">
-                <div class="grid emergencies-sections scrollable">
+                <div class="grid emergencies-sections scrollable" style="overflow-y: scroll; overflow-x:hidden; -webkit-overflow-scrolling: touch;">
                     <div class="container">
                         <ul class="vertical" data-bind="foreach: sections">
                             <li data-bind="tap: parent.sectionTap"><p data-bind="html: name"></p></li>
@@ -342,7 +340,7 @@
             </div>
         </div>
         <div class="content" style="bottom: 0px;">
-            <div class="grid downloads scrollable">
+            <div class="grid downloads scrollable" style="overflow-y: scroll; overflow-x:hidden; -webkit-overflow-scrolling: touch;">
                 <div class="container">
                     <ul id="downloads-items" class="vertical" data-bind="foreach: items">
                         <li data-bind="attr: {'data-id': _id}, tap: parent.itemTap">
@@ -446,7 +444,7 @@
     </div>
     <div class="flyover" data-bind="slideVisible: showConversions">
         <div class="grid available-conversions">
-            <div class="container inside scrollable">
+            <div class="container inside scrollable" style="overflow-y: scroll; overflow-x:hidden; -webkit-overflow-scrolling: touch;">
                 <ul id="conversion-items" class="vertical">
                     <li data-bind="tap: conversionTap" class="active" data-multiplier="0.868976242"
                         data-inverse="1.150779448" data-top="MPH" data-bottom="KTS" data-value="0"><p>MPH <i
@@ -469,6 +467,25 @@
                 </ul>
             </div>
         </div>
+    </div>
+</article>
+
+<article id="help"
+    class="page">
+    <div class="wrap">
+        <div class="topbar">
+            <span>Help</span>
+            
+            <div class="item-large back" data-bind="tap: backTap">
+                <p><i class="icon icon-double-angle-left"></i></p>
+            </div>
+            <div class="item-large topmenu" data-bind="tap: menuTap">
+                <p><i class="icon icon-th-list"></i></p>
+            </div>
+        </div>
+    </div>
+    <div class="content" style="bottom: 0px;">
+        <iframe style="top: 0px; left: 0px; width: 100%; border: 0px; height: 100%; right: 0px; bottom: 0px;" src="help/index.html"></iframe>
     </div>
 </article>
 
@@ -552,7 +569,7 @@
             </div>
         </div>
         <div id="productDetailsListing" data-bind="with: product" class="content" style="bottom: 0px;">
-            <div class="content scrollable" style="top: 0px; bottom: 65px;">
+            <div class="content scrollable" style="top: 0px; bottom: 65px; overflow-y: scroll; overflow-x:hidden; -webkit-overflow-scrolling: touch;">
                 <div class="container" style="padding-bottom: 10px;">
                     <div class="row detailsHeading">
                         <div data-bind="html: manufacturer.name + ' ' + model.name"></div>

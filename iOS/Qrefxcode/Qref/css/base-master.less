@@ -750,7 +750,24 @@ html, body {
         }
 
         .delete {
+            position: absolute;
+            left: 0px;
+            bottom: 0px;
+            top: 0px;
+            width: 40px;
             display: none;
+            z-index: 9999;
+
+            .deleteLabel {
+                position: absolute;
+                left: 0px;
+                right: 0px;
+                top: 50%;
+                height: 25px;
+                line-height: 25px;
+                margin: -12px 0 0 0;
+                text-align: center;
+            }
         }
     }
 }
@@ -1203,21 +1220,17 @@ form label {
 /** iOS HTML Recreation Elements **/
 .flyover {
     position: absolute;
-    top: 0px;
+    top: 82px;
     left: 0px;
     right: 0px;
     width: 100%;
-    height: auto;
     display: none;
     overflow: auto;
     z-index: 802;
-    margin-top: 82px;
-    overflow: auto;
-    bottom: 0;
+    bottom: 85px;
 
     .inside {
         position: relative;
-        overflow: auto;
         width: 100%;
         z-index: 999999;
     }

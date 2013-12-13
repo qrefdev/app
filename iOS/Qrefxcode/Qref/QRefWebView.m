@@ -121,6 +121,8 @@
     [self.webView setBackgroundColor:[UIColor clearColor]];
     //[self setView:self.webView];
     
+    [[self.webView.subviews objectAtIndex:0] setBounces:NO];
+    
     [self.view addSubview:self->imageView];
     
     self->preferences = [NSUserDefaults standardUserDefaults];

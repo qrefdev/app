@@ -1,5 +1,20 @@
 //602 - Removed Sync from all editing, and instead just lets sync auto sync and let the user sync.
 
+var HelpObserver = new zimoko.Observable({
+    backTap:function (element, e, data) {
+        e.stopPropagation();
+        e.preventDefault();
+    
+        Navigation.back();
+    },
+    menuTap: function(element,e, data) {
+        e.stopPropagation();
+        e.preventDefault();
+
+        MenuObserver.toggle();
+    }
+});
+
 var MarketingObserver = new zimoko.Observable({
 	signupTap: function(element, e, data) {
 		e.stopPropagation();
@@ -457,7 +472,7 @@ var MenuObserver = new zimoko.Observable({
         this.close();
     },
     helpTap:function (element, e, data) {
-        window.location = 'http://my.qref.com/help';
+        Navigation.go('#help');
         this.close();
     },
     downloadTap: function(element, e, data) {
@@ -1092,7 +1107,7 @@ var AppObserver = new zimoko.Observable({
         $(window).tap(function (e) {
                       e.stopPropagation();
                       e.preventDefault();
-            ChecklistObserver.set('showSections', false);
+            //ChecklistObserver.set('showSections', false);
         });
 
         /*
@@ -1113,7 +1128,11 @@ var AppObserver = new zimoko.Observable({
             $('input').blur();
         });
 
-        $(".scrollable").touchScroll({
+        $('.scrollable').bind('touchmove', function(e) {
+            e.stopPropagation();
+        })
+                                        
+        /*$(".scrollable").touchScroll({
             direction:"vertical",
             threshold:25,
             onBeforeScroll:function (e) {
@@ -1124,7 +1143,7 @@ var AppObserver = new zimoko.Observable({
                     $(this).touchScroll("enable");
                 }
             }
-        });
+        });*/
 
         $(".scrollable").scrollbar(function () {
             if (this.hasClass('dashboard-planes-selector')) {

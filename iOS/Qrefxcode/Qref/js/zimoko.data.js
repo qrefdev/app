@@ -2152,11 +2152,15 @@
          
                  if(val) {
                     element.css({'top': '-100%', 'display': 'block'});
-                    element.stop().animate({'top': '0%'}, 300);
+                    element.stop().animate({'top': '82px'}, 300, function() {
+                        element.css('-webkit-overflow-scrolling', '');
+                        element.css('-webkit-overflow-scrolling', 'touch');
+                    });
                  }
                  else {
                     element.stop().animate({'top': '-100%'}, 300, function() {
-                        element.hide();
+                        element.css('-webkit-overflow-scrolling', '');
+                                           element.hide();
                     });
                  }
             },
@@ -2165,16 +2169,21 @@
  
                 if(val) {
                     element.css({'top': '-100%', 'display': 'block'});
-                    element.stop().animate({'top': '0%'}, 300);
+                    element.stop().animate({'top': '82px'}, 300, function() {
+                        element.css('-webkit-overflow-scrolling', '');
+                        element.css('-webkit-overflow-scrolling', 'touch');
+                    });
                  }
                  else {
                     element.stop().animate({'top': '-100%'}, 300, function() {
-                        element.hide();
+                        element.css('-webkit-overflow-scrolling', '');
+                                           element.hide();
                     });
                  }
             },
             remove: function(element, value) {
                 element.stop().animate({'top': '-100%'}, 300, function() {
+                     element.css('-webkit-overflow-scrolling', '');
                                        element.hide();
                 });
             }
