@@ -45,6 +45,7 @@
 		964E9E1317E3B2AE00A68111 /* QrefIpad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 964E9E1017E3B2AE00A68111 /* QrefIpad.storyboard */; };
 		964E9E1417E3B2AE00A68111 /* QrefIphone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 964E9E1117E3B2AE00A68111 /* QrefIphone.storyboard */; };
 		965B232317EBEF30004B5B28 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 965B232217EBEF30004B5B28 /* Images.xcassets */; };
+		96AE457F18635FBB00AF1A9B /* help in Resources */ = {isa = PBXBuildFile; fileRef = 96AE457E18635FBB00AF1A9B /* help */; };
 		96BEE1AD17A2FE2A0093B0CA /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 96BEE1AB17A2FE2A0093B0CA /* Icon-72.png */; };
 		96BEE1AE17A2FE2A0093B0CA /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96BEE1AC17A2FE2A0093B0CA /* Icon-72@2x.png */; };
 /* End PBXBuildFile section */
@@ -103,6 +104,7 @@
 		964E9E1017E3B2AE00A68111 /* QrefIpad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = QrefIpad.storyboard; sourceTree = "<group>"; };
 		964E9E1117E3B2AE00A68111 /* QrefIphone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = QrefIphone.storyboard; sourceTree = "<group>"; };
 		965B232217EBEF30004B5B28 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Qref Aircraft/Images.xcassets"; sourceTree = "<group>"; };
+		96AE457E18635FBB00AF1A9B /* help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = help; sourceTree = "<group>"; };
 		96BEE1AB17A2FE2A0093B0CA /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		96BEE1AC17A2FE2A0093B0CA /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -218,6 +220,7 @@
 			isa = PBXGroup;
 			children = (
 				46E0934E1731A392007ACB9B /* tabletView.html */,
+				96AE457E18635FBB00AF1A9B /* help */,
 				4659C5C81625E851000A68E2 /* css */,
 				4659C5C91625E851000A68E2 /* images */,
 				4659C5CA1625E851000A68E2 /* js */,
@@ -303,6 +306,7 @@
 				46E09353173456DF007ACB9B /* Default@2x.png in Resources */,
 				46E09355173456E4007ACB9B /* Default-568h@2x.png in Resources */,
 				46E09357173456ED007ACB9B /* Default-Portrait~ipad.png in Resources */,
+				96AE457F18635FBB00AF1A9B /* help in Resources */,
 				46E09359173456F9007ACB9B /* Default-Portrait@2x~ipad.png in Resources */,
 				46E0935B173456FF007ACB9B /* Default-Landscape~ipad.png in Resources */,
 				965B232317EBEF30004B5B28 /* Images.xcassets in Resources */,
