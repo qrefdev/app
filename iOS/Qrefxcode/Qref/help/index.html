@@ -1,0 +1,84 @@
+<html><head>
+    <title>Qref</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/fontawesome.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/checkbox.css">
+    <script src="js/jquery.js"></script>
+	
+	<script>
+	$(document).ready(function(){
+		dynamicFaq();
+	});
+	
+	function dynamicFaq(){
+		$('dd').hide();
+		$('dt').bind('click', function(){
+			$(this).toggleClass('open').next().slideToggle();
+		});
+	}
+	</script>
+</head>
+<body class="theme-light">
+
+<!-- Help Screen -->
+    <article class="page">
+    <div class="wrap">
+        <div style="margin: 0px 15px 0 15px;">
+      <h2>Contact Us</h2>
+      <dl>
+        <dt>Want to talk to a person?</dt>
+        <dd>
+          <p>Qref prides ourselves on top-notch customer service. To prove it, we've set up a special phone line and email for you to talk to someone if you need help with this app and can't find your answer below.</p>
+          <p style="font-size: 24px; font-weight: bold; margin: 0;">(682) 422-7733</p>
+          <p style="font-size: 24px; font-weight: bold; margin: 0;"><a href="mailto:help@qref.com?subject=Qref Checklist App Help Request">help@qref.com</a></p>
+          <p>Hours: Monday through Saturday, 9am - 6pm Central Time</p>
+        </dd>
+      </dl>
+
+      <h2>Getting Started</h2>
+      <dl>
+        <dt>No checklist yet?</dt>
+        <dd>
+          <p>No problem. Qref checklists are but a tap away. Purchase and download the checklist you need directly from the app. Tap Download to view a list of available aircraft models. This list is being added to regularly, so check back if you don't see the checklist you need.</p>
+        </dd>
+          <dt>I purchased a checklist, but don't see it in the dashboard.</dt>
+          <dd>
+            <p>Sometimes, if an in-app purchase doesn't go through for some reason, simply download the checklist again. Both we and Apple keep track of your purchases. If you weren't charged for it the first time, you will be prompted to buy it. If you were charged, you'll be able to download it again at no additional cost. This is also the case if you remove your checklist from the dashboard.</p>
+          </dd>
+          <dt>Can I edit a checklist?</dt>
+          <dd>
+            <p>Absolutely! From the checklist, press the pencil icon at the top of the page <i class="icon icon-pencil"></i> to turn on/off edit mode.</p>
+          </dd>
+      </dl>
+
+      <h2>Qref Account</h2>
+      <dl>
+          <dt>Why do I need a Qref account?</dt>
+          <dd>
+            <p>Setting up a Qref account allows for automatic backup of your changes across devices.</p>
+          </dd>
+      </dl>
+
+      <h2>Editing</h2>
+      <dl>
+          <dt>How do I edit the aircraft tail number on the dashboard?</dt>
+          <dd>
+            <p>On the dashboard, press the pencil icon at the top of the page <i class="icon icon-pencil"></i> to turn on edit mode. Tap on the desired aircraft and you will be prompted for the tail number.</p>
+            <p>The tail number will be synced with your account the next time you log in or select Manual Sync from the menu. This means you'll see the tail number (and any checklist edits) on any device you log in with using the Qref app.</p>
+          </dd>
+          <dt>How do I remove a checklist from the Dashboard?</dt>
+          <dd>
+            <p>On the dashboard, press the pencil icon at the top of the page <i class="icon icon-pencil"></i> to turn on edit mode. Swipe the checklist you'd like to remove, then tap "Delete". If you want to add this checklist back, you can by simply downloading it again. You will not be charged for it again. Promise! <b>One thing to keep in mind, though... your edits will be gone if you remove the checklist from the dashboard.</b></p>
+          </dd>
+          <dt>How do I reset a checklist to the original download?</dt>
+          <dd>
+            <p>If you have edited a checklist and want to revert back to the original version, simply remove the checklist from the Dashboard (see above), go to Downloads, and download the checklist again. Because we keep track of your purchases, you won't be charged for it again.</b></p>
+          </dd>
+      </dl>
+
+        </div>
+    </div>
+    </article>
+</body></html>
