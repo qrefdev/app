@@ -57,7 +57,7 @@ function Install(productId) {
                 {
 					AppObserver.set('loading', false);
 					
-					var dialog = new Dialog('#infobox', 'Internal Error. Failed to create a new copy of the checklist for your account.');
+					var dialog = new Dialog('#infobox', 'You need to sign out and sign back in, in order to re-authenticate and install a new checklist.');
 					dialog.show();
                 }
            }
@@ -116,7 +116,7 @@ function SendReceipt(receiptData)
                     {
                     	AppObserver.set('loading', false);
                     	
-                        var dialog = new Dialog('#infobox', 'Your purchase was successful, but we could not verify the receipt from Apple. Please go through the purchase process again - you will not be charged a second time.');
+                        var dialog = new Dialog('#infobox', 'Your purchase was successful, but you need to sign out and sign back in, in order to re-authenticate with our servers. After you sign back in, go back to the checklist and press the buy button again. You will not be charged a second time.');
                         dialog.show();
                     }
                 }
@@ -126,7 +126,7 @@ function SendReceipt(receiptData)
         error: function() {
         	AppObserver.set('loading', false);
            
-           	var dialog = new Dialog('#infobox', 'Your purchase was successful, but we could not connect to our server to verify the purchase. Please go through the purchase process again, when connected to an internet connection - you will not be charged a second time.');
+           	var dialog = new Dialog('#infobox', 'Your purchase was successful, but we could not connect to our servers to verify the purchase. Please go through the purchase process again, when connected to an internet connection - you will not be charged a second time.');
            	dialog.show();
         }
     });

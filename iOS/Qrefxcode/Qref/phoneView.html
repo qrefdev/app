@@ -636,11 +636,7 @@
                     <input class="textbox required" style="display: block;" data-bind="value: response" type="text"
                            placeholder="response" />
 
-                    <div class="button" data-bind="visible: root.adding, tap: root.edit">
-                        <div class="special"><p>Save</p><i class="icon icon-arrow-right"></i></div>
-                    </div>
-
-                    <div class="button" data-bind="tap: root.backTap, visible: (function(){return !root.adding;})()">
+                    <div class="button" data-bind="tap: root.edit">
                         <div class="special"><p>Save</p><i class="icon icon-arrow-right"></i></div>
                     </div>
                 </form>
@@ -936,7 +932,7 @@
                             <p>Manual Sync</p></li>
                         <li data-bind="tap: helpTap"><i class="icon icon-question-sign"></i>
 
-                            <p>Help</p></a></li>
+                            <p>Help</p></li>
                         <li data-bind="tap: signOutNavTap, visible: token" id="signout-menu"><i class="icon icon-signout"></i>
 
                             <p>Sign out</p></li>

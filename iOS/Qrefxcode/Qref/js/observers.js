@@ -79,8 +79,7 @@ var EditAddObserver = new zimoko.Observable({
 
         $('#editAddForm input').blur();
 
-        EditAddObserver.item.unsubscribe('check', EditAddObserver);
-        EditAddObserver.item.unsubscribe('response', EditAddObserver);
+        EditAddObserver.set('item',new zimoko.Observable({check:'', response:'', icon:null, _id:zimoko.createGuid()}));
                                             
         ChecklistObserver.render();
                                             
@@ -116,20 +115,18 @@ var EditAddObserver = new zimoko.Observable({
 
             sectionItems.splice(index + 1, 0, EditAddObserver.item._original);
 
-            ChecklistObserver.set('modified', true);
             ChecklistObserver.itemsDataSource.insertAt(new zimoko.Observable(EditAddObserver.item._original), index + 1);
         }
-
-        ChecklistObserver.render();
                                             
+        ChecklistObserver.set('modified', true);
+        
+        EditAddObserver.set('item',new zimoko.Observable({check:'', response:'', icon:null, _id:zimoko.createGuid()}));
+                                            
+        ChecklistObserver.render();
+                                
         setTimeout(function () {
             Navigation.back();
         }, 100);
-    },
-    onPropertyChanged:function (sender, property) {
-        if (property == 'check' || property == 'response') {
-            ChecklistObserver.set('modified', true);
-        }
     }
 });
 
@@ -609,8 +606,10 @@ var AppObserver = new zimoko.Observable({
         var ele = $(element);
 
         if (ChecklistObserver.editing && ChecklistObserver.modified) {
-            if(ChecklistObserver.checklist._original._id != '5252fe02b2325732290016ed')
+            if(ChecklistObserver.checklist._original._id != '5252fe02b2325732290016ed') {
                 Sync.syncOneLocal(ChecklistObserver.checklist._original);
+                ChecklistObserver.set('modified', false);
+            }
         }
 
         $('.scrollable').stop();
@@ -1281,7 +1280,7 @@ var AppObserver = new zimoko.Observable({
 							else {
 								AppObserver.set('loading', false);
 								if (AppObserver.token) {
-									var dialog = new Dialog('#infobox', 'Cannot connect to the Qref Store, or there are no items currently available');
+									var dialog = new Dialog('#infobox', 'Cannot connect to the Qref store, because you need to sign out and sign back in, in order to re-authenticate with our servers.');
 									dialog.show();
 								}
 								else {
@@ -1347,8 +1346,10 @@ var AppObserver = new zimoko.Observable({
             }
             else {
                 if (ChecklistObserver.editing && ChecklistObserver.modified) {
-                    if(ChecklistObserver.checklist._original._id != '5252fe02b2325732290016ed')
-                         Sync.syncOneLocal(ChecklistObserver.checklist._original);
+                    if(ChecklistObserver.checklist._original._id != '5252fe02b2325732290016ed') {
+                        Sync.syncOneLocal(ChecklistObserver.checklist._original);
+                    	ChecklistObserver.set('modified', false);
+                    }
                 }
 
                 ChecklistObserver.set('editing', false);
@@ -1424,8 +1425,8 @@ var DashboardObserver = new zimoko.Observable({
                     else {
                         AppObserver.set('loading', false);
                         if (AppObserver.token) {
-                            var dialog = new Dialog('#infobox', 'Cannot connect to the Qref Store, or there are no items currently available');
-                            dialog.show();
+                           var dialog = new Dialog('#infobox', 'Cannot connect to the Qref store, because you need to sign out and sign back in, in order to re-authenticate with our servers.');
+                           dialog.show();
                         }
                         else {
                             var dialog = new Dialog('#infobox', 'You must be signed in to access the store');
@@ -2116,8 +2117,10 @@ var ChecklistObserver = new zimoko.Observable({
         e.preventDefault();
 
         if (ChecklistObserver.editing && ChecklistObserver.modified) {
-            if(ChecklistObserver.checklist._original._id != '5252fe02b2325732290016ed')
+            if(ChecklistObserver.checklist._original._id != '5252fe02b2325732290016ed') {
                 Sync.syncOneLocal(ChecklistObserver.checklist._original);
+            	ChecklistObserver.set('modified', false);
+            }
         }
 
         setTimeout(function () {
@@ -2223,8 +2226,6 @@ var ChecklistObserver = new zimoko.Observable({
             EditAddObserver.set('adding', false);
             EditAddObserver.set('item', data);
             EditAddObserver.set('index', data.index);
-            EditAddObserver.item.subscribe('check', EditAddObserver);
-            EditAddObserver.item.subscribe('response', EditAddObserver);
 
             Navigation.go('#editadd');
             $('#editAddCheck').focus();

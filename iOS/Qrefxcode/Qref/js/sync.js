@@ -30,9 +30,14 @@ function SyncProcessor() {
             if(reachability) {
          		AppObserver.set('syncing', true);
          		
-         		this.sendChecklistToServer(checklist, function() {
+         		this.sendChecklistToServer(checklist, function(success) {
          			AppObserver.set('syncing', false);
-         		});   
+                                           
+                    if(!success) {
+                       var dialog = new Dialog('#infobox', 'You will need to sign out and sign back in, in order to sync to the web.');
+                       dialog.show();
+                    }
+         		});
             }
 		}
     };
@@ -116,6 +121,12 @@ function SyncProcessor() {
                             self.syncToPhone(checklists);
                         }, 20);
                     }
+                    else {
+                        self.syncToPhone(checklists);
+                                             
+                        var dialog = new Dialog('#infobox', 'You will need to sign out and sign back in, in order to sync to the web. Checklists have been saved to the device.');
+                        dialog.show();
+                    }
                 });
             }
             else {
@@ -160,8 +171,8 @@ function SyncProcessor() {
 					if(AppObserver.saving) {
 						AppObserver.set('saving', false);
 						var saveDialog = new ConfirmationDialog('#savebox', function(doSync) {
-							if(doSync && self.lists.length > 0) {
-								Sync.syncOneServer(self.lists[0]);
+							if(doSync && lists.length > 0) {
+								Sync.syncOneServer(lists[0]);
 							}
 						});
 			
@@ -280,12 +291,22 @@ function SyncProcessor() {
 			url: urltoPost,
             cache: false,
 			success: function(data) {
-               if(callback) {
-                	callback();
+               if(data.success == true) {
+                   if(callback) {
+                        callback(true);
+                   }
+               }
+               else {
+                   if(callback) {
+                        callback(false);
+                   }
                }
 			},
             error: function(error) {
-               console.log(error);
+               //console.log(error);
+               if(callback) {
+                    callback(false);
+               }
             }
 		});
 	};
