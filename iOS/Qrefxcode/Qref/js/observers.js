@@ -150,6 +150,7 @@ var EditTailObserver = new zimoko.Observable({
         if (EditTailObserver.item) {
             setTimeout(function () {
                 Sync.syncOneLocalSilent(EditTailObserver.item);
+                Sync.sendChecklistToServer(EditTailObserver.item);
             }, 100);
         }
     }
@@ -1530,6 +1531,7 @@ var DashboardObserver = new zimoko.Observable({
 
                 setTimeout(function () {
                     Sync.syncOneLocalSilent(data);
+                    Sync.sendChecklistToServer(data);
                 }, 100);
 
                 DashboardObserver.dataSource.remove(data);
