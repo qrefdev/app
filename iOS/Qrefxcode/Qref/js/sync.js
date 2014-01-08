@@ -25,19 +25,43 @@ function SyncProcessor() {
     };
     
     this.syncOneServer = function(checklist) {
+    	var self = this;
         if(checklist != undefined && AppObserver.token != '' && AppObserver.token != undefined)
 		{	
             if(reachability) {
          		AppObserver.set('syncing', true);
-         		
-         		this.sendChecklistToServer(checklist, function(success) {
-         			AppObserver.set('syncing', false);
-                                           
-                    if(!success) {
-                       var dialog = new Dialog('#infobox', 'You will need to sign out and sign back in, in order to sync to the web.');
-                       dialog.show();
-                    }
-         		});
+         		self.getChecklistFromServer(checklist._id, function(item) {
+					if(item) {
+						if(!item.isDeleted) {
+							if(item.version <= checklist.version) {
+								self.sendChecklistToServer(checklist, function(success) {
+									AppObserver.set('syncing', false);
+										   
+									if(!success) {
+									   var dialog = new Dialog('#infobox', 'You will need to sign out and sign back in, in order to sync to the web.');
+									   dialog.show();
+									}
+								});
+							}
+							else {
+								AppObserver.set('syncing', false);
+							}
+						}
+						else {
+							self.sendChecklistToServer(checklist, function(success) {
+								AppObserver.set('syncing', false);
+								   
+								if(!success) {
+								   var dialog = new Dialog('#infobox', 'You will need to sign out and sign back in, in order to sync to the web.');
+								   dialog.show();
+								}
+							});
+						}
+					}
+					else {
+						AppObserver.set('syncing', false);
+					}
+                });
             }
 		}
     };
@@ -58,6 +82,23 @@ function SyncProcessor() {
                         setTimeout(function() {
                             var view = DashboardObserver.dataSource.view().toArray();
                             var newItems = [];
+                                   
+                            //Well looks like some were deleted!
+                            //Time to find out which!
+                            if(items.length < checklists.length) {
+                                for(var i = 0; i < checklists.length; i++) {
+                                   var found = _.find(items, function(item) {
+                                   		if(item._id == checklists[i]._id)
+                                   			return true;
+                                   		else
+                                   			return false;
+                                   });
+                                   
+                                   if(found == undefined) {
+                                   		checklists[i].isDeleted = true;
+                                   }
+                                }
+                            }
                             
                             for(var i = 0; i < items.length; i++)
                             {
@@ -70,10 +111,9 @@ function SyncProcessor() {
                             
                                 if(currentItem != undefined)
                                 {
-                                    if(items[i].version > currentItem.version)
+                                    if(items[i].version >= currentItem.version)
                                     {
-                                        //606 - Fix for screen refreshing on dashboard during sync
-                                        /*currentItem.manufacturer = items[i].manufacturer;
+                                        currentItem.manufacturer = items[i].manufacturer;
                                         currentItem.model = items[i].model;
                                         currentItem.tailNumber = items[i].tailNumber;
                                         currentItem.version = items[i].version;
@@ -82,17 +122,7 @@ function SyncProcessor() {
                                         currentItem.landing = items[i].landing;
                                         currentItem.emergencies = items[i].emergencies;
                                         currentItem.isDeleted = items[i].isDeleted;
-                                        currentItem.index = items[i].index;*/
-                                        
-                                        var observable = _.find(view, function(item) {
-                                            if(item._id == currentItem._id)
-                                                return true;
-                                            else
-                                                return false;
-                                        });
-                                        
-                                        if(observable != undefined)
-                                        	observable.batchSet(items[i]);
+                                        currentItem.index = items[i].index;
                                     }
                                     else
                                     {
@@ -110,6 +140,17 @@ function SyncProcessor() {
     							currentItem = undefined;
                             }
                             
+                            DashboardDataSource.clear();
+                            DashboardDataSource.data(checklists);
+                            
+                            if(ChecklistObserver.checklist) {
+                                   for(var i = 0; i < DashboardDataSource.view().length; i++) {
+                                        if(DashboardDataSource.view().elementAt(i)._id == ChecklistObserver.checklist._id) {
+                                            ChecklistObserver.set('checklist', DashboardDataSource.view().elementAt(i));
+                                        }
+                                   }
+                            }
+                                   
                             if(DashboardObserver.dataSource != DashboardDataSource)
         						DashboardObserver.set('dataSource', DashboardDataSource);
         					else
@@ -161,6 +202,8 @@ function SyncProcessor() {
         		
         		//window.location.href = 'qref://nlog=' + data;
 				
+                item.version += 0.01;
+                
 				window.location.href = 'qref://sc=' + item._id;
 				
 				if(index >= lists.length - 1) {
@@ -262,8 +305,6 @@ function SyncProcessor() {
     };*/
     
 	this.sendChecklistToServer = function(item, callback) {
-		item.version += 0.01;
-		
 		var request = {
 			manufacturer: item.manufacturer._id,
 			model: item.model._id,
@@ -308,6 +349,32 @@ function SyncProcessor() {
                     callback(false);
                }
             }
+		});
+	};
+	
+	this.getChecklistFromServer = function(id, updateCallback) {
+		$.ajax({
+			type: 'get',
+			dataType: 'json',
+			url: host + 'services/ajax/aircraft/checklist/' + id + '?token=' + AppObserver.token + '&timestamp=' + Date.now(),
+			success: function(data) {
+				var response = data;
+				
+				if(response.success == true)
+				{
+					if(updateCallback)
+						updateCallback(response.records[0]);
+				}
+				else
+				{
+					if(updateCallback)
+						updateCallback(null);
+				}
+			},
+			error: function() {
+				if(updateCallback)
+					updateCallback(null);
+			}
 		});
 	};
 	

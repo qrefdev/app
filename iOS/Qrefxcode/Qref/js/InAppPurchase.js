@@ -32,7 +32,7 @@ function Install(productId) {
         dataType: 'json',
         url: host + 'services/rpc/aircraft/product/authorize/install',
         success: function(data) {
-           if(data.success)
+           if(data.success == true)
            { 
 				var dialog = new Dialog('#infobox', 'A new check list has been created with the random tail number: ' + tailNumberIdentifier, function() {
 					Navigation.go('dashboard');
@@ -56,9 +56,9 @@ function Install(productId) {
                 else
                 {
 					AppObserver.set('loading', false);
-					
-					var dialog = new Dialog('#infobox', 'You need to sign out and sign back in, in order to re-authenticate and install a new checklist.');
-					dialog.show();
+           
+                   var dialog = new Dialog('#infobox', 'You need to sign out and sign back in, in order to re-authenticate and install a new checklist.');
+                   dialog.show();
                 }
            }
            
@@ -82,7 +82,7 @@ function SendReceipt(receiptData)
         dataType: 'json',
         url: host + 'services/rpc/aircraft/product/authorize/apple',
         success: function(data) {
-           if(data.success)
+           if(data.success == true)
            {  
 				var dialog = new Dialog('#infobox', 'A new check list has been created with the random tail number: ' + tailNumberIdentifier, function() {
 					Navigation.go('dashboard');
@@ -126,7 +126,7 @@ function SendReceipt(receiptData)
         error: function() {
         	AppObserver.set('loading', false);
            
-           	var dialog = new Dialog('#infobox', 'Your purchase was successful, but we could not connect to our servers to verify the purchase. Please go through the purchase process again, when connected to an internet connection - you will not be charged a second time.');
+           	var dialog = new Dialog('#infobox', 'Your purchase was successful, but we could not connect to our server to verify the purchase. Please go through the purchase process again, when connected to an internet connection - you will not be charged a second time.');
            	dialog.show();
         }
     });

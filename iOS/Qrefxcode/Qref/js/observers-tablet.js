@@ -146,13 +146,21 @@ var EditTailObserver = new zimoko.Observable({
         setTimeout(function () {
             Navigation.back();
         }, 100);
+    },
+    editTap: function(element, e, data) {
+        e.stopPropagation();
+        e.preventDefault();
+
+        $('#editTailForm input').blur();
 
         if (EditTailObserver.item) {
             setTimeout(function () {
-                Sync.syncOneLocalSilent(EditTailObserver.item);
-                Sync.sendChecklistToServer(EditTailObserver.item);
+                Sync.syncOneLocal(EditTailObserver.item._original);
             }, 100);
         }
+        setTimeout(function () {
+               Navigation.back();
+        }, 100);
     }
 });
 
@@ -426,6 +434,29 @@ var ProductDetailsObserver = new zimoko.Observable({
             AppObserver.set('loading', false);
         }
     },
+	getPricingDetails: function() {
+		if(this.product.userOwnsProduct) {
+			var prod = this.product;
+			var foundChecklist = _.find(checklists, function(item) {
+				if(item.manufacturer._id == prod.manufacturer._id
+					&& item.model._id == prod.model._id && item.isDeleted == false) {
+					return true;
+				}
+				
+				return false;
+			});
+			
+			if(foundChecklist) {
+				return 'INSTALL';
+			}
+			else {
+				return 'Restore';
+			}
+		}
+		else {
+			return '$' + this.product.suggestedRetailPrice.toFixed(2);
+		}
+	},
     onPropertyChanged:function (sender, property) {
         if (property == 'product') {
             var imageProcessor = new ImageProcessor([this.product._original], "productDetails", false);
@@ -1528,10 +1559,10 @@ var DashboardObserver = new zimoko.Observable({
         ele.fadeOut(200, function () {
             ele.prev().animate({'left':'0px'}, 200, function () {
                 data.set('isDeleted', true);
-
+                data._original.isDeleted = true;
+                
                 setTimeout(function () {
-                    Sync.syncOneLocalSilent(data);
-                    Sync.sendChecklistToServer(data);
+                    Sync.syncOneLocal(data._original);
                 }, 100);
 
                 DashboardObserver.dataSource.remove(data);

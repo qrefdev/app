@@ -66,6 +66,8 @@ function signinLoadChecklists() {
             }
 
             AppObserver.set('loading', false);
+                                  
+            Sync.sync();
         });
     }
     else {

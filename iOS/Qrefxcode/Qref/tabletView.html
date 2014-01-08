@@ -602,7 +602,7 @@
             </div>
             <div class="shadow" style="bottom: 65px;"></div>
             <div class="buynow"
-                 data-bind="tap: root.purchaseTap, html: (function() { if(userOwnsProduct) return 'INSTALL'; else return '$' + parseFloat(suggestedRetailPrice).toFixed(2); })()">
+                 data-bind="tap: root.purchaseTap, html: root.getPricingDetails()">
                 Install
             </div>
         </div>
@@ -660,7 +660,7 @@
                     <input class="textbox tailNumber required" data-bind="value: tailNumber" type="text" id="tailnumber"
                            name="tailnumber" placeholder="tail number" maxlength="6"/>
 
-                    <div class="button" data-bind="tap: root.backTap">
+                    <div class="button" data-bind="tap: root.editTap">
                         <div class="special"><p>Save</p><i class="icon icon-arrow-right"></i></div>
                     </div>
                 </form>
