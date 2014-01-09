@@ -447,7 +447,7 @@ var ProductDetailsObserver = new zimoko.Observable({
 			});
 			
 			if(foundChecklist) {
-				return 'INSTALL';
+				return 'Install';
 			}
 			else {
 				return 'Restore';
