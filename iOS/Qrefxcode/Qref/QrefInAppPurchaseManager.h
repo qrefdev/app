@@ -11,6 +11,7 @@
 
 @protocol QrefAppPurchaseDelegate <NSObject>
 @optional
+- (void) restoreCompletedTransactions: (BOOL) success;
 - (void) completeTransaction: (SKPaymentTransaction *) transaction;
 - (void) failedTransaction: (SKPaymentTransaction *) transaction;
 - (void) canceledTransaction;
@@ -32,6 +33,7 @@
 
 - (void) finishTransaction: (SKPaymentTransaction *) transaction;
 
+- (void) restoreAll;
 - (void) setDelegate:(id<QrefAppPurchaseDelegate>)delegate;
 
 @end

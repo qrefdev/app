@@ -922,6 +922,9 @@
             <li data-bind="tap: syncNavTap, visible: token" id="sync-menu"><i class="icon icon-refresh"></i>
 
                 <p>Manual Sync</p></li>
+            <li data-bind="tap: restoreAllTap"><i class="icon icon-cloud-download"></i>
+                            
+                <p>Restore All Purchases</p></li>
             <li data-bind="tap: helpTap"><i class="icon icon-question-sign"></i>
 
                 <p>Help</p></li>
@@ -1029,6 +1032,18 @@
         </div>
         <div class="button okay no" style="width: 90%; margin: 20px auto;">
             <div class="special2"><p>No</p><i class="icon icon-ban-circle"></i></div>
+        </div>
+    </figure>
+</div>
+
+<div class="modal" id="restoreAll">
+    <figure class="info">
+        <figcaption class="data" style="font-size: 14pt;">All checklist purchases will be restored using the original version. Proceed?</figcaption>
+        <div class="button okay yes" style="width: 90%; margin: 20px auto;">
+            <div class="special"><p>Proceed</p><i class="icon icon-ok"></i></div>
+        </div>
+        <div class="button okay no" style="width: 90%; margin: 20px auto;">
+            <div class="special2"><p>Cancel</p><i class="icon icon-ban-circle"></i></div>
         </div>
     </figure>
 </div>

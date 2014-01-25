@@ -56,6 +56,10 @@
     }
 }
 
+- (void) restoreAll {
+    [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
+}
+
 - (void) startTransaction: (SKProduct *) product {
     SKPayment *payment = [SKPayment paymentWithProduct:product];
     [[SKPaymentQueue defaultQueue] addPayment:payment];
@@ -92,9 +96,23 @@
 - (void) restoreTransaction:(SKPaymentTransaction *)transaction {
     if(self.delegate)
     {
-        [self.delegate completeTransaction:transaction.originalTransaction];
+        //[self.delegate completeTransaction:transaction.originalTransaction];
         [self finishTransaction:transaction];
     }
+}
+
+- (void) paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error {
+    if(self.delegate) {
+        [self.delegate restoreCompletedTransactions:NO];
+    }
+}
+
+- (void) paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue {
+    
+    if(self.delegate) {
+        [self.delegate restoreCompletedTransactions:YES];
+    }
+    
 }
 
 - (void) failedTransaction:(SKPaymentTransaction *)transaction {

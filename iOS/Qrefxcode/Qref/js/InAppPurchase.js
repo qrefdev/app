@@ -28,7 +28,7 @@ function Install(productId) {
     
     $.ajax({
         type: 'post',
-        data: 'mode=rpc&token=' + AppObserver.token + '&product=' + ProductDetailsObserver.product._id + '&tailNumber=' + tailNumberIdentifier,
+        data: 'mode=rpc&token=' + AppObserver.token + '&product=' + productId + '&tailNumber=' + tailNumberIdentifier,
         dataType: 'json',
         url: host + 'services/rpc/aircraft/product/authorize/install',
         success: function(data) {
@@ -52,6 +52,12 @@ function Install(productId) {
                     {
                         Install(productId);
                     }
+                    else {
+                    	AppObserver.set('loading', false);
+           
+           				var dialog = new Dialog('#infobox', 'Our server had an unexpected error! Please try again later!');
+           				dialog.show();
+                    }
                 }
                 else
                 {
@@ -68,6 +74,75 @@ function Install(productId) {
            
            	var dialog = new Dialog('#infobox', 'Could not connect to server. Please try again when an internet connection is available.');
            	dialog.show();
+        }
+    });
+}
+
+function RestoreFailed() {
+	AppObserver.set('loading', false);
+	var dialog = new Dialog('#infobox', 'Restore All Products Failed. Do you have an internet connection?');
+    dialog.show();
+}
+
+function RestoreAll() {
+    AppObserver.getUserProducts(function(success, items) {
+       if(success && items) {
+            var itemCount = items.length;
+            var currentCount = 0;        
+                    
+            AppObserver.set('loading', true);
+            
+            for(var i = 0; i < items.length; i++) {
+            	RestoreProduct(items[i]._id, function() {
+            		currentCount++;
+            		
+            		if(currentCount >= itemCount) {
+            			Sync.sync();
+            			AppObserver.set('loading', false);
+            			
+            			var dialog = new Dialog('#infobox', 'Restore All Completed');
+           				dialog.show();
+            		}
+            	});
+            }
+       }
+    });
+}
+
+function RestoreProduct(productId, callback) {
+	var tailNumberIdentifier = 'N' + Math.round(Math.random() * 10000);
+    
+    $.ajax({
+        type: 'post',
+        data: 'mode=rpc&token=' + AppObserver.token + '&product=' + productId + '&tailNumber=' + tailNumberIdentifier,
+        dataType: 'json',
+        url: host + 'services/rpc/aircraft/product/authorize/install',
+        success: function(data) {
+           if(data.success == true)
+           { 
+				callback();
+           }
+           else
+           {
+                if(data.message.code)
+                {
+                    if(data.message.code == 11000)
+                    {
+                        RestoreProduct(productId, callback);
+                    }
+                    else {
+                    	callback();
+                    }
+                }
+                else
+                {
+					callback();
+                }
+           }
+           
+        },
+        error: function() {
+        	callback();
         }
     });
 }
@@ -101,6 +176,12 @@ function SendReceipt(receiptData)
                     if(data.message.code == 11000)
                     {
                         SendReceipt(receiptData);
+                    }
+                    else {
+                    	AppObserver.set('loading', false);
+           
+           				var dialog = new Dialog('#infobox', 'Our server had an unexpected error! Please try again later!');
+           				dialog.show();
                     }
                 }
                 else

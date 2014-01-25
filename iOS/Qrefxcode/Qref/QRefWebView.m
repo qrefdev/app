@@ -443,6 +443,9 @@
                         [self->purchaseManager requestProduct:value];
                     }
                 }
+                else if([key isEqualToString:@"restoreAll"]) {
+                    [self->purchaseManager restoreAll];
+                }
                 else if([key isEqualToString:@"clearCache"])
                 {
                     //to prevent internal caching of webpages in application
@@ -474,6 +477,15 @@
     }
     else {
         return YES;
+    }
+}
+
+- (void) restoreCompletedTransactions:(BOOL)success {
+    if(success) {
+        [self.webView stringByEvaluatingJavaScriptFromString:@"RestoreAll();"];
+    }
+    else {
+        [self.webView stringByEvaluatingJavaScriptFromString:@"RestoreFailed();"];
     }
 }
 

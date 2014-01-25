@@ -424,7 +424,22 @@ var ProductDetailsObserver = new zimoko.Observable({
 
         if (ProductDetailsObserver.product) {
             if (ProductDetailsObserver.product.userOwnsProduct) {
-                Install(ProductDetailsObserver.product._id);
+            	var prod = ProductDetailsObserver.product;
+				var foundChecklist = _.find(checklists, function(item) {
+					if(item.manufacturer._id == prod.manufacturer._id
+						&& item.model._id == prod.model._id && item.isDeleted == false) {
+						return true;
+					}
+				
+					return false;
+				});
+            	
+            	if(foundChecklist) { 
+                	Install(ProductDetailsObserver.product._id);
+                }
+                else {
+                	window.location.href = "qref://purchase=" + ProductDetailsObserver.product.appleProductIdentifier;
+                }
             }
             else {
                 window.location.href = "qref://purchase=" + ProductDetailsObserver.product.appleProductIdentifier;
@@ -501,8 +516,24 @@ var MenuObserver = new zimoko.Observable({
         this.close();
     },
     helpTap:function (element, e, data) {
+        e.stopPropagation();
         Navigation.go('#help');
         this.close();
+    },
+    restoreAllTap: function(element, e, data) {
+    	e.stopPropagation();
+    	AppObserver.set('loading', true);
+    	
+        var dialog = new ConfirmationDialog("#restoreAll", function (result) {
+        	if(result) {
+        		window.location.href = "qref://restoreAll=yes";
+        	}
+        	else {
+        		AppObserver.set('loading', false);
+        	}
+        });
+                                         
+        dialog.show();
     },
     downloadTap: function(element, e, data) {
     	if(AppObserver.navHash != '#downloads') {
@@ -1603,7 +1634,7 @@ var DashboardObserver = new zimoko.Observable({
                 this.dataSource.preventRead = true;
                 this.dataSource.sort(new zimoko.Sort(['manufacturer.name', 'model.name', 'index'], 'asc'));
                 this.dataSource.filter(new zimoko.FilterSet('and', [
-                    new zimoko.Filter('==', 'isDeleted', false, false)
+                    new zimoko.Filter('eq', 'isDeleted', false, false)
                 ]));
 
                 this.dataSource.unsubscribe(this);
