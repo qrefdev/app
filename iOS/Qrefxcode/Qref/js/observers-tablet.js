@@ -417,29 +417,29 @@ var ProductDetailsObserver = new zimoko.Observable({
         e.preventDefault();
         Navigation.back();
     },
-    purchaseTap:function (element, e, data) {
+   	purchaseTap:function (element, e, data) {
         e.stopPropagation();
         e.preventDefault();
         AppObserver.set('loading', true);
 
         if (ProductDetailsObserver.product) {
             if (ProductDetailsObserver.product.userOwnsProduct) {
-            	var prod = ProductDetailsObserver.product;
-				var foundChecklist = _.find(checklists, function(item) {
-					if(item.manufacturer._id == prod.manufacturer._id
-						&& item.model._id == prod.model._id && item.isDeleted == false) {
-						return true;
-					}
-				
-					return false;
-				});
+            	//var prod = ProductDetailsObserver.product;
+				//var foundChecklist = _.find(checklists, function(item) {
+				//	if(item.manufacturer._id == prod.manufacturer._id
+				//		&& item.model._id == prod.model._id && item.isDeleted == false) {
+				//		return true;
+				//	}
+				//
+				//	return false;
+				//});
             	
-            	if(foundChecklist) { 
+            	//if(foundChecklist) {
                 	Install(ProductDetailsObserver.product._id);
-                }
-                else {
-                	window.location.href = "qref://purchase=" + ProductDetailsObserver.product.appleProductIdentifier;
-                }
+                //}
+                //else {
+                //	window.location.href = "qref://purchase=" + ProductDetailsObserver.product.appleProductIdentifier;
+                //}
             }
             else {
                 window.location.href = "qref://purchase=" + ProductDetailsObserver.product.appleProductIdentifier;
@@ -451,22 +451,22 @@ var ProductDetailsObserver = new zimoko.Observable({
     },
 	getPricingDetails: function() {
 		if(this.product.userOwnsProduct) {
-			var prod = this.product;
-			var foundChecklist = _.find(checklists, function(item) {
-				if(item.manufacturer._id == prod.manufacturer._id
-					&& item.model._id == prod.model._id && item.isDeleted == false) {
-					return true;
-				}
+			//var prod = this.product;
+			//var foundChecklist = _.find(checklists, function(item) {
+			//	if(item.manufacturer._id == prod.manufacturer._id
+			//		&& item.model._id == prod.model._id && item.isDeleted == false) {
+			//		return true;
+			//	}
 				
-				return false;
-			});
+			//	return false;
+			//});
 			
-			if(foundChecklist) {
+			//if(foundChecklist) {
 				return 'Install';
-			}
-			else {
-				return 'Restore';
-			}
+			//}
+			//else {
+			//	return 'Restore';
+			//}
 		}
 		else {
 			return '$' + this.product.suggestedRetailPrice.toFixed(2);
