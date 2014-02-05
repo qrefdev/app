@@ -85,6 +85,36 @@ function AuthenticationHandler() {
 		}
 	};
 	
+	this.syncSlave = function() {
+		if(token != "")
+		{	
+			var payload = { mode: 'rpc', token: token };
+			
+			$.ajax({
+				type: "POST",
+				dataType: 'json',
+				data: payload,
+				url: host + 'services/rpc/admin/syncSlaveDb',
+				success: function(data) {
+					if(data.success)
+					{
+						var dialog = new Dialog("#infobox", "Synchronization completed successfully!");
+						dialog.show();
+					}
+					else
+					{
+						var dialog = new Dialog("#infobox", "Synchronization failed!");
+						dialog.show();
+					}
+				},
+				error: function() {
+					var dialog = new Dialog("#infobox", "Synchronization failed!");
+						dialog.show();
+				}
+			});
+		}
+	};
+	
 	this.verify = function() {
 		if(token == null || token  == "")
 		{
@@ -112,6 +142,7 @@ function AuthenticationHandler() {
 					$("#refresh-server-menu").show();
 					$("#manufacturer-editor-menu").show();
 					$("#model-editor-menu").show();
+					$("#sync-sportys-menu").show();
 				}
 				else
 				{
@@ -120,6 +151,7 @@ function AuthenticationHandler() {
 					$("#refresh-server-menu").hide();
 					$("#manufacturer-editor-menu").hide();
 					$("#model-editor-menu").hide();
+					$("#sync-sportys-menu").hide();
 				}
 			});
 		

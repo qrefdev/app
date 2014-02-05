@@ -75,6 +75,10 @@ class UpgradeProductVersionsRoute extends RpcRoute
 					.equals(product.manufacturer)
 					.where('model')
 					.equals(product.model)
+					.where('user')
+					.equals(null)
+					.where('isDeleted')
+					.equals(false)
 					.sort('-version')
 					.findOne((err, latestChecklist) =>
 						if err?

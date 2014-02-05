@@ -23,8 +23,8 @@ class QRefSlaveManager
 	Attaches all the schemas to mongoose and sets up the model references.
 	###
 	initialize: () ->
-		@.createSlave('master', 'mongodb://qref:qref@10.1.224.60:27017,10.1.224.180:27017,10.1.224.181:27017/qref?replicaSet=rs0')
-		@.createSlave('slave', 'mongodb://qref:qref@10.1.224.60:27017,10.1.224.180:27017,10.1.224.181:27017/qref-sportys?replicaSet=rs0')
+		@.createSlave('master', 'mongodb://qref:qref@10.1.224.60:27017,10.1.224.180:27017,10.1.224.181:27017/qref-test-master?replicaSet=rs0')
+		@.createSlave('slave', 'mongodb://qref:qref@10.1.224.60:27017,10.1.224.180:27017,10.1.224.181:27017/qref-test-slave?replicaSet=rs0')
 	createSlave: (slaveName, mongoUrl) =>
 		if @.hasSlave(slaveName)
 			return false

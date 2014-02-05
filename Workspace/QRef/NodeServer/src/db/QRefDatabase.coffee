@@ -22,7 +22,7 @@ class QRefDatabase
 	###
 	@property [String] The mongodb URL to use in establishing the mongoose connection object.
 	###
-	url: 'mongodb://qref:qref@10.1.224.60:27017,10.1.224.180:27017,10.1.224.181:27017/qref?replicaSet=rs0'
+	url: 'mongodb://qref:qref@10.1.224.60:27017,10.1.224.180:27017,10.1.224.181:27017/qref-test-master?replicaSet=rs0'
 	###
 	@property [UserSchemaInternal] A reference to the User model.
 	###

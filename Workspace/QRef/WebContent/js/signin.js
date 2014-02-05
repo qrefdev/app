@@ -15,9 +15,9 @@ function Signin() {
 			
 			if(response.success == true)
 			{
-				AppObserver.set('token', response.returnValue);
+				AppObserver.set('token', response.returnValue.token);
 				AppObserver.set('email', $("#email").val());
-				$.cookie.setCookie("QrefAuth", response.returnValue, 7);
+				$.cookie.setCookie("QrefAuth", response.returnValue.token, 7);
 							
                 setTimeout(function() {
 					AppObserver.set('loading', true);

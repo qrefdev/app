@@ -73,5 +73,9 @@ class RpcResponse
 	failure: (reason, errorCode) -> 
 		@success = false
 		@errorCode = errorCode
-		@message = reason
+		
+		if reason instanceof Error
+			@message = JSON.stringify({ message: reason.message, stack: reason.stack })
+		else
+			@message = reason
 module.exports = RpcResponse
