@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>QRef Server API Documentation</title>
+  <link rel='stylesheet' href='../assets/codo.css' type='text/css'>
+  <script src='../assets/codo.js'></script>
+  <script src='../assets/search_data.js'></script>
+</head>
+  <body>
+    <div id='base' data-path='../'></div>
+<div id='header'>
+  <div id='menu'>
+    <a href='../class_index.html' title='Index'>Index</a>
+    &raquo;
+    <span class='title'>Callbacks</span>
+    <nav>
+      <ul>
+        <li class='noframes'>
+          (<a class='noframes' href='#'>no frames</a>)
+        </li>
+      </ul>
+    </nav>
+    <div id='search'>
+      <a id='class_list_link' href='../class_list.html'>Classes</a>
+      <a id='file_list_link' href='../file_list.html'>Files</a>
+      <a id='method_list_link' href='../method_list.html'>Methods</a>
+      <a id='extra_list_link' href='../extra_list.html'>Extras</a>
+    </div>
+  </div>
+  <iframe id='search_frame'></iframe>
+  <div id='fuzzySearch'>
+    <input type='text'>
+    <ol></ol>
+  </div>
+  <div id='help'>
+    <p>
+      Quickly fuzzy find classes, mixins, methods, file:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-T</span>
+        Open fuzzy finder dialog
+      </li>
+    </ul>
+    <p>
+      In frame mode you can toggle the list naviation frame on the left side:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-L</span>
+        Toggle list view
+      </li>
+    </ul>
+    <p>
+      You can focus a list in frame mode or toggle a tab in frameless mode:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-C</span>
+        Class list
+      </li>
+      <li>
+        <span>Ctrl-I</span>
+        Mixin list
+      </li>
+      <li>
+        <span>Ctrl-F</span>
+        File list
+      </li>
+      <li>
+        <span>Ctrl-M</span>
+        Method list
+      </li>
+      <li>
+        <span>Ctrl-E</span>
+        Extras list
+      </li>
+    </ul>
+    <p>
+      You can focus and blur the search input:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-S</span>
+        Focus search input
+      </li>
+      <li>
+        <span>Esc</span>
+        Blur search input
+      </li>
+    </ul>
+    <p>
+      In frameless mode you can close the list tab:
+    </p>
+    <ul>
+      <li>
+        <span>Esc</span>
+        Close list tab
+      </li>
+    </ul>
+  </div>
+</div>
+    <div id='content'>
+      <h1>
+        Class:
+        Callbacks
+        <span class='note title'>Abstract</span>
+      </h1>
+      <table class='box'>
+        <tr>
+          <td>Defined in:</td>
+          <td>src/specification/Callbacks.coffee</td>
+        </tr>
+      </table>
+      <h2>Overview</h2>
+      <div class='docstring'>
+  <div class='abstract note'>
+    <strong>
+      This
+      class
+      is abstract.
+    </strong>
+    
+  </div>
+  <p>Specification class for the purpose of documenting the signatures and parameters of the callback utilized in the application framework.</p>
+</div>
+<div class='tags'>
+  <h3>Author:</h3>
+  <ul class='author'>
+    <li>
+      Nathan Klick
+    </li>
+  </ul>
+  <h3>Copyright:</h3>
+  <ul class='copyright'>
+    <li>
+      QRef 2012
+    </li>
+  </ul>
+</div>
+      <h2>Instance Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#managerExpandItemCallback-instance'>
+        - (void) <strong>managerExpandItemCallback</strong>(err, item)
+      </a>
+    </span>
+    <span class='desc'>
+      Standard callback used in the DB Manager utility classes for deeply populating a single object.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#managerExpandArrayCallback-instance'>
+        - (void) <strong>managerExpandArrayCallback</strong>(err, newArray)
+      </a>
+    </span>
+    <span class='desc'>
+      Standard callback used in the DB Manager utility class for deeply populating arrays of objects.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#userAuthValidateCredentialCallback-instance'>
+        - (void) <strong>userAuthValidateCredentialCallback</strong>(err, isValid)
+      </a>
+    </span>
+    <span class='desc'>
+      Standard callback used by the <a href='../classes/UserAuth.html'>UserAuth</a> security routines to return the status of a credential validation operation.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#userAuthLoginCallback-instance'>
+        - (void) <strong>userAuthLoginCallback</strong>(err, token, isValid)
+      </a>
+    </span>
+    <span class='desc'>
+      Standard callback used by the <a href='../classes/UserAuth.html#login-instance'>UserAuth#login</a> method to return the status and token from an authentication operation.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#userAuthUserFromTokenCallback-instance'>
+        - (void) <strong>userAuthUserFromTokenCallback</strong>(err, user)
+      </a>
+    </span>
+    <span class='desc'>
+      Standard callback used by the <a href='../classes/UserAuth.html#userFromToken-instance'>UserAuth#userFromToken</a> method to return the status and user from a lookup operation.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#userAuthCreateAccountCallback-instance'>
+        - (void) <strong>userAuthCreateAccountCallback</strong>(err, success, errorCode)
+      </a>
+    </span>
+    <span class='desc'>
+      Standard callback used by the <a href='../classes/UserAuth.html#createAccount-instance'>UserAuth#createAccount</a> method to return the status from a user creation operation.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#userAuthIsInRoleCallback-instance'>
+        - (void) <strong>userAuthIsInRoleCallback</strong>(err, isInRole)
+      </a>
+    </span>
+    <span class='desc'>
+      Standard callback used by the <a href='../classes/UserAuth.html'>UserAuth</a> security routines to return the status of a role check operation.
+    </span>
+  </li>
+</ul>
+      <h2>Instance Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='managerExpandItemCallback-instance'>
+      - (void) <strong>managerExpandItemCallback</strong>(err, item)
+    </p>
+    <div class='docstring'>
+  <p>Standard callback used in the DB Manager utility classes for deeply populating a single object.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>err</span>
+      <span class='type'>
+        (<tt>Error</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>An error object if an error occurred or null otherwise.</span>
+    </li>
+    <li>
+      <span class='name'>item</span>
+      <span class='type'>
+        (<tt>Object</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>The resulting deeply populated object.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='managerExpandArrayCallback-instance'>
+      - (void) <strong>managerExpandArrayCallback</strong>(err, newArray)
+    </p>
+    <div class='docstring'>
+  <p>Standard callback used in the DB Manager utility class for deeply populating arrays of objects.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>err</span>
+      <span class='type'>
+        (<tt>Error</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>An error object if an error occurred or null otherwise.</span>
+    </li>
+    <li>
+      <span class='name'>newArray</span>
+      <span class='type'>
+        (<tt>Array&lt;Object&gt;</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>The resulting deeply populated array of objects.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='userAuthValidateCredentialCallback-instance'>
+      - (void) <strong>userAuthValidateCredentialCallback</strong>(err, isValid)
+    </p>
+    <div class='docstring'>
+  <p>Standard callback used by the <a href='../classes/UserAuth.html'>UserAuth</a> security routines to return the status of a credential validation operation.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>err</span>
+      <span class='type'>
+        (<tt>Error</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>An error object if an error occurred or null otherwise.</span>
+    </li>
+    <li>
+      <span class='name'>isValid</span>
+      <span class='type'>
+        (<tt>Boolean</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>An true/false value indicating if the credential was valid. True indicates a valid credential while false indicates failure or invalid credentials.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='userAuthLoginCallback-instance'>
+      - (void) <strong>userAuthLoginCallback</strong>(err, token, isValid)
+    </p>
+    <div class='docstring'>
+  <p>Standard callback used by the <a href='../classes/UserAuth.html#login-instance'>UserAuth#login</a> method to return the status and token from an authentication operation.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>err</span>
+      <span class='type'>
+        (<tt>Error</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>An error object if an error occurred or null otherwise.</span>
+    </li>
+    <li>
+      <span class='name'>token</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>A valid token if successful otherwise null.</span>
+    </li>
+    <li>
+      <span class='name'>isValid</span>
+      <span class='type'>
+        (<tt>Boolean</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>An true/false value indicating if the credential was valid. True indicates a valid credential while false indicates failure or invalid credentials.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='userAuthUserFromTokenCallback-instance'>
+      - (void) <strong>userAuthUserFromTokenCallback</strong>(err, user)
+    </p>
+    <div class='docstring'>
+  <p>Standard callback used by the <a href='../classes/UserAuth.html#userFromToken-instance'>UserAuth#userFromToken</a> method to return the status and user from a lookup operation.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>err</span>
+      <span class='type'>
+        (<tt>Error</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>An error object if an error occurred or null otherwise.</span>
+    </li>
+    <li>
+      <span class='name'>user</span>
+      <span class='type'>
+        (<tt><a href='../classes/UserSchemaInternal.html'>UserSchemaInternal</a></tt>)
+      </span>
+      &mdash;
+      <span class='desc'>The user associated with the token or null if failed.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='userAuthCreateAccountCallback-instance'>
+      - (void) <strong>userAuthCreateAccountCallback</strong>(err, success, errorCode)
+    </p>
+    <div class='docstring'>
+  <p>Standard callback used by the <a href='../classes/UserAuth.html#createAccount-instance'>UserAuth#createAccount</a> method to return the status from a user creation operation.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>err</span>
+      <span class='type'>
+        (<tt>Error</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>An error object if an error occurred or null otherwise.</span>
+    </li>
+    <li>
+      <span class='name'>success</span>
+      <span class='type'>
+        (<tt>Boolean</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>True if the operation was successful, false otherwise.</span>
+    </li>
+    <li>
+      <span class='name'>errorCode</span>
+      <span class='type'>
+        (<tt>Number</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>A numeric errorCode indicating why the request failed or zero otherwise.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='userAuthIsInRoleCallback-instance'>
+      - (void) <strong>userAuthIsInRoleCallback</strong>(err, isInRole)
+    </p>
+    <div class='docstring'>
+  <p>Standard callback used by the <a href='../classes/UserAuth.html'>UserAuth</a> security routines to return the status of a role check operation.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>err</span>
+      <span class='type'>
+        (<tt>Error</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>An error object if an error occurred or null otherwise.</span>
+    </li>
+    <li>
+      <span class='name'>isInRole</span>
+      <span class='type'>
+        (<tt>Boolean</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>An true/false value indicating if the user has the specified role. True indicates that the user possesses the specified role.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+</div>
+    </div>
+    <div id='footer'>
+  Generated on
+  Wed Oct 10 2012 19:32:33 GMT-0500 (CDT)
+  by
+  <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
+  v1.4.1
+  (Node.js v0.8.7).
+  &#10034;
+  Press Ctrl-h to see the keyboard shortcuts
+  &#10034;
+  <a href='http://twitter.com/#!/netzpirat'>@netzpirat</a>
+  &#10034;
+  <a href='https://mksoft.ch'>mksoft.ch</a>
+</div>
+  </body>
+</html>

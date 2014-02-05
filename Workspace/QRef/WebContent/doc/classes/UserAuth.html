@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>QRef Server API Documentation</title>
+  <link rel='stylesheet' href='../assets/codo.css' type='text/css'>
+  <script src='../assets/codo.js'></script>
+  <script src='../assets/search_data.js'></script>
+</head>
+  <body>
+    <div id='base' data-path='../'></div>
+<div id='header'>
+  <div id='menu'>
+    <a href='../class_index.html' title='Index'>Index</a>
+    &raquo;
+    <span class='title'>UserAuth</span>
+    <nav>
+      <ul>
+        <li class='noframes'>
+          (<a class='noframes' href='#'>no frames</a>)
+        </li>
+      </ul>
+    </nav>
+    <div id='search'>
+      <a id='class_list_link' href='../class_list.html'>Classes</a>
+      <a id='file_list_link' href='../file_list.html'>Files</a>
+      <a id='method_list_link' href='../method_list.html'>Methods</a>
+      <a id='extra_list_link' href='../extra_list.html'>Extras</a>
+    </div>
+  </div>
+  <iframe id='search_frame'></iframe>
+  <div id='fuzzySearch'>
+    <input type='text'>
+    <ol></ol>
+  </div>
+  <div id='help'>
+    <p>
+      Quickly fuzzy find classes, mixins, methods, file:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-T</span>
+        Open fuzzy finder dialog
+      </li>
+    </ul>
+    <p>
+      In frame mode you can toggle the list naviation frame on the left side:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-L</span>
+        Toggle list view
+      </li>
+    </ul>
+    <p>
+      You can focus a list in frame mode or toggle a tab in frameless mode:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-C</span>
+        Class list
+      </li>
+      <li>
+        <span>Ctrl-I</span>
+        Mixin list
+      </li>
+      <li>
+        <span>Ctrl-F</span>
+        File list
+      </li>
+      <li>
+        <span>Ctrl-M</span>
+        Method list
+      </li>
+      <li>
+        <span>Ctrl-E</span>
+        Extras list
+      </li>
+    </ul>
+    <p>
+      You can focus and blur the search input:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-S</span>
+        Focus search input
+      </li>
+      <li>
+        <span>Esc</span>
+        Blur search input
+      </li>
+    </ul>
+    <p>
+      In frameless mode you can close the list tab:
+    </p>
+    <ul>
+      <li>
+        <span>Esc</span>
+        Close list tab
+      </li>
+    </ul>
+  </div>
+</div>
+    <div id='content'>
+      <h1>
+        Class:
+        UserAuth
+      </h1>
+      <table class='box'>
+        <tr>
+          <td>Defined in:</td>
+          <td>src/security/UserAuth.coffee</td>
+        </tr>
+      </table>
+      <h2>Overview</h2>
+      <div class='docstring'>
+  <p>Secure utility methods for managing users, credentials, and tokens.</p>
+</div>
+<div class='tags'>
+  <h3>Author:</h3>
+  <ul class='author'>
+    <li>
+      Nathan Klick
+    </li>
+  </ul>
+  <h3>Copyright:</h3>
+  <ul class='copyright'>
+    <li>
+      QRef 2012
+    </li>
+  </ul>
+</div>
+      <h2>Instance Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#constructor-instance'>
+        - (void) <strong>constructor</strong>()
+      </a>
+    </span>
+    <span class='constructor note title'>Constructor</span>
+    <span class='desc'>
+      Creates a new UserAuth object instance.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#salt-instance'>
+        - (String) <strong>salt</strong>()
+      </a>
+    </span>
+    <span class='desc'>
+      Generates a random salt.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#securePassword-instance'>
+        - (String) <strong>securePassword</strong>(key, salt, password)
+      </a>
+    </span>
+    <span class='desc'>
+      Performs an HMAC transformation on a password using a given key and salt values.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#secureToken-instance'>
+        - (String) <strong>secureToken</strong>(key, salt)
+      </a>
+    </span>
+    <span class='desc'>
+      Generates a random secure token using the given key and salt values.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#validateCredential-instance'>
+        - (void) <strong>validateCredential</strong>(userName, password, callback)
+      </a>
+    </span>
+    <span class='desc'>
+      Validates a given userName and password against the database.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#validateToken-instance'>
+        - (void) <strong>validateToken</strong>(token, callback)
+      </a>
+    </span>
+    <span class='desc'>
+      Validate a secure token against the database records.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#login-instance'>
+        - (void) <strong>login</strong>(userName, password, callback)
+      </a>
+    </span>
+    <span class='desc'>
+      Validates a set of user credentials against the database and issues a valid token if the credentials are valid.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#validateRequest-instance'>
+        - (void) <strong>validateRequest</strong>(req, callback)
+      </a>
+    </span>
+    <span class='desc'>
+      A helper method user to extract a token from the Authorization HTTP header and pass it to the <a href='../classes/UserAuth.html#validateToken-instance'>#validateToken</a> method.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#refreshToken-instance'>
+        - (void) <strong>refreshToken</strong>(token, callback)
+      </a>
+    </span>
+    <span class='desc'>
+      Validates and extends the life of an existing secure token.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#createAccount-instance'>
+        - (void) <strong>createAccount</strong>(userName, password, callback)
+      </a>
+    </span>
+    <span class='desc'>
+      Creates a new user account with no roles.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#userFromToken-instance'>
+        - (void) <strong>userFromToken</strong>(token, callback)
+      </a>
+    </span>
+    <span class='desc'>
+      Retrieves the associate user account for a secure token.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#isInRole-instance'>
+        - (void) <strong>isInRole</strong>(token, roleName, callback)
+      </a>
+    </span>
+    <span class='desc'>
+      Determines if the currently authenticated user is in the given role.
+    </span>
+  </li>
+</ul>
+      <h2>Constructor Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='constructor-instance'>
+      - (void) <strong>constructor</strong>()
+    </p>
+    <div class='docstring'>
+  <p>Creates a new UserAuth object instance.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+</div>
+      <h2>Instance Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='salt-instance'>
+      - (String) <strong>salt</strong>()
+    </p>
+    <div class='docstring'>
+  <p>Generates a random salt.</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt>String</tt>)
+      &mdash;
+      <span class='desc'>A hexadecimal string representing a SHA-512 hash.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='securePassword-instance'>
+      - (String) <strong>securePassword</strong>(key, salt, password)
+    </p>
+    <div class='docstring'>
+  <p>Performs an HMAC transformation on a password using a given key and salt values.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>key</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>The key to use with the HMAC algorithm.</span>
+    </li>
+    <li>
+      <span class='name'>salt</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>A hexadecimal string representing a SHA-512 salt value.</span>
+    </li>
+    <li>
+      <span class='name'>password</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>The clear text password to be encoded.</span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt>String</tt>)
+      &mdash;
+      <span class='desc'>A hexadecimal string representing a secure SHA-512 HMAC representation of the clear text password.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='secureToken-instance'>
+      - (String) <strong>secureToken</strong>(key, salt)
+    </p>
+    <div class='docstring'>
+  <p>Generates a random secure token using the given key and salt values.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>key</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>The key to use with the HMAC algorithm.</span>
+    </li>
+    <li>
+      <span class='name'>salt</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>A hexadecimal string representing a SHA-512 salt value.</span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt>String</tt>)
+      &mdash;
+      <span class='desc'>A hexadecimal string representing a secure random token.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='validateCredential-instance'>
+      - (void) <strong>validateCredential</strong>(userName, password, callback)
+    </p>
+    <div class='docstring'>
+  <p>Validates a given userName and password against the database.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>userName</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>The username to validate.</span>
+    </li>
+    <li>
+      <span class='name'>password</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>The clear text password to validate.</span>
+    </li>
+    <li>
+      <span class='name'>callback</span>
+      <span class='type'>
+        (<tt>Function</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>A function meeting the requirements of the <a href='../classes/Callbacks.html#userAuthValidateCredentialCallback-instance'>Callbacks#userAuthValidateCredentialCallback</a> method.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='validateToken-instance'>
+      - (void) <strong>validateToken</strong>(token, callback)
+    </p>
+    <div class='docstring'>
+  <p>Validate a secure token against the database records.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>token</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>A hexadecimal string representing a secure token.</span>
+    </li>
+    <li>
+      <span class='name'>callback</span>
+      <span class='type'>
+        (<tt>Function</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>A function meeting the requirements of the <a href='../classes/Callbacks.html#userAuthValidateCredentialCallback-instance'>Callbacks#userAuthValidateCredentialCallback</a> method.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='login-instance'>
+      - (void) <strong>login</strong>(userName, password, callback)
+    </p>
+    <div class='docstring'>
+  <p>Validates a set of user credentials against the database and issues a valid token if the credentials are valid.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>userName</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>The username to validate.</span>
+    </li>
+    <li>
+      <span class='name'>password</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>The clear text password to validate.</span>
+    </li>
+    <li>
+      <span class='name'>callback</span>
+      <span class='type'>
+        (<tt>Function</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>A function meeting the requirements of the <a href='../classes/Callbacks.html#userAuthLoginCallback-instance'>Callbacks#userAuthLoginCallback</a> method.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='validateRequest-instance'>
+      - (void) <strong>validateRequest</strong>(req, callback)
+    </p>
+    <div class='docstring'>
+  <p>A helper method user to extract a token from the Authorization HTTP header and pass it to the <a href='../classes/UserAuth.html#validateToken-instance'>#validateToken</a> method.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>req</span>
+      <span class='type'>
+        (<tt>Express.Request</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>The HTTP request object.</span>
+    </li>
+    <li>
+      <span class='name'>callback</span>
+      <span class='type'>
+        (<tt>Function</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>A function meeting the requirements of the <a href='../classes/Callbacks.html#userAuthValidateCredentialCallback-instance'>Callbacks#userAuthValidateCredentialCallback</a> method.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='refreshToken-instance'>
+      - (void) <strong>refreshToken</strong>(token, callback)
+    </p>
+    <div class='docstring'>
+  <p>Validates and extends the life of an existing secure token.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>token</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>A hexadecimal string representing a secure token.</span>
+    </li>
+    <li>
+      <span class='name'>callback</span>
+      <span class='type'>
+        (<tt>Function</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>A function meeting the requirements of the <a href='../classes/Callbacks.html#userAuthValidateCredentialCallback-instance'>Callbacks#userAuthValidateCredentialCallback</a> method.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='createAccount-instance'>
+      - (void) <strong>createAccount</strong>(userName, password, callback)
+    </p>
+    <div class='docstring'>
+  <p>Creates a new user account with no roles.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>userName</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>The userName to create. This should always be the email address of the user.</span>
+    </li>
+    <li>
+      <span class='name'>password</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>The clear text password provided by the user.</span>
+    </li>
+    <li>
+      <span class='name'>callback</span>
+      <span class='type'>
+        (<tt>Function</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>A function meeting the requirements of the <a href='../classes/Callbacks.html#userAuthCreateAccountCallback-instance'>Callbacks#userAuthCreateAccountCallback</a> method.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='userFromToken-instance'>
+      - (void) <strong>userFromToken</strong>(token, callback)
+    </p>
+    <div class='docstring'>
+  <p>Retrieves the associate user account for a secure token.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>token</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>A hexadecimal string representing a secure token.</span>
+    </li>
+    <li>
+      <span class='name'>callback</span>
+      <span class='type'>
+        (<tt>Function</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>A function meeting the requirements of the <a href='../classes/Callbacks.html#userAuthUserFromTokenCallback-instance'>Callbacks#userAuthUserFromTokenCallback</a> method.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='isInRole-instance'>
+      - (void) <strong>isInRole</strong>(token, roleName, callback)
+    </p>
+    <div class='docstring'>
+  <p>Determines if the currently authenticated user is in the given role.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>token</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>A hexadecimal string representing a secure token.</span>
+    </li>
+    <li>
+      <span class='name'>roleName</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>The name of the role. </span>
+    </li>
+    <li>
+      <span class='name'>callback</span>
+      <span class='type'>
+        (<tt>Function</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>A function meeting the requirements of the <a href='../classes/Callbacks.html#userAuthIsInRoleCallback-instance'>Callbacks#userAuthIsInRoleCallback</a> method.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+</div>
+    </div>
+    <div id='footer'>
+  Generated on
+  Wed Oct 10 2012 19:32:33 GMT-0500 (CDT)
+  by
+  <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
+  v1.4.1
+  (Node.js v0.8.7).
+  &#10034;
+  Press Ctrl-h to see the keyboard shortcuts
+  &#10034;
+  <a href='http://twitter.com/#!/netzpirat'>@netzpirat</a>
+  &#10034;
+  <a href='https://mksoft.ch'>mksoft.ch</a>
+</div>
+  </body>
+</html>

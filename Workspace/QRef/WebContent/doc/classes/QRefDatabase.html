@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>QRef Server API Documentation</title>
+  <link rel='stylesheet' href='../assets/codo.css' type='text/css'>
+  <script src='../assets/codo.js'></script>
+  <script src='../assets/search_data.js'></script>
+</head>
+  <body>
+    <div id='base' data-path='../'></div>
+<div id='header'>
+  <div id='menu'>
+    <a href='../class_index.html' title='Index'>Index</a>
+    &raquo;
+    <span class='title'>QRefDatabase</span>
+    <nav>
+      <ul>
+        <li class='noframes'>
+          (<a class='noframes' href='#'>no frames</a>)
+        </li>
+      </ul>
+    </nav>
+    <div id='search'>
+      <a id='class_list_link' href='../class_list.html'>Classes</a>
+      <a id='file_list_link' href='../file_list.html'>Files</a>
+      <a id='method_list_link' href='../method_list.html'>Methods</a>
+      <a id='extra_list_link' href='../extra_list.html'>Extras</a>
+    </div>
+  </div>
+  <iframe id='search_frame'></iframe>
+  <div id='fuzzySearch'>
+    <input type='text'>
+    <ol></ol>
+  </div>
+  <div id='help'>
+    <p>
+      Quickly fuzzy find classes, mixins, methods, file:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-T</span>
+        Open fuzzy finder dialog
+      </li>
+    </ul>
+    <p>
+      In frame mode you can toggle the list naviation frame on the left side:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-L</span>
+        Toggle list view
+      </li>
+    </ul>
+    <p>
+      You can focus a list in frame mode or toggle a tab in frameless mode:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-C</span>
+        Class list
+      </li>
+      <li>
+        <span>Ctrl-I</span>
+        Mixin list
+      </li>
+      <li>
+        <span>Ctrl-F</span>
+        File list
+      </li>
+      <li>
+        <span>Ctrl-M</span>
+        Method list
+      </li>
+      <li>
+        <span>Ctrl-E</span>
+        Extras list
+      </li>
+    </ul>
+    <p>
+      You can focus and blur the search input:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-S</span>
+        Focus search input
+      </li>
+      <li>
+        <span>Esc</span>
+        Blur search input
+      </li>
+    </ul>
+    <p>
+      In frameless mode you can close the list tab:
+    </p>
+    <ul>
+      <li>
+        <span>Esc</span>
+        Close list tab
+      </li>
+    </ul>
+  </div>
+</div>
+    <div id='content'>
+      <h1>
+        Class:
+        QRefDatabase
+      </h1>
+      <table class='box'>
+        <tr>
+          <td>Defined in:</td>
+          <td>src/db/QRefDatabase.coffee</td>
+        </tr>
+      </table>
+      <h2>Overview</h2>
+      <div class='docstring'>
+  <p>Database middleware class that handles connection setup and exposes available data models.<br />Creating multiple instances of this class will create a new connection for each instance; therefore, <br />the application only spins up one copy of this class at startup and exposes a global variable named QRefDatabase <br />which is reused through the application. The convience method <a href='../classes/QRefDatabase.html#instance-instance'>#instance</a> is used to grab a reference off of <br />this global QRefDatabase variable. Only one connection to the MongoDB server is ever needed for the life of the <br />application because all requests to mongo occur in an evented manner and a single connection object can handle <br />multiple requests at a time. </p>
+  <div class='examples'>
+    <h3>Examples:</h3>
+    <h4>
+      Getting a reference from QRefDatabase global variable
+    </h4>
+    <pre><code class='coffee'>db = QRefDatabase.instance()</code></pre>
+  </div>
+</div>
+<div class='tags'>
+  <h3>Author:</h3>
+  <ul class='author'>
+    <li>
+      Nathan Klick
+    </li>
+  </ul>
+  <h3>Copyright:</h3>
+  <ul class='copyright'>
+    <li>
+      QRef 2012
+    </li>
+  </ul>
+</div>
+      <h2>Property Summary</h2>
+      <dl class='properties'>
+        <dt id='connection-property'>
+          <span class='signature'>
+            (Mongoose.Connection) <strong>connection</strong>
+          </span>
+        </dt>
+        <dd class='desc'>
+          <p>The underlying mongoose connection object.</p>
+        </dd>
+        <dt id='url-property'>
+          <span class='signature'>
+            (String) <strong>url</strong>
+          </span>
+        </dt>
+        <dd class='desc'>
+          <p>The mongodb URL to use in establishing the mongoose connection object.</p>
+        </dd>
+        <dt id='User-property'>
+          <span class='signature'>
+            (UserSchemaInternal) <strong>User</strong>
+          </span>
+        </dt>
+        <dd class='desc'>
+          <p>A reference to the User model.</p>
+        </dd>
+        <dt id='AuthToken-property'>
+          <span class='signature'>
+            (AuthTokenSchemaInternal) <strong>AuthToken</strong>
+          </span>
+        </dt>
+        <dd class='desc'>
+          <p>A reference to the AuthToken model.</p>
+        </dd>
+        <dt id='Role-property'>
+          <span class='signature'>
+            (RoleSchemaInternal) <strong>Role</strong>
+          </span>
+        </dt>
+        <dd class='desc'>
+          <p>A reference to the Role model.</p>
+        </dd>
+        <dt id='RecoveryQuestion-property'>
+          <span class='signature'>
+            (RecoveryQuestionSchemaInternal) <strong>RecoveryQuestion</strong>
+          </span>
+        </dt>
+        <dd class='desc'>
+          <p>A reference to the RecoveryQuestion model.</p>
+        </dd>
+        <dt id='AircraftManufacturer-property'>
+          <span class='signature'>
+            (AircraftManufacturerSchemaInternal) <strong>AircraftManufacturer</strong>
+          </span>
+        </dt>
+        <dd class='desc'>
+          <p>A reference to the AircraftManufacturer model.</p>
+        </dd>
+        <dt id='AircraftModel-property'>
+          <span class='signature'>
+            (AircraftModelSchemaInternal) <strong>AircraftModel</strong>
+          </span>
+        </dt>
+        <dd class='desc'>
+          <p>A reference to the AircraftModel model.</p>
+        </dd>
+        <dt id='AircraftChecklist-property'>
+          <span class='signature'>
+            (AircraftChecklistSchemaInternal) <strong>AircraftChecklist</strong>
+          </span>
+        </dt>
+        <dd class='desc'>
+          <p>A reference to the AircraftChecklist model.</p>
+        </dd>
+        <dt id='Product-property'>
+          <span class='signature'>
+            (ProductSchemaInternal) <strong>Product</strong>
+          </span>
+        </dt>
+        <dd class='desc'>
+          <p>A reference to the Product model.</p>
+        </dd>
+        <dt id='UserProduct-property'>
+          <span class='signature'>
+            (UserProductSchemaInternal) <strong>UserProduct</strong>
+          </span>
+        </dt>
+        <dd class='desc'>
+          <p>A reference to the UserProduct model.</p>
+        </dd>
+        <dt id='AircraftProductAuthorizationAttempt-property'>
+          <span class='signature'>
+            (AircraftProductAuthorizationAttemptSchemaInternal) <strong>AircraftProductAuthorizationAttempt</strong>
+          </span>
+        </dt>
+        <dd class='desc'>
+          <p>A reference to the AircraftProductAuthorizationAttempt model.</p>
+        </dd>
+        <dt id='Schema-property'>
+          <span class='signature'>
+            (Mongoose.Schema) <strong>Schema</strong>
+          </span>
+        </dt>
+        <dd class='desc'>
+          <p>A convenience property for accessing the Mongoose.Schema object.</p>
+        </dd>
+      </dl>
+      <h2>Instance Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#constructor-instance'>
+        - (void) <strong>constructor</strong>()
+      </a>
+    </span>
+    <span class='constructor note title'>Constructor</span>
+    <span class='desc'>
+      Create a new instance of the QRefDatabase object, connects to mongodb, and calls the <a href='../classes/QRefDatabase.html#initialize-instance'>#initialize</a> method.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#initialize-instance'>
+        - (void) <strong>initialize</strong>()
+      </a>
+    </span>
+    <span class='desc'>
+      Attaches all the schemas to mongoose and sets up the model references.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getConnection-instance'>
+        - (Mongoose.Connection) <strong>getConnection</strong>()
+      </a>
+    </span>
+    <span class='desc'>
+      Returns a reference to the underlying mongoose connection.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getUrl-instance'>
+        - (String) <strong>getUrl</strong>()
+      </a>
+    </span>
+    <span class='desc'>
+      Returns the URL used to establish the underlying mongodb connection.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#instance-instance'>
+        - (QRefDatabase) <strong>instance</strong>()
+      </a>
+    </span>
+    <span class='desc'>
+      Safety method for retrieving a reference to the current instance of this object.
+    </span>
+  </li>
+</ul>
+      <h2>Constructor Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='constructor-instance'>
+      - (void) <strong>constructor</strong>()
+    </p>
+    <div class='docstring'>
+  <p>Create a new instance of the QRefDatabase object, connects to mongodb, and calls the <a href='../classes/QRefDatabase.html#initialize-instance'>#initialize</a> method.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+</div>
+      <h2>Instance Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='initialize-instance'>
+      - (void) <strong>initialize</strong>()
+    </p>
+    <div class='docstring'>
+  <p>Attaches all the schemas to mongoose and sets up the model references.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getConnection-instance'>
+      - (Mongoose.Connection) <strong>getConnection</strong>()
+    </p>
+    <div class='docstring'>
+  <p>Returns a reference to the underlying mongoose connection.</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt>Mongoose.Connection</tt>)
+      &mdash;
+      <span class='desc'>The underlying mongoose connection object.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getUrl-instance'>
+      - (String) <strong>getUrl</strong>()
+    </p>
+    <div class='docstring'>
+  <p>Returns the URL used to establish the underlying mongodb connection.</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt>String</tt>)
+      &mdash;
+      <span class='desc'>The mongodb URL.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='instance-instance'>
+      - (QRefDatabase) <strong>instance</strong>()
+    </p>
+    <div class='docstring'>
+  <p>Safety method for retrieving a reference to the current instance of this object.</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt><a href='../classes/QRefDatabase.html'>QRefDatabase</a></tt>)
+      &mdash;
+      <span class='desc'>A reference to the current instance of this object.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+</div>
+    </div>
+    <div id='footer'>
+  Generated on
+  Wed Oct 10 2012 19:32:33 GMT-0500 (CDT)
+  by
+  <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
+  v1.4.1
+  (Node.js v0.8.7).
+  &#10034;
+  Press Ctrl-h to see the keyboard shortcuts
+  &#10034;
+  <a href='http://twitter.com/#!/netzpirat'>@netzpirat</a>
+  &#10034;
+  <a href='https://mksoft.ch'>mksoft.ch</a>
+</div>
+  </body>
+</html>

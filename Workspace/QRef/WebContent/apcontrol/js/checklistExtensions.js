@@ -1048,7 +1048,6 @@ function CheckIn_Cycle(datalist, ul)
 		
 		var SectionIndex = $(option).data("SectionIndex");
 		var Section = $(option).data("Section");
-		var Index = $(option).data("Index");
 		var Check = $(option).data("Check");
 		var Response = $(option).data("Response");
 		var value = $(option).data("Value");
@@ -1056,7 +1055,7 @@ function CheckIn_Cycle(datalist, ul)
 		var newItem = new ChecklistItem();
 		newItem.check = Check;
 		newItem.response = Response;
-		newItem.index = Index;
+		newItem.index = i;
 		
 		var section = _.find(datalist,function(item){
 			if(item.name == Section)

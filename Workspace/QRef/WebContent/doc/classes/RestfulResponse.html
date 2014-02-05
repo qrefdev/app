@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>QRef Server API Documentation</title>
+  <link rel='stylesheet' href='../assets/codo.css' type='text/css'>
+  <script src='../assets/codo.js'></script>
+  <script src='../assets/search_data.js'></script>
+</head>
+  <body>
+    <div id='base' data-path='../'></div>
+<div id='header'>
+  <div id='menu'>
+    <a href='../class_index.html' title='Index'>Index</a>
+    &raquo;
+    <span class='title'>RestfulResponse</span>
+    <nav>
+      <ul>
+        <li class='noframes'>
+          (<a class='noframes' href='#'>no frames</a>)
+        </li>
+      </ul>
+    </nav>
+    <div id='search'>
+      <a id='class_list_link' href='../class_list.html'>Classes</a>
+      <a id='file_list_link' href='../file_list.html'>Files</a>
+      <a id='method_list_link' href='../method_list.html'>Methods</a>
+      <a id='extra_list_link' href='../extra_list.html'>Extras</a>
+    </div>
+  </div>
+  <iframe id='search_frame'></iframe>
+  <div id='fuzzySearch'>
+    <input type='text'>
+    <ol></ol>
+  </div>
+  <div id='help'>
+    <p>
+      Quickly fuzzy find classes, mixins, methods, file:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-T</span>
+        Open fuzzy finder dialog
+      </li>
+    </ul>
+    <p>
+      In frame mode you can toggle the list naviation frame on the left side:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-L</span>
+        Toggle list view
+      </li>
+    </ul>
+    <p>
+      You can focus a list in frame mode or toggle a tab in frameless mode:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-C</span>
+        Class list
+      </li>
+      <li>
+        <span>Ctrl-I</span>
+        Mixin list
+      </li>
+      <li>
+        <span>Ctrl-F</span>
+        File list
+      </li>
+      <li>
+        <span>Ctrl-M</span>
+        Method list
+      </li>
+      <li>
+        <span>Ctrl-E</span>
+        Extras list
+      </li>
+    </ul>
+    <p>
+      You can focus and blur the search input:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-S</span>
+        Focus search input
+      </li>
+      <li>
+        <span>Esc</span>
+        Blur search input
+      </li>
+    </ul>
+    <p>
+      In frameless mode you can close the list tab:
+    </p>
+    <ul>
+      <li>
+        <span>Esc</span>
+        Close list tab
+      </li>
+    </ul>
+  </div>
+</div>
+    <div id='content'>
+      <h1>
+        Class:
+        RestfulResponse
+      </h1>
+      <table class='box'>
+        <tr>
+          <td>Defined in:</td>
+          <td>src/serialization/RestfulResponse.coffee</td>
+        </tr>
+      </table>
+      <h2>Overview</h2>
+      <div class='docstring'>
+  <p>The response object returned for all RESTful requests. <br />This response object supports pagination and returning the total available records using the <a href='../classes/RestfulResponse.html#setTotal-instance'>#setTotal</a> method.</p>
+  <div class='examples'>
+    <h3>Examples:</h3>
+    <h4>
+      Reporting a Failure
+    </h4>
+    <pre><code class='coffee'>response = new RestfulResponse()
+response.failure(&#39;Some failure reason&#39;, 500)</code></pre>
+    <h4>
+      Returning Data [Single Object]
+    </h4>
+    <pre><code class='coffee'>response = new RestfulResponse()
+response.addRecord(someObj)
+response.setTotal(1)</code></pre>
+    <h4>
+      Returning Data [Array of Objects]
+    </h4>
+    <pre><code class='coffee'>response = new RestfulResponse()
+response.addRecords(someArray)
+response.setTotal(someCount)</code></pre>
+    <h4>
+      Reset to Default
+    </h4>
+    <pre><code class='coffee'>response = new RestfulResponse()
+response.addRecords(someArray)
+response.reset()</code></pre>
+    <h4>
+      Count Objects in Response
+    </h4>
+    <pre><code class='coffee'>response = new RestfulResponse()
+response.addRecords(someArray)
+myCount = response.getLength()</code></pre>
+  </div>
+</div>
+<div class='tags'>
+  <h3>Author:</h3>
+  <ul class='author'>
+    <li>
+      Nathan Klick
+    </li>
+  </ul>
+  <h3>Copyright:</h3>
+  <ul class='copyright'>
+    <li>
+      QRef 2012
+    </li>
+  </ul>
+</div>
+      <h2>Property Summary</h2>
+      <dl class='properties'>
+        <dt id='total-property'>
+          <span class='signature'>
+            (Number) <strong>total</strong>
+          </span>
+        </dt>
+        <dd class='desc'>
+          <p>(Required) The total number of records available.</p>
+        </dd>
+        <dt id='records-property'>
+          <span class='signature'>
+            (Array&lt;Object&gt;) <strong>records</strong>
+          </span>
+        </dt>
+        <dd class='desc'>
+          <p>(Required) The records returned from the server.</p>
+        </dd>
+        <dt id='success-property'>
+          <span class='signature'>
+            (Boolean) <strong>success</strong>
+          </span>
+        </dt>
+        <dd class='desc'>
+          <p>(Required) A boolean value indicating whether the request was successful. True if the request succeeded, false otherwise.</p>
+        </dd>
+        <dt id='mode-property'>
+          <span class='signature'>
+            (String) <strong>mode</strong>
+          </span>
+        </dt>
+        <dd class='desc'>
+          <p>(Required) The type of request being responded to by the server. Will always be &quot;rest&quot;.</p>
+        </dd>
+        <dt id='message-property'>
+          <span class='signature'>
+            (Mixed) <strong>message</strong>
+          </span>
+        </dt>
+        <dd class='desc'>
+          <p>(Required) A string or object containing an error message from a server side failure.</p>
+        </dd>
+        <dt id='errorCode-property'>
+          <span class='signature'>
+            (Number) <strong>errorCode</strong>
+          </span>
+        </dt>
+        <dd class='desc'>
+          <p>(Required) An error code returned from the server indicating failure. Will always be a standard HTTP error code (4xx, 5xx). </p>
+        </dd>
+      </dl>
+      <h2>Instance Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#constructor-instance'>
+        - (void) <strong>constructor</strong>()
+      </a>
+    </span>
+    <span class='constructor note title'>Constructor</span>
+    <span class='desc'>
+      Contructs a new RestfulResponse object and calls the <a href='../classes/RestfulResponse.html#reset-instance'>#reset</a> method.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#setTotal-instance'>
+        - (void) <strong>setTotal</strong>(value)
+      </a>
+    </span>
+    <span class='desc'>
+      Sets the total number of available records when using pagination on a request.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#addRecord-instance'>
+        - (void) <strong>addRecord</strong>(r)
+      </a>
+    </span>
+    <span class='desc'>
+      Add a single object to the records associated with this response.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#addRecords-instance'>
+        - (void) <strong>addRecords</strong>(arr)
+      </a>
+    </span>
+    <span class='desc'>
+      Appends an array of objects to the response.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#reset-instance'>
+        - (void) <strong>reset</strong>()
+      </a>
+    </span>
+    <span class='desc'>
+      Resets the AjaxResponse object to its default state.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getLength-instance'>
+        - (Number) <strong>getLength</strong>()
+      </a>
+    </span>
+    <span class='desc'>
+      Returns the total number of objects contained in this response.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#failure-instance'>
+        - (void) <strong>failure</strong>(reason, errorCode)
+      </a>
+    </span>
+    <span class='desc'>
+      Sets this response to a failed state by setting the success property to false and assigning the message and errorCode properties.
+    </span>
+  </li>
+</ul>
+      <h2>Constructor Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='constructor-instance'>
+      - (void) <strong>constructor</strong>()
+    </p>
+    <div class='docstring'>
+  <p>Contructs a new RestfulResponse object and calls the <a href='../classes/RestfulResponse.html#reset-instance'>#reset</a> method. </p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+</div>
+      <h2>Instance Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='setTotal-instance'>
+      - (void) <strong>setTotal</strong>(value)
+    </p>
+    <div class='docstring'>
+  <p>Sets the total number of available records when using pagination on a request. </p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>value</span>
+      <span class='type'>
+        (<tt>Number</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>The total number of available records. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='addRecord-instance'>
+      - (void) <strong>addRecord</strong>(r)
+    </p>
+    <div class='docstring'>
+  <p>Add a single object to the records associated with this response.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>r</span>
+      <span class='type'>
+        (<tt>Object</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>The record to add to the response.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='addRecords-instance'>
+      - (void) <strong>addRecords</strong>(arr)
+    </p>
+    <div class='docstring'>
+  <p>Appends an array of objects to the response.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>arr</span>
+      <span class='type'>
+        (<tt>Array&lt;Object&gt;</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>The array of objects to append to this response.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='reset-instance'>
+      - (void) <strong>reset</strong>()
+    </p>
+    <div class='docstring'>
+  <p>Resets the AjaxResponse object to its default state.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getLength-instance'>
+      - (Number) <strong>getLength</strong>()
+    </p>
+    <div class='docstring'>
+  <p>Returns the total number of objects contained in this response.</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt>Number</tt>)
+      &mdash;
+      <span class='desc'>The total number of objects in this response.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='failure-instance'>
+      - (void) <strong>failure</strong>(reason, errorCode)
+    </p>
+    <div class='docstring'>
+  <p>Sets this response to a failed state by setting the success property to false and assigning the message and errorCode properties.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>reason</span>
+      <span class='type'>
+        (<tt>Mixed</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>The string or object to be set as the message property. </span>
+    </li>
+    <li>
+      <span class='name'>errorCode</span>
+      <span class='type'>
+        (<tt>Number</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>The standard HTTP error code to return in the errorCode property.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+</div>
+    </div>
+    <div id='footer'>
+  Generated on
+  Wed Oct 10 2012 19:32:33 GMT-0500 (CDT)
+  by
+  <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
+  v1.4.1
+  (Node.js v0.8.7).
+  &#10034;
+  Press Ctrl-h to see the keyboard shortcuts
+  &#10034;
+  <a href='http://twitter.com/#!/netzpirat'>@netzpirat</a>
+  &#10034;
+  <a href='https://mksoft.ch'>mksoft.ch</a>
+</div>
+  </body>
+</html>
