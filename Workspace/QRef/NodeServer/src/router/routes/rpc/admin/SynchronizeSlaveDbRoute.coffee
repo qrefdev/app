@@ -167,7 +167,40 @@ class SynchronizeSlaveDbRoute extends RpcRoute
 										sNewChkLst.version = sChkLstVersion + 1
 										sNewChkLst.productIcon = mChkLst.productIcon
 										
-										sNewChkLst.save(cb)
+										sNewChkLst.save((err)=>
+											if err?
+												cb(err)
+												return
+											
+											slaveDb.AircraftChecklist
+											.where('manufacturer')
+											.equals(mChkLst.manufacturer)
+											.where('model')
+											.equals(mChkLst.model)
+											.where('user')
+											.equals(null)
+											.where('version')
+											.ne(sChkLstVersion + 1)
+											.where('isDeleted')
+											.equals(false)
+											.find((err, arrPreviousItems) =>
+												if err?
+													cb(err)
+													return
+												
+												async.forEach(arrPreviousItems,
+													(pItem, zCb) =>
+														pItem.isDeleted = true
+														pItem.save(zCb)
+													,(err) =>
+														if err?
+															cb(err)
+															return
+														
+														cb(null)
+												)
+											)
+										)
 										
 									)
 								)

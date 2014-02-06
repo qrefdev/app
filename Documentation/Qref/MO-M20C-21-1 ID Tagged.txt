@@ -1,0 +1,380 @@
+<ASCII-MAC>
+<Version:8><FeatureSet:InDesign-Roman><ColorTable:=<Black:COLOR:CMYK:Process:0,0,0,1><Accent Darker:COLOR:LAB:Process:66,-1.2451000213623047,-1.9454998970031738><Blue:COLOR:CMYK:Process:1,0.75,0,0><Red Dark:COLOR:CMYK:Process:0.26,1,1,0.26>>
+<DefineListStyle:\[Default\]=<ContinuesAcrossStories:0><ContinuesAcrossDocuments:0>>
+<DefineCharStyle:Body Bold=<Nextstyle:Body Bold><cTypeface:Bold><cFont:Myriad Pro>>
+<DefineCharStyle:Body Number=<Nextstyle:Body Number><cColor:Accent Darker><cTypeface:Semibold><cSize:9.000000><cFont:Myriad Pro>>
+<DefineCharStyle:Note \!=<Nextstyle:Note \!><cColor:Red Dark><cTypeface:Regular><cSize:11.000000><cStrokeWeight:2.000000><cBaselineShift:-0.500000><cStrokeColor:None><cFont:FontAwesome><cOutlineJoin:1>>
+<DefineParaStyle:Guts\:Body=<Nextstyle:Guts\:Body><cTypeface:Light><cSize:11.000000><cHorizontalScale:0.950000><pLeftIndent:17.999999><pFirstLineIndent:-5.000001><cLeading:16.000000><pTabRuler:12\,Left\,.\,0\,\;17.999999999999993\,Left\,.\,0\,\;154\,Left\,.\,0\,\;><cFont:Myriad Pro><pRunInGrepStyles:Body Bold\,\(\[\\d\]\+\[\\-\]\[\\d\]\+\|\\d\+\)\(\?\=\\s\(KIAS\|MPH\|RPM\)\)\;Body Bold\,\(\?\<\=\\t\)\(\\d\\-\\d\+\\<0x00B0>\|\\d\+\\<0x00B0>\)\;Body Bold\,\(\?\<\=\\t\)\[0-9\].\[\^\\l\\u\]\+\;><bnListType:Numbered><numListLevel:2><numCharStyle:Body Number><numAlignment:Right><numNumber:\^\#\^t>>
+<DefineParaStyle:Guts\:Header=<Nextstyle:Guts\:Header><KeyboardShortcut:Shift\+Num 1><cColor:Blue><cTypeface:Bold SemiExtended><cSize:10.500000><cCase:All Caps><pLeftIndent:4.000000><cLeading:16.000000><pSpaceBefore:16.000000><pTabRuler:12\,Left\,.\,0\,\;154\,Left\,.\,0\,\;><cFont:Myriad Pro><bnListType:Numbered><bnBulletCharacter:UnicodeWithFont\,32><bnNumberingStyle:><bulFont:Myriad Pro><bulTypeFace:Bold SemiExtended><numCFPrevious:0><numNumber:><bulTextAfter:>>
+<DefineParaStyle:Guts\:Continued=<BasedOn:Guts\:Body><Nextstyle:Guts\:Continued><KeyboardShortcut:Shift\+Num 9><cColor:Accent Darker><cTypeface:SemiExtended><cSize:7.000000><cTracking:200><cBaselineShift:1.000000><cCase:All Caps><pRightIndent:5.000000><pTextAlignment:Right><pRunInGrepStyles:none><bnListType:None>>
+<DefineParaStyle:Guts\:Note=<BasedOn:Guts\:Body><Nextstyle:Guts\:Note><KeyboardShortcut:Shift\+Num 3><cTypeface:Semibold Italic><cSize:9.000000><cBaselineShift:0.500000><pLeftIndent:18.000000><pFirstLineIndent:-13.500000><pTabRuler:17.999999999999993\,Left\,.\,0\,\;163\,Left\,.\,0\,\;><bnListType:Bullet><bnBulletCharacter:GlyphWithFont\,108><bulFont:FontAwesome><bulTypeFace:Regular><bulCharStyle:Note \!>>
+<DefineParaStyle:Guts\:Body Table Data=<BasedOn:Guts\:Body Table><Nextstyle:Guts\:Body Table Data><cColor:Black><cTypeface:Light><cSize:11.000000>>
+<DefineParaStyle:Guts\:Body Table=<BasedOn:Guts\:Body><Nextstyle:Guts\:Body Table Data><cTypeface:Bold SemiExtended><cSize:9.000000><pLeftIndent:4.999999><pRightIndent:5.000000><pFirstLineIndent:-0.000001><pTabRuler:42\,Right\,.\,0\,\;78\,Right\,.\,0\,\;113\,Right\,.\,0\,\;156\,Right\,.\,0\,\;210\,Right\,.\,0\,\;><pTextAlignment:Right><pRunInGrepStyles:none><bnListType:None>>
+<DefineParaStyle:Guts\:Header EMERG=<BasedOn:Guts\:Header><Nextstyle:Guts\:Header EMERG><KeyboardShortcut:Shift\+Num 4><cColor:Red Dark>>
+<ParaStyle:Guts\:Body>Maintenance Records & Books 	Check
+<ParaStyle:Guts\:Body>Weather 	Check
+<ParaStyle:Guts\:Body>Aircraft Performance Data 	Check
+<ParaStyle:Guts\:Body>AROW Documents 	Check
+<ParaStyle:Guts\:Body>Gear 	Down
+<ParaStyle:Guts\:Body>Mags 	OFF
+<ParaStyle:Guts\:Body>Rocker Switches 	OFF
+<ParaStyle:Guts\:Body>MASTER Switch 	ON
+<ParaStyle:Guts\:Body>Fuel Gages 	Check
+<ParaStyle:Guts\:Body>Battery Voltage 	Check
+<ParaStyle:Guts\:Body>Pitot Heat 	OFF
+<ParaStyle:Guts\:Body>MASTER Switch 	OFF
+<ParaStyle:Guts\:Header>Right Fuselage / Tail
+<ParaStyle:Guts\:Body>Instrument Static Port 	Clear / Check
+<ParaStyle:Guts\:Body>Rivets & Skin 	Check
+<ParaStyle:Guts\:Body>All Panels 	Secure
+<ParaStyle:Guts\:Body>Tie Down 	Remove
+<ParaStyle:Guts\:Header>Empennage
+<ParaStyle:Guts\:Body>Elevator / Rudder 	Check
+<ParaStyle:Guts\:Body>Tail Lights 	Inspect
+<ParaStyle:Guts\:Body>Rivets & Skin 	Check
+<ParaStyle:Guts\:Body>All Panels 	Secure
+<ParaStyle:Guts\:Body>Tie Down 	Remove
+<ParaStyle:Guts\:Header><pTabRuler:12\,Left\,.\,0\,\;17.999999999999993\,Left\,.\,0\,\;154\,Left\,.\,0\,\;><cNextXChars:Column>
+<pTabRuler:><ParaStyle:Guts\:Header><pTabRuler:12\,Left\,.\,0\,\;17.999999999999993\,Left\,.\,0\,\;154\,Left\,.\,0\,\;>Left Fuselage / Tail
+<pTabRuler:><ParaStyle:Guts\:Body>Instrument Static Port 	Check
+<ParaStyle:Guts\:Body>Rivets & Skin 	Check
+<ParaStyle:Guts\:Body>All Panels 	Secure
+<ParaStyle:Guts\:Header><pTabRuler:12\,Left\,.\,0\,\;17.999999999999993\,Left\,.\,0\,\;154\,Left\,.\,0\,\;>Left Wing
+<pTabRuler:><ParaStyle:Guts\:Body>Flaps / Ailerons 	Check
+<ParaStyle:Guts\:Body>Wing Tips and Lights 	Inspect
+<ParaStyle:Guts\:Body>Pitot Tube 	Check / Clear
+<ParaStyle:Guts\:Body>Landing /Taxi Lights 	Check
+<ParaStyle:Guts\:Body>Stall Warning Vane 	Check
+<ParaStyle:Guts\:Body>Fuel Tank Quantity and Cap 	Secured
+<ParaStyle:Guts\:Body>Tie Down / Chocks 	Remove
+<ParaStyle:Guts\:Body>Fuel Vent 	Clear
+<ParaStyle:Guts\:Body>Gear / Shocks / Doors / Linkage 	Check
+<ParaStyle:Guts\:Body>Fuel Sump 	Drain
+<ParaStyle:Guts\:Header><pTabRuler:12\,Left\,.\,0\,\;17.999999999999993\,Left\,.\,0\,\;154\,Left\,.\,0\,\;>Nose
+<pTabRuler:><ParaStyle:Guts\:Body>Windshield 	Clean / Check
+<ParaStyle:Guts\:Body>Cabin Inlet 	Check
+<ParaStyle:Guts\:Body>Panels 	Check Security
+<ParaStyle:Guts\:Body>Cowl Flaps 	Check
+<ParaStyle:Guts\:Body>Prop & Spinner 	Inspect
+<ParaStyle:Guts\:Body>Induction Inlets 	Check
+<ParaStyle:Guts\:Body>Gear / Shocks / Doors / Linkage 	Check
+<ParaStyle:Guts\:Body>Engine Oil 	6-8 Qts.
+<ParaStyle:Guts\:Body>Exhaust Piper 	Check
+<ParaStyle:Guts\:Header>Right Wing
+<ParaStyle:Guts\:Body>Fuel Sump 	Drain
+<ParaStyle:Guts\:Body>Gear / Shocks / Doors / Linkage 	Check
+<ParaStyle:Guts\:Body>Tie Down / Chocks 	Remove
+<ParaStyle:Guts\:Body>Fuel Vent 	Clear
+<ParaStyle:Guts\:Body>Fuel Tank Quantity and Cap 	Secured
+<ParaStyle:Guts\:Body>Landing /Taxi Lights 	Check
+<ParaStyle:Guts\:Body>Wing Tips and Lights 	Inspect
+<ParaStyle:Guts\:Body>Flaps / Ailerons 	Check
+<ParaStyle:Guts\:Body>Baggage Door 	Secured
+<ParaStyle:Guts\:Header><pTabRuler:12\,Left\,.\,0\,\;17.999999999999993\,Left\,.\,0\,\;154\,Left\,.\,0\,\;>Engine Startup
+<pTabRuler:><ParaStyle:Guts\:Body>Brakes 	Set
+<ParaStyle:Guts\:Body>Briefing / Seat Belts 	Check
+<ParaStyle:Guts\:Body>MASTER / Mags 	OFF
+<ParaStyle:Guts\:Body>Avionics and Radios 	OFF
+<ParaStyle:Guts\:Body>ELT (If Applicable) 	ARM
+<ParaStyle:Guts\:Body>Circuit Breakers / Fuses 	Check
+<ParaStyle:Guts\:Body>Cowl Flaps 	OPEN
+<ParaStyle:Guts\:Body>Fuel Selector 	Fullest
+<ParaStyle:Guts\:Body>Carb Heat 	OFF
+<ParaStyle:Guts\:Body>MASTER 	ON
+<ParaStyle:Guts\:Body>Landing Gear 	Verify Down
+<ParaStyle:Guts\:Body>Beacon / Lights 	As Needed
+<ParaStyle:Guts\:Body>Mixture 	FULL
+<ParaStyle:Guts\:Body>Prop 	FULL RPM
+<ParaStyle:Guts\:Continued>Continued
+<ParaStyle:Guts\:Body>Fuel Pump 	ON
+<ParaStyle:Guts\:Body>Mixture 	RICH
+<ParaStyle:Guts\:Body>Throttle (Pump Twice) 	1/4 inch Open
+<ParaStyle:Guts\:Body>Area Clear / START 	1000 RPM
+<ParaStyle:Guts\:Body>Fuel Pump (Check Pressure) 	OFF
+<ParaStyle:Guts\:Body>Oil Pressure (30 sec) 	Check
+<ParaStyle:Guts\:Body>Avionics / Transponder 	ON / STBY
+<ParaStyle:Guts\:Body>Mixture 	Lean for taxi
+<ParaStyle:Guts\:Body>Flaps 	UP
+<ParaStyle:Guts\:Body>ATIS / AWOS / ASOS 	Obtain
+<ParaStyle:Guts\:Body>Taxi Clearance 	Obtain
+<ParaStyle:Guts\:Header><pTabRuler:12\,Left\,.\,0\,\;17.999999999999993\,Left\,.\,0\,\;154\,Left\,.\,0\,\;>Flooded Engine Start
+<pTabRuler:><ParaStyle:Guts\:Body>Fuel Pump 	OFF
+<ParaStyle:Guts\:Body>Prop 	FULL RPM
+<ParaStyle:Guts\:Body>Mixture 	Idle Cutoff
+<ParaStyle:Guts\:Body>Area Clear / START 	1000 RPM
+<ParaStyle:Guts\:Body>Mixture 	Advance after Start
+<ParaStyle:Guts\:Note><pTabRuler:12\,Left\,.\,0\,\;17.999999999999993\,Left\,.\,0\,\;154\,Left\,.\,0\,\;>Continue with normal Start Procedures
+<pTabRuler:><ParaStyle:Guts\:Header><pTabRuler:12\,Left\,.\,0\,\;17.999999999999993\,Left\,.\,0\,\;154\,Left\,.\,0\,\;><cNextXChars:Column>
+<pTabRuler:><ParaStyle:Guts\:Header><pTabRuler:12\,Left\,.\,0\,\;17.999999999999993\,Left\,.\,0\,\;154\,Left\,.\,0\,\;>Warm Engine Start
+<pTabRuler:><ParaStyle:Guts\:Body>Fuel Pump 	OFF
+<ParaStyle:Guts\:Body>Prop 	FULL RPM
+<ParaStyle:Guts\:Body>Throttle 	FULL FORWARD
+<ParaStyle:Guts\:Body>Mixture 	RICH
+<ParaStyle:Guts\:Body>Area Clear / START 	1000 RPM
+<ParaStyle:Guts\:Body>Mixture 	Advance after Start
+<ParaStyle:Guts\:Body>Throttle 	Reduce to Idle
+<ParaStyle:Guts\:Note><pTabRuler:12\,Left\,.\,0\,\;17.999999999999993\,Left\,.\,0\,\;154\,Left\,.\,0\,\;>Continue with normal Start Procedures
+<pTabRuler:><ParaStyle:Guts\:Header><pTabRuler:12\,Left\,.\,0\,\;17.999999999999993\,Left\,.\,0\,\;154\,Left\,.\,0\,\;><cNextXChars:Column>
+<pTabRuler:><ParaStyle:Guts\:Header><pTabRuler:12\,Left\,.\,0\,\;17.999999999999993\,Left\,.\,0\,\;154\,Left\,.\,0\,\;>Taxiing
+<pTabRuler:><ParaStyle:Guts\:Body>Brakes 	Check
+<ParaStyle:Guts\:Body>DG / HI / TC / AI 	Check
+<ParaStyle:Guts\:Header><pTabRuler:12\,Left\,.\,0\,\;17.999999999999993\,Left\,.\,0\,\;154\,Left\,.\,0\,\;>Before Takeoff
+<pTabRuler:><ParaStyle:Guts\:Body>Brakes 	Set
+<ParaStyle:Guts\:Body>Flight Controls 	Check
+<ParaStyle:Guts\:Body>Fuel Selector 	Fullest
+<ParaStyle:Guts\:Body>Fuel Pump 	ON
+<ParaStyle:Guts\:Body>Cowl Flaps 	OPEN
+<ParaStyle:Guts\:Body>Mixture 	Adjust / DA & Elev
+<ParaStyle:Guts\:Body>Fuel Pump 	ON
+<ParaStyle:Guts\:Body>Power 	1800 RPM
+<ParaStyle:Guts\:Body>Prop 	Exercise / FULL
+<ParaStyle:Guts\:Body>Power 	1700 RPM
+<ParaStyle:Guts\:Body>Ignition Switches 	L&R (125/50)
+<ParaStyle:Guts\:Body>Carb Heat 	Check / OFF
+<ParaStyle:Guts\:Body>Engine Gages / CHT 	Check
+<ParaStyle:Guts\:Body>Annunciator Panel (If installed) 	Check
+<ParaStyle:Guts\:Body>Suction / Ammeter 	Check
+<ParaStyle:Guts\:Body>Carb Heat 	Check
+<ParaStyle:Guts\:Body>Standby Vacuum Pump 	Check
+<ParaStyle:Guts\:Body>Power 	Reduce
+<ParaStyle:Guts\:Body>Fuel Pump 	ON
+<ParaStyle:Guts\:Body>Instruments 	Check / Set
+<ParaStyle:Guts\:Body>COM / NAV 	Set
+<ParaStyle:Guts\:Continued>Continued
+<ParaStyle:Guts\:Body>Doors / Windows 	Lock / Closed
+<ParaStyle:Guts\:Body>Flaps 	Set
+<ParaStyle:Guts\:Body>Trim 	Set for Takeoff
+<ParaStyle:Guts\:Body>Lights / Transponder 	Set
+<ParaStyle:Guts\:Body>Clearance 	Obtain
+<ParaStyle:Guts\:Header><pTabRuler:12\,Left\,.\,0\,\;17.999999999999993\,Left\,.\,0\,\;154\,Left\,.\,0\,\;>Normal Takeoff
+<pTabRuler:><ParaStyle:Guts\:Body>Flaps 	0-15<0x00B0>
+<ParaStyle:Guts\:Body>Full Power 	Set
+<ParaStyle:Guts\:Body>Engine Instruments 	Check
+<ParaStyle:Guts\:Body>Crosswind Corrections 	Set
+<ParaStyle:Guts\:Body>Rotate	Vr 65 KIAS 75 MPH
+<ParaStyle:Guts\:Body>Climb	Vy 91 KIAS 105 MPH
+<ParaStyle:Guts\:Body>Brakes	Apply momentarily
+<ParaStyle:Guts\:Body>Gear 	UP
+<ParaStyle:Guts\:Body>Flaps 	UP
+<ParaStyle:Guts\:Header><pTabRuler:12\,Left\,.\,0\,\;17.999999999999993\,Left\,.\,0\,\;154\,Left\,.\,0\,\;><cNextXChars:Column>
+<pTabRuler:><ParaStyle:Guts\:Header><pTabRuler:12\,Left\,.\,0\,\;17.999999999999993\,Left\,.\,0\,\;154\,Left\,.\,0\,\;>Short Field Takeoff
+<pTabRuler:><ParaStyle:Guts\:Body>Flaps 	Set as Needed
+<ParaStyle:Guts\:Body>Runway 	To End
+<ParaStyle:Guts\:Body>Brakes 	Hold
+<ParaStyle:Guts\:Body>Full Power 	Set
+<ParaStyle:Guts\:Body>Engine Inst. / Crosswind 	Check / Compensate
+<ParaStyle:Guts\:Body>Brakes	Release
+<ParaStyle:Guts\:Body>Rotate	Vr 55 KIAS 65 MPH
+<ParaStyle:Guts\:Body>Obstacle	Vx 70 KIAS 80 MPH
+<ParaStyle:Guts\:Body>Climb	Vy 91 KIAS 105 MPH
+<ParaStyle:Guts\:Body>Brakes	Apply momentarily
+<ParaStyle:Guts\:Body>Gear 	UP
+<ParaStyle:Guts\:Body>Flaps 	UP
+<ParaStyle:Guts\:Header><pTabRuler:12\,Left\,.\,0\,\;17.999999999999993\,Left\,.\,0\,\;154\,Left\,.\,0\,\;>Soft Field Takeoff
+<pTabRuler:><ParaStyle:Guts\:Body>Flaps 	15<0x00B0>
+<ParaStyle:Guts\:Body>Back Pressure 	Keep Nose Up
+<ParaStyle:Guts\:Body>Full Power 	Set
+<ParaStyle:Guts\:Body>Engine Instruments 	Check
+<ParaStyle:Guts\:Body>Crosswind Corrections 	Set
+<ParaStyle:Guts\:Body>Obstacle	Vx 70 KIAS/80 MPH
+<ParaStyle:Guts\:Body>Climb	Vy 91 KIAS/105 MPH
+<ParaStyle:Guts\:Body>Brakes	Apply momentarily
+<ParaStyle:Guts\:Body>Gear	UP
+<ParaStyle:Guts\:Body>Flaps 	UP
+<ParaStyle:Guts\:Header><cNextXChars:Column>
+<ParaStyle:Guts\:Header>Climb
+<ParaStyle:Guts\:Body>Power / Prop 	25<0x201D> / 2500 RPM
+<ParaStyle:Guts\:Body>Fuel Pump 	OFF / Check Press.
+<ParaStyle:Guts\:Body>En-route Climb 	95-110 KIAS 115-120 MPH
+<ParaStyle:Guts\:Header>Cruise
+<ParaStyle:Guts\:Body>Power / Prop 	Set with table below
+<ParaStyle:Guts\:Body>Mixture 	Adjust /Up to 75%
+<ParaStyle:Guts\:Body>ECONOMY 	25<0x00B0>F RICH of Peak EGT
+<ParaStyle:Guts\:Body>POWER 	100<0x00B0>F RICH of Peak EGT
+<ParaStyle:Guts\:Body>Cowl Flaps 	CLOSE
+<ParaStyle:Guts\:Body>Fuel Pump 	As Required
+<ParaStyle:Guts\:Body>Heading Indicator 	Reset as Needed
+<ParaStyle:Guts\:Header>Cruise Profile
+<ParaStyle:Guts\:Body Table><pTabRuler:42\,Right\,.\,0\,\;88\,Right\,.\,0\,\;135\,Right\,.\,0\,\;181\,Right\,.\,0\,\;228\,Right\,.\,0\,\;270\,Right\,.\,0\,\;>	PALT 	PWR 	MAN 	RPM 	MPH 	GPH
+<pTabRuler:><ParaStyle:Guts\:Body Table Data><pTabRuler:42\,Right\,.\,0\,\;88\,Right\,.\,0\,\;135\,Right\,.\,0\,\;181\,Right\,.\,0\,\;228\,Right\,.\,0\,\;270\,Right\,.\,0\,\;>	5000	85%	24.0<0x201D>	2600	183	12.5
+<pTabRuler:><ParaStyle:Guts\:Body Table Data><pTabRuler:42\,Right\,.\,0\,\;88\,Right\,.\,0\,\;135\,Right\,.\,0\,\;181\,Right\,.\,0\,\;228\,Right\,.\,0\,\;270\,Right\,.\,0\,\;>	5000	75%	22.0<0x201D>	2500	169	10.8
+<pTabRuler:><ParaStyle:Guts\:Body Table Data><pTabRuler:42\,Right\,.\,0\,\;88\,Right\,.\,0\,\;135\,Right\,.\,0\,\;181\,Right\,.\,0\,\;228\,Right\,.\,0\,\;270\,Right\,.\,0\,\;>	5000	65%	21.0<0x201D>	2300	157	9.3
+<pTabRuler:><ParaStyle:Guts\:Body Table Data><pTabRuler:42\,Right\,.\,0\,\;88\,Right\,.\,0\,\;135\,Right\,.\,0\,\;181\,Right\,.\,0\,\;228\,Right\,.\,0\,\;270\,Right\,.\,0\,\;>
+<pTabRuler:><ParaStyle:Guts\:Body Table Data><pTabRuler:42\,Right\,.\,0\,\;88\,Right\,.\,0\,\;135\,Right\,.\,0\,\;181\,Right\,.\,0\,\;228\,Right\,.\,0\,\;270\,Right\,.\,0\,\;>	7500	75%	22.0<0x201D>	2500	177	11.0
+<pTabRuler:><ParaStyle:Guts\:Body Table Data><pTabRuler:42\,Right\,.\,0\,\;88\,Right\,.\,0\,\;135\,Right\,.\,0\,\;181\,Right\,.\,0\,\;228\,Right\,.\,0\,\;270\,Right\,.\,0\,\;>	7500	65%	20.0<0x201D>	2400	161	9.3
+<pTabRuler:><ParaStyle:Guts\:Body Table Data><pTabRuler:42\,Right\,.\,0\,\;88\,Right\,.\,0\,\;135\,Right\,.\,0\,\;181\,Right\,.\,0\,\;228\,Right\,.\,0\,\;270\,Right\,.\,0\,\;>
+<pTabRuler:><ParaStyle:Guts\:Body Table Data><pTabRuler:42\,Right\,.\,0\,\;88\,Right\,.\,0\,\;135\,Right\,.\,0\,\;181\,Right\,.\,0\,\;228\,Right\,.\,0\,\;270\,Right\,.\,0\,\;>	FL100	65%	19.0<0x201D>	2500	166	9.5
+<pTabRuler:><ParaStyle:Guts\:Body Table Data><pTabRuler:42\,Right\,.\,0\,\;88\,Right\,.\,0\,\;135\,Right\,.\,0\,\;181\,Right\,.\,0\,\;228\,Right\,.\,0\,\;270\,Right\,.\,0\,\;>	FL100	55%	17.5<0x201D>	2300	146	8.0<cColor:Blue><cTypeface:Bold SemiExtended><cCase:All Caps><cNextXChars:Column>
+<cColor:><cTypeface:><cCase:><pTabRuler:><ParaStyle:Guts\:Header>Approach
+<ParaStyle:Guts\:Body>ATIS / AWOS / ASOS 	Obtain
+<ParaStyle:Guts\:Body>Brief / Seat Belts 	Check
+<ParaStyle:Guts\:Body>Cowl Flaps 	Close
+<ParaStyle:Guts\:Body>Mixture 	Set
+<ParaStyle:Guts\:Body>Carb Heat 	ON
+<ParaStyle:Guts\:Body>Prop 	FULL
+<ParaStyle:Guts\:Body>Fuel Boost Pump 	ON
+<ParaStyle:Guts\:Body>Fuel Selector 	FULLEST
+<ParaStyle:Guts\:Body>Gear Down Below Vlo 	104 KIAS 120 MPH
+<ParaStyle:Guts\:Body>Flaps Down Below Vfe 	87 KIAS 100 MPH
+<ParaStyle:Guts\:Body>Normal Approach 	70-75 KIAS 80-85 MPH
+<ParaStyle:Guts\:Body>Short Field Approach 	71 KIAS 81 MPH
+<ParaStyle:Guts\:Body>GUMPS 	CHECK
+<ParaStyle:Guts\:Header>Go Around
+<ParaStyle:Guts\:Body>Power 	FULL
+<ParaStyle:Guts\:Body>Carb Heat 	OFF
+<ParaStyle:Guts\:Body>Gear / Flaps 	Retract As Needed
+<ParaStyle:Guts\:Body>Cowl Flaps 	Open
+<ParaStyle:Guts\:Body>Pitch 	91 KIAS 105 MPH
+<ParaStyle:Guts\:Body>Runway Offset 	When aircraft is in control
+<ParaStyle:Guts\:Body>Communicate 	Announce Go-Around<cNextXChars:Column>
+<ParaStyle:Guts\:Header>After Landing
+<ParaStyle:Guts\:Body>Runway 	Cleared
+<ParaStyle:Guts\:Body>Carb Heat 	OFF
+<ParaStyle:Guts\:Body>Flaps 	UP
+<ParaStyle:Guts\:Body>Mixture 	Lean for taxi
+<ParaStyle:Guts\:Body>Prop 	FULL
+<ParaStyle:Guts\:Body>Cowl Flaps 	Open
+<ParaStyle:Guts\:Body>Fuel Pump 	OFF
+<ParaStyle:Guts\:Body>Transponder 	OFF
+<ParaStyle:Guts\:Body>Strobes 	OFF
+<ParaStyle:Guts\:Body>Clearance 	Obtain
+<ParaStyle:Guts\:Header>Secure
+<ParaStyle:Guts\:Body>Avionics / Radios 	OFF
+<ParaStyle:Guts\:Body>Ignition Grounding Check 	Cycle Mags
+<ParaStyle:Guts\:Body>Mixture 	OFF
+<ParaStyle:Guts\:Body>Prop 	FULL
+<ParaStyle:Guts\:Body>Ignition / Mags 	OFF
+<ParaStyle:Guts\:Body>MASTER 	OFF
+<ParaStyle:Guts\:Body>Cowl Flaps 	CLOSE
+<ParaStyle:Guts\:Body>Control Locks 	Set
+<ParaStyle:Guts\:Body>Chocks / Chains / Papers 	Complete<cNextXChars:Column>
+<ParaStyle:Guts\:Header EMERG>Excessive Rate Of Charge
+<ParaStyle:Guts\:Body>Alternator Field Switch 	OFF / Verify problem
+<ParaStyle:Guts\:Body>Ammeter 	Confirm discharge
+<ParaStyle:Guts\:Body>MASTER 	Cycle
+<ParaStyle:Guts\:Body>Alternator circuit breaker 	PULL / Verify
+<ParaStyle:Guts\:Body>Electrical Load 	Reduce / Land soon
+<ParaStyle:Guts\:Note>Landing gear lights will not be visible after complete electrical failure
+<ParaStyle:Guts\:Header EMERG>Low Voltage
+<ParaStyle:Guts\:Body>Alternator Field Switch 	OFF / Verify problem
+<ParaStyle:Guts\:Body>Ammeter 	Confirm discharge
+<ParaStyle:Guts\:Body>Alternator circuit breaker 	PULL / Verify
+<ParaStyle:Guts\:Body>Electrical Load 	Reduce / Land soon
+<ParaStyle:Guts\:Note>Landing gear lights will not be visible after complete electrical failure
+<ParaStyle:Guts\:Header EMERG><cNextXChars:Column>
+<ParaStyle:Guts\:Header EMERG>Engine Failure During Takeoff Roll
+<ParaStyle:Guts\:Body>Throttle 	Close
+<ParaStyle:Guts\:Body>Brakes 	Apply
+<ParaStyle:Guts\:Body>Flaps 	Retract
+<ParaStyle:Guts\:Body>Mixture 	OFF
+<ParaStyle:Guts\:Body>Ignition / Mags 	OFF
+<ParaStyle:Guts\:Body>MASTER 	OFF
+<ParaStyle:Guts\:Header EMERG>Engine Failure During Flight
+<ParaStyle:Guts\:Note>Land if runway remains. If not:
+<ParaStyle:Guts\:Body>Airspeed 	90 KIAS 105 MPH
+<ParaStyle:Guts\:Body>Gear 	Up if not after takeoff
+<ParaStyle:Guts\:Body>Flaps 	Up if not after takeoff
+<ParaStyle:Guts\:Body>Landing Site 	Select / Land into Wind
+<ParaStyle:Guts\:Body>Prop 	FULL
+<ParaStyle:Guts\:Body>Fuel Selector 	FULLEST / Switch
+<ParaStyle:Guts\:Body>Fuel Pump (Try ON) 	OFF if No improvement
+<ParaStyle:Guts\:Body>Carb Heat 	Try
+<ParaStyle:Guts\:Body>Fuel Pressure 	Check
+<ParaStyle:Guts\:Body>Throttle 	FULL
+<ParaStyle:Guts\:Body>MASTER Switch 	ON
+<ParaStyle:Guts\:Body>Mixture 	RICH
+<ParaStyle:Guts\:Body>IGNITION 	BOTH / RESTART
+<ParaStyle:Guts\:Header EMERG><cNextXChars:Column>
+<ParaStyle:Guts\:Header EMERG>Failure To Restart
+<ParaStyle:Guts\:Body>Pitch 	90 KIAS 105 MPH
+<ParaStyle:Guts\:Body>Communicate 	121.5 or Current Freq
+<ParaStyle:Guts\:Body>Transponder 	7700
+<ParaStyle:Guts\:Body>Seat Belts 	Secure
+<ParaStyle:Guts\:Body>Fuel Pump 	OFF
+<ParaStyle:Guts\:Body>Mixture 	Cut-OFF
+<ParaStyle:Guts\:Body>Throttle 	Close
+<ParaStyle:Guts\:Body>Fuel Selector / Ignition / Mags 	OFF
+<ParaStyle:Guts\:Body>Gear and Flaps 	Down when needed
+<ParaStyle:Guts\:Body>MASTER 	OFF
+<ParaStyle:Guts\:Body>Doors 	Open ajar
+<ParaStyle:Guts\:Header EMERG>Rough Engine
+<ParaStyle:Guts\:Body>Engine Instruments 	Troubleshoot
+<ParaStyle:Guts\:Body>Fuel Selector 	Switch
+<ParaStyle:Guts\:Body>Mixture 	Re-adjust
+<ParaStyle:Guts\:Body>Mags 	Try L or R only
+<ParaStyle:Guts\:Body>Prop 	Check 
+<ParaStyle:Guts\:Note>Prop Damage can cause major vibrations
+<ParaStyle:Guts\:Header EMERG>High Cylinder Or Oil Temp
+<ParaStyle:Guts\:Body>Mixture 	Enrich as needed
+<ParaStyle:Guts\:Body>Cowl Flaps 	OPEN
+<ParaStyle:Guts\:Body>Airspeed 	Increase
+<ParaStyle:Guts\:Body>Power 	Reduce
+<ParaStyle:Guts\:Body>If in a climb, reduce angle
+<ParaStyle:Guts\:Header EMERG>Engine Driven Fuel Pump Failure
+<ParaStyle:Guts\:Body>Mixture 	Cut-OFF
+<ParaStyle:Guts\:Body>Throttle 	Cruise Position
+<ParaStyle:Guts\:Body>Fuel Pump 	ON
+<ParaStyle:Guts\:Body>Mixture 	Return to FULL
+<ParaStyle:Guts\:Header EMERG>Propeller Overspeed
+<ParaStyle:Guts\:Body>Throttle 	Idle
+<ParaStyle:Guts\:Body>Prop RPM 	Below 2700
+<ParaStyle:Guts\:Body>Oil Pressure 	Check
+<ParaStyle:Guts\:Body>Airspeed 	Reduce
+<ParaStyle:Guts\:Header EMERG><cNextXChars:Column>
+<ParaStyle:Guts\:Header EMERG>Engine Fire During Start
+<ParaStyle:Guts\:Body>Starter 	Engage and crank
+<ParaStyle:Guts\:Body>Throttle 	1700 RPM to extinguish
+<ParaStyle:Guts\:Body>Engine 	Secure
+<ParaStyle:Guts\:Body>Fuel Flow 	OFF
+<ParaStyle:Guts\:Header EMERG>Engine Fire During Flight
+<ParaStyle:Guts\:Body>Fuel / Mixture 	OFF
+<ParaStyle:Guts\:Body>Throttle 	Close
+<ParaStyle:Guts\:Body>Ignition / Mags 	OFF
+<ParaStyle:Guts\:Body>Cowl Flaps 	CLOSE
+<ParaStyle:Guts\:Body>MASTER Switch 	OFF
+<ParaStyle:Guts\:Body>Vents Close / Windows 	Close OPEN if smoke enters
+<ParaStyle:Guts\:Header EMERG>Wing Fire During Flight
+<ParaStyle:Guts\:Body>MASTER Switch 	OFF
+<ParaStyle:Guts\:Body>Strobes and NAV Lights 	OFF
+<ParaStyle:Guts\:Body>Extinguish with maneuvers
+<ParaStyle:Guts\:Body>MASTER 	ON 
+<ParaStyle:Guts\:Header EMERG>Electrical Fire During Flight
+<ParaStyle:Guts\:Body>MASTER Switch 	OFF
+<ParaStyle:Guts\:Body>Alternator 	OFF
+<ParaStyle:Guts\:Body>Circuit Breakers 	Check which is out
+<ParaStyle:Guts\:Body>Fire 	Extinguish
+<ParaStyle:Guts\:Body>Vents 	Open if smoke enters
+<ParaStyle:Guts\:Note>Reset Electrical to troubleshoot Problem
+<ParaStyle:Guts\:Header EMERG>Emergency Descent
+<ParaStyle:Guts\:Body>Throttle 	Close
+<ParaStyle:Guts\:Body>Carb Heat 	ON
+<ParaStyle:Guts\:Body>Gear Down 	104 KIAS 120 MPH
+<ParaStyle:Guts\:Body>Airspeed to extinguish	104 KIAS 120 MPH
+<ParaStyle:Guts\:Body>Landing site 	Acquire
+<ParaStyle:Guts\:Header EMERG>Unlatched Doors
+<ParaStyle:Guts\:Body>Airspeed 	Below 95 KIAS 105 MPH
+<ParaStyle:Guts\:Body>Storm Window 	Open
+<ParaStyle:Guts\:Body>Aircraft 	Right Sideslip
+<ParaStyle:Guts\:Body>Door Pull shut and Latch
+<ParaStyle:Guts\:Header EMERG>Inadvertent Spiral Dive
+<ParaStyle:Guts\:Body>Throttle	Idle
+<ParaStyle:Guts\:Body>Wings	Level
+<ParaStyle:Guts\:Body>Elevator	Level Or Vy Climb
+<ParaStyle:Guts\:Body>Trim	Set For Level Or Climb
+<ParaStyle:Guts\:Body>Power	Set
+<ParaStyle:Guts\:Body>IMC Conditions	Exit
+<ParaStyle:Guts\:Header EMERG><cNextXChars:Column>
+<ParaStyle:Guts\:Header EMERG>Spin Recovery
+<ParaStyle:Guts\:Body>Power	Idle
+<ParaStyle:Guts\:Body>Ailerons	Neutral
+<ParaStyle:Guts\:Body>Rudder	Full Opposite
+<ParaStyle:Guts\:Body>Elevator	Briskly Full Forward
+<ParaStyle:Guts\:Note>When rotation stopped...<cTypeface:Light><cSize:11.000000><cBaselineShift:0.000000>
+<cTypeface:><cSize:><cBaselineShift:><ParaStyle:Guts\:Body>Rudder	Neutral
+<ParaStyle:Guts\:Body>Elevator	<cTracking:-10>Slowly Recover From Dive<cTracking:>
+<ParaStyle:Guts\:Header EMERG>Unintentional IMC Encounter
+<ParaStyle:Guts\:Body>Wings	Level
+<ParaStyle:Guts\:Body>Trims	Set For Level
+<ParaStyle:Guts\:Body>Heading	Change For 180<0x00B0> Turn
+<ParaStyle:Guts\:Body>IMC Conditions	Exit
+<BookmarkDefn:=<BookmarkName:Preflight><BookmarkDestName:.20812><BookmarkLevel:1>><BookmarkDefn:=<BookmarkName:Right Fuselage \/ Tail><BookmarkParentName:Preflight><BookmarkDestName:.20818><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Empennage><BookmarkParentName:Preflight><BookmarkDestName:.20822><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Left Fuselage \/ Tail><BookmarkParentName:Preflight><BookmarkDestName:.20826><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Left Wing><BookmarkParentName:Preflight><BookmarkDestName:.20830><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Nose><BookmarkParentName:Preflight><BookmarkDestName:.20834><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Right Wing><BookmarkParentName:Preflight><BookmarkDestName:.20838><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Engine Startup><BookmarkParentName:Preflight><BookmarkDestName:.20842><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Flooded Engine Start><BookmarkParentName:Preflight><BookmarkDestName:.20846><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Warm Engine Start><BookmarkParentName:Preflight><BookmarkDestName:.20850><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Takeoff \/ Cruise><BookmarkDestName:.20855><BookmarkLevel:1>><BookmarkDefn:=<BookmarkName:Taxiing><BookmarkParentName:Takeoff \/ Cruise><BookmarkDestName:.20859><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Before Takeoff><BookmarkParentName:Takeoff \/ Cruise><BookmarkDestName:.20863><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Normal Takeoff><BookmarkParentName:Takeoff \/ Cruise><BookmarkDestName:.20867><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Short Field Takeoff><BookmarkParentName:Takeoff \/ Cruise><BookmarkDestName:.20871><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Soft Field Takeoff><BookmarkParentName:Takeoff \/ Cruise><BookmarkDestName:.20875><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Climb><BookmarkParentName:Takeoff \/ Cruise><BookmarkDestName:.20879><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Cruise><BookmarkParentName:Takeoff \/ Cruise><BookmarkDestName:.20883><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Cruise Profile><BookmarkParentName:Takeoff \/ Cruise><BookmarkDestName:.20887><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Landing><BookmarkDestName:.20892><BookmarkLevel:1>><BookmarkDefn:=<BookmarkName:Approach><BookmarkParentName:Landing><BookmarkDestName:.20896><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Go Around><BookmarkParentName:Landing><BookmarkDestName:.20900><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:After Landing><BookmarkParentName:Landing><BookmarkDestName:.20904><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Secure><BookmarkParentName:Landing><BookmarkDestName:.20908><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Electrical><BookmarkDestName:.20912><BookmarkLevel:1>><BookmarkDefn:=<BookmarkName:Excessive Rate Of Charge><BookmarkParentName:Electrical><BookmarkDestName:.20916><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Low Voltage><BookmarkParentName:Electrical><BookmarkDestName:.20921><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Engine><BookmarkDestName:.20925><BookmarkLevel:1>><BookmarkDefn:=<BookmarkName:Engine Failure During Takeoff Roll><BookmarkParentName:Engine><BookmarkDestName:.20929><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Engine Failure During Flight><BookmarkParentName:Engine><BookmarkDestName:.20934><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Failure To Restart><BookmarkParentName:Engine><BookmarkDestName:.20938><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Rough Engine><BookmarkParentName:Engine><BookmarkDestName:.20943><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:High Cylinder Or Oil Temp><BookmarkParentName:Engine><BookmarkDestName:.20947><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Engine Driven Fuel Pump Failure><BookmarkParentName:Engine><BookmarkDestName:.20951><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Propeller Overspeed><BookmarkParentName:Engine><BookmarkDestName:.20955><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Fire \/ Smoke><BookmarkDestName:.20959><BookmarkLevel:1>><BookmarkDefn:=<BookmarkName:Engine Fire During Start><BookmarkParentName:Fire \/ Smoke><BookmarkDestName:.20963><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Engine Fire During Flight><BookmarkParentName:Fire \/ Smoke><BookmarkDestName:.20968><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Wing Fire During Flight><BookmarkParentName:Fire \/ Smoke><BookmarkDestName:.20972><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Electrical Fire During Flight><BookmarkParentName:Fire \/ Smoke><BookmarkDestName:.20977><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Other><BookmarkDestName:.20981><BookmarkLevel:1>><BookmarkDefn:=<BookmarkName:Emergency Descent><BookmarkParentName:Other><BookmarkDestName:.20985><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Unlatched Doors><BookmarkParentName:Other><BookmarkDestName:.20989><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Inadvertent Spiral Dive><BookmarkParentName:Other><BookmarkDestName:.20993><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Spin Recovery><BookmarkParentName:Other><BookmarkDestName:.20997><BookmarkLevel:2>><BookmarkDefn:=<BookmarkName:Unintentional IMC Encounter><BookmarkParentName:Other><BookmarkDestName:.21001><BookmarkLevel:2>>
