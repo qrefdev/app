@@ -105,6 +105,10 @@ var EditAddObserver = new zimoko.Observable({
             else
                 sectionItems = ChecklistObserver.checklist[list][category].items[section].items;
 
+            if(index > ChecklistObserver.items.length) {
+                    index = ChecklistObserver.items.length - 1;
+            }
+                                            
             EditAddObserver.item.set('index', index + 1);
 
             for (var i = index + 1; i < ChecklistObserver.items.length; i++) {
@@ -1918,6 +1922,8 @@ var ChecklistObserver = new zimoko.Observable({
     	
     	for(var i = 0; i < this.items.length; i++) {
     		var item = this.items.elementAt(i);
+                               
+            if(item) {
     		var element = checklistArea.find('[data-id="' + item._id + '"]');
     			
     		if(element.length == 0) {
@@ -1939,6 +1945,7 @@ var ChecklistObserver = new zimoko.Observable({
 			
 				item.attach(template);
     		}
+                                              }
     	}
     	
     	_this.onDataSourceRead();
@@ -1955,14 +1962,16 @@ var ChecklistObserver = new zimoko.Observable({
     	for(var i = 0; i < this.items.length; i++) {
 			var item = this.items.elementAt(i);
 			
+                                              if(item) {
             item.detach();
+                                              }
 		}
 				
     	checklistArea.html('');
     	
     	for(var i = 0; i < this.items.length; i++) {
     		var item = this.items.elementAt(i);
-    		
+                                              if(item) {
     		item.parent = this;
     		
     		var template = checklistArea.data('template').clone();
@@ -1978,6 +1987,7 @@ var ChecklistObserver = new zimoko.Observable({
     		template.find('.handle').hide();
     		
     		checklistArea.append(template);
+                                              }
     	}
                                               
     	if(this.items.length == 0 && this.editing)
@@ -1988,11 +1998,15 @@ var ChecklistObserver = new zimoko.Observable({
     	setTimeout(function() {
     		for(var i = 0; i < _this.items.length; i++) {
     			var item = _this.items.elementAt(i);
+                   if(item) {
     			var element = checklistArea.find('[data-id="' + item._id + '"]');
     			
     			if(element.length > 0) {
+                   if(item) {
     				item.attach(element);
+                   }
     			}
+                   }
     		}
     		
     		_this.onDataSourceRead();

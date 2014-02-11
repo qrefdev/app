@@ -441,14 +441,15 @@
 			
 			this._source.splice(index, 0, item);
 			this._view.insertAt(item, index);
-			
+            this.total++;
+                                            
 			return this;
 		};
 		
 		this.remove = function(object) {
 			this._source.remove(object);
 			this._view.remove(object);
-			this.total = this._source.length;
+            this.total--;
 			
 			return this;
 		};
