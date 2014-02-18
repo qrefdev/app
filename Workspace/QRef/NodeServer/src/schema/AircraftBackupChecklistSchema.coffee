@@ -1,6 +1,7 @@
 mongoose = require('mongoose')
 Schema = mongoose.Schema
 ObjectId = Schema.ObjectId
+Mixed = Schema.Types.Mixed
 AircraftChecklistSectionSchema = require('./AircraftChecklistSectionSchema')
 AircraftChecklistCategorySchema = require('./AircraftChecklistCategorySchema');
 
@@ -14,7 +15,7 @@ Schema representing a manufacturer/model specific checklist.
 @copyright QRef 2012
 @abstract
 ###
-class AircraftChecklistSchemaInternal  
+class AircraftBackupChecklistSchemaInternal  
 	###
 	@property [ObjectId] (Required) The manufacturer that this checklist is built against.
 	@see AircraftManufacturerSchemaInternal
@@ -71,25 +72,25 @@ class AircraftChecklistSchemaInternal
 	@property [Array<AircraftChecklistSectionSchemaInternal>] (Optional) The array of preflight sections.
 	###
 	preflight:
-		type: [AircraftChecklistSectionSchema]
+		type: [Mixed]
 		required: false
 	###
 	@property [Array<AircraftChecklistSectionSchemaInternal>] (Optional) The array of takeoff sections.
 	###
 	takeoff:
-		type: [AircraftChecklistSectionSchema]
+		type: [Mixed]
 		required: false
 	###
 	@property [Array<AircraftChecklistSectionSchemaInternal>] (Optional) The array of landing sections.
 	###
 	landing: 
-		type: [AircraftChecklistSectionSchema]
+		type: [Mixed]
 		required: false
 	###
 	@property [Array<AircraftChecklistSectionSchemaInternal>] (Optional) The array of emergency sections.
 	###
 	emergencies:
-		type: [AircraftChecklistCategorySchema]
+		type: [Mixed]
 		required: false
 	###
 	@property [Boolean] (Required) A true/false value indicating whether this record has been deleted. Required for soft-delete support.
@@ -103,8 +104,6 @@ class AircraftChecklistSchemaInternal
 		required: false
 		default: new Date()
 
-AircraftChecklistSchema = new Schema(new AircraftChecklistSchemaInternal())
-AircraftChecklistSchema.index({ manufacturer: 1, model: 1, version: 1, tailNumber: 1, user: 1 }, { unique: true })
-AircraftChecklistSchema.index({ manufacturer: 1, model: 1, user: 1 })
-AircraftChecklistSchema.index({ manufacturer: 1, model: 1, user: 1, version: 1 })
-module.exports = AircraftChecklistSchema
+AircraftBackupChecklistSchema = new Schema(new AircraftBackupChecklistSchemaInternal())
+AircraftBackupChecklistSchema.index({ manufacturer: 1, model: 1, version: 1, tailNumber: 1, user: 1 }, { unique: false })
+module.exports = AircraftBackupChecklistSchema

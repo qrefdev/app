@@ -86,27 +86,51 @@ class SynchronizeSlaveDbRoute extends RpcRoute
 				return
 			
 			arrTargetVersions = []
+			removalTargets = []
+			backupObjects = []
 			
 			async.series(
 				[
-					(sCb) => 
-						async.forEach(arrMasterChecklists,
+					(sCb) =>
+						async.forEach(arrMasterChecklists, 
 							(mChkLst, cb) =>
-								foundVector = null
+								slaveDb.AircraftChecklist
+								.where('manufacturer')
+								.equals(mChkLst.manufacturer)
+								.where('model')
+								.equals(mChkLst.model)
+								.where('user')
+								.equals(null)
+								.sort('+version')
+								.find((err, arrSlaveChecklists) =>
+									
+									if err?
+										cb(err)
+										return
+									
+									@.backupChecklists(slaveDb, arrSlaveChecklists, (err, targets, backups) =>
+										
+										if err?
+											cb(err)
+											return
+										
+										backupObjects = backupObjects.concat(backups)
+										removalTargets = removalTargets.concat(targets)
+										cb(null)
+									)
 								
-								for tv in arrTargetVersions
-									if tv.model.toString() == mChkLst.model.toString() and tv.manufacturer.toString() == mChkLst.manufacturer.toString()
-										foundVector = tv
-										break
-								
-								if not foundVector?
-									foundVector = { model: mChkLst.model, manufacturer: mChkLst.manufacturer, version: mChkLst.version }
-									arrTargetVersions.push(foundVector)
-								else
-									if mChkLst.version > foundVector.version
-										foundVector.version = mChkLst.version
-								
-								cb(null)
+								)
+							,(err) => 
+								if err?
+									sCb(err)
+									return
+									
+								sCb(null)
+						)
+					,(sCb) =>
+						async.forEach(backupObjects,
+							(bo, cb) =>
+								bo.save(cb)
 							,(err) =>
 								if err?
 									sCb(err)
@@ -115,96 +139,48 @@ class SynchronizeSlaveDbRoute extends RpcRoute
 								sCb(null)
 						)
 					,(sCb) =>
-						async.forEach(arrTargetVersions, 
-							(tv, cb) =>
-								sChkLstVersion = 0
-								masterDb.AircraftChecklist
-								.where('model')
-								.equals(tv.model)
-								.where('manufacturer')
-								.equals(tv.manufacturer)
-								.where('version')
-								.equals(tv.version)
-								.findOne((err, mChkLst) =>
+						async.forEach(removalTargets,
+							(rt, cb) =>
+								slaveDb.AircraftChecklist.remove({ _id: rt }, cb)
+							,(err) =>
+								if err?
+									sCb(err)
+									return
+								
+								sCb(null)
+						)
+					,(sCb) =>
+						async.forEach(arrMasterChecklists, 
+							(mChkLst, cb) =>
+							
+								
+								
+									
+								
+										
+								mChkLst = mChkLst.toObject()
+								
+								sNewChkLst = new slaveDb.AircraftChecklist()
+								sNewChkLst.manufacturer = mChkLst.manufacturer
+								sNewChkLst.model = mChkLst.model
+								sNewChkLst.preflight = mChkLst.preflight
+								sNewChkLst.takeoff = mChkLst.takeoff
+								sNewChkLst.landing = mChkLst.landing
+								sNewChkLst.emergencies = mChkLst.emergencies
+								sNewChkLst.tailNumber = mChkLst.tailNumber
+								sNewChkLst.index = mChkLst.index
+								sNewChkLst.user = mChkLst.user
+								sNewChkLst.version = mChkLst.version
+								sNewChkLst.productIcon = mChkLst.productIcon
+								
+								sNewChkLst.save((err)=>
 									if err?
 										cb(err)
 										return
 									
-									if not mChkLst?
-										cb(new Error('Master checklist not found'))
-										return
-									
-									slaveDb.AircraftChecklist
-									.where('manufacturer')
-									.equals(mChkLst.manufacturer)
-									.where('model')
-									.equals(mChkLst.model)
-									.where('user')
-									.equals(null)
-									.sort('-version')
-									.findOne((err, sChkLst) =>
-										if err?
-											cb(err)
-											return
-										
-										if not sChkLst?
-											sChkLstVersion = 0
-										else
-											sChkLstVersion = sChkLst.version
-											
-										mChkLst = mChkLst.toObject()
-										
-										sNewChkLst = new slaveDb.AircraftChecklist()
-										sNewChkLst.manufacturer = mChkLst.manufacturer
-										sNewChkLst.model = mChkLst.model
-										sNewChkLst.preflight = mChkLst.preflight
-										sNewChkLst.takeoff = mChkLst.takeoff
-										sNewChkLst.landing = mChkLst.landing
-										sNewChkLst.emergencies = mChkLst.emergencies
-										sNewChkLst.tailNumber = mChkLst.tailNumber
-										sNewChkLst.index = mChkLst.index
-										sNewChkLst.user = mChkLst.user
-										sNewChkLst.version = sChkLstVersion + 1
-										sNewChkLst.productIcon = mChkLst.productIcon
-										
-										sNewChkLst.save((err)=>
-											if err?
-												cb(err)
-												return
-											
-											slaveDb.AircraftChecklist
-											.where('manufacturer')
-											.equals(mChkLst.manufacturer)
-											.where('model')
-											.equals(mChkLst.model)
-											.where('user')
-											.equals(null)
-											.where('version')
-											.ne(sChkLstVersion + 1)
-											.where('isDeleted')
-											.equals(false)
-											.find((err, arrPreviousItems) =>
-												if err?
-													cb(err)
-													return
-												
-												async.forEach(arrPreviousItems,
-													(pItem, zCb) =>
-														pItem.isDeleted = true
-														pItem.save(zCb)
-													,(err) =>
-														if err?
-															cb(err)
-															return
-														
-														cb(null)
-												)
-											)
-										)
-										
-									)
+									cb(null)
 								)
-								
+									
 								
 							,(err) =>
 								if err?
@@ -265,6 +241,39 @@ class SynchronizeSlaveDbRoute extends RpcRoute
 					callback(err)
 			)
 				
+		)
+	backupChecklists: (db, arrSlaveChecklists, callback) =>
+		removalTargets = []
+		backupObjects = []
+		async.forEach(arrSlaveChecklists,
+			(sChkLst, cb) =>
+				osChkLst = sChkLst.toObject()
+				bNewChkLst = new db.AircraftBackupChecklist()
+				bNewChkLst.manufacturer = osChkLst.manufacturer
+				bNewChkLst.model = osChkLst.model
+				bNewChkLst.preflight = osChkLst.preflight
+				bNewChkLst.takeoff = osChkLst.takeoff
+				bNewChkLst.landing = osChkLst.landing
+				bNewChkLst.emergencies = osChkLst.emergencies
+				bNewChkLst.tailNumber = osChkLst.tailNumber
+				bNewChkLst.index = osChkLst.index
+				bNewChkLst.user = osChkLst.user
+				bNewChkLst.version = osChkLst.version
+				bNewChkLst.productIcon = osChkLst.productIcon
+				bNewChkLst.tailNumber = osChkLst.tailNumber
+				bNewChkLst.isDeleted = osChkLst.isDeleted
+				bNewChkLst.timestamp = osChkLst.timestamp
+				
+				backupObjects.push(bNewChkLst)
+				removalTargets.push(sChkLst._id)
+				cb(null)
+				
+			,(err) =>
+				if err?
+					callback(err, null, null)
+					return
+				
+				callback(null, removalTargets, backupObjects)
 		)
 	
 	isValidRequest: (req) ->

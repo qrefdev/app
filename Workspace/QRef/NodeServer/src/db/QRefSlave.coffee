@@ -60,6 +60,10 @@ class QRefSlave
 	###
 	AircraftChecklist: null
 	###
+	@property [AircraftBackupChecklistSchemaInternal] A reference to the AircraftBackupChecklist model.
+	###
+	AircraftBackupChecklist: null
+	###
 	@property [ProductSchemaInternal] A reference to the Product model.
 	###
 	Product: null
@@ -109,6 +113,8 @@ class QRefSlave
 		@UserProduct = @connection.model('user.products', UserProductSchema)
 		AircraftProductAuthorizationAttemptSchema = require('../schema/AircraftProductAuthorizationAttemptSchema')
 		@AircraftProductAuthorizationAttempt = @connection.model('aircraft.product.authorization.attempt', AircraftProductAuthorizationAttemptSchema)
+		AircraftBackupChecklistSchema = require('../schema/AircraftBackupChecklistSchema')
+		@AircraftBackupChecklist = @connection.model('backup.aircraft.checklists', AircraftBackupChecklistSchema)
 	###
 	Returns a reference to the underlying mongoose connection.
 	@return [Mongoose.Connection] The underlying mongoose connection object.
