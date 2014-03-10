@@ -30,7 +30,7 @@
 	  var startTime = 0, endTime = 0;
 	
 	  var duration = 0;
-	  var threshold = 250;
+	  var threshold = 1000;
  var startPosition = {x: 0, y: 0};
 	
 	  var moved = false;
