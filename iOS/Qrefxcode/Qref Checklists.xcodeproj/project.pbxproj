@@ -26,7 +26,6 @@
 		46B2666415C054B1002E9931 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 46B2666215C054B1002E9931 /* InfoPlist.strings */; };
 		46B2666615C054B1002E9931 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B2666515C054B1002E9931 /* main.m */; };
 		46B2666A15C054B1002E9931 /* QRefAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B2666915C054B1002E9931 /* QRefAppDelegate.m */; };
-		46B2666D15C054B1002E9931 /* Qref.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 46B2666B15C054B1002E9931 /* Qref.xcdatamodeld */; };
 		46CA88A616E9153E00A0E36D /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CA88A516E9153E00A0E36D /* Reachability.m */; };
 		46CA88A816E9157900A0E36D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46CA88A716E9157900A0E36D /* SystemConfiguration.framework */; };
 		46D0A5581607D1BA0007247D /* QRefWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D0A5571607D1BA0007247D /* QRefWebView.m */; };
@@ -80,7 +79,6 @@
 		46B2666715C054B1002E9931 /* Qref-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Qref-Prefix.pch"; sourceTree = "<group>"; };
 		46B2666815C054B1002E9931 /* QRefAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QRefAppDelegate.h; sourceTree = "<group>"; };
 		46B2666915C054B1002E9931 /* QRefAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QRefAppDelegate.m; sourceTree = "<group>"; };
-		46B2666C15C054B1002E9931 /* Qref.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Qref.xcdatamodel; sourceTree = "<group>"; };
 		46B2667415C054B1002E9931 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		46CA88A416E9153E00A0E36D /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		46CA88A516E9153E00A0E36D /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
@@ -189,7 +187,6 @@
 				46B266B415C05BD0002E9931 /* Resources */,
 				46B2666815C054B1002E9931 /* QRefAppDelegate.h */,
 				46B2666915C054B1002E9931 /* QRefAppDelegate.m */,
-				46B2666B15C054B1002E9931 /* Qref.xcdatamodeld */,
 				46B2666015C054B1002E9931 /* Supporting Files */,
 				46D0A5561607D1BA0007247D /* QRefWebView.h */,
 				46D0A5571607D1BA0007247D /* QRefWebView.m */,
@@ -328,7 +325,6 @@
 			files = (
 				46B2666615C054B1002E9931 /* main.m in Sources */,
 				46B2666A15C054B1002E9931 /* QRefAppDelegate.m in Sources */,
-				46B2666D15C054B1002E9931 /* Qref.xcdatamodeld in Sources */,
 				46D0A5581607D1BA0007247D /* QRefWebView.m in Sources */,
 				469F6F85160A212700279439 /* QrefInAppPurchaseManager.m in Sources */,
 				469F6F8D160A593F00279439 /* DESCrypt.m in Sources */,
@@ -503,19 +499,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		46B2666B15C054B1002E9931 /* Qref.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				46B2666C15C054B1002E9931 /* Qref.xcdatamodel */,
-			);
-			currentVersion = 46B2666C15C054B1002E9931 /* Qref.xcdatamodel */;
-			path = Qref.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 46B2664A15C054B0002E9931 /* Project object */;
 }
