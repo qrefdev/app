@@ -1,7 +1,8 @@
 async = require('async')
 mongoose = require('mongoose')
 QRefDatabase = require('../QRefDatabase')
-
+ObjectId = mongoose.Types.ObjectId
+underscore = require('underscore')
 ###
 Utility class used to provide common operations on {AircraftChecklistSchemaInternal} object instances.
 @author Nathan Klick
@@ -61,6 +62,25 @@ class ChecklistManager
 									eChklst.model = mdl.toObject()
 									cb(null)
 								)
+						,
+						(cb) ->
+							if eChklst.knownSerialNumbers.length < 50
+								cb(null)
+								return
+							
+							eChklst.knownSerialNumbers.sort((a, b) => 
+								if a.serialNumber < b.serialNumber
+									return -1
+								else if a.serialNumber > b.serialNumber
+									return 1
+								
+								return 0
+							)
+							
+							index = eChklst.knownSerialNumbers.length - 50
+							eChklst.knownSerialNumbers = underscore.rest(eChklst.knownSerialNumbers, index)
+							
+							cb(null)
 					],
 					(err, results) ->
 					
@@ -107,4 +127,12 @@ class ChecklistManager
 				#console.log("End forEach expand")
 				callback(null, eArrChkLists)
 		)
+	recordUpdatedSerialNumber: (chklst, newSerialNumber, deviceName) =>
+		ksn = { _id: new ObjectId(), serialNumber: newSerialNumber, deviceName: deviceName }
+		
+		debugger
+		chklst.knownSerialNumbers.push(ksn)
+		chklst.currentSerialNumber = ksn.serialNumber
+		
+		
 module.exports = ChecklistManager

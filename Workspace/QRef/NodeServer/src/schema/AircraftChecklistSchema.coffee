@@ -1,5 +1,6 @@
 mongoose = require('mongoose')
 Schema = mongoose.Schema
+Mixed = Schema.Types.Mixed
 ObjectId = Schema.ObjectId
 AircraftChecklistSectionSchema = require('./AircraftChecklistSectionSchema')
 AircraftChecklistCategorySchema = require('./AircraftChecklistCategorySchema');
@@ -102,6 +103,16 @@ class AircraftChecklistSchemaInternal
 		type: Date
 		required: false
 		default: new Date()
+	currentSerialNumber:
+		type: Number
+		required: true
+	knownSerialNumbers:
+		type: [Mixed]
+		required: false
+		default: []
+	lastCheckpointSerialNumber:
+		type: Number
+		required: true
 
 AircraftChecklistSchema = new Schema(new AircraftChecklistSchemaInternal())
 AircraftChecklistSchema.index({ manufacturer: 1, model: 1, version: 1, tailNumber: 1, user: 1 }, { unique: true })

@@ -104,6 +104,7 @@ class AircraftChecklistRoute extends AjaxRoute
 		token = req.param('token')
 		checklistId = req.params.checklistId
 		filter = new AircraftChecklistFilter(token)
+		mgr = new ChecklistManager()
 		
 		UserAuth.validateToken(token, (err, isTokenValid) ->
 			if err? or not isTokenValid == true
@@ -168,19 +169,55 @@ class AircraftChecklistRoute extends AjaxRoute
 			
 					if req.body?.isDeleted?
 						obj.isDeleted = req.body.isDeleted
+					
+					if req.body.clientTime?
+						if req.body.clientTime < obj.currentSerialNumber
+							acceptedSerialNumber = null
+						else
+							acceptedSerialNumber = req.body.clientTime
 						
-					obj.save((err) ->
-						if err?
+						
+						if not acceptedSerialNumber?
 							resp = new AjaxResponse()
-							resp.failure(err, 500)
+							resp.failure('Serial Number Out-of-Sync', 403)
 							res.json(resp, 200)
 							return
 						
-						resp = new AjaxResponse()
-						resp.addRecord(obj)
-						resp.setTotal(1)
-						res.json(resp, 200)
-					)
+						if req.body.deviceName?
+							deviceName = req.body.deviceName
+						else
+							deviceName = "UNKNOWN"
+						
+						mgr.recordUpdatedSerialNumber(obj, acceptedSerialNumber, deviceName)
+						
+						obj.save((err) ->
+							if err?
+								resp = new AjaxResponse()
+								resp.failure(err, 500)
+								res.json(resp, 200)
+								return
+							
+							debugger
+							resp = new AjaxResponse()
+							#resp.addRecord(obj)
+							#resp.setTotal(1)
+							res.json(resp, 200)
+						)
+					else
+					
+					
+						obj.save((err) ->
+							if err?
+								resp = new AjaxResponse()
+								resp.failure(err, 500)
+								res.json(resp, 200)
+								return
+							
+							resp = new AjaxResponse()
+							#resp.addRecord(obj)
+							#resp.setTotal(1)
+							res.json(resp, 200)
+						)
 				) 
 				
 			)
