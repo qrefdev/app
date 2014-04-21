@@ -199,6 +199,7 @@ button,
     padding: 0;
     z-index: 0;
     display: none;
+    box-shadow: inset 10px 0px 13px -5px rgba(0,0,0,1);
 
     ul {
         float: left;
@@ -313,9 +314,10 @@ button,
                 border: none;
                 font-family: Myriad, Helvetica;
                 text-align: left;
+                background: @colorDashButton;
 
                 &.last {
-                    margin: 0;
+                    //margin: 0;
                 }
             }
         }
@@ -583,7 +585,7 @@ form label {
     color: @colorAccent;
 
     .icon {
-    @colorSecondary;
+    	color: @colorSecondary;
     }
 }
 
@@ -655,6 +657,37 @@ form label {
 .special:last-child, .special2:last-child {
     border-bottom: 0px;
 }
+
+.conflict-button {
+    width: auto;
+    position: relative;
+    text-align: left;
+    overflow: hidden;
+    height: 48px;
+    margin-bottom: 5px;
+
+    p {
+        color: @colorButton2Text;
+        font-family: Myriad;
+        font-size: 21px;
+        float: left;
+        position: relative;
+        width: auto;
+        padding: 5px 0 0;
+        margin: 0;
+        text-indent: 7px;
+    }
+
+    .icon {
+        float: left;
+        color: @colorButton2Icon;
+        text-align: center;
+        padding: 5px 0;
+        margin-top: 0px;
+        font-size: 21px;
+    }
+}
+
 
 // Modal
 .modal {
@@ -1027,6 +1060,95 @@ form label {
                     float: none;
                 }
             }
+        }
+    }
+}
+
+// Conflict
+.conflictbox {
+    .choiceBox {
+        border: none;
+        border-top: 1px solid @colorButton2Icon;
+        padding: 0 0 10px 0;
+        margin: 0;
+        width: 47%;
+        box-sizing: border-box;
+        float: left;
+
+        &:last-child {
+            border-bottom: 1px solid @colorButton2Icon;
+        }
+    }
+
+    .choiceButtons {
+        margin: 0 20px;
+    }
+
+    .choiceBoxButton {
+        float: left;
+        width: 47%;
+        margin-left: 0px;
+    }
+
+    .choiceTitle {
+        font-size: 20px;
+        margin: 10px 0 10px;
+        display: block;
+    }
+
+    .description {
+        display: none;
+    }
+
+    .conflictNumber {
+        color: @colorButton2Text;
+    }
+
+    .cdev {
+        font-size: 14px;
+    }
+
+    .emphasis {
+        font-family: MyriadBold;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .tableRow {
+        clear: both;
+        margin-bottom: 5px;
+    }
+
+    .tableCell {
+        display: block;
+        margin: 0 10px 5px 0;
+        float: left;
+
+        &.col1 { width: 80px; }
+        &.col2 { width: auto; }
+
+    }
+}
+
+@media only screen and (orientation: landscape) {
+    .conflictbox {
+        .choiceBox {
+            border: none;
+
+            &:last-child {
+                border: none;
+            }
+        }
+    }
+}
+
+@media only screen and (orientation: portrait) {
+    .conflictbox {
+        .choiceBox {
+            width: 100%;
+        }
+        .choiceBoxButton {
+           width: 100%;
         }
     }
 }

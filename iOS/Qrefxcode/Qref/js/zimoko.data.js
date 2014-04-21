@@ -144,6 +144,7 @@
 			self = this;
 			
 			this._original = object;
+			this._unmodified = $.extend(true, {}, object);
 			
 			for(var name in object) {
 				this[name] = object[name];

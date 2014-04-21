@@ -65,6 +65,26 @@ function AppendChecklist(data) {
     }
 }
 
+function AppendChecklistVersionInfo(data) {
+    if(data) {
+        if(AppObserver.checklistVersions == undefined)
+            AppObserver.checklistVersions = [];
+        
+        try {
+            var decoded = decodeURIComponent(unescape(atob(data)));
+            var vi = JSON.parse(decoded);
+            
+			var found = _.find(AppObserver.checklistVersions, function(item) { return item._id == vi._id });
+			
+			if (!found) {
+            	AppObserver.checklistVersions.push(vi);
+			}
+        } catch (e) {
+            
+        }
+    }
+}
+
 function ShowMarketingPage() {
     window.location.href = "qref://nlog=MarketingHo!";
     Navigation.go('#marketing');

@@ -183,3 +183,59 @@
         }
     }
 }
+
+
+// Conflict
+.conflictbox {
+    .choiceBox {
+        border: 1px solid @colorButton2Icon;
+        border-radius: 15px;
+        -webkit-border-radius: 15px;
+        padding: 20px;
+        margin: 0 25px 0 0;
+
+        &:last-child {
+            border: 1px solid @colorButton2Icon;
+            margin-right: 0;
+        }
+    }
+
+    top: 10%;
+
+    .header {
+        font-size: 48px;
+    }
+
+    .description {
+        display: block;
+        margin-bottom: 25px;
+    }
+
+    .cdev {
+        font-size: 18px;
+    }
+
+    .choiceTitle {
+        font-size: 26px;
+        margin: 0 0 10px;
+        display: block;
+    }
+
+    .conflict-button {
+        .icon, p {
+            font-size: 30px;
+        }
+    }
+
+}
+
+@media only screen and (orientation: portrait) {
+    .conflictbox {
+        .choiceBox {
+            width: 47%;
+        }
+        .choiceBoxButton {
+            width: 47%;
+        }
+    }
+}

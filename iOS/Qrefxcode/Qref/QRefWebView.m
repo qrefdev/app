@@ -323,6 +323,14 @@
                         }];
                     }
                 }
+                else if([key isEqualToString:@"svi"]) {
+                    NSLog(@"Saving version info supposedly");
+                    if(value != nil) {
+                        [self.savingQueue addOperationWithBlock:^{
+                            [self saveVersionInfo:value];
+                        }];
+                    }
+                }
                 else if([key isEqualToString:@"hasChecklists"]) {
                     NSThread  * thread = [[NSThread alloc] initWithTarget:self selector:@selector(signinFindCachedChecklists) object:nil];
                     
@@ -445,7 +453,19 @@
                 }
                 else if([key isEqualToString:@"restoreAll"]) {
                     [self->purchaseManager restoreAll];
+                }else if ([key isEqualToString:@"getDeviceName"]) {
+					[self publishDeviceName];
+				}
+				/*
+                else if([key isEqualToString:@"lastCheckpointSerialNumber"]) {
+                    [self->preferences setValue:value forKey:@"lastCheckpointSerialNumber"];
+                } else if ([key isEqualToString:@"getLastCheckpointSerialNumber"]) {
+                    NSString * lastCheckpointSerialNumber = [self->preferences valueForKey:@"lastCheckpointSerialNumber"];
+                
+                    
+                    [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"AppObserver.setLastCheckpointSerialNumber(%@);", lastCheckpointSerialNumber] ];
                 }
+				*/
                 else if([key isEqualToString:@"clearCache"])
                 {
                     //to prevent internal caching of webpages in application
@@ -637,6 +657,14 @@
     }
 }
 
+- (void) publishDeviceName {
+	NSString * deviceName = [NSString stringWithString:[UIDevice currentDevice].name];
+	deviceName = [deviceName stringByReplacingOccurrencesOfString:@"'" withString: @"\\'" ];
+	NSString * buffer = [NSString stringWithFormat:@"AppObserver.setDeviceName('%@');", deviceName];
+	
+	[self.webView stringByEvaluatingJavaScriptFromString:buffer];
+}
+
 /*- (void) saveChecklists: (NSString *) checklists {
     NSString *UID = [self->preferences stringForKey:@"qrefUID"];
     NSString *user = [self->preferences stringForKey:@"qrefUser"];
@@ -740,6 +768,74 @@
     }];
 }
 
+- (void) saveVersionInfo:(NSString *) cId {
+    NSString *UID = [self->preferences stringForKey:@"qrefUID"];
+    NSString *user = [self->preferences stringForKey:@"qrefUserId"];
+    
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        NSLog(@"Checklist Version ID: %@", cId);
+        NSString *versionInfo = [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat: @"AppObserver.getChecklistVersionInfo('%@');", cId]];
+        NSLog(@"Version Info Length: %d", versionInfo.length);
+        //NSLog(@"Checklist Item count: %d", items.count);
+        
+        if(versionInfo.length > 0) {
+            NSString *file = [cId stringByAppendingString:@".qvi"];
+            NSString *content = versionInfo;
+            
+            //NSLog(@"Beginning Saving checklist: %@", file);
+            
+            if(UID != nil && user != nil && content != nil)
+            {
+                
+                NSString *combinedUserUID = [user stringByAppendingString:UID];
+                NSData *encryptedData = nil;
+                
+                NSData *decoded = [content dataUsingEncoding:NSASCIIStringEncoding];
+                
+                NSString *dataToEncrypt = [[NSString alloc] initWithBytes:[decoded bytes] length:[decoded length] encoding:NSASCIIStringEncoding];
+                
+                @try {
+                    encryptedData = [DESCrypt crypt:dataToEncrypt password:combinedUserUID];
+					//encryptedData = [dataToEncrypt dataUsingEncoding:NSASCIIStringEncoding];
+                }
+                @catch (NSException *exception) {
+                    encryptedData = [dataToEncrypt dataUsingEncoding:NSASCIIStringEncoding];
+                }
+                
+                NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+                NSFileManager *manager = [NSFileManager defaultManager];
+                NSString *cachedFilePath = [cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"/qref/%@", file]];
+                
+                if([manager fileExistsAtPath:[cachePath stringByAppendingString:@"/qref"]] == NO)
+                {
+                    NSError *__autoreleasing * directoryError;
+                    if(![manager createDirectoryAtPath:[cachePath stringByAppendingPathComponent:@"/qref"] withIntermediateDirectories:NO attributes:nil error:directoryError])
+                    {
+                        NSLog(@"Error creating directory %@", [cachePath stringByAppendingPathComponent:@"/qref"]);
+                    }
+                    
+                }
+                
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                    NSLog(@"Saving version info: %@", file);
+                    [encryptedData writeToFile:cachedFilePath atomically:YES];
+                }];
+                
+                cachePath = nil;
+                manager = nil;
+                cachedFilePath = nil;
+                decoded = nil;
+                dataToEncrypt = nil;
+                encryptedData = nil;
+                combinedUserUID = nil;
+            }
+            
+            file = nil;
+            content = nil;
+        }
+    }];
+}
+
 - (BOOL) hasCachedChecklists {
     NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     NSFileManager *manager = [NSFileManager defaultManager];
@@ -757,6 +853,7 @@
     NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     NSFileManager *manager = [NSFileManager defaultManager];
     NSMutableArray * cached = [NSMutableArray array];
+    NSMutableArray * versions = [NSMutableArray array];
     
     NSUserDefaults * pref = [NSUserDefaults standardUserDefaults];
     NSString *user = [pref stringForKey:@"qrefUserId"];
@@ -775,6 +872,10 @@
                 if([filename hasSuffix:@".qrf"] && contains) {
                     [cached addObject:filename];
                 }
+                
+                if([filename hasSuffix:@".qvi"]) {
+                    [versions addObject:filename];
+                }
             }
             
             NSLog(@"Found Cached Count: %d", cached.count);
@@ -784,6 +885,13 @@
                 
                 [self loadChecklist:content];
                 content = nil;
+            }
+            
+            for(int i = 0; i < versions.count; i++) {
+                NSData * content = [manager contentsAtPath:[cachePath stringByAppendingString:[NSString stringWithFormat:@"/qref/%@", [versions objectAtIndex:i]]]];
+                [self loadChecklistVersionInfo:content];
+                content = nil;
+                
             }
         }
         
@@ -801,7 +909,8 @@
     NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     NSFileManager *manager = [NSFileManager defaultManager];
     NSMutableArray * cached = [NSMutableArray array];
-    
+	NSMutableArray * versions = [NSMutableArray array];
+
     NSUserDefaults * pref = [NSUserDefaults standardUserDefaults];
     NSString *user = [pref stringForKey:@"qrefUserId"];
     
@@ -819,6 +928,11 @@
                 if([filename hasSuffix:@".qrf"] && contains) {
                     [cached addObject:filename];
                 }
+				
+				
+                if([filename hasSuffix:@".qvi"]) {
+                    [versions addObject:filename];
+                }
             }
             
             NSLog(@"Found Cached Count: %d", cached.count);
@@ -828,6 +942,13 @@
                 
                 [self loadChecklist:content];
                 content = nil;
+            }
+			
+			for(int i = 0; i < versions.count; i++) {
+                NSData * content = [manager contentsAtPath:[cachePath stringByAppendingString:[NSString stringWithFormat:@"/qref/%@", [versions objectAtIndex:i]]]];
+                [self loadChecklistVersionInfo:content];
+                content = nil;
+                
             }
         }
         
@@ -948,7 +1069,7 @@
         for(int i = 0; i < contents.count; i++) {
             NSString *filename = [contents objectAtIndex:i];
             
-            if([filename hasSuffix:@".qrf"]) {
+            if([filename hasSuffix:@".qrf"] || [filename hasSuffix:@".qvi"]) {
                 [cached addObject:filename];
             }
         }
@@ -985,6 +1106,33 @@
         {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"AppendChecklist('%@');", decryptedChecklistData]];
+            });
+        }
+    }
+}
+
+- (void) loadChecklistVersionInfo: (NSData *) data {
+    NSUserDefaults * preference = [NSUserDefaults standardUserDefaults];
+    NSString *user = [preference stringForKey:@"qrefUserId"];
+    NSString *UID = [preference stringForKey:@"qrefUID"];
+    
+    if(user != nil && data != nil && UID != nil)
+    {
+        NSString *combinedUserUID = [user stringByAppendingString: UID];
+        
+        NSString *decryptedChecklistData = nil;
+        
+        @try {
+            decryptedChecklistData = [DESCrypt decrypt:data password:combinedUserUID];
+        }
+        @catch (NSException *exception) {
+            decryptedChecklistData = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+        }
+        
+        if([decryptedChecklistData length] > 0)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"AppendChecklistVersionInfo('%@');", decryptedChecklistData]];
             });
         }
     }

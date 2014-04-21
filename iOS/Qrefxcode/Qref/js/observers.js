@@ -100,7 +100,7 @@ var EditAddObserver = new zimoko.Observable({
             var sectionItems = []
 
             //Emergency Category Changes
-            if (list != 'emergencies')
+            if (list != 'emergencies')  
                 sectionItems = ChecklistObserver.checklist[list][section].items;
             else
                 sectionItems = ChecklistObserver.checklist[list][category].items[section].items;
@@ -123,6 +123,17 @@ var EditAddObserver = new zimoko.Observable({
         }
                                             
         ChecklistObserver.set('modified', true);
+        
+        if (!_.isEqual(EditAddObserver.item._unmodified, EditAddObserver.item._original)) {
+        	var versionInfo = AppObserver.getChecklistVersionObject(ChecklistObserver.checklist._id);
+        	
+        	if (versionInfo) {
+        		versionInfo.lastCheckpointSerialNumber = (new Date()).getTime();
+        		setTimeout(function () {
+        			Sync.syncVersionInfoToPhone([versionInfo]);
+        		}, 500);
+        	}
+        }
         
         EditAddObserver.set('item',new zimoko.Observable({check:'', response:'', icon:null, _id:zimoko.createGuid()}));
                                             
@@ -667,6 +678,9 @@ var AppObserver = new zimoko.Observable({
     userProducts:[],
     isSorting:false,
     menuOpen:false,
+    checklistVersions: [],
+    /* lastCheckpointSerialNumber: null, */
+    deviceName: null,
     pageTap:function (element, e, data) {
         MenuObserver.close();
     },
@@ -1008,6 +1022,39 @@ var AppObserver = new zimoko.Observable({
 
         return '';
     },
+    getChecklistVersionInfo: function (id) {
+        var found = _.find(this.checklistVersions, function (item) { return item._id == id; });
+        
+        if (found) {
+        	return btoa(escape(encodeURIComponent(JSON.stringify(found))));
+        }
+        
+        return '';
+    },
+    getChecklistVersionObject: function (id) {
+        return _.find(this.checklistVersions, function (item) { return item._id == id; });
+    },
+    addChecklistVersionObject: function (versionInfo) {
+    	var found = _.find(this.checklistVersions, function (item) { return item._id == versionInfo._id; });
+    	
+    	if (!found) {
+    		this.checklistVersions.push(versionInfo);
+    	}
+    },
+    setDeviceName: function (dn) {
+    	this.deviceName = dn;
+    },
+    getDeviceName: function () {
+    	return this.deviceName;
+    },
+	/*
+	setLastCheckpointSerialNumber: function (lsn) {
+		this.lastCheckpointSerialNumber = lsn;
+	},
+	getLastCheckpointSerialNumber: function () {
+		return this.lastCheckpointSerialNumber;
+	},
+	*/
     getChecklists:function (callback) {
         var self = this;
 
@@ -1028,6 +1075,17 @@ var AppObserver = new zimoko.Observable({
                                 var item = checklists[i];
 
                                 item.lastPosition = undefined;
+                                
+                                /*
+                                setTimeout( function () {
+									if (!self.getChecklistVersionObject(item._id)) {
+										var versionInfo = self.formatVersionInfo(item);
+										self.addChecklistVersionObject(versionInfo);
+										window.location.href = "qref://svi=" + btoa(encodeURIComponent(versionInfo._id));
+									}
+								}, 20);
+								*/
+							
                             }
 
                             //var temp = JSON.stringify(checklists);

@@ -22,6 +22,7 @@
     <script src="js/jquery.scrollbar.js"></script>
     <script src="js/jquery.touchscroll.js"></script>
     <script src="js/underscore.js"></script>
+	<script src="js/async.js"></script>
     <script src="js/zimoko.core.js"></script>
     <script src="js/zimoko.culture.js"></script>
     <script src="js/zimoko.utils.js"></script>
@@ -1065,6 +1066,21 @@
         <figcaption class="data"></figcaption>
         <div class="button okay" style="width: 90%; margin: 20px auto;">
             <div class="special"><p>OK</p><i class="icon icon-ok"></i></div>
+        </div>
+    </figure>
+</div>
+
+<!-- Sync Conflict Dialog -->
+<div class="modal" id="conflictbox">
+    <figure class="info conflictbox">
+        <figcaption class="data conflict"></figcaption>
+        <div class="choiceButtons">
+            <div class="choiceBoxButton button okay yes">
+                <div class="conflict-button"><i class="icon icon-ok"></i><p>Keep Local Version</p></div>
+            </div>
+            <div class="choiceBoxButton button okay no">
+                <div class="conflict-button"><i class="icon icon-ok"></i><p>Keep Server Version</p></div>
+            </div>
         </div>
     </figure>
 </div>

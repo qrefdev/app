@@ -4,6 +4,8 @@ function Signin() {
 	AppObserver.set('loading', true);
 	
     window.location.href = "qref://clearCache";
+    //window.location.href = "qref://clearChecklistCache";
+    
     
     if(reachability) {
         $.ajax({
