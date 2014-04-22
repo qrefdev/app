@@ -4,6 +4,10 @@ UserAuth = require('../../../../security/UserAuth')
 QRefDatabase = require('../../../../db/QRefDatabase')
 ChecklistManager = require('../../../../db/manager/ChecklistManager')
 AircraftChecklistFilter = require('../../../../security/filters/AircraftChecklistFilter')
+mongoose = require('mongoose')
+ObjectId = mongoose.Types.ObjectId
+
+
 ###
 Service route that allows the retrieval of all checklists and the creation of new checklists.
 @example Service Methods (see {CreateAircraftChecklistAjaxRequest})
@@ -165,6 +169,10 @@ class AircraftChecklistsRoute extends AjaxRoute
 				
 				#if req.body?.coverImage?
 				#	newObj.coverImage = req.body.coverImage
+				
+				newObj.currentSerialNumber = 13956809037234
+				newObj.lastCheckpointSerialNumber = 13956809037234
+				newObj.knownSerialNumbers.push({ serialNumber: 13956809037234 , deviceName: 'SYSTEM', _id: new ObjectId() })
 				
 				newObj.save((err) ->
 					if err?
