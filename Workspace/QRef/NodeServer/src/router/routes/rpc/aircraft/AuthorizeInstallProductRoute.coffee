@@ -131,6 +131,9 @@ class AuthorizeInstallProductRoute extends RpcRoute
 		nChecklist.landing = oChecklist.landing
 		nChecklist.emergencies = oChecklist.emergencies
 		nChecklist.isDeleted = false
+		nChecklist.currentSerialNumber = oChecklist.currentSerialNumber
+		nChecklist.lastCheckpointSerialNumber = oChecklist.lastCheckpointSerialNumber
+		nChecklist.knownSerialNumbers = oChecklist.knownSerialNumbers
 		
 		nChecklist.save((err) => 
 			if err?
