@@ -103,6 +103,16 @@ class AircraftBackupChecklistSchemaInternal
 		type: Date
 		required: false
 		default: new Date()
+	currentSerialNumber:
+		type: Number
+		required: true
+	knownSerialNumbers:
+		type: [Mixed]
+		required: false
+		default: []
+	lastCheckpointSerialNumber:
+		type: Number
+		required: true
 
 AircraftBackupChecklistSchema = new Schema(new AircraftBackupChecklistSchemaInternal())
 AircraftBackupChecklistSchema.index({ manufacturer: 1, model: 1, version: 1, tailNumber: 1, user: 1 }, { unique: false })

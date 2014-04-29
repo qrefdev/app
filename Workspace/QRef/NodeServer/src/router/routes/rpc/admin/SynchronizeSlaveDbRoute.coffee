@@ -172,6 +172,9 @@ class SynchronizeSlaveDbRoute extends RpcRoute
 								sNewChkLst.user = mChkLst.user
 								sNewChkLst.version = mChkLst.version
 								sNewChkLst.productIcon = mChkLst.productIcon
+								sNewChkLst.currentSerialNumber = mChkLst.currentSerialNumber
+								sNewChkLst.knownSerialNumbers = mChkLst.knownSerialNumbers
+								sNewChkLst.lastCheckpointSerialNumber = mChkLst.lastCheckpointSerialNumber
 								
 								sNewChkLst.save((err)=>
 									if err?
@@ -263,6 +266,9 @@ class SynchronizeSlaveDbRoute extends RpcRoute
 				bNewChkLst.tailNumber = osChkLst.tailNumber
 				bNewChkLst.isDeleted = osChkLst.isDeleted
 				bNewChkLst.timestamp = osChkLst.timestamp
+				bNewChkLst.currentSerialNumber = osChkLst.currentSerialNumber
+				bNewChkLst.knownSerialNumbers = osChkLst.knownSerialNumbers
+				bNewChkLst.lastCheckpointSerialNumber = osChkLst.lastCheckpointSerialNumber
 				
 				backupObjects.push(bNewChkLst)
 				removalTargets.push(sChkLst._id)
