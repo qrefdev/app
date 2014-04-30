@@ -224,6 +224,9 @@ class AuthorizeAppleAircraftProductRoute extends RpcRoute
 		nChecklist.landing = oChecklist.landing
 		nChecklist.emergencies = oChecklist.emergencies
 		nChecklist.isDeleted = false
+		nChecklist.currentSerialNumber = oChecklist.currentSerialNumber
+		nChecklist.knownSerialNumbers = oChecklist.knownSerialNumbers
+		nChecklist.lastCheckpointSerialNumber = oChecklist.lastCheckpointSerialNumber
 		
 		nChecklist.save((err) -> 
 			if err?
