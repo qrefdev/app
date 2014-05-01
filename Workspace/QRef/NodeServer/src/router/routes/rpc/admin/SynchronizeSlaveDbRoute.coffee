@@ -42,16 +42,24 @@ class SynchronizeSlaveDbRoute extends RpcRoute
 				res.json(resp, 200)
 				return
 			
-			@.synchronize((err) =>
+			@.synchronizeModels((err) =>
 				if err?
 					resp = new RpcResponse(null)
 					resp.failure(err, 500)
 					res.json(resp, 200)
 					return
-					
-				resp = new RpcResponse(null)
-				res.json(resp, 200)
-				return
+			
+				@.synchronize((err) =>
+					if err?
+						resp = new RpcResponse(null)
+						resp.failure(err, 500)
+						res.json(resp, 200)
+						return
+						
+					resp = new RpcResponse(null)
+					res.json(resp, 200)
+					return
+				)
 			)
 			
 			###
@@ -70,6 +78,100 @@ class SynchronizeSlaveDbRoute extends RpcRoute
 					return
 			)
 			###
+		)
+	synchronizeModels: (callback) =>
+		masterDb = QRefSlaveManager.getSlave('master')
+		slaveDb = QRefSlaveManager.getSlave('slave')
+		
+		async.series(
+			[
+				(sCb) =>
+					masterDb.AircraftManufacturer
+					.find((err, arrMasterMfg) =>
+						if err?
+							sCb(err)
+							return
+			
+						async.forEach(arrMasterMfg, 
+							(mMfg, aCb) =>
+								slaveDb.AircraftManufacturer
+								.where('name')
+								.equals(mMfg.name)
+								.count((err, cntExisting) =>
+									if err?
+										aCb(err)
+										return
+									
+									if cntExisting > 0
+										aCb(null)
+										return
+									
+									sMfg = new slaveDb.AircraftManufacturer()
+									sMfg._id = mMfg._id
+									sMfg.name = mMfg.name
+									sMfg.description = mMfg.description
+									sMfg.models = mMfg.models
+									
+									sMfg.save(aCb)
+								)
+							,(err) =>
+								if err?
+									sCb(err)
+									return
+								
+								sCb(null)
+						)
+					)
+				,(sCb) =>
+					masterDb.AircraftModel
+					.find((err, arrMasterMdl) =>
+						if err?
+							sCb(err)
+							return
+						
+						async.forEach(arrMasterMdl, 
+							(mMdl, aCb) =>
+								slaveDb.AircraftModel
+								.where('name')
+								.equals(mMdl.name)
+								.where('manufacturer')
+								.equals(mMdl.manufacturer)
+								.where('modelYear')
+								.equals(mMdl.modelYear)
+								.count((err, cntExisting) =>
+									if err?
+										aCb(err)
+										return
+									
+									if cntExisting > 0
+										aCb(null)
+										return
+									
+									sMdl = new slaveDb.AircraftModel()
+									sMdl._id = mMdl._id
+									sMdl.name = mMdl.name
+									sMdl.manufacturer = mMdl.manufacturer
+									sMdl.modelYear = mMdl.modelYear
+									sMdl.description = mMdl.description
+									
+									sMdl.save(aCb)
+								)
+							,(err) =>
+								if err?
+									sCb(err)
+									return
+								
+								sCb(null)
+						)
+						
+					)
+			], 
+			(err) =>
+				if err?
+					callback(err)
+					return
+				
+				callback(null)
 		)
 	synchronize: (callback) =>
 		masterDb = QRefSlaveManager.getSlave('master')
