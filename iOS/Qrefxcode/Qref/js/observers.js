@@ -175,7 +175,7 @@ var EditTailObserver = new zimoko.Observable({
             
             if (!_.isEqual(EditTailObserver.item._unmodified, EditTailObserver.item._original)) {
 				var versionInfo = AppObserver.getChecklistVersionObject(EditTailObserver.item._id);
-			
+		
 				if (versionInfo) {
 					versionInfo.lastCheckpointSerialNumber = (new Date()).getTime();
 					setTimeout(function () {
@@ -184,6 +184,8 @@ var EditTailObserver = new zimoko.Observable({
 				}
 			}
         }
+        
+        
                                              
         setTimeout(function () {
             Navigation.back();
