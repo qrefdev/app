@@ -1,4 +1,4 @@
-var host = "https://my.qref.com/";
+var host = "http://test-master.qref.com/";
 
 //Default Theme Settings 
 var NightTimeModeTime = "00:00";

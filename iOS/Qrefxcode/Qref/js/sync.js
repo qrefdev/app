@@ -149,12 +149,14 @@ function SyncProcessor() {
 				
 				
 				for (var i = 0; i < localItems.length; i++) {
-					var found = _.find(serverItems, function (z) { return z._id == localItems[i]._id; });
+					if (localItems[i].isDeleted == false) {
+						var found = _.find(serverItems, function (z) { return z._id == localItems[i]._id; });
 					
-					if (found == null) {
-						localItems[i].isDeleted = true;
-					} else if (found && localItems[i].isDeleted) {
-						localItems[i].isDeleted = false;
+						if (found == null) {
+							localItems[i].isDeleted = true;
+						} else if (found && localItems[i].isDeleted) {
+							localItems[i].isDeleted = false;
+						}
 					}
 				}
 				
