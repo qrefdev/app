@@ -1,0 +1,241 @@
+// Dash Top Bar
+.logoSection {
+    .logo {
+        background: url('../images/@{skin}/logo-tablet.png') 0 0 no-repeat;
+
+        @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+            background-image: url('../images/@{skin}/logo@2x.png');
+            background-size: 214px 84px;
+        }
+    }
+}
+
+.checklist .vertical li {
+
+    .check.nextSection {
+        right: 4px;
+        margin-bottom: 20px;
+    }
+}
+
+#marketing .wrap {
+    background-color: #252a31;
+    background-image: url(../images/marketing/accent~ipad.png), url(../images/marketing/background~ipad.png);
+    background-position: center bottom, left bottom;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+    -webkit-background-size: 768px auto, 100%;
+    background-size: 768px auto, 100%;
+
+    @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+        background-image: url(../images/marketing/accent~ipad@2x.png), url(../images/marketing/background~ipad@2x.png);
+    }
+
+    .wrap {
+        background-color: transparent;
+    }
+
+    .checklistImage {
+        background: transparent url('../images/marketing/checklist_large.png') no-repeat left bottom;
+        width: 333px;
+        height: 918px;
+        position: absolute;
+        bottom: 15px;
+        top: auto;
+        -webkit-background-size: auto 918px;
+        background-size: auto 918px;
+
+        @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+            background-image: url(../images/marketing/checklist_large@2x.png);
+        }
+    }
+
+    .salesContent {
+        margin: 100px 25px 0 333px;
+
+        .header {
+            margin: 20px 0 50px;
+            color: @colorea;
+            font-size: 60px;
+            font-family: MyriadLight;
+            letter-spacing: -2px;
+
+            span {
+                display: block;
+                font-size: 48px;
+                letter-spacing: -1px;
+            }
+        }
+
+        .salesText {
+            padding: 0;
+            width: 50%;
+
+            & > p {
+                font-size: 20px;
+                font-family: MyriadLight;
+                color: @colora0;
+                line-height: 28px;
+
+                b {
+                    color: white;
+                    font-family: MyriadBold;
+                    font-weight: normal;
+                }
+
+                .highlight {
+                    color: #ffd000;
+                }
+            }
+
+            &.left {
+                float: left;
+
+                & > p, .special {
+                    margin-right: 10px;
+                    margin-left: 0;
+                }
+
+            }
+
+            &.right {
+                float: right;
+
+                & > p, .special {
+                    margin-left: 10px;
+                    margin-right: 0;
+                }
+            }
+
+            .special {
+                text-align: left;
+                border: 2px solid #484f59;
+                border-radius: 10px;
+                -webkit-border-radius: 10px;
+                height: 60px;
+                width: 185px;
+                margin-bottom: 20px;
+                float: none;
+
+                p, i {
+                    font-size: 40px;
+                    margin: 0;
+                    padding: 8px 12px 0 0;
+                    color: @color9b;
+                    letter-spacing: -1px;
+                }
+
+                i {
+                    color: @color66;
+                    font-size: 34px;
+                    padding: 12px 0 0 11px;
+                    position: absolute;
+                    display: block;
+                }
+            }
+
+            .spacer {
+                height: 2px;
+                display: block;
+            }
+        }
+    }
+
+    .signin {
+        font-size: 18px;
+        font-family: MyriadLight;
+        color: @colora0;
+        bottom: 8px;
+        right: 20px;
+        position: absolute;
+        line-height: 26px;
+        text-align: right;
+
+        span {
+            color: white;
+            font-family: MyriadBold;
+            font-size: 22px;
+            display: block;
+        }
+    }
+
+    @media only screen and (orientation: landscape) {
+        background-image: url(../images/marketing/accent-wide~ipad.png), url(../images/marketing/background~ipad.png);
+        background-position: center bottom, left bottom;
+        background-repeat: no-repeat;
+        height: 100%;
+        width: 100%;
+        -webkit-background-size: 1024px auto, 100%;
+        background-size: 1024px auto, 100%;
+
+        @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+            background-image: url(../images/marketing/accent-wide~ipad@2x.png), url(../images/marketing/background~ipad@2x.png);
+        }
+
+        .checklistImage {
+            top: 15px;
+            bottom: auto;
+        }
+
+        .salesContent {
+            margin-left: 280px;
+        }
+    }
+}
+
+
+// Conflict
+.conflictbox {
+    .choiceBox {
+        border: 1px solid @colorButton2Icon;
+        border-radius: 15px;
+        -webkit-border-radius: 15px;
+        padding: 20px;
+        margin: 0 25px 0 0;
+
+        &:last-child {
+            border: 1px solid @colorButton2Icon;
+            margin-right: 0;
+        }
+    }
+
+    top: 10%;
+
+    .header {
+        font-size: 48px;
+    }
+
+    .description {
+        display: block;
+        margin-bottom: 25px;
+    }
+
+    .cdev {
+        font-size: 18px;
+    }
+
+    .choiceTitle {
+        font-size: 26px;
+        margin: 0 0 10px;
+        display: block;
+    }
+
+    .conflict-button {
+        .icon, p {
+            font-size: 30px;
+        }
+    }
+
+}
+
+@media only screen and (orientation: portrait) {
+    .conflictbox {
+        .choiceBox {
+            width: 47%;
+        }
+        .choiceBoxButton {
+            width: 47%;
+        }
+    }
+}

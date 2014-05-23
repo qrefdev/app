@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Qref</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="format-detection" content="email=no"/>
+    <meta name="format-detection" content="address=no"/>
+    <link rel="stylesheet" href="css/fontawesome.css"/>
+    <link rel="stylesheet" href="css/base.css"/>
+    <link rel="stylesheet" href="css/theme-light.css"/>
+    <link rel="stylesheet" href="css/animate.css"/>
+    <link rel="stylesheet" href="css/checkbox.css"/>
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery.ui.js"></script>
+    <script src="js/jquery.punch.js"></script>
+    <script src="js/jquery.validate.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+    <script src="js/jquery.swipe.js"></script>
+    <script src="js/jquery.tap.js"></script>
+    <script src="js/jquery.scrollbar.js"></script>
+    <script src="js/jquery.touchscroll.js"></script>
+    <script src="js/underscore.js"></script>
+	<script src="js/async.js"></script>
+    <script src="js/zimoko.core.js"></script>
+    <script src="js/zimoko.culture.js"></script>
+    <script src="js/zimoko.utils.js"></script>
+    <script src="js/zimoko.data.js"></script>
+    <script src="js/zimoko.sortablecollection.js"></script>
+    <script src="js/zimoko.observablecollection.js"></script>
+    <script src="js/zimoko.datasource.js"></script>
+    <script src="js/zimoko.navigation.js"></script>
+    <script src="js/timer.js"></script>
+    <script src="js/imageprocessor.js"></script>
+    <script src="js/InAppPurchase.js"></script>
+    <script src="js/dialog.js"></script>
+    <script src="js/sync.js"></script>
+    <script src="js/observers-tablet.js"></script>
+    <script src="js/signin.js"></script>
+    <script src="js/register.js"></script>
+    <script src="js/include.js"></script>
+</head>
+<body class="theme-light">
+<div class="wrapper tablet">
+
+<!-- Dashboard Screen -->
+<article id="dashboard" data-page-show="inVisible" data-page-hide="outVisible" class="page">
+    <div class="wrap">
+        <div class="topbar">
+            <span>Dashboard</span>
+
+            <div class="item-large topmenu" data-bind="tap: menuTap">
+                <p><i class="icon icon-th-list"></i></p>
+            </div>
+            <div class="item-large topmenu"
+                 data-bind="tap: editTap, attr: {'class': (function() { if(editing) return 'item-large topmenu active'; else return 'item-large topmenu';})()}">
+                <p><i class="icon icon-pencil"></i></p>
+            </div>
+        </div>
+        <div class="logoSection">
+            <p>My Aircraft</p>
+
+            <div class="logo"></div>
+        </div>
+
+        <!--<div class="dashbar">
+            <div class="item logo">
+            </div>
+            <div class="item item-right topmenu" data-bind="tap: menuTap">
+                <p><i class="icon icon-th-list"></i></p>
+            </div>
+            <div class="item item-right edit-check" data-bind="tap: editTap, attr: {'class': (function() { if (editing) return 'item item-right edit-check active'; else return 'item item-right edit-check'; })()}">
+                <p><i class="icon icon-pencil"></i></p>
+            </div>
+            <div class="header">
+                <p>My Aircraft</p>
+            </div>
+        </div>-->
+        <div class="dashcontent">
+            <div class="grid dashboard-planes-selector scrollable" style="overflow-y: scroll; overflow-x:hidden; -webkit-overflow-scrolling: touch;">
+                <div class="container">
+                    <div class="getStarted" data-bind="visible: (token && showHelp)">
+                   		To get started, tap <span>Download</span> below and select a checklist.
+                   	</div>
+                    <ul id="dashboard-planes" class="vertical" data-bind="foreach: items">
+                        <li class="li-item"
+                            data-bind="attr: {'data-id': _id }, tap: parent.itemTap, swipeRight: parent.itemSwipeRight, swipeLeft: parent.itemSwipeRight">
+                            <div class="plane-icon"></div>
+                            <div class="holder">
+                                <span data-bind="html: tailNumber, visible: tailNumber" class="tailNumber"></span>
+
+                                <div class="heading" data-bind="html: manufacturer.name + ' ' + model.name"></div>
+                                <div class="subheading">
+                                    <span data-bind="html: model.description, visible: model.description"
+                                          style="margin-top: 0px"></span>, <span
+                                        data-bind="html: model.modelYear, visible: model.modelYear"></span>
+                                </div>
+                                <ul>
+                                    <li class="product-subarea" data-bind="tap: parent.subItemTap"
+                                        data-link="preflight">Preflight
+                                    </li>
+                                    <li class="product-subarea" data-bind="tap: parent.subItemTap" data-link="takeoff">
+                                        Takeoff
+                                    </li>
+                                    <li class="product-subarea" data-bind="tap: parent.subItemTap" data-link="landing">
+                                        Landing
+                                    </li>
+                                    <li class="product-subarea" data-bind="tap: parent.subItemTap"
+                                        data-link="emergencies">Emergencies
+                                    </li>
+                                    <li class="product-subarea last"
+                                        data-bind="tap: parent.subItemTap, visible: (function() { if(lastPosition) return true; else return false;})()"
+                                        data-link="last">Recent
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="delete" data-bind="tap: parent.deleteTap"><div class="deleteLabel">Delete</div></div>
+                            <div class="editTools">
+                                <div class="handle" data-bind="visible: parent.editing"><i class="icon-reorder"></i></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="shadow">
+            </div>
+        </div>
+        <div class="dashcontent" style="z-index: 99999;" data-bind="visible: !token">
+            <div class="grid dashboard-planes-selector scrollable" style="overflow-y: scroll; overflow-x:hidden; -webkit-overflow-scrolling: touch;">
+                <div class="container">
+                    <ul class="vertical">
+                        <li data-link="signin" data-bind="tap: navTap">
+                            <div class="special"><p style="right: 10px;">Sign in</p><i
+                                    class="icon icon-arrow-right"></i></div>
+                        </li>
+                        <li data-link="register" data-bind="tap: navTap">
+                            <div class="special"><p style="right: 10px;">Register</p><i
+                                    class="icon icon-arrow-right"></i></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="shadow"></div>
+        </div>
+        <nav class="nav dashnav" style="z-index: 99999;">
+            <ul>
+                <li data-link="downloads" data-bind="tap: navTap, visible: token" class="item" style="z-index: 10;">
+                    <div><i class="icon icon-download"></i>
+
+                        <div class="header">Download Aircraft Models</div>
+                    </div>
+                </li>
+                <li data-link="e6b" data-bind="tap: navTap" class="item" style="z-index: 5;">
+                    <div><i class="icon icon-table"></i>
+
+                        <div class="header">Conversions</div>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</article>
+
+<!-- Checklist Screen -->
+<article id="checklist" data-page-show="inVisible" data-page-hide="outVisible" class="page">
+    <div class="wrap">
+        <div class="topbar topbar-checklist">
+            <span data-bind="text: checklist.manufacturer.name"></span> <span
+                data-bind="text: checklist.model.name"></span>
+
+            <div class="item-large back" data-bind="tap: backTap">
+                <p><i class="icon icon-double-angle-left"></i></p>
+            </div>
+            <div class="item-large topmenu" data-bind="tap: menuTap">
+                <p><i class="icon icon-th-list"></i></p>
+            </div>
+            <div class="item-large topmenu"
+                 data-bind="tap: editTap, attr: {'class': (function() { if(editing) return 'item-large topmenu active'; else return 'item-large topmenu';})()}">
+                <p><i class="icon icon-pencil"></i></p>
+            </div>
+            <div class="item-large topmenu" data-bind="tap: clearTap, visible: canCheck">
+                <p><i class="icon icon-check-empty"></i></p>
+            </div>
+        </div>
+        <div class="content">
+            <div class="section-nav sections" data-bind="tap: sectionsTap">
+                <i class="icon icon-caret-down" style="position: absolute; left: 50%; bottom: -3px; margin-left: -4px;"></i>
+
+                <div class="name"
+                     data-bind="attr: {'class': (function() { if(list == 'emergencies') {return 'name name-emergencies';} else {return 'name';}})()}">
+                    <p data-bind="html: sectionName"></p>
+                </div>
+                <div class="previousSection"
+                     data-bind="tap: previousSectionTap, visible: (function() { if(list == 'preflight') {return section > 0;} else if(list != 'emergencies') {return true;}})()">
+                    <p style="margin: 5px; padding: 8px;"><i class="icon icon-chevron-left"></i></p></div>
+                <div class="nextSection"
+                     data-bind="tap: nextSectionTap, visible: (function() { if(((list == 'preflight' || list == 'takeoff') && checklist) || (list == 'landing' && checklist && section < checklist.landing.length - 1)) {return true; } else {return false;}})()">
+                    <p style="margin: 5px; padding: 8px;"><i class="icon icon-chevron-right"></i></p></div>
+            </div>
+            <div class="shadowTop">
+            </div>
+            <div style="position: absolute; top: 46px; left: 0px; bottom: 0px; right: 0px; width: 100%">
+                <div class="grid checklist scrollable" style="overflow-y: scroll; overflow-x:hidden; -webkit-overflow-scrolling: touch;">
+                    <div class="container">
+                        <ul id="checklist-items" class="vertical">
+                            <li class="list-item" data-bind="tap: parent.itemTap, swipeRight: parent.itemSwipeRight, swipeLeft: parent.itemSwipeRight">
+                                <div class="holder">
+                                    <div class="check" data-bind="visible: (check != '')"></div>
+                                    <div class="response" data-bind="visible: (response != '')"></div>
+                                </div>
+                                <div class="delete" data-bind="tap: parent.deleteTap"><div class="deleteLabel">Delete</div></div>
+                                <div class="editTools">
+                                    <div class="add" data-bind="tap: parent.addTap, visible: parent.editing"><i class="icon-plus"></i></div>
+                                    <div class="handle" data-bind="visible: parent.editing"><i class="icon-reorder"></i></div>
+                                </div>
+                                <div class="checkmark" style="display: none;"
+                                     data-bind="visible: (function() { if(parent.canCheck && !parent.editing && parent.sectionName.toLowerCase() != 'cruise performance') return true; else return false; })(), tap: parent.checkTap">
+                                    <div class="checker" style="display: none;"
+                                         data-bind="visible: (function() { if(isChecked) return true; else return false; })()">
+                                        <i class="icon icon-ok"></i></div>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="vertical">
+                            <li data-bind="tap: nextSectionTap, visible: (function() { if(((list == 'preflight' || list == 'takeoff') && checklist && displayNext) || (list == 'landing' && checklist && section < checklist.landing.length - 1 && displayNext)) {return true; } else {return false;}})()">
+                                <div class="holder">
+                                    <div class="check nextSection">Next Section</div>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="add add-single" style="display: none;" data-bind="tap: addTap"><i class="icon-plus"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="shadow">
+            </div>
+        </div>
+        <div class="flyover" data-bind="slideVisible: showSections" style="overflow-y: scroll; overflow-x:hidden; -webkit-overflow-scrolling: touch;">
+            <div class="grid">
+                    <ul id="check-sections-items" class="vertical" data-bind="foreach: sections">
+                        <li data-bind="tap: parent.sectionTap, attr: {'class': (function() { if(index == parent.section) return 'active'; else return ''; })()}">
+                            <p data-bind="html: name"></p></li>
+                    </ul>
+            </div>
+        </div>
+    </div>
+</article>
+
+<!-- Emergencies Home Screen -->
+<article id="emergencies" data-page-show="inVisible" data-page-hide="outVisible" class="page">
+    <div class="wrap">
+        <div class="topbar">
+            <span>Emergencies</span>
+
+            <div class="item-large back" data-bind="tap: backTap">
+                <p><i class="icon icon-double-angle-left"></i></p>
+            </div>
+            <div class="item-large topmenu" data-bind="tap: menuTap">
+                <p><i class="icon icon-th-list"></i></p>
+            </div>
+        </div>
+        <div class="content">
+            <div class="grid emergencies scrollable" style="overflow-y: scroll; overflow-x:hidden; -webkit-overflow-scrolling: touch;">
+                <div class="container">
+                    <ul id="emergency-items" class="full" data-bind="foreach: emergencies">
+                        <li data-link="checklist" data-bind="tap: parent.itemTap">
+                            <div class="icon">
+                                <div data-bind="attr: {
+                                    'class': (function() {
+                                        if(name) {
+                                            if(name.toLowerCase().indexOf('electric') > -1) return 'electrical';
+                                            else if(name.toLowerCase().indexOf('fire') > -1) return 'fire';
+                                            else if(name.toLowerCase().indexOf('control') > -1) return 'flight-controls';
+                                            else if(name.toLowerCase().indexOf('instrument') > -1) return 'flight-instruments';
+                                            else if(name.toLowerCase().indexOf('landing') > -1) return 'forced-landing';
+                                            else if(name.toLowerCase().indexOf('nav') > -1 || name.toLowerCase().indexOf('pilot') > -1) return 'nav-autopilot';
+                                            else if(name.toLowerCase().indexOf('propeller') > -1 || name.toLowerCase().indexOf('engine') > -1) return 'propeller-engine';
+                                            else if(name.toLowerCase().indexOf('other') > -1) return 'other';
+                                            else return 'other'; }
+                                        else { return 'other'; }
+                                    })()}"
+                                        ></div>
+                            </div>
+                            <div class="section-name" data-bind="html: name"></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="shadow">
+            </div>
+        </div>
+    </div>
+</article>
+
+<!-- Emergencies Section Selection -->
+<article id="emergencies-sections" data-bind="swipeRight: backTap" data-page-show="slideInRight"
+         data-page-hide="slideOutRight" class="page">
+    <div class="wrap">
+        <div class="topbar">
+            <span>Emergencies</span>
+
+            <div class="item-large back" data-bind="tap: backTap">
+                <p><i class="icon icon-double-angle-left"></i></p>
+            </div>
+            <div class="item-large topmenu" data-bind="tap: menuTap">
+                <p><i class="icon icon-th-list"></i></p>
+            </div>
+        </div>
+        <div class="content">
+            <div class="section-nav sections">
+                <div class="name">
+                    <p data-bind="html: sectionName"></p>
+                </div>
+            </div>
+            <div style="position: absolute; top: 46px; left: 0px; bottom: 0px; right: 0px; width: 100%">
+                <div class="grid emergencies-sections scrollable" style="overflow-y: scroll; overflow-x:hidden; -webkit-overflow-scrolling: touch;">
+                    <div class="container">
+                        <ul class="vertical" data-bind="foreach: sections">
+                            <li data-bind="tap: parent.sectionTap"><p data-bind="html: name"></p></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+
+<!-- Product Download Listing -->
+<article id="downloads" data-bind="swipeRight: backTap" data-page-show="slideInLeft" data-page-hide="slideOutLeft"
+         class="page">
+    <div class="wrap">
+        <div class="topbar">
+            <span>Available Models</span>
+
+            <div class="item-large back" data-bind="tap: backTap">
+                <p><i class="icon icon-double-angle-left"></i></p>
+            </div>
+            <div class="item-large topmenu" data-bind="tap: menuTap">
+                <p><i class="icon icon-th-list"></i></p>
+            </div>
+        </div>
+        <div class="content" style="bottom: 0px;">
+            <div class="grid downloads scrollable" style="overflow-y: scroll; overflow-x:hidden; -webkit-overflow-scrolling: touch;">
+                <div class="container">
+                    <ul id="downloads-items" class="vertical" data-bind="foreach: items">
+                        <li data-bind="attr: {'data-id': _id}, tap: parent.itemTap">
+                            <div class="plane-icon"></div>
+                            <div class="holder">
+                                <div class="heading" data-bind="html: manufacturer.name + ' ' + model.name"></div>
+                                <div class="subheading">
+                                    <span data-bind="html: model.description, visible: model.description"></span>,
+                                    <span class="subheading"
+                                          data-bind="html: model.modelYear, visible: model.modelYear"></span>
+                                </div>
+                                <div class="subheading" data-bind="html: serialNumber, visible: serialNumber"></div>
+                            </div>
+                            <div class="checkmark" style="display: none;"
+                                 data-bind="visible: (function() { if (userOwnsProduct) return 'active'; else return '';})()">
+                                <div class="checker"><i class="icon icon-ok"></i></div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="section-nav" data-bind="tap: sampleTap, visible: displayRequestModel">
+                        <p>Sample Checklist</p>
+                        
+                        <div class="nextSection" style="display: block"><p style="margin: 5px; padding: 8px;"><i class="icon icon-chevron-right"></i></p></div>
+                    </div>
+                    <div class="section-nav" data-bind="tap: requestModelTap, visible: displayRequestModel">
+                        <p>Request a Model</p>
+
+                        <div class="nextSection" style="display: block"><p style="margin: 5px; padding: 8px;"><i
+                                class="icon icon-chevron-right"></i></p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+
+<!-- E6B Selection -->
+<!--<article id="e6bselection" style="display: none;" class="page">
+        <section class="page">
+            <div class="topbar">
+                <div class="item-large back">
+                    <p><i class="icon icon-chevron-left"></i></p>
+                </div>
+                <div class="item-middle" style="text-align: center;">
+                    <p>E6B</p>
+                </div>
+                <div class="item-large topmenu">
+                    <p><i class="icon icon-th-list"></i></p>
+                </div>
+            </div>
+            <div class="content" style="bottom: 0px;">
+                <div class="grid e6b scrollable">
+                    <div class="container">
+                        <div class="utcTime"></div>
+                        <ul id="e6bList" class="vertical">
+                            <li data-link="conversions"><i class="icon icon-arrow-right"></i><i class="icon icon-arrow-left"></i> <div class="header">Conversions</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </article>-->
+
+
+<!-- E6B Conversions -->
+<article id="e6b" data-page-show="slideInLeft" data-page-hide="slideOutLeft"
+         class="page">
+    <div class="wrap">
+        <div class="topbar">
+            <span>Conversions</span>
+
+            <div class="item-large back" data-bind="tap: backTap">
+                <p><i class="icon icon-double-angle-left"></i></p>
+            </div>
+            <div class="item-large topmenu" data-bind="tap: menuTap">
+                <p><i class="icon icon-th-list"></i></p>
+            </div>
+        </div>
+    </div>
+    <div class="content e6b" style="bottom: 0px;">
+        <div class="section-nav sections" data-bind="tap: conversionsTap">
+            <i class="icon icon-caret-down" style="position: absolute; left: 49%; bottom: -3px;"></i>
+
+            <div class="name">
+                <p data-bind="html: conversionSelectedName"></p>
+            </div>
+        </div>
+        <div class="utcTime"><p class="utcCurrent"></p> <i class="icon icon-time"></i></div>
+        <div class="row" style="margin-top: 58px;">
+            <div class="topConversion" data-bind="html: topType">MPH</div>
+            <input id="convertTop" type="number" class="textbox"
+                   data-bind="value: topConversionValue, keyup: conversionTopKeyUp, keydown: conversionTopKeyDown"
+                   value="0"/>
+        </div>
+        <div class="row">
+            <div class="bottomConversion" data-bind="html: bottomType">KTS</div>
+            <input id="convertBottom"
+                   data-bind="value: bottomConversionValue, keyup: conversionBottomKeyUp, keydown: conversionBottomKeyDown"
+                   class="textbox" type="number" value="0"/>
+        </div>
+    </div>
+    <div class="flyover" data-bind="slideVisible: showConversions">
+        <div class="grid available-conversions">
+            <div class="container inside scrollable" style="overflow-y: scroll; overflow-x:hidden; -webkit-overflow-scrolling: touch;">
+                <ul id="conversion-items" class="vertical">
+                    <li data-bind="tap: conversionTap" class="active" data-multiplier="0.868976242"
+                        data-inverse="1.150779448" data-top="MPH" data-bottom="KTS" data-value="0"><p>MPH <i
+                            class="icon icon-resize-horizontal"></i> KTS</p></li>
+                    <li data-bind="tap: conversionTap" data-multiplier="0.3048" data-inverse="3.280839895"
+                        data-top="FT" data-bottom="M" data-value="1"><p>FT <i
+                            class="icon icon-resize-horizontal"></i> M</p></li>
+                    <li data-bind="tap: conversionTap" data-multiplier="1.15077945" data-inverse="0.86897624"
+                        data-top="NM" data-bottom="SM" data-value="2"><p>NM <i
+                            class="icon icon-resize-horizontal"></i> SM</p></li>
+                    <li data-bind="tap: conversionTap" data-multiplier="1.852" data-inverse="0.539956803"
+                        data-top="NM" data-bottom="KM" data-value="3"><p>NM <i
+                            class="icon icon-resize-horizontal"></i> KM</p></li>
+                    <li data-bind="tap: conversionTap" data-multiplier="3.78541" data-inverse="0.264172177"
+                        data-top="GAL" data-bottom="LIT" data-value="4"><p>GAL <i
+                            class="icon icon-resize-horizontal"></i> LIT</p></li>
+                    <li data-bind="tap: conversionTap" data-multiplier="0.453592" data-inverse="2.20462442"
+                        data-top="LB" data-bottom="KG" data-value="5"><p>LB <i
+                            class="icon icon-resize-horizontal"></i> KG</p></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</article>
+
+<article id="help"
+    class="page">
+    <div class="wrap">
+        <div class="topbar">
+            <span>Help</span>
+            
+            <div class="item-large back" data-bind="tap: backTap">
+                <p><i class="icon icon-double-angle-left"></i></p>
+            </div>
+            <div class="item-large topmenu" data-bind="tap: menuTap">
+                <p><i class="icon icon-th-list"></i></p>
+            </div>
+        </div>
+    </div>
+    <div class="content" style="bottom: 0px;">
+        <iframe style="top: 0px; left: 0px; width: 100%; border: 0px; height: 100%; right: 0px; bottom: 0px;" src="help/index.html"></iframe>
+    </div>
+</article>
+
+<!-- Setting Screen -->
+<!--<article id="settings" data-page-show="slideInLeft" data-page-hide="slideOutLeft" class="page">
+    <div class="wrap">
+        <div class="topbar">
+            <div class="item-large back">
+                <p><i class="icon icon-chevron-left"></i></p>
+            </div>
+            <div class="item-middle-large" style="text-align: center;">
+                <p>Settings</p>
+            </div>
+            <div class="item-large topmenu">
+                <p><i class="icon icon-th-list"></i></p>
+            </div>
+        </div>
+        <div class="content scrollable" style="bottom: 0px;">
+            <div class="grid settingsItems">
+                <ul class="vertical">
+                    <li>
+                        <div class="row dark-bg">
+                            <h2>Day Time Theme</h2>
+                        </div>
+                        <select class="textbox" style="width: 95%; height: 30px; color: #000000;" id="dayTheme">
+                            <option value="theme-light">Light</option>
+                            <option value="theme-light">Dark</option>
+                        </select>
+                        <div class="row dark-bg">
+                            <h2>Night Time Theme</h2>
+                        </div>
+                        <select class="textbox" style="width: 95%; height: 30px; color: #000000;" id="nightTheme">
+                            <option value="theme-light">Dark</option>
+                            <option value="theme-light">Light</option>
+                        </select>
+                    </li>
+                    <li>
+                        <div class="row dark-bg">
+                            <h2>Switch to Night Theme at (Must be different from day theme time)</h2>
+                        </div>
+                        <div class="row">
+                            <input type="number" class="textbox" style="width: 50px; margin: 0px 10px; float: left;" maxlength="2" value="18" id="nightTimeModeOnHour" /><div style="float: left; font-size: 18px;"> : </div><input type="number" class="textbox" style="width: 50px; margin: 0px 10px; float: left;" maxlength="2" id="nightTimeModeOnMinutes" value="00" /><div style="float: left; margin-left: 10px; margin-top: 8px; font-size: 11px;"> 24H Format (HH:MM)</div>
+                        </div>
+                        <div class="row dark-bg">
+                            <h2>Switch to Day Theme at</h2>
+                        </div>
+                        <div class="row">
+                            <input type="number" class="textbox" style="width: 50px; margin: 0px 10px; float: left;" maxlength="2" value="18" id="nightTimeModeOffHour" /><div style="float: left; font-size: 18px;"> : </div><input type="number" class="textbox" style="width: 50px; margin: 0px 10px; float: left;" maxlength="2" id="nightTimeModeOffMinutes" value="00" /><div style="float: left; margin-left: 10px; margin-top: 8px; font-size: 11px;"> 24H Format (HH:MM)</div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="row dark-bg">
+                            <h2>Auto Theme Switching</h2>
+                        </div>
+                        <select class="textbox" style="width: 95%; height: 30px; color: #000000" id="autoThemeMode">
+                            <option value="0">Off</option>
+                            <option value="1">On</option>
+                        </select>
+                    </li>
+                    <li>
+                        <button class="button-register saveSettings" style="margin: 0px; width: 100%;">Save</save>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</article>-->
+
+<!-- Product Details -->
+<article id="productdetails" data-page-show="slideInRight"
+         data-page-hide="slideOutRight" class="page">
+    <div class="wrap">
+        <div class="topbar">
+            <span>Product Details</span>
+
+            <div class="item-large back" data-bind="tap: backTap">
+                <p><i class="icon icon-double-angle-left"></i></p>
+            </div>
+            <div class="item-large topmenu" data-bind="tap: menuTap">
+                <p><i class="icon icon-th-list"></i></p>
+            </div>
+        </div>
+        <div id="productDetailsListing" data-bind="with: product" class="content" style="bottom: 0px;">
+            <div class="content scrollable" style="top: 0px; bottom: 65px; overflow-y: scroll; overflow-x:hidden; -webkit-overflow-scrolling: touch;">
+                <div class="container" style="padding-bottom: 10px;">
+                    <div class="row detailsHeading">
+                        <div data-bind="html: manufacturer.name + ' ' + model.name"></div>
+                        <p class="serial modelDescription" data-bind="html: model.description"></p>
+                    </div>
+                    <div class="row">
+                        <div class="productImage"></div>
+                    </div>
+                    <div class="details">
+                        <div class="row detailsHeading">
+                            <p class="serial productModelYear">Digital checklist data</p>
+                        </div>
+                        <div class="row detailsHeading">
+                            <p>Model Year(s)</p>
+
+                            <p class="serial productModelYear" data-bind="html: model.modelYear"></p>
+                        </div>
+                        <div class="row detailsHeading" data-bind="visible: serialNumber">
+                            <p>Serial Number(s)</p>
+
+                            <p class="serial productSerialNumbers" data-bind="html: serialNumber"></p>
+                        </div>
+                        <div class="row detailsHeading" data-bind="visible: description">
+                            <p>Description</p>
+
+                            <p class="description" data-bind="html: description"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="shadow" style="bottom: 65px;"></div>
+            <div class="buynow"
+                 data-bind="tap: root.purchaseTap, html: root.getPricingDetails()">
+                Install
+            </div>
+        </div>
+    </div>
+</article>
+
+<!-- Edit Checklist / Add Checklist Item Screen -->
+<article id="editadd" data-page-show="slideInLeft" data-page-hide="slideOutLeft"
+         class="page">
+    <div class="wrap">
+        <div class="topbar">
+            <span data-bind="html: (function() { if(adding) return 'Add Item'; else return 'Edit Item'; })()"></span>
+
+            <div class="item-large back" data-bind="tap: backTap">
+                <p><i class="icon icon-double-angle-left"></i></p>
+            </div>
+            <div class="item-large topmenu" data-bind="tap: menuTap">
+                <p><i class="icon icon-th-list"></i></p>
+            </div>
+        </div>
+        <div class="content" style="bottom: 0px;">
+            <div style="float: left; position: relative; width: 100%; margin-top: 5px;" data-bind="with: item">
+                <form id="editAddForm" method="post" action="javascript:void(null);">
+                    <input class="textbox required" style="display: block;" data-bind="value: check" type="text"
+                           placeholder="check" autofocus id="editAddCheck" />
+                    <input class="textbox required" style="display: block;" data-bind="value: response" type="text"
+                           placeholder="response" />
+
+                    <div class="button" data-bind="tap: root.edit">
+                        <div class="special"><p>Save</p><i class="icon icon-arrow-right"></i></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</article>
+
+<!-- Edit Tail Number Screen -->
+<article id="edittail" data-page-show="slideInLeft" data-page-hide="slideOutLeft"
+         style="display: none;" class="page">
+    <div class="wrap">
+        <div class="topbar">
+            <span>Edit Tail Number</span>
+
+            <div class="item-large back" data-bind="tap: backTap">
+                <p><i class="icon icon-double-angle-left"></i></p>
+            </div>
+            <div class="item-large topmenu" data-bind="tap: menuTap">
+                <p><i class="icon icon-th-list"></i></p>
+            </div>
+        </div>
+        <div class="content" style="bottom: 0px;">
+            <div style="float: left; position: relative; width: 100%; margin-top: 5px;" data-bind="with: item">
+                <form id="editTailForm" method="post" action="javascript:void(null);">
+                    <input class="textbox tailNumber required" data-bind="value: tailNumber" type="text" id="tailnumber"
+                           name="tailnumber" placeholder="tail number" maxlength="6"/>
+
+                    <div class="button" data-bind="tap: root.editTap">
+                        <div class="special"><p>Save</p><i class="icon icon-arrow-right"></i></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</article>
+
+<!-- Sign in Screen -->
+<article id="signin" data-page-show="slideInLeft" data-page-hide="slideOutLeft"
+         class="page">
+    <div class="wrap">
+        <div class="topbar">
+            <span>Sign In</span>
+
+            <div class="item-large back" data-bind="tap: backTap">
+                <p><i class="icon icon-double-angle-left"></i></p>
+            </div>
+            <div class="item-large topmenu" data-bind="tap: menuTap">
+                <p><i class="icon icon-th-list"></i></p>
+            </div>
+        </div>
+        <div class="content" style="bottom: 0px;">
+            <div style="float: left; position: relative; width: 100%; margin-top: 5px;">
+                <form id="signinForm" method="post" action="javascript:void(null);">
+                    <input class="textbox required" type="email" id="email" data-bind="keyup: keyUp"
+                           name="email" placeholder="email" autofocus />
+                    <input class="textbox required" type="password" id="password" data-bind="keyup: keyUp"
+                           name="password" placeholder="password"/>
+
+                    <div class="submit">
+                        <div class="special"><p>Sign in</p><i class="icon icon-arrow-right"></i></div>
+                    </div>
+                    <div style="position: relative; margin-top: -7px;">
+                        <div class="button" style="position: absolute;" data-bind="tap: navTap"
+                             data-link="passwordRecovery">
+                            <div class="special2"><p>Forgot password</p><i class="icon icon-question-sign"></i></div>
+                        </div>
+                        <div class="button" style="position: absolute; right: 0;" data-bind="tap: navTap"
+                             data-link="register">
+                            <div class="special2"><p>Need an account</p><i class="icon icon-question-sign"></i></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</article>
+
+<!-- Password Recovery Screen -->
+<article id="passwordRecovery" data-page-show="slideInRight"
+         data-page-hide="slideOutRight" class="page">
+    <div class="wrap">
+        <div class="topbar">
+            <span>Forgot Password</span>
+
+            <div class="item-large back" data-bind="tap: backTap">
+                <p><i class="icon icon-double-angle-left"></i></p>
+            </div>
+            <div class="item-large topmenu" data-bind="tap: menuTap">
+                <p><i class="icon icon-th-list"></i></p>
+            </div>
+        </div>
+        <div class="content" style="bottom: 0px;">
+            <div style="float: left; position: relative; width: 100%; margin-top: 5px;">
+                <form id="passwordRecoveryForm" method="post" action="javascript:void(null);">
+                    <input class="textbox required" type="email" id="recoveryEmail"
+                           name="recoveryEmail" placeholder="email" autofocus />
+
+                    <div class="submit">
+                        <div class="special"><p>Send Email</p><i class="icon icon-arrow-right"></i></div>
+                    </div>
+                </form>
+            </div>
+            <div style="float: left; position: relative; width: 98%; margin: 5px;">
+            	<div class="button" data-bind="tap: passwordAuthCodeTap">
+            		<div class="special2"><p>I have a Auth Code</p><i class="icon icon-arrow-right"></i></div>
+            	</div>
+            </div>
+        </div>
+    </div>
+</article>
+
+<article id="passwordAuthCode" data-page-show="slideInRight" data-page-hide="slideOutRight" class="page">
+	<div class="wrap">
+        <div class="topbar">
+            <span>Enter Auth Code</span>
+
+            <div class="item-large back" data-bind="tap: backTap">
+                <p><i class="icon icon-double-angle-left"></i></p>
+            </div>
+            <div class="item-large topmenu" data-bind="tap: menuTap">
+                <p><i class="icon icon-th-list"></i></p>
+            </div>
+        </div>
+        <div class="content" style="bottom: 0px;">
+        	<div style="float: left; position: relative; width: 99%; margin: 5px;">
+				<form id="passwordAuthCodeForm" method="post" action="javascript:void(null)">
+					<input class="textbox required" type="number" id="authCode"
+							   name="authCode" placeholder="Auth Code" autofocus />
+					<input class="textbox required" type="password" placeholder="new password"
+							    id="authPassword" name="authPassword"/>
+					<input class="textbox required" type="password" placeholder="confirm password"
+							    id="authPasswordConfirm" name="authPasswordConfirm"/>
+
+					<div class="submit">
+						<div class="special"><p>Change</p><i class="icon icon-arrow-right"></i></div>
+					</div>
+				</form>
+        	</div>
+        </div>
+    </div>
+</article>
+
+<!-- Change Password Screen -->
+<article id="changePassword" data-page-show="slideInRight"
+         data-page-hide="slideOutRight" class="page">
+    <div class="wrap">
+        <div class="topbar">
+            <span>Change Password</span>
+
+            <div class="item-large back" data-bind="tap: backTap">
+                <p><i class="icon icon-double-angle-left"></i></p>
+            </div>
+            <div class="item-large topmenu" data-bind="tap: menuTap">
+                <p><i class="icon icon-th-list"></i></p>
+            </div>
+        </div>
+        <div class="content" style="bottom: 0px;">
+            <div style="float: left; position: relative; width: 100%; margin-top: 5px;">
+                <form id="changePasswordForm" method="post" action="javascript:void(null);">
+                    <input class="textbox required" type="password" placeholder="old password"
+                           data-bind="keyup: keyUp" id="oldPassword" name="oldPassword" autofocus />
+                    <input class="textbox required" type="password" placeholder="new password"
+                           data-bind="keyup: keyUp" id="newPassword" name="newPassword"/>
+                    <input class="textbox required" type="password" placeholder="confirm password"
+                           data-bind="keyup: keyUp" id="newPasswordConfirm" name="newPasswordConfirm"/>
+
+                    <div style="margin: 10px auto; width: 90%" class="submit">
+                        <div class="special"><p>Change</p><i class="icon icon-arrow-right"></i></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</article>
+
+<!-- Register Area -->
+<article id="register" data-page-show="slideInRight" data-page-hide="slideOutRight"
+         class="page">
+    <div class="wrap">
+        <div class="topbar">
+            <span>Register</span>
+
+            <div class="item-large back" data-bind="tap: backTap">
+                <p><i class="icon icon-double-angle-left"></i></p>
+            </div>
+            <div class="item-large topmenu" data-bind="tap: menuTap">
+                <p><i class="icon icon-th-list"></i></p>
+            </div>
+        </div>
+        <div class="content" style="bottom: 0px;">
+            <div style="float: left; position: relative; width: 100%; margin-top: 5px;">
+                <form id="registerForm" action="javascript:void(null);" method="post">
+                    <input class="textbox required" type="email" id="emailRegister"
+                           data-bind="keyup: keyUp" name="emailRegister" placeholder="email" autofocus />
+                    <input class="textbox required" type="password" id="passwordRegister"
+                           data-bind="keyup: keyUp" name="passwordRegister" placeholder="password"/>
+                    <input class="textbox required" type="password" id="confirmPassword"
+                           data-bind="keyup: keyUp" name="confirmPassword" placeholder="confirm password"/>
+
+                    <div style="margin: 10px auto; width: 90%" class="submit">
+                        <div class="special"><p>Register</p><i class="icon icon-arrow-right"></i></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</article>
+
+<!-- Marketing Page -->
+<article id="marketing" class="page" data-page-show="slideInLeft" data-page-hide="slideOutLeft">
+       <div class="wrap">
+           <div class="content" style="bottom: 0px; top: 0px;">
+               <div class="checklistImage"></div>
+               <div class="salesContent">
+                   <div class="header">Need a checklist? <span>Let's Get Started!</span></div>
+                   <div class="salesText left">
+                       <div data-bind="tap: sampleTap">
+                           <div class="special"><p>Sample</p><i class="icon icon-arrow-right"></i></div>
+                       </div>
+                       <p><b>Take a tour.</b> Qref is all about accurate data. But a great app helps, too! Tap to tour a sample checklist.</p>
+                   </div>
+                   <div class="salesText right">
+                       <div data-bind="tap: signupTap">
+                           <div class="special"><p>Sign Up</p><i class="icon icon-arrow-right"></i></div>
+                       </div>
+                       <p><b>Create your <span class="highlight">free</span> Qref login.</b> Your login keeps your checklists organized, backed up and synced on every device you use.</p>
+                       <p><b>Select your aircraft model.</b> Purchase and download from our extensive library, written by aviation professionals. You can <b>customize</b> your checklist, right on this device.</p>
+                   </div>
+               </div>
+               <div data-bind="tap: signinTap" class="signin">
+                   Already a user? <span>Sign in here</span>
+               </div>
+           </div>
+       </div>
+   </article>
+
+<article id="hiddenTapSpace" data-bind="tap: pageTap, visible: menuOpen" class="page-hidden-tap" style="z-index: 100">
+</article>
+
+<!-- Menu -->
+<div id="menu">
+    <div class="menu">
+        <div class="version">v <span data-bind="text: version"></span></div>
+        <div class="username"><span class="icon icon-user"></span> <span class="user" data-bind="html: email"></span>
+        </div>
+        <ul>
+            <!--<li data-link="settings"><i class="icon icon-cog"></i><p>Settings</p></li>-->
+            <li data-link="dashboard" data-bind="tap: menuNavTap"><i class="icon icon-dashboard"></i>
+
+                <p>Dashboard</p></li>
+            <li data-bind="tap: checkingTap">
+                <i class="icon icon-ok"></i>
+
+                <p>Checking</p>
+                <label style="position: absolute; top: 9px; right: 13px;" onclick="return false;">
+                    <input id="checkingCheckbox" type="checkbox"/>
+                </label>
+            </li>
+            <!--
+            <li data-bind="visible: token">
+                <i class="icon icon-moon"></i>
+
+                <p>Night Theme</p>
+                <label style="position: absolute; top: 9px; right: 13px;" onclick="return false;">
+                    <input class="nightCheckbox" id="nightCheckbox" type="checkbox"/>
+                </label>
+            </li>
+            -->
+            <li data-link="changePassword" data-bind="tap: menuNavTap, visible: token" id="changepassword-menu"><i
+                    class="icon icon-lock"></i>
+
+                <p>Change Password</p></li>
+            <li data-link="signin" data-bind="tap: menuNavTap, visible: !token" id="signin-menu"><i
+                    class="icon icon-signin"></i>
+
+                <p>Sign in</p></li>
+            <li data-link="register" data-bind="tap: menuNavTap, visible: !token" id="register-menu"><i
+                    class="icon icon-pencil"></i>
+
+                <p>Register</p></li>
+            <li data-link="download" data-bind="tap: downloadTap, visible: token"><i class="icon icon-download"></i>
+
+                <p>Download</p></li>
+            <li data-bind="tap: orderPrintedTap, visible: token"><i class="icon icon-print"></i>
+
+                <p>Buy Printed Version</p></li>
+            <li data-bind="tap: syncNavTap, visible: token" id="sync-menu"><i class="icon icon-refresh"></i>
+
+                <p>Manual Sync</p></li>
+            <li data-bind="tap: helpTap"><i class="icon icon-question-sign"></i>
+
+                <p>Help</p></li>
+            <li data-bind="tap: signOutNavTap, visible: token" id="signout-menu"><i class="icon icon-signout"></i>
+
+                <p>Sign out</p></li>
+        </ul>
+    </div>
+</div>
+
+<!-- Checklist Bottom Navigation -->
+<div id="checklist-nav"
+     data-bind="visible: (function() { return (navHash == '#checklist' || navHash == '#emergencies' || navHash == '#emergencies-sections'); })()">
+    <nav class="nav checklistnav">
+        <ul>
+            <li data-link="preflight" data-bind="tap: checklistNavTap" class="item-25">
+                <div class="item-25-inner">
+                    <div class="icon icon-preflight"></div>
+                </div>
+                <div class="navLabel">Preflight</div>
+            </li>
+            <li data-link="takeoff" data-bind="tap: checklistNavTap" class="item-25">
+                <div class="item-25-inner">
+                    <div class="icon icon-takeoff"></div>
+                </div>
+                <div class="navLabel">Takeoff</div>
+            </li>
+            <li data-link="landing" data-bind="tap: checklistNavTap" class="item-25">
+                <div class="item-25-inner">
+                    <div class="icon icon-landing"></div>
+                </div>
+                <div class="navLabel">Landing</div>
+            </li>
+            <li data-link="emergencies" data-bind="tap: checklistNavTap" class="item-25">
+                <div class="item-25-inner">
+                    <div class="icon icon-emergencies"></div>
+                </div>
+                <div class="navLabel">Emerg</div>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<!-- Loader Screens -->
+<div class="modal" data-bind="fadeVisible: loading">
+    <figure class="loader">
+        <div class="ball"></div>
+        <div class="ball1"></div>
+    </figure>
+    <div class="modalText">
+        <p>Loading</p>
+    </div>
+</div>
+
+<div class="modal" data-bind="fadeVisible: syncing">
+    <figure class="loader">
+        <div class="ball"></div>
+        <div class="ball1"></div>
+    </figure>
+    <div class="modalText">
+        <p>Syncing</p>
+    </div>
+</div>
+
+<div class="modal" data-bind="fadeVisible: saving">
+    <figure class="loader">
+        <div class="ball"></div>
+        <div class="ball1"></div>
+    </figure>
+    <div class="modalText">
+        <p>Saving Changes</p>
+    </div>
+</div>
+
+<!-- Modal Screens -->
+<div class="modal" id="savebox">
+    <figure class="info">
+        <figcaption class="data">Your changes have been saved.</figcaption>
+        <div class="button okay no" style="width: 90%; margin: 20px auto;">
+            <div class="special"><p>OK</p><i class="icon icon-ok"></i></div>
+        </div>
+        <div class="button okay yes" style="width: 90%; margin: 20px auto;">
+            <div class="special2"><p>Sync Now</p><i class="icon icon-refresh"></i></div>
+        </div>
+    </figure>
+</div>
+
+<div class="modal" id="signoutbox">
+    <figure class="info">
+        <figcaption class="data">Are you sure you want to sign out?</figcaption>
+        <div class="button okay yes" style="width: 90%; margin: 20px auto;">
+            <div class="special"><p>Sign out</p><i class="icon icon-ok"></i></div>
+        </div>
+        <div class="button okay no" style="width: 90%; margin: 20px auto;">
+            <div class="special"><p>Cancel</p><i class="icon icon-ban-circle"></i></div>
+        </div>
+    </figure>
+</div>
+
+<div class="modal" id="clearchecks">
+    <figure class="info">
+        <figcaption class="data">Clear checkmarks?</figcaption>
+        <div class="button okay yes" style="width: 90%; margin: 20px auto;">
+            <div class="special"><p>Yes</p><i class="icon icon-ok"></i></div>
+        </div>
+        <div class="button okay no" style="width: 90%; margin: 20px auto;">
+            <div class="special2"><p>No</p><i class="icon icon-ban-circle"></i></div>
+        </div>
+    </figure>
+</div>
+
+<!-- Info Dialog -->
+<div class="modal" id="infobox">
+    <figure class="info">
+        <figcaption class="data"></figcaption>
+        <div class="button okay" style="width: 90%; margin: 20px auto;">
+            <div class="special"><p>OK</p><i class="icon icon-ok"></i></div>
+        </div>
+    </figure>
+</div>
+
+<!-- Sync Conflict Dialog -->
+<div class="modal" id="conflictbox">
+    <figure class="info conflictbox">
+        <figcaption class="data conflict"></figcaption>
+        <div class="choiceButtons">
+            <div class="choiceBoxButton button okay yes">
+                <div class="conflict-button"><i class="icon icon-ok"></i><p>Keep Local Version</p></div>
+            </div>
+            <div class="choiceBoxButton button okay no">
+                <div class="conflict-button"><i class="icon icon-ok"></i><p>Keep Server Version</p></div>
+            </div>
+        </div>
+    </figure>
+</div>
+
+</div>
+</body>
+</html>

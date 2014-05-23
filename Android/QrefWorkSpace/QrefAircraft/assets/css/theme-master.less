@@ -1,0 +1,1154 @@
+a {
+    font-size: 16px;
+    font-weight: normal;
+    color: @colorLink;
+    font-family: MyriadBold, Myriad, Helvetica;
+    text-decoration: none;
+
+    &:visited {
+        font-size: 16px;
+        font-weight: normal;
+        color: @colorLink;
+        text-decoration: none;
+    }
+
+    &:hover {
+        font-size: 16px;
+        font-weight: normal;
+        color: @colorLinkHover;
+        text-decoration: none;
+    }
+}
+
+b, strong {
+    font-family: MyriadBold, Myriad, Helvetica;
+    font-weight: normal;
+}
+
+.active {
+    opacity: 1;
+}
+
+// Text Box
+.textbox {
+    border: 1px solid @colorInputBorder;
+    background: @colorInputBkg;
+    color: @colorInputText;
+    -webkit-appearance: none;
+}
+
+// Page Wrapper
+
+.wrap {
+    background: @colorBody;
+    background-size: 100% 100%;
+    //-webkit-box-shadow: 5px 0px 10px 1px rgba(0, 0, 0, 0.5);
+    //box-shadow: 5px 0px 10px 1px rgba(0, 0, 0, 0.5);
+}
+
+// Bottom Nav Bar
+
+.nav {
+    background: @colorBody;
+
+    .item div .icon {
+        color: @colorNavIcon;
+    }
+
+    ul li {
+        .item-25-inner {
+            width: 100%;
+            height: 100%;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        .nav-emergencies {
+            background: url('../images/@{skin}/stripe-pattern.png') top left repeat;
+        }
+    }
+
+    .active .icon {
+        background-color: @colorNavActive;
+    }
+
+    &.checklistnav .icon {
+        border: 1px solid @colorNavBorder;
+        border-radius: 10px;
+        -webkit-border-radius: 10px;
+        background-size: auto 200%;
+        background-repeat: repeat;
+        background-position: center center;
+
+        &.icon-preflight {
+            background-image: url('../images/@{skin}/tab-preflight@2x.png');
+        }
+
+        &.icon-takeoff {
+            background-image: url('../images/@{skin}/tab-takeoff@2x.png');
+        }
+
+        &.icon-landing {
+            background-image: url('../images/@{skin}/tab-landing@2x.png');
+        }
+
+        &.icon-emergencies {
+            background-image: url('../images/@{skin}/tab-emergencies@2x.png');
+        }
+    }
+
+    .navLabel {
+        color: @colorNavText;
+    }
+}
+
+// Dash-Specific Nav Theme
+.dashnav {
+    background: transparent;
+    border-top: none;
+
+    .header {
+        color: @colorDashNavHeader;
+        font-size: 18px;
+    }
+
+    .subheader {
+        color: @colorDashNavSubheader;
+        font-size: 18px;
+    }
+
+    ul li {
+        opacity: 1;
+    }
+
+}
+
+// Dash Top Bar
+.logoSection {
+    color: @colorTopText;
+    background-color: @colorSectionnav;
+    .box-shadow(0 5px 10px @colorShadowOpaque);
+    border-bottom: 1px solid @colorSectionnavBorder;
+
+    p {
+        color: @colorDashHeader;
+    }
+
+    .logo {
+        background: url('../images/@{skin}/logo.png') 0 0 no-repeat;
+
+        @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+            background-image: url('../images/@{skin}/logo@2x.png');
+            background-size: 153px 60px;
+        }
+
+    }
+}
+
+// Top Bar for all other pages
+
+.topbar {
+    color: @colorTopText;
+    font-family: MyriadBold;
+    font-size: 18px;
+    background: @colorTopBackground;
+    border-bottom: 1px solid @colorTopBorder;
+
+    &.topbar-checklist {
+        font-family: Myriad;
+    }
+
+    .item,
+    .item-large {
+        font-size: 16px;
+        max-width: 100px;
+
+        &.active {
+            color: @colorTopActiveText;
+            background-color: @colorTopActiveBackground;
+        }
+    }
+}
+
+// Button Theme
+button,
+.button,
+.submit {
+    text-align: center;
+    border: none;
+    overflow: hidden;
+    display: block;
+    cursor: pointer;
+
+    &.active i {
+        -webkit-transform: translate(8px, 0); // PRESS STATE
+    }
+}
+
+// Menu Theme
+.menu {
+    position: absolute;
+    top: 0px;
+    right: -150px;
+    width: 250px;
+    bottom: 0px;
+    height: 100%;
+    background: @colorMenuBackground;
+    color: @colorMenuText;
+    margin: 0;
+    padding: 0;
+    z-index: 0;
+    display: none;
+    box-shadow: inset 10px 0px 13px -5px rgba(0,0,0,1);
+
+    ul {
+        float: left;
+        position: relative;
+        width: 100%;
+        margin: 0;
+        margin-top: 5px;
+        padding: 0;
+        list-style-type: none;
+
+        li {
+            float: left;
+            position: relative;
+            width: 100%;
+            text-align: left;
+            overflow: hidden;
+            height: 50px;
+            border-top: 1px solid @colorMenuBorderTop;
+            border-bottom: 1px solid @colorMenuBorderBottom;
+        }
+
+        li:first-child {
+            border-top: none;
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        li .icon {
+            float: left;
+            position: relative;
+            font-size: 24px;
+            width: 23px;
+            color: @colorMenuIcon;
+            margin: 12px 0 0 8px;
+        }
+
+        li p {
+            float: left;
+            position: relative;
+            width: auto;
+            margin: 0px;
+            padding: 16px;
+            font-size: 18px;
+            font-family: Myriad;
+        }
+
+        a, a:hover {
+            color: @colorMenuText;
+        }
+    }
+}
+
+// Dashboard Listing
+
+#dashboard .topbar {
+    text-align: left;
+
+    span {
+        padding-left: 10px;
+    }
+}
+
+.dashboard-planes-selector,
+.downloads {
+    .heading {
+        color: @colorDashHeading;
+        font-family: Myriad;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .subheading {
+        color: @colorDashSubheading;
+        font-family: Myriad;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .tailNumber {
+        color: @colorDashTail;
+        font-family: MyriadBold;
+        display: block;
+        position: absolute;
+        right: -83px;
+        top: 5px;
+        padding: 3px 100px 3px 100px;
+        background: @colorDashTailBackground;
+        line-height: 12px;
+        border-radius: 5px 0 0 5px;
+        -webkit-border-radius: 5px 0 0 5px;
+        transform: rotate(30deg);
+        -webkit-transform: rotate(30deg);
+        font-size: 13px;
+    }
+
+    .plane-icon {
+        opacity: @colorDashPlaneOpacity;
+    }
+
+    .vertical {
+        li {
+            color: @colorDashText;
+            border-top: 1px solid @colorChecklistBorder;
+            //            border-bottom: 1px solid @colorChecklistBorder2;
+
+            ul li {
+                color: @colorDashLink;
+                border: none;
+                font-family: Myriad, Helvetica;
+                text-align: left;
+                background: @colorDashButton;
+
+                &.last {
+                    //margin: 0;
+                }
+            }
+        }
+
+        .active {
+            background: @colorDashActiveBackground;
+        }
+    }
+}
+
+// Edit tools
+.dashboard-planes-selector,
+.checklist {
+    .handle {
+        .gradient(@colorHandle1, @colorHandle2);
+        color: @colorHandleItem;
+        .box-shadow(0 0px 10px @colorShadowOpaque);
+        border-radius: 25px 0px 0px 25px;
+        -webkit-border-radius: 25px 0px 0px 25px;
+        border-right: none;
+        padding: 14px 5px 5px 10px;
+    }
+
+    .delete {
+        padding: 14px 12px;
+        font-family: MyriadBold, Helvetica;
+        background-color: @colorRed1;
+        font-size: 16px;
+        color: white;
+    }
+
+    .add {
+        padding: 5px;
+        padding-top: 7px;
+        color: @colorHandleItem;
+        background: @colorGreen;
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        font-size: 16px;
+    }
+}
+
+.downloads .vertical li {
+    padding-bottom: 8px;
+}
+
+// Checklist
+.checklist .vertical li {
+    color: @colorCheck;
+    border-top: 1px solid @colorChecklistBorder;
+    //    border-bottom: 1px solid @colorChecklistBorder2;
+    background-color: @colorCheckBackground;
+
+    .check {
+        color: @colorCheck;
+        font-family: Myriad, Helvetica;
+        font-size: 24px;
+
+        &.nextSection {
+            font-size: 20px;
+            color: @colorResponse;
+            text-align: center;
+            width: auto;
+            right: 15px;
+            float: right;
+            border: 1px solid #cdd0d6;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            padding: 10px 17px 8px;
+            line-height: 20px;
+        }
+    }
+
+    .response {
+        color: @colorResponse;
+        font-family: Myriad, Helvetica;
+    }
+
+    .active {
+        .gradient(@colorBlue2, @colorBlue3);
+        color: @colorLink;
+    }
+}
+
+.checklist .vertical li .checkmark,
+.downloads .vertical li .checkmark {
+    background: @colorCheckmarkBackground;
+    border: 1px solid @colorCheckmarkBorder;
+
+    .checker .icon {
+        color: @colorBlue1;
+    }
+}
+
+.shadow {
+    .gradient(@colorShadowTransparent, @colorShadowOpaque);
+}
+
+.shadowTop {
+    .gradient(@colorShadowOpaque, @colorShadowTransparent);
+}
+
+.loader {
+    color: @colorModalText;
+}
+
+.info {
+    color: @colorModalText;
+    font-family: Myriad;
+}
+
+form label {
+    color: @colorRed1;
+    margin: -5px 0 10px;
+    padding: 0px;
+    font-size: 12px;
+    font-family: MyriadBold, Helvetica;
+}
+
+// Product Details
+#productDetailsListing {
+    font-family: Myriad, Helvetica;
+    color: @colorSecondary;
+    font-weight: normal;
+    font-size: 20px;
+}
+
+.detailsHeading div {
+    font-size: 28px;
+    color: @colorPrimary;
+    padding: 10px 10px 0;
+    letter-spacing: -.03em;
+}
+
+.detailsHeading p,
+.detailsHeading .modelDescription {
+    font-size: 14px;
+    color: @colorPrimary;
+    margin: 0;
+    padding: 0 10px 0;
+}
+
+.detailsHeading p:first-child {
+    color: @colorSecondary;
+}
+
+.productImage img {
+    border-top: 1px solid @colorChecklistBorder;
+    border-bottom: 1px solid @colorChecklistBorder;
+}
+
+// E6B
+.e6b {
+
+    .textbox {
+        background: transparent;
+        text-align: left;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        float: left;
+        position: relative;
+        margin: 0px 10px;
+        padding: 6px 10px 0;
+        width: 195px;
+        font-size: 35px;
+        line-height: 35px;
+    }
+
+    .row {
+        float: left;
+        position: relative;
+        width: 100%;
+        height: auto;
+        padding: 0px;
+        margin: 3px 0px;
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+
+    .utcTime {
+        width: 100%;
+        position: absolute;
+        bottom: 0px;
+        text-align: left;
+        color: @colorSecondary;
+        font-family: Myriad;
+        font-size: 25px;
+        overflow: hidden;
+        height: 40px;
+    }
+
+    .utcCurrent {
+        float: right;
+        position: relative;
+        width: auto;
+        padding: 0 10px 0 0;
+        margin: 0;
+    }
+
+    .e6bDate {
+        padding-right: 15px;
+    }
+
+    .utcTime .icon {
+        float: right;
+        color: @colorAccent;
+        text-align: center;
+        margin: 0 10px;
+        font-size: 26px;
+    }
+
+    .topConversion,
+    .bottomConversion {
+        float: left;
+        position: relative;
+        padding: 10px 0px 0px 17px;
+        font-size: 35px;
+        text-align: center;
+        color: @colorAccent;
+        font-family: Myriad, Helvetica;
+        width: 80px;
+        letter-spacing: -.04em;
+        line-height: 35px;
+    }
+}
+
+// Settings
+.settingsItems {
+    color: @colorLinkHover;
+}
+
+.settingsItems h2 {
+    font-size: 18px;
+    font-weight: normal;
+    color: @colorLinkHover;
+    margin-left: 10px;
+}
+
+.settingsItems .row {
+    padding: 0px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.buynow {
+    font-size: 22px;
+    font-family: MyriadBold, Myriad;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border: 1px solid @colorBuy;
+    position: absolute;
+    bottom: 10px;
+    padding: 10px;
+    margin-left: -50px;
+    width: 100px;
+    text-align: center;
+    left: 50%;
+    color: @colorBuy;
+    line-height: 22px;
+}
+
+// Current Login Info Display
+.currentLogin {
+    color: @colorAccent;
+
+    .icon {
+    	color: @colorSecondary;
+    }
+}
+
+.version {
+    color: @colorMenuText;
+}
+
+// Special Buttons for when not signed in!
+.special {
+    width: 100%;
+    float: left;
+    position: relative;
+    text-align: right;
+    overflow: hidden;
+    height: 78px;
+
+    p {
+        color: @colorButtonText;
+        font-family: Myriad;
+        font-size: 45px;
+        float: right;
+        position: relative;
+        width: auto;
+        padding: 17px 0 0;
+        margin: 0;
+        letter-spacing: -.04em;
+    }
+
+    .icon {
+        float: right;
+        color: @colorButtonIcon;
+        text-align: center;
+        padding: 15px 0;
+        margin-top: 5px;
+        margin-right: 10px;
+        font-size: 37px;
+    }
+
+}
+
+.special2 {
+    width: 100%;
+    float: right;
+    position: relative;
+    text-align: left;
+    overflow: hidden;
+    height: 37px;
+
+    p {
+        color: @colorButton2Text;
+        font-family: Myriad;
+        font-size: 16px;
+        float: right;
+        position: relative;
+        width: auto;
+        text-indent: 7px;
+    }
+
+    .icon {
+        float: right;
+        color: @colorButton2Icon;
+        text-align: center;
+        padding: 8px 0;
+        margin-top: 6px;
+        font-size: 20px;
+    }
+}
+
+.special:last-child, .special2:last-child {
+    border-bottom: 0px;
+}
+
+.conflict-button {
+    width: auto;
+    position: relative;
+    text-align: left;
+    overflow: hidden;
+    height: 48px;
+    margin-bottom: 5px;
+
+    p {
+        color: @colorButton2Text;
+        font-family: Myriad;
+        font-size: 21px;
+        float: left;
+        position: relative;
+        width: auto;
+        padding: 5px 0 0;
+        margin: 0;
+        text-indent: 7px;
+    }
+
+    .icon {
+        float: left;
+        color: @colorButton2Icon;
+        text-align: center;
+        padding: 5px 0;
+        margin-top: 0px;
+        font-size: 21px;
+    }
+}
+
+
+// Modal
+.modal {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    display: none;
+    z-index: 99999999;
+    background: @colorModal;
+
+    .modalText {
+        width: 100%;
+        color: #ffffff;
+        text-align: center;
+        font-size: 24px;
+        position: absolute;
+        bottom: 25%;
+        left: 0px;
+
+        p {
+            color: @colorModalText;
+        }
+    }
+
+    .special {
+        p {
+            color: @colorButtonTextModal;
+        }
+
+        .icon {
+            color: @colorButtonIconModal;
+        }
+    }
+
+    .special2 {
+        p {
+            color: @colorButton2TextModal;
+        }
+
+        .special2 .icon {
+            color: @colorButton2IconModal;
+        }
+    }
+}
+
+// Emergencies
+.emergencies {
+    color: @colorNavText;
+
+    ul li .icon {
+
+        div {
+            height: 65px;
+            width: 100%;
+            border: none;
+            background-size: auto 100%;
+            background-repeat: no-repeat;
+            background-position-x: center;
+            background-position-y: center;
+        }
+
+        .electrical {
+            background-image: url("../images/@{skin}/electrical.png");
+        }
+
+        .fire {
+            background-image: url("../images/@{skin}/fire.png");
+        }
+
+        .flight-controls {
+            background-image: url("../images/@{skin}/flight-controls.png");
+        }
+
+        .flight-instruments {
+            background-image: url("../images/@{skin}/flight-instruments.png");
+        }
+
+        .forced-landing {
+            background-image: url("../images/@{skin}/forced-landing.png");
+        }
+
+        .nav-autopilot {
+            background-image: url("../images/@{skin}/nav-autopilot.png");
+        }
+
+        .other {
+            background-image: url("../images/@{skin}/other.png");
+        }
+
+        .propeller-engine {
+            background-image: url("../images/@{skin}/propeller-engine.png");
+        }
+    }
+}
+
+// Section nav for checklist
+.section-nav {
+    background: @colorSectionnav;
+    color: @colorSectionnavText;
+    font-family: MyriadBold;
+    border-bottom: 1px solid @colorSectionnavBorder;
+
+    .active {
+        color: @colorLinkHover;
+    }
+
+}
+
+// Emergencies Section Selector
+.emergencies-sections {
+    ul li {
+        float: left;
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+        border-bottom: 1px solid @colorNavBorder;
+
+        p {
+            padding: 10px;
+            margin: 0;
+            font-size: 21px;
+            color: @colorCheck;
+        }
+
+        &:hover p {
+        }
+
+        &:last-child {
+            border-bottom: 0px;
+        }
+    }
+}
+
+.flyover {
+
+    ul {
+        background: @colorFlyover;
+
+        li {
+            border-top: 1px solid @colorFlyoverBorderTop;
+            border-bottom: 1px solid @colorFlyoverBorderBottom;
+
+            p {
+                color: @colorFlyoverText;
+            }
+
+            &:hover p {
+                color: @colorFlyoverText;
+            }
+        }
+
+        .active {
+            background: @colorFlyoverActive;
+
+            p {
+                color: @colorFlyoverText;
+            }
+        }
+    }
+}
+
+.getStarted {
+    color: @colorGetStarted;
+}
+
+#marketing .wrap {
+    background-color: #252a31;
+    background-image: url(../images/marketing/accent.png), url(../images/marketing/background.png);
+    background-position: center bottom, left bottom;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+    -webkit-background-size: 320px auto, 100%;
+    background-size: 320px auto, 100%;
+
+    @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+        background-image: url(../images/marketing/accent@2x.png), url(../images/marketing/background@2x.png);
+    }
+
+    .wrap {
+        background-color: transparent;
+    }
+
+    .checklistImage {
+        background: transparent url('../images/marketing/checklist_small.png') no-repeat left bottom;
+        width: 167px;
+        height: 297px;
+        position: absolute;
+        top: 250px;
+        -webkit-background-size: auto 297px;
+        background-size: auto 297px;
+
+        @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+            background-image: url(../images/marketing/checklist_small@2x.png);
+        }
+    }
+
+    .salesContent {
+        margin: 0 25px;
+
+        .header {
+            margin: 10px 0 12px;
+            color: @colorea;
+            font-size: 38px;
+            font-family: MyriadLight;
+            letter-spacing: -2px;
+
+            span {
+                display: block;
+                font-size: 25px;
+                letter-spacing: -1px;
+            }
+        }
+
+        .salesText {
+            padding: 0;
+            width: 50%;
+
+            & > p {
+                font-size: 13px;
+                font-family: MyriadLight;
+                color: @colora0;
+                line-height: 16px;
+
+                b {
+                    color: white;
+                    font-family: MyriadBold;
+                    font-weight: normal;
+                }
+
+                .highlight {
+                    color: #ffd000;
+                }
+            }
+
+            &.left {
+                float: left;
+
+                & > p, .special {
+                    margin-right: 10px;
+                    margin-left: 0;
+                }
+
+            }
+
+            &.right {
+                float: right;
+
+                & > p, .special {
+                    margin-left: 10px;
+                    margin-right: 0;
+                }
+            }
+
+            .special {
+                text-align: left;
+                border: 2px solid #484f59;
+                border-radius: 10px;
+                -webkit-border-radius: 10px;
+                height: 42px;
+                width: 126px;
+                margin-bottom: 12px;
+
+                p, i {
+                    font-size: 29px;
+                    margin: 0;
+                    padding: 6px 7px 0 0;
+                    color: @color9b;
+                    letter-spacing: -1px;
+                }
+
+                i {
+                    color: @color66;
+                    font-size: 25px;
+                    padding: 7px 0 0 6px;
+                    position: absolute;
+                    display: block;
+                }
+            }
+
+            .spacer {
+                height: 2px;
+                display: block;
+            }
+        }
+
+        .active {
+            .special {
+                background: #484f59; // PRESS STATE
+            }
+        }
+    }
+
+    .signin {
+        font-size: 15px;
+        font-family: MyriadLight;
+        color: @colora0;
+        bottom: 8px;
+        right: 20px;
+        position: absolute;
+        line-height: 21px;
+        text-align: right;
+
+        span {
+            color: white;
+            font-family: MyriadBold;
+            font-size: 18px;
+            display: block;
+        }
+
+        &.active {
+            -webkit-transform: scale(.9, .9); // PRESS STATE
+        }
+    }
+
+    @media only screen and (orientation: landscape) {
+        background-image: url(../images/marketing/background.png);
+        background-position: left bottom;
+        background-repeat: no-repeat;
+        -webkit-background-size: 100%;
+        background-size: 100%;
+
+        @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+            background-image: url(../images/marketing/background@2x.png);
+        }
+
+        .checklistImage {
+            top: 10px;
+            left: -60px;
+        }
+
+        .salesContent {
+            margin-left: 100px;
+
+            .header {
+                font-size: 25px;
+                margin-bottom: 10px;
+
+                span {
+                    font-size: 25px;
+                    display: inline-block
+                }
+            }
+
+            .salesText {
+                &.right {
+                    float: left;
+
+                    & > p, .special {
+                        margin-right: 10px;
+                        margin-left: 0;
+                    }
+
+                }
+
+                &.left {
+                    float: right;
+
+                    & > p, .special {
+                        margin-left: 10px;
+                        margin-right: 0;
+                    }
+                }
+
+                .special {
+                    float: none;
+                }
+            }
+        }
+    }
+}
+
+// Conflict
+.conflictbox {
+    .choiceBox {
+        border: none;
+        border-top: 1px solid @colorButton2Icon;
+        padding: 0 0 10px 0;
+        margin: 0;
+        width: 47%;
+        box-sizing: border-box;
+        float: left;
+
+        &:last-child {
+            border-bottom: 1px solid @colorButton2Icon;
+        }
+    }
+
+    .choiceButtons {
+        margin: 0 20px;
+    }
+
+    .choiceBoxButton {
+        float: left;
+        width: 47%;
+        margin-left: 0px;
+    }
+
+    .choiceTitle {
+        font-size: 20px;
+        margin: 10px 0 10px;
+        display: block;
+    }
+
+    .description {
+        display: none;
+    }
+
+    .conflictNumber {
+        color: @colorButton2Text;
+    }
+
+    .cdev {
+        font-size: 14px;
+    }
+
+    .emphasis {
+        font-family: MyriadBold;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .tableRow {
+        clear: both;
+        margin-bottom: 5px;
+    }
+
+    .tableCell {
+        display: block;
+        margin: 0 10px 5px 0;
+        float: left;
+
+        &.col1 { width: 80px; }
+        &.col2 { width: auto; }
+
+    }
+}
+
+@media only screen and (orientation: landscape) {
+    .conflictbox {
+        .choiceBox {
+            border: none;
+
+            &:last-child {
+                border: none;
+            }
+        }
+    }
+}
+
+@media only screen and (orientation: portrait) {
+    .conflictbox {
+        .choiceBox {
+            width: 100%;
+        }
+        .choiceBoxButton {
+           width: 100%;
+        }
+    }
+}

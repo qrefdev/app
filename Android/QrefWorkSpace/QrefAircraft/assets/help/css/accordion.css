@@ -1,0 +1,39 @@
+dl, dt, dl, h2 {
+    margin: 0;
+    padding: 0;
+}
+
+dt {
+    color: #959ba5;
+    font-size: 20px;
+    font-family: MyriadBold;
+    margin: 10px 0 15px 0;
+    cursor: pointer;
+    line-height: 16px;
+	border-top: 1px solid #dde0e4;
+	padding-top: 12px;
+}
+
+dt:hover {
+    color: #000;
+}
+
+dd {
+    margin-left: 15px;
+}
+
+dd *:first-child {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+h2 {
+    font-weight: normal;
+    font-size: 30px;
+    margin: 30px 0 15px 0;
+    color: #4c535e;
+}
+
+.ui-loader {
+    opacity: 0;
+}
