@@ -1,3 +1,27 @@
+function PushImage(data) {
+    var imageArray = data;
+    
+    if(imageArray[2].toLowerCase() == "productlisting")
+    {
+        var item = $("#downloads-items li[data-id='" + imageArray[1] + "']");
+    
+        if(item.length > 0)
+            item.find(".plane-icon").html('<img src="' + imageArray[0] + '" />');
+    }
+    else if(imageArray[2].toLowerCase() == "checklistlisting")
+    {
+        var item = $("#dashboard-planes li[data-id='" + imageArray[1] + "']");
+    
+        if(item.length > 0)
+            item.find(".plane-icon").html('<img src="' + imageArray[0] + '" />');
+    }
+    else if(imageArray[2].toLowerCase() == "productdetails")
+    {
+        var details = $("#productDetailsListing");
+        details.find(".productImage").html('<img src="' + imageArray[0] + '" />');
+    }
+}
+
 function ImageProcessor(itemsToProcess, cacheType, icon) {
     this.count = 0;
     this.index = 0;
@@ -12,30 +36,6 @@ function ImageProcessor(itemsToProcess, cacheType, icon) {
         this.index = 0;
     };
     
-    function PushImage(data) {
-		var imageArray = data;
-		
-		if(imageArray[2].toLowerCase() == "productlisting")
-		{
-			var item = $("#downloads-items li[data-id='" + imageArray[1] + "']");
-		
-			if(item.length > 0)
-				item.find(".plane-icon").html('<img src="' + imageArray[0] + '" />');
-		}
-		else if(imageArray[2].toLowerCase() == "checklistlisting")
-		{
-			var item = $("#dashboard-planes li[data-id='" + imageArray[1] + "']");
-		
-			if(item.length > 0)
-				item.find(".plane-icon").html('<img src="' + imageArray[0] + '" />');
-		}
-		else if(imageArray[2].toLowerCase() == "productdetails")
-		{
-			var details = $("#productDetailsListing");
-			details.find(".productImage").html('<img src="' + imageArray[0] + '" />');
-		}
-	}
-    
     this.processImages = function() {
         if(this.count > 0)
         {
@@ -46,9 +46,7 @@ function ImageProcessor(itemsToProcess, cacheType, icon) {
                 if(item.productIcon)
                 {
                     var iconImageLocation = item.productIcon;
-                	var realPath = QrefInterface.getImage(iconImageLocation); 
-                	
-                	PushImage([realPath,item._id,this.type]);   
+                	QrefInterface.getImage(iconImageLocation, 'function(data) { var realData = QrefInterface.getDataFromQueue(); PushImage([realData,\'' + item._id + '\',\'' + this.type + '\']); }');    
                	}
             }
             else
@@ -57,9 +55,7 @@ function ImageProcessor(itemsToProcess, cacheType, icon) {
                 {
                     var coverImageLocation = item.coverImage;
                 
-                	var realPath = QrefInterface.getImage(coverImageLocation); 
-                	
-                	PushImage([realPath, item._id, this.type]);
+                	QrefInterface.getImage(coverImageLocation, 'function(data) { var realData = QrefInterface.getDataFromQueue(); PushImage([realData,\'' + item._id + '\',\'' + this.type + '\']); }'); 
                 }
             }
         

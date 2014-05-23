@@ -34,16 +34,16 @@
       
       $element = $(element);
       
-    /*  if(typeof TouchEvent == 'undefined' || typeof Touch == "undefined")
+      if(typeof TouchEvent == 'undefined' || typeof Touch == "undefined")
       {
       	$element.mouseup(touchEnd);
       	$element.mousedown(touchStart);
       }
       else
-      {*/
+      {
       	$element.bind("touchstart", touchStart);
       	$element.bind("touchend", touchEnd);
-  	  //}
+  	  }
   
   	this.updateOptions = function(options) {
   		TapHandler = options;
@@ -67,7 +67,7 @@
 		}
 	}
 	  
-	  function touchEnd(event) {
+	function touchEnd(event) {
 			
 			if(waitingSecondTap)
 			{
@@ -92,8 +92,9 @@
 	  }
 	  
 	  function triggerHandler(event) {
-		if(TapHandler)
-			TapHandler.call($element[0], event);
+			if(TapHandler) {
+                TapHandler.call($element[0], event);
+			}
 	  }
 	  
 	  function getDuration() {

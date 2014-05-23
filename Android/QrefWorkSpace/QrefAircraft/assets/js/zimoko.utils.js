@@ -1,7 +1,38 @@
 (function() {
+ 	zimoko.heightOfElements = function(elements) {
+ 		var height = 0;
+ 		
+ 		elements.each(function() {
+ 			height += $(this).outerHeight();
+ 		});
+ 		
+ 		return height;
+ 	};
+ 	
+ 	zimoko.applyVirtualCoords = function(elements, scrollTop, parent) {
+ 		zimoko.Async.each(elements, function() {
+ 			var $this = $(this);
+ 			
+ 			var offset = $this.position();
+                          
+ 			if(offset.top - scrollTop < 0 - $this.height()) {
+				$this.css({visibility: 'hidden'});
+				//console.log("Item " + i + ": Hidden");
+			}
+			else if(offset.top - scrollTop > parent.height() + $this.height()) {
+				$this.css({visibility: 'hidden'});
+				//console.log("Item " + i + ": Hidden");
+			}
+			else {
+				$this.css({visbility: 'visible'});
+				//console.log("Item " + i + ": Shown");
+			}
+ 		});
+ 	};
+ 	
 	zimoko.createGuid = function() {
 		var d = new Date().getTime();
-		var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+		var uuid = 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
 			var r = (d + Math.random()*16)%16 | 0;
 			d = Math.floor(d/16);
 			return (c=='x' ? r : (r&0x7|0x8)).toString(16);
@@ -143,7 +174,7 @@
          try {
             this.value = new Function(keys,'return ' + property.value + ';').apply(object, values);
          } catch (e) {
-            this.value = '';
+            this.value = undefined;
          }
  
 		this.get = function() {
@@ -162,8 +193,9 @@
 		};
 		
 		this.trigger = function(element, event, data) {
+			var self = this;
 			if(typeof(this.value) == 'function') {
-				this.value.call(this.owner, element, event, data);
+				self.value.call(self.owner, element, event, data);
 			}
 		};
 	};
@@ -177,5 +209,48 @@
 		}
 		
 		return !isNaN(parseFloat(value)) && isFinite(value);
+	};
+	
+	if(!document.documentMode) {
+		window.addEventListener('message', function(event) {	
+			if(event.data == 'queue') {
+				zimoko.queue.dequeue();
+			}
+		}, false);
+	}
+	else if(document.documentMode < 9) {
+		window.attachEvent('message', function(event) {
+			if(event.data == 'queue') {
+				zimoko.queue.dequeue();
+			}
+		});
+	}
+	
+	zimoko.queue = {
+		_timer: null,
+		_queue: [],
+		add: function(fn, context) {
+			if(!document.documentMode) {
+				zimoko.queue._queue.push({fn: fn, context: context});
+				window.postMessage('queue', window.location.href);
+			}
+			else {
+				zimoko.queue._queue.push({fn: fn, context: context});
+				setTimeout(function() {
+					zimoko.queue.dequeue();
+				}, 1);
+			}
+		},
+		dequeue: function() {
+			if(zimoko.queue._queue.length > 0) {
+				var item = zimoko.queue._queue.splice(0,1);
+				
+				if(item && item.length > 0)
+					item[0].fn.call(item[0].context || window);
+			}
+		},
+		clear: function() {
+			zimoko.queue._queue = [];
+		}
 	};
 })();

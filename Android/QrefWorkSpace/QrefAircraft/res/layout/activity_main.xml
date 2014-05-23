@@ -10,14 +10,15 @@
         android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:background="#000000"
-         />
-	<ImageView 
+        android:layout_alignParentBottom="true"
+        android:background="#000000" />
+
+	<ImageView
 	    android:id="@+id/splash"
 	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-	   	android:src="@drawable/splash"
-	   	android:scaleType="centerCrop"
-	    />
+	   	android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+	    android:scaleType="centerCrop"
+	    android:src="@drawable/splash" />
+
 </RelativeLayout>

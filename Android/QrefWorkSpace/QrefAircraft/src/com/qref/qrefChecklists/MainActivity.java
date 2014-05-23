@@ -5,8 +5,15 @@ import java.io.File;
 import android.inputmethodservice.InputMethodService;
 import android.os.*;
 import java.io.InputStream;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import org.json.JSONObject;
 
@@ -15,22 +22,19 @@ import com.qref.qrefChecklists.util.Base64;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.res.Configuration;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
-import android.view.inputmethod.InputMethod;
-import android.view.inputmethod.InputMethodManager;
-import android.view.inputmethod.InputMethodSubtype;
+
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -48,19 +52,38 @@ public class MainActivity extends Activity {
 	protected InputMethodService input;
 	protected boolean isInputShown;
 	
-    @Override
+	@SuppressLint("NewApi")
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
         this.purchases = new ArrayList<QrefProduct>();
         this.pendingPurchases = new ArrayList<String>();
+        
+        trustAllHosts();
+        
         this.webView = (WebView)findViewById(R.id.webView);
         
         this.splash = (ImageView)findViewById(R.id.splash);
         
         this.webView.getSettings().setJavaScriptEnabled(true);
         this.webView.getSettings().setAppCacheEnabled(false);
-        this.webView.getSettings().setCacheMode(2);
+        this.webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+        	this.webView.getSettings().setAllowUniversalAccessFromFileURLs(true);
+        	this.webView.getSettings().setAllowFileAccessFromFileURLs(true);
+        }
+        
+    	this.webView.getSettings().setAllowContentAccess(true);
+        
+        this.webView.getSettings().setAllowFileAccess(true);
+    	this.webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+    	this.webView.getSettings().setBlockNetworkImage(false);
+    	this.webView.getSettings().setLoadsImagesAutomatically(true);
+        
+    	
         this.webView.getSettings().setSaveFormData(false);
         this.webView.getSettings().setSavePassword(false);
         
@@ -70,15 +93,18 @@ public class MainActivity extends Activity {
         this.webView.setWebChromeClient(new ChromeClient());
         this.webView.addJavascriptInterface(new QrefInterface(this, PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext()), this.getApplicationContext(), this.webView, mhandler), "QrefInterface");
         
-        this.webView.setWebViewClient(new WebViewClient() {
-        	@Override
-        	public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-        		handler.proceed();
-        	}
-        });
+        this.webView.setWebViewClient(new QrefWebViewClient());
         
         try {
-        	InputStream input = getAssets().open("phoneView.html");
+        	InputStream input = null;
+        	
+        	if(MainActivity.isTablet(this)) {
+        		input = getAssets().open("tabletView.html");
+        	}
+        	else {
+        		input = getAssets().open("phoneView.html");
+        	}
+        	
         	int size = input.available();
         	byte[] buffer = new byte[size];
         	input.read(buffer);
@@ -87,6 +113,9 @@ public class MainActivity extends Activity {
         	String view = new String(buffer);
         	
         	this.webView.loadDataWithBaseURL("file:///android_asset/", view, "text/html", "UTF-8", null);
+        	this.webView.clearCache(true);
+        	this.webView.clearSslPreferences();
+        	//this.webView.loadUrl("file:///android_asset/phoneView.html");
         } catch (Exception e)
         {
         	
@@ -110,6 +139,12 @@ public class MainActivity extends Activity {
         }
     }
     
+	public static boolean isTablet(Context context) {
+	    return (context.getResources().getConfiguration().screenLayout
+	            & Configuration.SCREENLAYOUT_SIZE_MASK)
+	            >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+	}
+	
     public void hideSplash() {
     	this.splash.setVisibility(View.GONE);
     }
@@ -316,5 +351,37 @@ public class MainActivity extends Activity {
     	}
     	
     	return false;
+    }
+    
+    private static void trustAllHosts() {
+        // Create a trust manager that does not validate certificate chains
+        TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+            @Override
+            public void checkClientTrusted(
+                    java.security.cert.X509Certificate[] x509Certificates,
+                    String s) throws java.security.cert.CertificateException {
+            }
+
+            @Override
+            public void checkServerTrusted(
+                    java.security.cert.X509Certificate[] x509Certificates,
+                    String s) throws java.security.cert.CertificateException {
+            }
+
+            @Override
+            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                return new java.security.cert.X509Certificate[] {};
+            }
+        } };
+
+        // Install the all-trusting trust manager
+        try {
+            SSLContext sc = SSLContext.getInstance("TLS");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection
+                    .setDefaultSSLSocketFactory(sc.getSocketFactory());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

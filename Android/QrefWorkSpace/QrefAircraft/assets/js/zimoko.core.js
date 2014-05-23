@@ -13,7 +13,7 @@ var zimoko = new (function() {})();
 			window.oRequestAnimationFrame ||
 			window.msRequestAnimationFrame ||
 			function( /* function FrameRequestCallback */ callback, /* DOMElement Element */ element ) {
-				window.setTimeout( callback, 1000 / 60 );
+				window.setTimeout( callback, 0 );
 			};
 		} )();
 	}
@@ -51,6 +51,63 @@ var zimoko = new (function() {})();
 		Class.extend = arguments.callee;
 		
 		return Class;
+	};
+	
+	zimoko.Async = function() { };
+	
+	zimoko.Async.method = function(object, method, args) {
+		this.object = object;
+		this.method = method;
+		this.args = args;
+		
+		this.exec = function() {
+			var self = this;
+			
+			if(this.object) {
+				setTimeout(function() {
+					self.method.apply(self.object, self.args);
+				}, 0);
+			} else {
+				self.method.apply(self, self.args);
+			}
+		};
+	};
+	
+	zimoko.Async.dispatch = function(object, method, args) {
+		var async = new zimoko.Async.method(object, method, args);
+		async.exec();
+	};
+	
+	zimoko.Async.each = function(items, callback) {
+		
+		var asyncEach = function(listItems, cb) {
+			this.list = listItems;
+			this.index = 0;
+			this.cb = cb;
+			
+			this.next = function() {
+				if(this.index < this.list.length) {
+					var item = this.list[this.index];
+ 
+                        if(typeof(this.cb) == 'function')
+                            this.cb.call(item, this.index, item);
+	
+					this.index++;
+					
+					zimoko.Async.dispatch(this, this.next, []);		
+				}
+			};
+			
+			zimoko.Async.dispatch(this, this.next, []);
+		};
+		
+		var process = new asyncEach(items, callback);
+	};
+	
+	zimoko.each = function(items, callback) {
+		for(var i = 0; i < items.length; i++) {
+			callback.apply(callback, [i,items[i]]);
+		}
 	};
 	
 	zimoko.ui = function() { };
@@ -117,6 +174,7 @@ var zimoko = new (function() {})();
 		};
 		
 		this.end = function(ele, e) {	
+			var self = this;
 			this.element.unbind('animationend', this.listener);
 			this.element.unbind('webkitAnimationEnd', this.listener);
 			this.element.unbind('MSAnimationEnd', this.listener);

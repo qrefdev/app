@@ -30,32 +30,28 @@ function Dialog(element, message, callback) {
 function ConfirmationDialog(element, callback) {
 	this.callback = callback;
 	this.element = $(element);
-	this.closeButton = this.element.find(".close");
 	this.yesButton = this.element.find(".yes");
 	this.noButton = this.element.find(".no");
-	this.innerElement = this.element.find(".content");
+	this.innerElement = this.element.find(".data");
 	
-	var self = this;
-	
-	this.closeButton.tap(function(e) {
-		self.close(false);
-	});
-	
-	this.yesButton.tap(function(e) {
-		self.close(true);
-	});
-	
-	this.noButton.tap(function(e) {
-		self.close(false);
-	});
-	
+    this.init = function() {
+        var self = this;
+        
+        this.yesButton.tap(function(e) {
+            self.close(true);
+        });
+        
+        this.noButton.tap(function(e) {
+            self.close(false);
+        });
+    };
+    
 	this.close = function(confirm) {
-		this.element.fadeOut(function() {
-			if(this.callback)
-			{
-				this.callback(confirm);
-			}
-		});
+		this.element.hide();
+        if(this.callback)
+        {
+            this.callback(confirm);
+        }
 	};
 	
 	this.show = function() {
@@ -65,4 +61,6 @@ function ConfirmationDialog(element, callback) {
 	this.html = function(data) {
 		this.innerElement.html(data);
 	};
+    
+    this.init();
 }

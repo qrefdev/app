@@ -30,28 +30,47 @@
 	  var startTime = 0, endTime = 0;
 	
 	  var duration = 0;
-	  var threshold = 200;
+	  var threshold = 250;
+	  
+	  var moved = false;
 	  
 	  var TapHandler = undefined;	
-  		
+
+	  var tapHadActive = false;
+  	
   	  TapHandler = options;
       
       $element = $(element);
       
-      /*if(typeof TouchEvent == 'undefined' || typeof Touch == "undefined")
-      {
-      	$element.mouseup(touchEnd);
-      	$element.mousedown(touchStart);
-      }
-      else
-      {*/
-      	$element.bind("touchstart", touchStart);
-      	$element.bind("touchend", touchEnd);
-  	  //}
+    $element.bind("touchstart", touchStart);
+    $element.bind("touchend", touchEnd);
+    $element.bind("touchmove", touchMove);
   	  
 	  function touchStart(event) {
 			startTime = endTime = Date.now();
 			duration = 0;
+			
+			var clientX = event.pageX;
+			var clientY = event.pageY;
+			
+			if(event.touches) {
+				clientX = event.touches[0].pageX;
+				clientY = event.touches[0].pageY;
+			}
+			
+			if(!$element.hasClass('active')) {
+				$element.addClass('active');
+				tapHadActive = false;
+			}
+			else {
+				tapHadActive = true;
+			}
+			
+			moved = false;
+	  }
+	  
+	  function touchMove(event) {
+			moved = true;
 	  }
 	  
 	  this.updateOptions = function(options) {
@@ -63,37 +82,35 @@
 	  };
 	  
 	  function touchEnd(event) {
-			endTime = Date.now();
+			if(!moved) {
+                event.stopPropagation();
+				endTime = Date.now();
 			
-			duration = getDuration();
+				duration = getDuration();
 			
-			if(duration < threshold) {
-				triggerHandler(event);
+				if(duration < threshold) {
+					triggerHandler(event);
+				}
+			}
+			
+			if(!tapHadActive) {
+				$element.removeClass('active');
+			}
+			else {
+				tapHadActive = false;
 			}
 	  }
 	  
 	  function trigger() {
-	  		if(typeof TouchEvent == 'undefined' || typeof Touch == "undefined")
-	  		{
-				$element.mousedown();
-				$element.mouseup();
-			}
-			else
-			{
-				$element.trigger("touchstart");
-				$element.trigger("touchend");
-			}
+	  		
+        $element.trigger("touchstart");
+        $element.trigger("touchend");
+
 	  }
 	  
 	  function triggerHandler(event) {
 		if(TapHandler) {
-			if(!$element.hasClass('active')) {
-				$element.addClass('active');
-				setTimeout(function() {
-					$element.removeClass('active');
-				}, 100);
-			}
-			TapHandler.call($element[0], event);
+            TapHandler.call($element[0], event);
 		}
 	  }
 	  

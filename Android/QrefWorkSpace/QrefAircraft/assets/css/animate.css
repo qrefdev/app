@@ -3498,10 +3498,10 @@ body { /* Addresses a small issue in webkit: http://bit.ly/NEdoDq */
 }
 
 .animated.fadeIn {
-	-webkit-animation-duration: 0.55s;
-    -moz-animation-duration: 0.55s;
-    -o-animation-duration: 0.55s;
-    animation-duration: 0.55s;
+	-webkit-animation-duration: 0.25s;
+    -moz-animation-duration: 0.25s;
+    -o-animation-duration: 0.25s;
+    animation-duration: 0.25s;
 }
 
 .animated.fadeOut {
@@ -3540,10 +3540,10 @@ body { /* Addresses a small issue in webkit: http://bit.ly/NEdoDq */
 }
 
 .animated.slideInLeft {
-	-webkit-animation-duration: 0.1s;
-    -moz-animation-duration: 0.1s;
-    -o-animation-duration: 0.1s;
-    animation-duration: 0.1s;
+	-webkit-animation-duration: 0.2s;
+    -moz-animation-duration: 0.2s;
+    -o-animation-duration: 0.2s;
+    animation-duration: 0.2s;
 }
 
 @-webkit-keyframes slideOutLeft {
@@ -3574,10 +3574,10 @@ body { /* Addresses a small issue in webkit: http://bit.ly/NEdoDq */
 }
 
 .animated.slideOutLeft {
-	-webkit-animation-duration: 0.1s;
-    -moz-animation-duration: 0.1s;
-    -o-animation-duration: 0.1s;
-    animation-duration: 0.1s;
+	-webkit-animation-duration: 0.4s;
+    -moz-animation-duration: 0.4s;
+    -o-animation-duration: 0.4s;
+    animation-duration: 0.4s;
 }
 
 @-webkit-keyframes outVisible {
@@ -3642,10 +3642,10 @@ body { /* Addresses a small issue in webkit: http://bit.ly/NEdoDq */
 }
 
 .animated.inVisible {
-	-webkit-animation-duration: 0.1s;
-    -moz-animation-duration: 0.1s;
-    -o-animation-duration: 0.1s;
-    animation-duration: 0.1s;
+	-webkit-animation-duration: 0.2s;
+    -moz-animation-duration: 0.2s;
+    -o-animation-duration: 0.2s;
+    animation-duration: 0.2s;
 }
 
 @-webkit-keyframes slideInRight {
@@ -3676,10 +3676,10 @@ body { /* Addresses a small issue in webkit: http://bit.ly/NEdoDq */
 }
 
 .animated.slideInRight {
-	-webkit-animation-duration: 0.1s;
-    -moz-animation-duration: 0.1s;
-    -o-animation-duration: 0.1s;
-    animation-duration: 0.1s;
+	-webkit-animation-duration: 0.4s;
+    -moz-animation-duration: 0.4s;
+    -o-animation-duration: 0.4s;
+    animation-duration: 0.4s;
 }
 
 @-webkit-keyframes slideOutRight {
@@ -3710,8 +3710,77 @@ body { /* Addresses a small issue in webkit: http://bit.ly/NEdoDq */
 }
 
 .animated.slideOutRight {
-	-webkit-animation-duration: 0.1s;
-    -moz-animation-duration: 0.1s;
-    -o-animation-duration: 0.1s;
-    animation-duration: 0.1s;
+	-webkit-animation-duration: 0.4s;
+    -moz-animation-duration: 0.4s;
+    -o-animation-duration: 0.4s;
+    animation-duration: 0.4s;
+}
+
+
+@-webkit-keyframes slideInTop {
+    0% {top: -100%;}
+	100% {top: 0px;}
+}
+
+@-moz-keyframes slideInTop {
+    0% {top: -100%;}
+   	100% {top: 0px;}
+}
+
+@-o-keyframes slideInTop {
+    0% {top: -100%;}
+   	100% {top: 0px;}
+}
+
+@keyframes slideInTop {
+    0% {top: -100%;}
+   	100% {top: 0px;}
+}
+
+.slideInTop {
+	-webkit-animation-name: slideInTop;
+	-moz-animation-name: slideInTop;
+	-o-animation-name: slideInTop;
+	animation-name: slideInTop;
+}
+
+.animated.slideInTop {
+	-webkit-animation-duration: 0.3s;
+    -moz-animation-duration: 0.3s;
+    -o-animation-duration: 0.3s;
+    animation-duration: 0.3s;
+}
+
+@-webkit-keyframes slideOutTop {
+    0% {top: 0px;}
+   	100% {top: -100%;}
+}
+
+@-moz-keyframes slideOutTop {
+    0% {top: 0px;}
+   	100% {top: -100%;}
+}
+
+@-o-keyframes slideOutTop {
+    0% {top: 0px;}
+   	100% {top: -100%;}
+}
+
+@keyframes slideOutTop {
+    0% {top: 0px;}
+   	100% {top: -100%;}
+}
+
+.slideOutTop {
+	-webkit-animation-name: slideOutTop;
+	-moz-animation-name: slideOutTop;
+	-o-animation-name: slideOutTop;
+	animation-name: slideOutTop;
+}
+
+.animated.slideOutTop {
+	-webkit-animation-duration: 0.3s;
+    -moz-animation-duration: 0.3s;
+    -o-animation-duration: 0.3s;
+    animation-duration: 0.3s;
 }

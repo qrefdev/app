@@ -9,7 +9,7 @@
 				var plugin = $this.data("jquery.scrollbar");
 				
 				if (!plugin) {
-					plugin = new ScrollBar(item);
+					plugin = new ScrollBar(item, options);
 					$this.data("jquery.scrollbar", plugin);
 				}
 			});
@@ -29,7 +29,7 @@
 		}
   };
  
- function ScrollBar(element) {
+ function ScrollBar(element,endReached) {
  	this.element = $(element);
  	this.child = $(this.element.children().get(0));
  	this.scrollTop = 0;
@@ -41,13 +41,14 @@
  	this.offsetTop = 0;
  	this.activity = false;
  	this.hideTimeout = false;
+ 	this.onBottomReached = endReached;
  	
  	this.addEventHandlers = function() {
  		var self = this;
  		
  		this.generateScrollBar();
  		
- 	/*	if(typeof TouchEvent == 'undefined' || typeof Touch == "undefined")
+ 		if(typeof TouchEvent == 'undefined' || typeof Touch == "undefined")
 		{
 			this.scrollBar.mouseup(function(e) {
 				self.touchEnd(e);
@@ -64,7 +65,8 @@
 			});
 		}
 		else
-		{*/
+		{
+ 		
 			this.scrollBar[0].addEventListener("touchend", function(e) {
 				self.touchEnd(e);
 			}, false);
@@ -74,11 +76,18 @@
 			this.scrollBar[0].addEventListener("touchmove", function(e) {
 				self.touchMove(e);
 			}, false);
-			 
-			window.addEventListener("touchend", function(e) {
-				self.touchEnd(e);
-			}, false);
- 		//}
+			
+			if(window.addEventListener) {
+				window.addEventListener("touchend", function(e) {
+					self.touchEnd(e);
+				}, false);
+			}
+			else {
+				window.ontouchend = function(e) {
+					self.touchEnd(e);
+				};
+			}
+ 		}
  	
  		this.scrollBar.bind("dragstart", function(e) { e.preventDefault(); });
  		
@@ -87,6 +96,12 @@
  			self.calculateScrollBarHeight();
  			self.calculateScrollBarPosition();
  			self.hideScrollBar();
+ 			
+ 			if(self.element.scrollTop() >= self.extra) {
+ 				setTimeout(function() {
+ 					self.onBottomReached.call(self.element);
+ 				}, 1 / 60);
+ 			}
  		});
  	};
  	
