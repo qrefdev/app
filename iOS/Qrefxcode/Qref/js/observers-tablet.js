@@ -172,6 +172,17 @@ var EditTailObserver = new zimoko.Observable({
             setTimeout(function () {
                 Sync.syncOneLocal(EditTailObserver.item._original);
             }, 100);
+            
+            if (!_.isEqual(EditTailObserver.item._unmodified, EditTailObserver.item._original)) {
+				var versionInfo = AppObserver.getChecklistVersionObject(EditTailObserver.item._id);
+		
+				if (versionInfo) {
+					versionInfo.lastCheckpointSerialNumber = (new Date()).getTime();
+					setTimeout(function () {
+						Sync.syncVersionInfoToPhone([versionInfo]);
+					}, 500);
+				}
+			}
         }
         setTimeout(function () {
                Navigation.back();
@@ -1646,6 +1657,17 @@ var DashboardObserver = new zimoko.Observable({
                 setTimeout(function () {
                     Sync.syncOneLocal(data._original);
                 }, 100);
+                
+                if (!_.isEqual(data._unmodified, data._original)) {
+					var versionInfo = AppObserver.getChecklistVersionObject(data._id);
+			
+					if (versionInfo) {
+						versionInfo.lastCheckpointSerialNumber = (new Date()).getTime();
+						setTimeout(function () {
+							Sync.syncVersionInfoToPhone([versionInfo]);
+						}, 500);
+					}
+				}
 
                 DashboardObserver.dataSource.remove(data);
             });

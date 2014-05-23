@@ -684,7 +684,7 @@ function SyncProcessor() {
 				}, 100);
 			}
 		}
-	},
+	};
 	
 	this.syncToPhone = function(lists, callback) {
 		var self = this;
