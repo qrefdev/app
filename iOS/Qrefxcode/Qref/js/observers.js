@@ -1322,8 +1322,7 @@ var AppObserver = new zimoko.Observable({
             axis:"y",
             stop:function (event, ui) {
                 AppObserver.isSorting = false;
-                var indices = new Array();
-                zimoko.Async.each($("#checklist-items").children(), function (index, item) {
+                $("#checklist-items").children().each(function(index, item) {
                     var id = $(this).attr("data-id");
 
                     for (var i = 0; i < ChecklistObserver.items.length; i++) {
@@ -1336,22 +1335,17 @@ var AppObserver = new zimoko.Observable({
                         }
                     }
                 });
-
-                //zimoko.applyVirtualCoords($('#checklist-items').children(), $('.checklist').scrollTop(), $('.checklist'));
-                /*
-                 $("#checklist-items").children().each(function(index, item) {
-                 var id = $(this).attr("data-id");
-
-                 for(var i = 0; i < ChecklistObserver.items.length; i++) {
-                 var item = ChecklistObserver.items.elementAt(i);
-
-                 if(item._id == id) {
-                 ChecklistObserver.set('modified', true);
-                 item.set('index', index);
-                 break;
-                 }
-                 }
-                 });*/
+                
+                if (!_.isEqual(ChecklistObserver.checklist._unmodified, ChecklistObserver.checklist._original)) {
+					var versionInfo = AppObserver.getChecklistVersionObject(ChecklistObserver.checklist._id);
+			
+					if (versionInfo) {
+						versionInfo.lastCheckpointSerialNumber = (new Date()).getTime();
+						setTimeout(function () {
+							Sync.syncVersionInfoToPhone([versionInfo]);
+						}, 500);
+					}
+				}
             },
             sort:function (event, ui) {
 
@@ -1381,10 +1375,6 @@ var AppObserver = new zimoko.Observable({
                         }
                     }
                 });
-                //zimoko.applyVirtualCoords($('#dashboard-planes').children(), $('.dashboard-planes-selector').scrollTop(), $('.dashboard-planes-selector'));
-                /*$("#dashboard-planes").children().each(function(index, item) {
-
-                 });*/
             },
             start:function (event, ui) {
                 AppObserver.isSorting = true;
@@ -2360,6 +2350,16 @@ var ChecklistObserver = new zimoko.Observable({
                     if (index > -1) {
                         ChecklistObserver.set('modified', true);
                         ChecklistObserver.checklist[ChecklistObserver.list][ChecklistObserver.section].items.removeAt(index);
+                    	if (!_.isEqual(ChecklistObserver.checklist._unmodified, ChecklistObserver.checklist._original)) {
+							var versionInfo = AppObserver.getChecklistVersionObject(ChecklistObserver.checklist._id);
+		
+							if (versionInfo) {
+								versionInfo.lastCheckpointSerialNumber = (new Date()).getTime();
+								setTimeout(function () {
+									Sync.syncVersionInfoToPhone([versionInfo]);
+								}, 500);
+							}
+						}
                     }
                     
                     if(ChecklistObserver.items.length == 0)
