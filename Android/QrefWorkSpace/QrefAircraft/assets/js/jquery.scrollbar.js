@@ -48,7 +48,7 @@
  		
  		this.generateScrollBar();
  		
- 		if(typeof TouchEvent == 'undefined' || typeof Touch == "undefined")
+ 		if(!('ontouchstart' in document.documentElement))
 		{
 			this.scrollBar.mouseup(function(e) {
 				self.touchEnd(e);

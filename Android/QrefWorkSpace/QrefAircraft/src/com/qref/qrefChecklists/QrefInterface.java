@@ -10,6 +10,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -700,6 +702,33 @@ public class QrefInterface {
 	}
 	
 	@JavascriptInterface
+	public String getBuildString() {
+		try {
+			PackageInfo pInfo = this.context.getPackageManager().getPackageInfo(this.context.getPackageName(), 0);
+			String version = pInfo.versionName;
+			String versionCode = String.valueOf(pInfo.versionCode);
+			
+			return version + " (" + versionCode + ")";
+			
+		} catch (Exception e) {
+			return "";
+		}
+	}
+	
+	private void writeToFile(String data) {
+	    try {
+	    	File dataDirectory = this.context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
+			File f = new File(dataDirectory.getAbsolutePath() + "ajax-request.txt");
+	        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(f));
+	        outputStreamWriter.write(data);
+	        outputStreamWriter.close();
+	    }
+	    catch (IOException e) {
+	        Log.e("Exception", "File write failed: " + e.toString());
+	    } 
+	}
+	
+	@JavascriptInterface
 	public void getAjaxResponse(final String url, final String data, final String method, final String callback) {		
 		Thread thr = new Thread(new Runnable() {
 			@Override
@@ -707,6 +736,9 @@ public class QrefInterface {
 				try {
 					Log.d("Ajax", "Before Ajax Call: " + url);
 					Log.d("Ajax", "Before Ajax Call Data: " + data);
+					
+					writeToFile(data);
+					
 					Log.d("Ajax", "Before Ajax Call Method: " + method); 
 					ByteArrayOutputStream buffer = new AuthSSLDownloader(url, data, method).getByteStream();
 					String output = buffer.toString();

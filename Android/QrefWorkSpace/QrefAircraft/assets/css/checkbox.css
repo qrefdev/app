@@ -16,6 +16,7 @@ input[type="checkbox"] {
     -webkit-transition: border .25s .15s, box-shadow .25s .3s, padding .25s;
   width: 44px;
   vertical-align: top;
+  -webkit-background-clip: padding-box;
 }
 
 input[type="checkbox"]:after {
@@ -25,6 +26,7 @@ input[type="checkbox"]:after {
   box-shadow: inset 0 -3px 3px rgba(0, 0, 0, 0.025), 0 1px 4px rgba(0, 0, 0, 0.15), 0 4px 4px rgba(0, 0, 0, 0.1);
     -webkit-box-shadow: inset 0 -3px 3px rgba(0, 0, 0, 0.025), 0 1px 4px rgba(0, 0, 0, 0.15), 0 4px 4px rgba(0, 0, 0, 0.1);
   content: '';
+  -webkit-background-clip: padding-box;
   display: block;
   height: 24px;
   left: 0;

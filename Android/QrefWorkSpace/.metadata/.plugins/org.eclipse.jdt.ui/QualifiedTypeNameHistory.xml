@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="com.android.vending.billing.IInAppBillingService.Stub"/>
 <fullyQualifiedTypeName name="java.lang.Object"/>
 <fullyQualifiedTypeName name="com.qref.qrefChecklists.util.Base64"/>
 <fullyQualifiedTypeName name="android.app.PendingIntent"/>
@@ -60,4 +59,5 @@
 <fullyQualifiedTypeName name="java.util.concurrent.ArrayBlockingQueue"/>
 <fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="android.os.Build"/>
+<fullyQualifiedTypeName name="android.content.pm.PackageInfo"/>
 </qualifiedTypeNameHistroy>

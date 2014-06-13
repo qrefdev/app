@@ -141,6 +141,8 @@ $(document).ready(function() {
 	
 	loadCache();
 
+	MenuObserver.set('version', QrefInterface.getBuildString());
+
     DataLoaded();
 });
 
@@ -201,6 +203,7 @@ function RefreshToken() {
 		
 		AppObserver.ajax({
 			type: 'post',
+			contentType: 'application/json',
         	dataType: 'json',
 			url: host + "services/rpc/auth/refreshToken",
 			data: refresh,

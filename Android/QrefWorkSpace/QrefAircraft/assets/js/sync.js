@@ -725,10 +725,15 @@ function SyncProcessor() {
 						var saveDialog = new ConfirmationDialog('#savebox', function(doSync) {
 							if(doSync && lists.length > 0) {
 								Sync.syncOneServer(lists[0]);
+								
+								if (callback) {
+									callback();
+								}
 							}
 						});
 			
 						saveDialog.show();
+						return;
 					}
 					
 					if (callback) {
@@ -741,7 +746,6 @@ function SyncProcessor() {
 					}, 100);
 				}
 			}
-		}
 		} else {
 			if (callback) {
 				callback();
@@ -822,7 +826,7 @@ function SyncProcessor() {
         AppObserver.set('syncing', false);
     };*/
     
-	this.sendChecklistToServer = function(item, callback) {
+	this.sendChecklistToServer = function(item, syncTime, callback) {
 		var request = {
 			manufacturer: item.manufacturer._id,
 			model: item.model._id,
@@ -837,7 +841,10 @@ function SyncProcessor() {
 			user: item.user,
 			productIcon: item.productIcon,
 			token: AppObserver.token,
-			mode: 'ajax'
+			mode: 'ajax',
+			clientTime: syncTime,
+			deviceName: AppObserver.getDeviceName(),
+			token: AppObserver.token
 		};
 		
         var urltoPost = host + 'services/ajax/aircraft/checklist/' + item._id + '?token=' + AppObserver.token;
@@ -846,7 +853,7 @@ function SyncProcessor() {
 			type: 'POST',
 			contentType:'application/json',
 			dataType: 'json',
-			data: JSON.stringify(request),
+			data: request,
 			url: urltoPost,
             cache: false,
 			success: function(data) {

@@ -30,8 +30,9 @@
 	  var startTime = 0, endTime = 0;
 	
 	  var duration = 0;
-	  var threshold = 250;
-	  
+	  var threshold = 1000;
+ var startPosition = {x: 0, y: 0};
+	
 	  var moved = false;
 	  
 	  var TapHandler = undefined;	
@@ -41,10 +42,10 @@
   	  TapHandler = options;
       
       $element = $(element);
-      
-    $element.bind("touchstart", touchStart);
-    $element.bind("touchend", touchEnd);
-    $element.bind("touchmove", touchMove);
+ 
+      	$element[0].addEventListener("touchstart", touchStart, false);
+      	$element[0].addEventListener("touchend", touchEnd, false);
+      	$element[0].addEventListener("touchmove", touchMove, false);
   	  
 	  function touchStart(event) {
 			startTime = endTime = Date.now();
@@ -57,7 +58,10 @@
 				clientX = event.touches[0].pageX;
 				clientY = event.touches[0].pageY;
 			}
-			
+
+ startPosition.x = clientX;
+ startPosition.y = clientY;
+ 
 			if(!$element.hasClass('active')) {
 				$element.addClass('active');
 				tapHadActive = false;
@@ -70,7 +74,17 @@
 	  }
 	  
 	  function touchMove(event) {
-			moved = true;
+ 
+         var clientX = event.pageX;
+         var clientY = event.pageY;
+         
+         if(event.touches) {
+            clientX = event.touches[0].pageX;
+            clientY = event.touches[0].pageY;
+         }
+ 
+            if(Math.abs(clientX - startPosition.x) >= 15 || Math.abs(clientY - startPosition.y) >= 15)
+            moved = true;
 	  }
 	  
 	  this.updateOptions = function(options) {
@@ -102,10 +116,8 @@
 	  }
 	  
 	  function trigger() {
-	  		
-        $element.trigger("touchstart");
-        $element.trigger("touchend");
-
+				$element.trigger("touchstart");
+				$element.trigger("touchend");
 	  }
 	  
 	  function triggerHandler(event) {

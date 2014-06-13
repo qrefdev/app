@@ -60,7 +60,7 @@
 		}, false);
 		this.$element[0].addEventListener("touchmove", function(e) {
 			_this.touchMove(e)
-		}, true);
+		}, false);
       };
 	  
 	  /** Prevent the dragstart on the element **/
@@ -78,10 +78,11 @@
 	  this.touchStart = function(event) {
 	  		var clientX = event.pageX;
 	  		var clientY = event.pageY;
-          
+	  		//event.preventDefault();
+	  		
 	  		if(event.touches)
 	  		{
-                first = event.touches[0];
+                var first = event.touches[0];
 	
 				clientX = first.pageX;
 				clientY = first.pageY;
@@ -100,10 +101,10 @@
 	  this.touchMove = function(event) {
 	  		var clientX = event.pageX;
 	  		var clientY = event.pageY;
-          
-	  		if(event.touches)
+	
+	  		if(event.changedTouches)
 	  		{
-                first = event.touches[0];
+                var first = event.changedTouches[0];
 	
 				clientX = first.pageX;
 				clientY = first.pageY;
@@ -137,15 +138,15 @@
 	
 	  this.touchEnd = function(event) {
 	  		event.stopPropagation();
-            event.preventDefault();
+	  		event.preventDefault();
             
             if(this.touched) {
 				var clientX = event.pageX;
 				var clientY = event.pageY;
 	  
-				if(event.touches)
+				if(event.changedTouches)
 				{
-					first = event.touches[0];
+					var first = event.changedTouches[0];
 	
 					clientX = first.pageX;
 					clientY = first.pageY;

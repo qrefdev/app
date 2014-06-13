@@ -2526,8 +2526,8 @@
 				element.data('zimokoSwipeLeftFunction', swipeFunction);
 				element.swipe({
 					swipeLeft: swipeFunction,
-					threshold: 45,
-					durationThreshold: 265
+					threshold: 7.5,
+					durationThreshold: 300
 				});
 			},
 			update: function(element, value) {
@@ -2553,8 +2553,8 @@
 				element.data('zimokoSwipeRightFunction', swipeFunction);
 				element.swipe({
 					swipeRight: swipeFunction,
-					threshold: 45,
-					durationThreshold: 265
+					threshold: 7.5,
+					durationThreshold: 300
 				});
 			},
 			update: function(element, value) {
