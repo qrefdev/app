@@ -65,7 +65,7 @@ var MarketingObserver = new zimoko.Observable({
 });
 
 var EditAddObserver = new zimoko.Observable({
-    item:new zimoko.Observable({check:'', response:'', icon:null, _id:zimoko.createGuid()}),
+    item:new zimoko.Observable({check:'', response:'', icon:null, _id:new ObjectId()}),
     adding:false,
     index:0,
     menuTap:function (element, e, data) {
@@ -79,7 +79,7 @@ var EditAddObserver = new zimoko.Observable({
 
         $('#editAddForm input').blur();
 
-        EditAddObserver.set('item',new zimoko.Observable({check:'', response:'', icon:null, _id:zimoko.createGuid()}));
+        EditAddObserver.set('item',new zimoko.Observable({check:'', response:'', icon:null, _id:new ObjectId()}));
                                             
         ChecklistObserver.render();
                                             
@@ -135,7 +135,7 @@ var EditAddObserver = new zimoko.Observable({
         	}
         }
         
-        EditAddObserver.set('item',new zimoko.Observable({check:'', response:'', icon:null, _id:zimoko.createGuid()}));
+        EditAddObserver.set('item',new zimoko.Observable({check:'', response:'', icon:null, _id:new ObjectId()}));
                                             
         ChecklistObserver.render();
                                 
@@ -2284,7 +2284,7 @@ var ChecklistObserver = new zimoko.Observable({
         e.preventDefault();
         ChecklistObserver.set('showSections', false);
 
-        EditAddObserver.set('item', new zimoko.Observable({check:'', response:'', icon:null, _id:zimoko.createGuid()}));
+        EditAddObserver.set('item', new zimoko.Observable({check:'', response:'', icon:null, _id:new ObjectId()}));
 
         EditAddObserver.set('adding', true);
 
