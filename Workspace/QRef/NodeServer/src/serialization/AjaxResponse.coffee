@@ -101,7 +101,11 @@ class AjaxResponse
 	@param errorCode [Number] The standard HTTP error code to return in the errorCode property.
 	###
 	failure: (reason, errorCode) -> 
-		@message = reason
 		@errorCode = errorCode
 		@success = false
+		
+		if reason instanceof Error
+			@message = JSON.stringify({ message: reason.message, stack: reason.stack })
+		else
+			@message = reason
 module.exports = AjaxResponse
