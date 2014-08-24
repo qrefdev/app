@@ -224,7 +224,7 @@
                                 <div class="checkmark" style="display: none;"
                                      data-bind="visible: (function() { if(parent.canCheck && !parent.editing && parent.sectionName.toLowerCase() != 'cruise performance') return true; else return false; })(), tap: parent.checkTap">
                                     <div class="checker" style="display: none;"
-                                         data-bind="visible: (function() { if(isChecked) return true; else return false; })()">
+                                         data-bind="visible: isChecked">
                                         <i class="icon icon-ok"></i></div>
                                 </div>
                             </li>
