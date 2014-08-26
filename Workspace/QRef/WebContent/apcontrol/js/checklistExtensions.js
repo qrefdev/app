@@ -691,47 +691,49 @@ function createCategoryFromList(index, name, lis) {
 	var newCategory = new ChecklistSection();
 	newCategory.name = name;
 	newCategory.index = index;
-	
-	var currentSection = undefined;
-	var previousSection = "";
-	
-	var uniqueSectionCount = 0;
+
+	var sections = [];
 	
 	for(var i = 0; i < lis.length; i++) {
 		var $li = $(lis.get(i));
 		
-		var SectionIndex = $li.data("SectionIndex");
-		var Section = $li.data("Section");
-		var Index = i;
-		var Check = $li.data("Check");
-		var Response = $li.data("Response");
-		var Value = $li.data("Value");
-		
-		var item = new ChecklistItem();
-		item.check = Check;
-		item.response = Response;
-		item.index = Index;
-		
-		if(previousSection != Section) {
-			if(currentSection != undefined) 
-				newCategory.items.push(currentSection);
-			
-			currentSection = new ChecklistSection();
-			currentSection.name = Section;
-			currentSection.index = uniqueSectionCount;
-			
-			previousSection = Section;
-			
-			uniqueSectionCount++;
+		if(sections[$li.data("SectionIndex")]) {
+			sections[$li.data("SectionIndex")].push($li);
 		}
-		
-		currentSection.items.push(item);
+		else {
+			sections[$li.data("SectionIndex")] = [];
+			sections[$li.data("SectionIndex")].push($li);
+		}
 	}
 	
-	//Push the last section if not undefined
-	if(currentSection != undefined)
-		newCategory.items.push(currentSection);
+	for(var i = 0; i < sections.length; i++) {
+		var sectionLis = sections[i];
+	
+		var currentSection = new ChecklistSection();
+		currentSection.name = sectionLis[0].data("Section");
+		currentSection.index = i;
+	
+		for(var j = 0; j < sectionLis.length; j++) {
+			var $li = sectionLis[j];
 		
+			var SectionIndex = $li.data("SectionIndex");
+			var Section = $li.data("Section");
+			var Index = j;
+			var Check = $li.data("Check");
+			var Response = $li.data("Response");
+			var Value = $li.data("Value");
+		
+			var item = new ChecklistItem();
+			item.check = Check;
+			item.response = Response;
+			item.index = Index;
+		
+			currentSection.items.push(item);
+		}
+		
+		newCategory.items.push(currentSection);
+	}
+	
 	return newCategory;
 }
 
@@ -740,46 +742,48 @@ function createNewCategoryFromPrevious(name, lis) {
 	newCategory.name = name;
 	newCategory.index = $('#s4 ul').length;
 	
-	var currentSection = undefined;
-	var previousSection = "";
-	
-	var uniqueSectionCount = 0;
+	var sections = [];
 	
 	for(var i = 0; i < lis.length; i++) {
-		$li = $(lis.get(i));
+		var $li = $(lis.get(i));
 		
-		var SectionIndex = $li.data("SectionIndex");
-		var Section = $li.data("Section");
-		var Index = i;
-		var Check = $li.data("Check");
-		var Response = $li.data("Response");
-		var Value = $li.data("Value");
-		
-		var item = new ChecklistItem();
-		item.check = Check;
-		item.response = Response;
-		item.index = Index;
-		
-		if(previousSection != Section) {
-			if(currentSection != undefined) 
-				newCategory.items.push(currentSection);
-			
-			currentSection = new ChecklistSection();
-			currentSection.name = Section;
-			currentSection.index = uniqueSectionCount;
-			
-			previousSection = Section;
-			
-			uniqueSectionCount++;
+		if(sections[$li.data("SectionIndex")]) {
+			sections[$li.data("SectionIndex")].push($li);
 		}
-		
-		currentSection.items.push(item);
+		else {
+			sections[$li.data("SectionIndex")] = [];
+			sections[$li.data("SectionIndex")].push($li);
+		}
 	}
 	
-	//Push the last section if not undefined
-	if(currentSection != undefined)
-		newCategory.items.push(currentSection);
+	for(var i = 0; i < sections.length; i++) {
+		var sectionLis = sections[i];
+	
+		var currentSection = new ChecklistSection();
+		currentSection.name = sectionLis[0].data("Section");
+		currentSection.index = i;
+	
+		for(var j = 0; j < sectionLis.length; j++) {
+			var $li = sectionLis[j];
 		
+			var SectionIndex = $li.data("SectionIndex");
+			var Section = $li.data("Section");
+			var Index = j;
+			var Check = $li.data("Check");
+			var Response = $li.data("Response");
+			var Value = $li.data("Value");
+		
+			var item = new ChecklistItem();
+			item.check = Check;
+			item.response = Response;
+			item.index = Index;
+		
+			currentSection.items.push(item);
+		}
+		
+		newCategory.items.push(currentSection);
+	}
+	
 	return newCategory;
 }
 /**
@@ -1004,9 +1008,9 @@ function CheckIn()
 {
 	if(g_checklist != "")
 	{
-		var preflight = document.getElementById('s1');
-		var takeoff = document.getElementById('s2');
-		var landing = document.getElementById('s3');
+		var preflight = $('#s1');
+		var takeoff = $('#s2');
+		var landing = $('#s3');
 		var emergencies = $('#s4 ul');
 		
 		
@@ -1042,7 +1046,65 @@ function CheckIn()
 
 function CheckIn_Cycle(datalist, ul)
 {
-	for(var i = 0; i < ul.children.length; i++)
+	var lis = ul.find('li');
+	
+	var sections = [];
+	
+	for(var i = 0; i < lis.length; i++) {
+		var $li = $(lis.get(i));
+		
+		if(sections[$li.data("SectionIndex")]) {
+			sections[$li.data("SectionIndex")].push($li);
+		}
+		else {
+			sections[$li.data("SectionIndex")] = [];
+			sections[$li.data("SectionIndex")].push($li);
+		}
+	}
+	
+	for(var i = 0; i < sections.length; i++) {
+		var sectionLis = sections[i];
+	
+		var currentSection = new ChecklistSection();
+		currentSection.name = sectionLis[0].data("Section");
+		currentSection.index = i;
+	
+		for(var j = 0; j < sectionLis.length; j++) {
+			var $li = sectionLis[j];
+		
+			var SectionIndex = $li.data("SectionIndex");
+			var Section = $li.data("Section");
+			var Index = j;
+			var Check = $li.data("Check");
+			var Response = $li.data("Response");
+			var Value = $li.data("Value");
+		
+			var item = new ChecklistItem();
+			item.check = Check;
+			item.response = Response;
+			item.index = Index;
+		
+			currentSection.items.push(item);
+		}
+		
+		var foundSection = _.find(datalist, function(item) {
+			if(item.name == currentSection.name) {
+				return true;
+			}
+			
+			return false;
+		});
+		
+		if(foundSection) {
+			datalist[foundSection.index].items = currentSection.items;
+		}
+		else {
+			currentSection.index = datalist.length;
+			datalist.push(currentSection);
+		}
+	}
+
+	/*for(var i = 0; i < sortedLis.length; i++)
 	{
 		var option = ul.children[i];
 		
@@ -1077,6 +1139,7 @@ function CheckIn_Cycle(datalist, ul)
 		{
 			datalist[section.index].items.push(newItem);
 		}
+		
 		/*
 		var newItem = new ChecklistItem();
 		newItem.check = Check;
@@ -1086,9 +1149,10 @@ function CheckIn_Cycle(datalist, ul)
 			datalist[section].items.push(newItem);
 		else
 			datalist[section].items[value] = newItem;
-		*/
-	}
-	ClearList($(ul));
+		
+	}*/
+	
+	ClearList(ul);
 }
 
 function ClearChecklistsImportInto() {
