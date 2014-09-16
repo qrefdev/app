@@ -1966,7 +1966,7 @@ var ChecklistObserver = new zimoko.Observable({
           }
 
           if(shouldReindex) {
-            this.checklist[this.list][this.category].items[this.section].items = this.checklist[this.list][this.category].items[this.section].items.sort(function(item2, item2){
+            this.checklist[this.list][this.category].items[this.section].items = this.checklist[this.list][this.category].items[this.section].items.sort(function(item1, item2){
               if(item1.index < item2.index) {
                 return -1;
               }
