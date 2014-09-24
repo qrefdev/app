@@ -1,6 +1,6 @@
 var host = "https://my.qref.com/";
 
-//Default Theme Settings 
+//Default Theme Settings
 var NightTimeModeTime = "00:00";
 var NightTimeModeTimeOff = "00:00";
 var AutoSwitch = false;
@@ -15,9 +15,17 @@ var Navigation = undefined;
 //var SettingsEditor = new SettingsEditorHandler();
 var Sync = new SyncProcessor();
 
+function CallObjectiveC(scheme) {
+	var iframe = document.createElement("IFRAME");
+	iframe.setAttribute("src", scheme);
+	document.documentElement.appendChild(iframe);
+	iframe.parentNode.removeChild(iframe);
+	iframe = null;
+}
+
 $(document).ready(function() {
 	Navigation = new zimoko.Navigation(true, '.page');
-	
+
 	//Attach Observers!!!
 	EditTailObserver.attach('#edittail');
 	EditAddObserver.attach('#editadd');
@@ -32,12 +40,12 @@ $(document).ready(function() {
     MarketingObserver.attach('#marketing');
     HelpObserver.attach('#help');
 	AppObserver.attach('body');
-	
+
 	/*window.addEventListener("touchmove", function(e) {
 			e.preventDefault();
 	}, true);*/
-	
-	window.location.href = "qref://onload";
+
+	CallObjectiveC("qref://onload");
     //DataLoaded();
 });
 
@@ -53,14 +61,14 @@ function AppendChecklist(data) {
     if(data) {
         if(AppObserver.cachePack == undefined)
             AppObserver.cachePack = [];
-        
+
         try {
             var decoded = decodeURIComponent(unescape(atob(data)));
             var checklist = JSON.parse(decoded);
-        
+
             AppObserver.cachePack.push(checklist);
         } catch (e) {
-            
+
         }
     }
 }
@@ -69,24 +77,24 @@ function AppendChecklistVersionInfo(data) {
     if(data) {
         if(AppObserver.checklistVersions == undefined)
             AppObserver.checklistVersions = [];
-        
+
         try {
             var decoded = decodeURIComponent(unescape(atob(data)));
             var vi = JSON.parse(decoded);
-            
+
 			var found = _.find(AppObserver.checklistVersions, function(item) { return item._id == vi._id });
-			
+
 			if (!found) {
             	AppObserver.checklistVersions.push(vi);
 			}
         } catch (e) {
-            
+
         }
     }
 }
 
 function ShowMarketingPage() {
-    window.location.href = "qref://nlog=MarketingHo!";
+    CallObjectiveC("qref://nlog=MarketingHo!");
     Navigation.go('#marketing');
 }
 
@@ -96,25 +104,25 @@ function LoadChecklistPacket(data) {
 
 function PushImage(data) {
     var imageArray = data.split(";");
-    
+
 	if(imageArray[2].toLowerCase() == "productlisting")
 	{
 		var item = $("#downloads-items li[data-id='" + imageArray[1] + "']");
-	
+
 		if(item.length > 0)
 			item.find(".plane-icon").html('<img src="' + imageArray[0] + '" />');
 	}
 	else if(imageArray[2].toLowerCase() == "checklistlisting")
 	{
 		var item = $("#dashboard li[data-id='" + imageArray[1] + "']");
-	
+
 		if(item.length > 0)
 			item.find(".plane-icon").html('<img src="' + imageArray[0] + '" />');
 	}
 	else if(imageArray[2].toLowerCase() == "productdetails")
 	{
 		var details = $("#productDetailsListing");
-        
+
 		details.find(".productImage").html('<img src="' + imageArray[0] + '" />');
 	}
 }
@@ -123,23 +131,23 @@ function RefreshToken() {
 	if(AppObserver.token != "" && AppObserver.token != undefined)
 	{
 		var refresh = { "mode":"rpc", "token": AppObserver.token}
-		
+
 		$.ajax({
 			type: "post",
 			url: host + "services/rpc/auth/refreshToken",
 			data: refresh,
 			success: function(data) {
 				var response = data;
-				
+
 				if(response.success == true)
 				{
 					AppObserver.set('token', response.returnValue);
-					window.location.href = "qref://setToken=" + AppObserver.token;
+					CallObjectiveC("qref://setToken=" + AppObserver.token);
 				}
-			
+
 			},
 			error: function(data) {
-				
+
 			}
 		});
 	}
@@ -150,47 +158,47 @@ function UpdateLoginDisplay(email) {
 }
 
 function DataLoaded() {
-	window.location.href = "qref://clearCache";
+	CallObjectiveC("qref://clearCache");
 	$("#editAddForm").validate({
 		submitHandler: function() {
 			EditAddObserver.edit();
 		}
 	});
-	
+
 	$("#registerForm").validate({
 		submitHandler:function() {
 			Register();
 		}
 	});
-	
+
 	$("#signinForm").validate({
 		submitHandler: function() {
 			Signin();
 		}
 	});
-	
+
 	$("#passwordRecoveryForm").validate({
 		submitHandler: function() {
 			passwordRecovery();
 		}
 	});
-	
+
 	$("#changePasswordForm").validate({
 		submitHandler: function() {
 			changePassword();
 		}
 	});
-	
+
 	$('#passwordAuthCodeForm').validate({
 		submitHandler: function() {
 			passwordAuthCode();
 		}
 	});
-	
+
 	//AppObserver.set('loading', false);
 	AppObserver.load();
 	Navigation.go("dashboard");
-    
+
     $('input[type="text"],input[type="number"],input[type="email"],input[type="password"]').tap(function(e) {
         e.stopPropagation();
     	$(this).focus();
@@ -355,7 +363,7 @@ var Whirlpool = undefined;
     }
     return source;
   };
-  
+
   // Delivers input data to the hashing algorithm. Assumes bufferBits < 512
   WP.add = function(source,sourceBits){
     /*

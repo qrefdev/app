@@ -30,7 +30,7 @@ function SyncProcessor() {
     var self = this;
     if (checklist != undefined && AppObserver.token != '' && AppObserver.token != undefined) {
       setTimeout(function() {
-        window.location.href = "qref://getDeviceName";
+        CallObjectiveC("qref://getDeviceName");
       }, 20);
 
       if (reachability) {
@@ -258,7 +258,7 @@ function SyncProcessor() {
     if (checklists != undefined && AppObserver.token != '' && AppObserver.token != undefined) {
       AppObserver.set('syncing', true);
       setTimeout(function() {
-        window.location.href = "qref://getDeviceName";
+        CallObjectiveC("qref://getDeviceName");
       }, 20);
 
       if (reachability) {
@@ -719,7 +719,7 @@ function SyncProcessor() {
     }
 
     function process(index, item) {
-      window.location.href = 'qref://svi=' + item._id;
+      CallObjectiveC('qref://svi=' + item._id);
 
       if (index >= versions.length - 1) {
         if (callback) {
@@ -736,7 +736,7 @@ function SyncProcessor() {
 
   this.syncToPhone = function(lists, callback) {
     var self = this;
-    window.location.href = 'qref://nlog=ListCount:' + lists.length;
+    CallObjectiveC('qref://nlog=ListCount:' + lists.length);
     if (lists != undefined) {
       if (lists.length > 0) {
         setTimeout(function() {
@@ -762,7 +762,7 @@ function SyncProcessor() {
 
         //item.version += 0.01;
 
-        window.location.href = 'qref://sc=' + item._id;
+        CallObjectiveC('qref://sc=' + item._id);
 
         if (index >= lists.length - 1) {
 

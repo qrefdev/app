@@ -495,7 +495,7 @@ var ProductDetailsObserver = new zimoko.Observable({
         //	window.location.href = "qref://purchase=" + ProductDetailsObserver.product.appleProductIdentifier;
         //}
       } else {
-        window.location.href = "qref://purchase=" + ProductDetailsObserver.product.appleProductIdentifier;
+        CallObjectiveC("qref://purchase=" + ProductDetailsObserver.product.appleProductIdentifier);
       }
     } else {
       AppObserver.set('loading', false);
@@ -575,7 +575,7 @@ var MenuObserver = new zimoko.Observable({
 
     var dialog = new ConfirmationDialog("#restoreAll", function(result) {
       if (result) {
-        window.location.href = "qref://restoreAll=yes";
+        CallObjectiveC("qref://restoreAll=yes");
       } else {
         AppObserver.set('loading', false);
       }
@@ -622,11 +622,11 @@ var MenuObserver = new zimoko.Observable({
     if (ChecklistObserver.canCheck) {
       checkbox.checked = false;
       ChecklistObserver.set('canCheck', false);
-      window.location.href = 'qref://setCanCheck=false';
+      CallObjectiveC('qref://setCanCheck=false');
     } else {
       checkbox.checked = true;
       ChecklistObserver.set('canCheck', true);
-      window.location.href = 'qref://setCanCheck=true';
+      CallObjectiveC('qref://setCanCheck=true');
     }
   },
   signOutNavTap: function(element, e, data) {
@@ -637,7 +637,7 @@ var MenuObserver = new zimoko.Observable({
       if (result) {
         AppObserver.set('token', undefined);
         AppObserver.set('email', '');
-        window.location.href = "qref://clearToken&clearUser";
+        CallObjectiveC("qref://clearToken&clearUser");
         AppObserver.cachePack = undefined;
         checklists = undefined;
         DashboardDataSource.clear();
@@ -876,7 +876,7 @@ var AppObserver = new zimoko.Observable({
       metalist.push(meta);
     }
 
-    window.location.href = 'qref://' + callback + '=' + btoa(encodeURIComponent(JSON.stringify(metalist)));
+    CallObjectiveC('qref://' + callback + '=' + btoa(encodeURIComponent(JSON.stringify(metalist))));
   },
   //BKing API Addition
   purchasableProducts: function(callback) {
@@ -929,10 +929,10 @@ var AppObserver = new zimoko.Observable({
           metalist.push(meta);
         }
 
-        window.location.href = 'qref://' + callback + '=' + btoa(encodeURIComponent(JSON.stringify(metalist)));
+        CallObjectiveC('qref://' + callback + '=' + btoa(encodeURIComponent(JSON.stringify(metalist))));
       });
     } else {
-      window.location.href = 'qref://' + callback + '=' + btoa(encodeURIComponent(JSON.stringify(metalist)));
+      CallObjectiveC('qref://' + callback + '=' + btoa(encodeURIComponent(JSON.stringify(metalist))));
     }
   },
   //BKing API Addition
@@ -949,7 +949,7 @@ var AppObserver = new zimoko.Observable({
       }
 
       if (checklist) {
-        window.location.href = 'qref://checklistopen=' + btoa(encodeURIComponent('starting'));
+        CallObjectiveC('qref://checklistopen=' + btoa(encodeURIComponent('starting')));
         setTimeout(function() {
           ChecklistObserver.set('checklist', checklist);
 
@@ -957,7 +957,7 @@ var AppObserver = new zimoko.Observable({
             setTimeout(function() {
               ChecklistObserver.set('list', section);
 
-              window.location.href = 'qref://checklistopen=' + btoa(encodeURIComponent('yes'));
+              CallObjectiveC('qref://checklistopen=' + btoa(encodeURIComponent('yes')));
               Navigation.go('#checklist');
             }, 250);
           }
@@ -966,7 +966,7 @@ var AppObserver = new zimoko.Observable({
         return;
       }
 
-      window.location.href = 'qref://checklistopen=' + btoa(encodeURIComponent('no'));
+      CallObjectiveC('qref://checklistopen=' + btoa(encodeURIComponent('no')));
     }, 1000);
   },
   //BKing API Addition
@@ -983,7 +983,7 @@ var AppObserver = new zimoko.Observable({
       }
 
       if (checklist) {
-        window.location.href = 'qref://resetchecks=' + btoa(encodeURIComponent('yes'));
+        CallObjectiveC('qref://resetchecks=' + btoa(encodeURIComponent('yes')));
         var preflight = checklist.preflight;
         var takeoff = checklist.takeoff;
         var landing = checklist.landing;
@@ -1042,7 +1042,7 @@ var AppObserver = new zimoko.Observable({
         return;
       }
 
-      window.location.href = 'qref://resetchecks=' + btoa(encodeURIComponent('no'));
+      CallObjectiveC('qref://resetchecks=' + btoa(encodeURIComponent('no')));
     }, 1000);
   },
   getChecklist: function(id) {
