@@ -76,7 +76,14 @@
     }
     else if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         if([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft || [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight) {
-            self->imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, bounds.size.height, bounds.size.width)];
+            
+            if ([[[UIDevice currentDevice] systemVersion] floatValue] < 8.0)
+            {
+                self->imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, bounds.size.height, bounds.size.width)];
+            }
+            else {
+                self->imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, bounds.size.width, bounds.size.height)];
+            }
         }
         else {
             self->imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, bounds.size.width, bounds.size.height)];
@@ -979,7 +986,13 @@
                     //568
                     
                     if([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft || [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight) {
-                        button.frame = CGRectMake((bounds.size.height / 2) - (135 / 2), bounds.size.width - 150, 135, 42);
+                        if ([[[UIDevice currentDevice] systemVersion] floatValue] < 8.0)
+                        {
+                            button.frame = CGRectMake((bounds.size.height / 2) - (135 / 2), bounds.size.width - 150, 135, 42);
+                        }
+                        else {
+                            button.frame = CGRectMake((bounds.size.width / 2) - (135 / 2), bounds.size.height - 150, 135, 42);
+                        }
                         
                     }
                     else {
@@ -989,7 +1002,13 @@
                 else {
                     //2x
                     if([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft || [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight) {
-                        button.frame = CGRectMake((bounds.size.height / 2) - (135 / 2), bounds.size.width - 112, 135, 42);
+                        if ([[[UIDevice currentDevice] systemVersion] floatValue] < 8.0)
+                        {
+                            button.frame = CGRectMake((bounds.size.height / 2) - (135 / 2), bounds.size.width - 112, 135, 42);
+                        }
+                        else {
+                            button.frame = CGRectMake((bounds.size.width / 2) - (135 / 2), bounds.size.height - 112, 135, 42);
+                        }
                         
                     }
                     else {
@@ -1000,8 +1019,14 @@
             else {
                 //normal
                 if([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft || [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight) {
-                    button.frame = CGRectMake((bounds.size.height / 2) - (135 / 2), bounds.size.width - 110, 135, 42);
-                    
+                    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 8.0)
+                    {
+                        
+                        button.frame = CGRectMake((bounds.size.height / 2) - (135 / 2), bounds.size.width - 110, 135, 42);
+                    }
+                    else {
+                        button.frame = CGRectMake((bounds.size.width / 2) - (135 / 2), bounds.size.height - 110, 135, 42);
+                    }
                 }
                 else {
                     button.frame = CGRectMake((bounds.size.width / 2) - (135 / 2), bounds.size.height - 110, 135, 42);
@@ -1012,8 +1037,13 @@
             if(screenScale > 1) {
                 //2x
                 if([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft || [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight) {
-                    button.frame = CGRectMake((bounds.size.height / 2) - (260 / 2), bounds.size.width - 235, 260, 81);
-                    
+                    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 8.0)
+                    {
+                        button.frame = CGRectMake((bounds.size.height / 2) - (260 / 2), bounds.size.width - 235, 260, 81);
+                    }
+                    else {
+                        button.frame = CGRectMake((bounds.size.width / 2) - (260 / 2), bounds.size.height - 235, 260, 81);
+                    }
                 }
                 else {
                     button.frame = CGRectMake((bounds.size.width / 2) - (260 / 2), bounds.size.height - 335, 260, 81);
@@ -1022,7 +1052,13 @@
             else {
                 //normal
                 if([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft || [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight) {
-                    button.frame = CGRectMake((bounds.size.height / 2) - (260 / 2), bounds.size.width - 235, 260, 81);
+                    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 8.0)
+                    {
+                        button.frame = CGRectMake((bounds.size.height / 2) - (260 / 2), bounds.size.width - 235, 260, 81);
+                    }
+                    else {
+                        button.frame = CGRectMake((bounds.size.width / 2) - (260 / 2), bounds.size.height - 235, 260, 81);
+                    }
                     
                 }
                 else {
