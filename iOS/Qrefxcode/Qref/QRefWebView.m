@@ -519,7 +519,11 @@
 - (void) completeTransaction:(SKPaymentTransaction *)transaction {
     if(transaction != nil)
     {
-        NSString * base64Receipt = [QSStrings  encodeBase64WithData:transaction.transactionReceipt];
+        //NSString * base64Receipt = [QSStrings encodeBase64WithData:transaction.transactionReceipt];
+		
+		NSData * receipt = [NSData dataWithContentsOfURL:[[NSBundle mainBundle] appStoreReceiptURL]];
+		NSString * base64Receipt = [QSStrings encodeBase64WithData:receipt];
+		
         [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat: @"SendReceipt('%@');", base64Receipt]];
         base64Receipt = nil;
     }
