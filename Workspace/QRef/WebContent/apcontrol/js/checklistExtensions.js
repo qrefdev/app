@@ -706,8 +706,7 @@ function createCategoryFromList(index, name, lis) {
 		}
 	}
 	
-	for(var i = 0; i < sections.length; i++) {
-		var sectionLis = sections[i];
+	sections.forEach(function (sectionLis, i, arr) {
 	
 		var currentSection = new ChecklistSection();
 		currentSection.name = sectionLis[0].data("Section");
@@ -732,7 +731,7 @@ function createCategoryFromList(index, name, lis) {
 		}
 		
 		newCategory.items.push(currentSection);
-	}
+	});
 	
 	return newCategory;
 }
